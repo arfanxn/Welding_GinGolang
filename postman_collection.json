@@ -1,0 +1,516 @@
+{
+	"info": {
+		"_postman_id": "25968fc6-9d9e-4cab-a5f4-3dc9ec9fa779",
+		"name": "Welding",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17284024",
+		"_collection_link": "https://arfan-team.postman.co/workspace/Weighpoint~07c1279e-a83e-4453-bacf-bcbee6e95282/collection/17284024-25968fc6-9d9e-4cab-a5f4-3dc9ec9fa779?action=share&source=collection_link&creator=17284024"
+	},
+	"item": [
+		{
+			"name": "APIs",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "admin@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "11112222",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/users/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "admin@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/login",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 10 Oct 2025 18:14:51 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "600"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Login berhasil\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMDFLNzNWNENaQVBaMFk2TURLOTY5QUhNNDQiLCJleHAiOjE3NjAxMjM2OTEsImlhdCI6MTc2MDEyMDA5MX0.KRM1vuVxiiDFnU27XHOY3o0sq8shCS2mgWMWSy1RwqQ\",\n        \"user\": {\n            \"Id\": \"01K73V4CZAPZ0Y6MDK969AHM44\",\n            \"name\": \"Admin\",\n            \"birth_date\": \"2000-01-01T00:00:00Z\",\n            \"email\": \"admin@gmail.com\",\n            \"email_verified_at\": \"2025-10-09T13:37:47+07:00\",\n            \"password\": \"$2a$12$N3ly9UTEFe0GRiodOzIqfeWl9RNpdlb/nz4N7ZnpQk/xwxuntgbbm\",\n            \"created_at\": \"2025-10-09T13:37:47+07:00\",\n            \"updated_at\": \"2025-10-09T13:37:47+07:00\",\n            \"deleted_at\": null\n        }\n    }\n}"
+								},
+								{
+									"name": "422",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/login",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"login"
+											]
+										}
+									},
+									"status": "Unprocessable Entity",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 10 Oct 2025 18:14:04 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "100"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 422,\n    \"status\": \"error\",\n    \"message\": \"Email wajib diisi\",\n    \"errors\": {\n        \"email\": [\n            \"Email wajib diisi\"\n        ]\n    }\n}"
+								},
+								{
+									"name": "401",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "admin@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "111122223333",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/login",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"login"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 10 Oct 2025 18:14:34 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "67"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 401,\n    \"status\": \"error\",\n    \"message\": \"Email atau password salah\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Logout",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/users/logout",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"logout"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": []
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/logout",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"logout"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 10 Oct 2025 19:32:12 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "59"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Logout berhasil\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Me",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/users/me",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"me"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/me",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"me"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 10 Oct 2025 19:30:03 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "342"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"User berhasil diambil\",\n    \"data\": {\n        \"user\": {\n            \"Id\": \"01K73V4CZAPZ0Y6MDK969AHM44\",\n            \"name\": \"Admin\",\n            \"birth_date\": \"2000-01-01T00:00:00Z\",\n            \"email\": \"admin@gmail.com\",\n            \"email_verified_at\": \"2025-10-09T13:37:47+07:00\",\n            \"created_at\": \"2025-10-09T13:37:47+07:00\",\n            \"updated_at\": \"2025-10-09T13:37:47+07:00\",\n            \"deleted_at\": null\n        }\n    }\n}"
+								},
+								{
+									"name": "401",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/me",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"me"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 10 Oct 2025 19:27:58 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "81"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 401,\n    \"status\": \"error\",\n    \"message\": \"Token tidak valid atau sudah kadaluarsa\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Health",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/health",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"health"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/health",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"health"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 Oct 2025 07:23:04 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"OK\"\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{TOKEN}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

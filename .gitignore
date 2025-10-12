@@ -1,0 +1,104 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Go build cache
+.cache/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.staging
+.env.docker
+*.env
+
+# Logs
+logs/
+*.log
+log/
+*.log.*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Docker files (optional - uncomment if you don't want to track these)
+# docker-compose.override.yml
+# .dockerignore
+docker/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Coverage reports
+coverage.txt
+coverage.html
+coverage.out
+
+# Build artifacts
+dist/
+build/
+bin/
+*.tar.gz
+*.zip
+
+# Air live reload (if using air for development)
+.air.toml
+tmp/
+
+# Delve debugger
+__debug_bin*
+
+# IDE specific files
+*.iml
+.project
+.classpath
+
+# Local configuration files
+config.local.*
+settings.local.*
+
+# Backup files
+*.bak
+*.backup
+
+# Test files
+testdata/

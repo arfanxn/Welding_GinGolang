@@ -1,0 +1,15 @@
+# Directories
+vendor/
+node_modules/
+docker/
+logs/
+
+# Files
+*.log
+*.tmp
+.git
+.gitignore
+docker-compose.override.yml
+
+# Database
+database/migrations/*.down.sql
