@@ -15,6 +15,8 @@ type User struct {
 	CreatedAt       time.Time `json:"created_at"`
 	UpdatedAt       null.Time `json:"updated_at"`
 	DeletedAt       null.Time `json:"deleted_at"`
+
+	Roles []*Role `gorm:"many2many:role_user;references:id;joinReferences:user_id;foreignReferences:role_id"`
 }
 
 func NewUser() *User {
