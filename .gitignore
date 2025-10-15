@@ -58,10 +58,11 @@ Thumbs.db
 *.swo
 *~
 
-# Docker files (optional - uncomment if you don't want to track these)
-# docker-compose.override.yml
-# .dockerignore
-docker/
+# Local docker-compose overrides (for development-specific settings)
+docker-compose.override.yml
+
+# Ignore docker data/volume
+docker/**/data/ 
 
 # Database files
 *.db
