@@ -1,102 +1,107 @@
 # Welding - Makefile Commands
 # ==========================
 
-# Load environment variables
+# ========== Auto execute commands ==========
 ENV_FILE ?= .env
 ifneq (,$(wildcard $(ENV_FILE)))
     include $(ENV_FILE)
     export
 endif
 
-.PHONY: help setup build serve migrate seed docker-migrate docker-seed up down restart logs ps clean
+.PHONY: help check-env check-env-docker clean setup build serve migrate-up migrate-down seed \
+	docker-migrate-up docker-migrate-down docker-seed docker-up-build docker-up \
+	docker-down docker-restart docker-logs docker-ps
 
-# Default target
+# ========== Default target ==========
 help:
 	@echo "Welding - Available Commands:"
 	@echo ""
 	@echo "Local Development:"
-	@echo "  make setup     - Setup project (copy .env, install deps)"
-	@echo "  make build     - Build the application"
-	@echo "  make serve     - Start the application server"
-	@echo "  make migrate   - Run database migrations (local)"
-	@echo "  make seed      - Seed database with sample data (local)"
+	@echo "  make setup           - Setup project (copy .env, install deps)"
+	@echo "  make build           - Build the application"
+	@echo "  make serve           - Start the application server"
+	@echo "  make migrate-up      - Run database migrations up (local)"
+	@echo "  make migrate-down    - Rollback database migrations (local)"
+	@echo "  make seed            - Seed database with sample data (local)"
 	@echo ""
 	@echo "Docker:"
-	@echo "  make up            - Start all services with Docker"
-	@echo "  make down          - Stop and remove all containers"
-	@echo "  make restart       - Restart all services"
-	@echo "  make docker-migrate - Run database migrations (Docker)"
-	@echo "  make docker-seed   - Seed database with sample data (Docker)"
-	@echo "  make logs          - View container logs"
-	@echo "  make ps            - List running containers"
+	@echo "  make docker-up        - Start all services with Docker"
+	@echo "  make docker-up-build  - Rebuild and start all services"
+	@echo "  make docker-down      - Stop and remove all containers"
+	@echo "  make docker-restart   - Restart all services with rebuild"
+	@echo "  make docker-migrate-up   - Run database migrations (Docker)"
+	@echo "  make docker-migrate-down - Rollback database migrations (Docker)"
+	@echo "  make docker-seed      - Seed database with sample data (Docker)"
+	@echo "  make docker-logs      - View container logs"
+	@echo "  make docker-ps        - List running containers"
 	@echo ""
 	@echo "Utilities:"
-	@echo "  make clean     - Clean build artifacts and Docker resources"
+	@echo "  make clean           - Clean build artifacts and Docker resources"
+	@echo "  make check-env       - Check if .env file exists"
+	@echo "  make check-env-docker - Check if .env.docker file exists"
 
-# Development Commands
-setup:
-	@echo "Setting up project..."
-	@if [ ! -f .env ]; then cp .env.example .env && echo "Created .env file from .env.example"; fi
-	@if [ ! -f .env.docker ]; then cp .env.example .env.docker && echo "Created .env.docker file"; fi
-	go mod download
-	@echo "Setup complete!"
 
-build:
-	@echo "Building application..."
-	go build -o bin/welding main.go
-	@echo "Build complete!"
-
-serve:
-	@echo "Starting application server..."
-	go run main.go serve
-
-migrate:
-	@echo "Running database migrations..."
-	go run main.go migrate
-
-seed:
-	@echo "Seeding database..."
-	go run main.go seed
-
-# Docker Commands
-docker-migrate:
-	@echo "Running database migrations in Docker..."
-	docker compose exec welding ./server migrate
-
-docker-seed:
-	@echo "Seeding database in Docker..."
-	docker compose exec welding ./server seed
-
-# Docker Service Commands
+# ========== Utilities commands ==========
 check-env:
 	@if [ ! -f $(ENV_FILE) ]; then \
-		echo "Error: $(ENV_FILE) file not found. Run 'make setup' first."; \
+		echo "error: $(ENV_FILE) file not found. Run 'make setup' first."; \
+		exit 1; \ 
+	fi
+
+check-env-docker:
+	@if [ ! -f .env.docker ]; then \
+		echo "error: .env.docker file not found. Run 'make setup' first."; \
 		exit 1; \
 	fi
 
-up: check-env
-	@echo "Starting services with Docker..."
+clean:
+	@if [ -f bin/welding ]; then rm bin/welding && echo "removed `bin/welding` binary"; fi
+	docker system prune -f
+
+# ========== Development commands ==========
+setup:
+	@if [ ! -f $(ENV_FILE) ]; then cp .env.example $(ENV_FILE) && echo "created $(ENV_FILE) file from .env.example"; fi
+	@if [ ! -f .env.docker ]; then cp .env.example .env.docker && echo "created .env.docker file"; fi
+	go mod download
+
+build:
+	go build -o bin/welding main.go
+
+serve:
+	go run main.go serve
+
+migrate-up:
+	go run main.go migrate up
+
+migrate-down:
+	go run main.go migrate down
+
+seed:
+	go run main.go seed
+
+# ========== Docker commands ==========
+docker-up-build: check-env-docker
 	docker compose up -d --build
-	@echo "Services started!"
-	@echo "  - API: http://localhost:8080"
-	@echo "  - Nginx: http://localhost (port 80)"
-down:
-	@echo "Stopping services..."
+
+docker-up: check-env-docker
+	docker compose up -d
+
+docker-down:
 	docker compose down
 
-restart: down up
+docker-restart: docker-down docker-up-build
 
-logs:
-	@echo "Viewing container logs (Ctrl+C to exit)..."
+docker-migrate-up:
+	docker compose exec welding ./server migrate up
+
+docker-migrate-down:
+	docker compose exec welding ./server migrate down
+
+docker-seed:
+	docker compose exec welding ./server seed
+
+docker-logs:
 	docker compose logs -f
 
-ps:
-	@echo "Container status:"
+docker-ps:
 	docker compose ps
-
-# Utility Commands
-clean:
-	@echo "Cleaning up..."
-	@if [ -f bin/welding ]; then rm bin/welding && echo "Removed binary"; fi
-	@docker system prune -f
-	@echo "Cleanup complete!"
