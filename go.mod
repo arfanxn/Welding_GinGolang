@@ -3,12 +3,17 @@ module github.com/arfanxn/welding
 go 1.25.1
 
 require (
+	github.com/bluele/factory-go v0.0.1
+	github.com/brianvoe/gofakeit/v7 v7.8.0
+	github.com/creasty/defaults v1.8.0
 	github.com/gin-gonic/gin v1.11.0
 	github.com/go-ozzo/ozzo-validation/v4 v4.3.0
 	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/golang-migrate/migrate/v4 v4.19.0
 	github.com/guregu/null/v6 v6.0.0
 	github.com/joho/godotenv v1.5.1
+	github.com/oklog/ulid/v2 v2.1.1
+	github.com/samber/lo v1.52.0
 	github.com/urfave/cli/v3 v3.4.1
 	go.uber.org/fx v1.24.0
 	go.uber.org/zap v1.27.0
@@ -58,7 +63,7 @@ require (
 	golang.org/x/net v0.44.0 // indirect
 	golang.org/x/sync v0.17.0 // indirect
 	golang.org/x/sys v0.36.0 // indirect
-	golang.org/x/text v0.29.0 // indirect
+	golang.org/x/text v0.30.0 // indirect
 	golang.org/x/tools v0.37.0 // indirect
 	google.golang.org/protobuf v1.36.9 // indirect
 )
