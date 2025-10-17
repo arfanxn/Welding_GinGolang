@@ -25,7 +25,7 @@ type Pagination[T any] struct {
 	TotalItems   int         `json:"total_items"`
 }
 
-func NewFromContextPaginationDTO[T any](
+func NewPaginationFromContextPaginationDTO[T any](
 	c *gin.Context, paginationDto *dto.Pagination[T],
 ) *Pagination[T] {
 	var (

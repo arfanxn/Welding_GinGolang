@@ -36,6 +36,6 @@ func (h *permissionHandler) Paginate(c *gin.Context) {
 	c.JSON(http.StatusOK, response.NewBodyWithData(
 		http.StatusOK,
 		"Permissions berhasil diambil",
-		response.NewFromContextPaginationDTO(c, paginationDto),
+		response.NewPaginationFromContextPaginationDTO(c, paginationDto),
 	))
 }
