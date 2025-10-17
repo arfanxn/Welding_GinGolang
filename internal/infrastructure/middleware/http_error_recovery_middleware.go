@@ -1,8 +1,8 @@
 package middleware
 
 import (
+	"github.com/arfanxn/welding/internal/infrastructure/http/response"
 	"github.com/arfanxn/welding/pkg/errors"
-	"github.com/arfanxn/welding/pkg/response"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,17 +11,7 @@ func HttpErrorRecoveryMiddlewareFunc() gin.HandlerFunc {
 		defer func() {
 			if r := recover(); r != nil {
 				if err, ok := r.(*errors.HttpError); ok {
-					body := response.Body{
-						Code:    err.Code,
-						Status:  response.StatusError,
-						Message: err.Error(),
-					}
-
-					if err.Errors != nil {
-						body.Errors = err.Errors
-					}
-
-					c.AbortWithStatusJSON(err.Code, body)
+					c.AbortWithStatusJSON(err.Code, response.NewBodyWithErrors(err.Code, err.Error(), err.Errors))
 					return
 				}
 
