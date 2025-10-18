@@ -7,14 +7,13 @@ import (
 )
 
 type Role struct {
-	Id        string    `json:"id" gorm:"primarykey"`
-	Name      string    `json:"name"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt null.Time `json:"updated_at"`
-	DeletedAt null.Time `json:"deleted_at"`
+	Id        string    `json:"id" gorm:"primarykey;not null;unique;type:varchar(26);index"`
+	Name      string    `json:"name" gorm:"unique;not null;type:varchar(50);index"`
+	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt null.Time `json:"updated_at" gorm:"autoUpdateTime"`
 
-	Users       []*User       `json:"users" gorm:"many2many:role_user;references:id;joinReferences:role_id;foreignReferences:user_id"`
-	Permissions []*Permission `json:"permissions" gorm:"many2many:permission_role;references:id;joinReferences:role_id;foreignReferences:permission_id"`
+	Users       []*User       `json:"users" gorm:"many2many:role_user"`
+	Permissions []*Permission `json:"permissions" gorm:"many2many:permission_role"`
 }
 
 func NewRole() *Role {

@@ -18,7 +18,4 @@ var RoleFactory = factory.NewFactory(&entity.Role{}).
 	}).
 	Attr("UpdatedAt", func(args factory.Args) (any, error) {
 		return null.TimeFromPtr(nil), nil
-	}).
-	Attr("DeletedAt", func(args factory.Args) (any, error) {
-		return null.TimeFromPtr(nil), nil
 	})
