@@ -1,4 +1,4 @@
-package errors
+package errorutil
 
 var _ error = (*HttpError)(nil)
 
