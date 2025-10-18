@@ -1,8 +1,11 @@
 package helper
 
 import (
+	"errors"
+
 	"github.com/arfanxn/welding/internal/module/shared/usecase/dto"
 	"github.com/guregu/null/v6"
+	"github.com/jackc/pgx/v5/pgconn"
 	"gorm.io/gorm"
 )
 
@@ -73,4 +76,13 @@ func GormDBPaginateWithQueryDTO[T any](db *gorm.DB, queryDto *dto.Query) (*dto.P
 		Items:       items,           // Paginated items
 		TotalItems:  int(totalItems), // Total number of items across all pages
 	}, nil
+}
+
+// IsPostgresDuplicateKeyError checks if the error is a PostgreSQL duplicate key error
+func IsPostgresDuplicateKeyError(err error) bool {
+	var pgErr *pgconn.PgError
+	if errors.As(err, &pgErr) && pgErr.Code == "23505" {
+		return true
+	}
+	return false
 }
