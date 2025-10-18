@@ -37,30 +37,39 @@ func NewRoleSeeder(params NewRoleSeederParams) Seeder {
 
 func (s *RoleSeeder) Seed() error {
 	superAdminRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+		"Id":   "01K7KJ8RYMGS1FWJRZD000TCW0",
 		"Name": "super admin",
 	}).(*entity.Role)
 	adminRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+		"Id":   "01K7KJ8RYN8QJMYKA1WNBHQ22K",
 		"Name": "admin",
 	}).(*entity.Role)
 	headRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+		"Id":   "01K7KJ8RYN8QJMYKA1WQQQYZA6",
 		"Name": "head",
 	}).(*entity.Role)
 	managerRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+		"Id":   "01K7KJ8RYN8QJMYKA1WTZNZVYT",
 		"Name": "manager",
 	}).(*entity.Role)
 	supervisorRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+		"Id":   "01K7KJ8RYN8QJMYKA1WYFRKSYN",
 		"Name": "supervisor",
 	}).(*entity.Role)
 	engineerRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+		"Id":   "01K7KJ8RYN8QJMYKA1X0VNR31G",
 		"Name": "engineer",
 	}).(*entity.Role)
 	staffRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+		"Id":   "01K7KJ8RYN8QJMYKA1X405T2FF",
 		"Name": "staff",
 	}).(*entity.Role)
 	operatorRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+		"Id":   "01K7KJ8RYN8QJMYKA1X78V9C0T",
 		"Name": "operator",
 	}).(*entity.Role)
 	customerServiceAdminRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+		"Id":   "01K7KJ8RYN8QJMYKA1X7GKVWKP",
 		"Name": "customer service admin",
 	}).(*entity.Role)
 
