@@ -10,7 +10,9 @@ require (
 	github.com/go-ozzo/ozzo-validation/v4 v4.3.0
 	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/golang-migrate/migrate/v4 v4.19.0
+	github.com/gookit/goutil v0.7.1
 	github.com/guregu/null/v6 v6.0.0
+	github.com/jackc/pgx/v5 v5.7.6
 	github.com/joho/godotenv v1.5.1
 	github.com/oklog/ulid/v2 v2.1.1
 	github.com/samber/lo v1.52.0
@@ -39,7 +41,6 @@ require (
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.7.6 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
