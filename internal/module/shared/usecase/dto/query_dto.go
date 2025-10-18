@@ -49,12 +49,12 @@ type QuerySort struct {
 }
 
 type Query struct {
-	Offset  int           `json:"offset"`
-	Limit   int           `json:"limit"`
-	Search  string        `json:"search"`
-	Filters []QueryFilter `json:"filters"`
-	Sorts   []QuerySort   `json:"sorts"`
-	Joins   []string      `json:"joins"`
+	Offset   int           `json:"offset"`
+	Limit    int           `json:"limit"`
+	Search   string        `json:"search"`
+	Filters  []QueryFilter `json:"filters"`
+	Sorts    []QuerySort   `json:"sorts"`
+	Includes []string      `json:"includes"`
 }
 
 // GetOffset returns the offset value and a boolean indicating if it's set (greater than 0)
@@ -98,12 +98,12 @@ func (q *Query) GetSortByColumn(column string) (*QuerySort, bool) {
 	return nil, false
 }
 
-// GetJoin searches for a join by name (case-insensitive) and returns
-// the join string and a boolean indicating if found
-func (q *Query) GetJoin(join string) (string, bool) {
-	for _, j := range q.Joins {
-		if strings.EqualFold(j, join) {
-			return j, true
+// GetInclude searches for a include by name (case-insensitive) and returns
+// the include string and a boolean indicating if found
+func (q *Query) GetInclude(include string) (string, bool) {
+	for _, i := range q.Includes {
+		if strings.EqualFold(i, include) {
+			return i, true
 		}
 	}
 	return "", false
