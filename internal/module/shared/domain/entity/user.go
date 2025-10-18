@@ -16,7 +16,7 @@ type User struct {
 	UpdatedAt       null.Time `json:"updated_at"`
 	DeletedAt       null.Time `json:"deleted_at"`
 
-	Roles []*Role `gorm:"many2many:role_user;references:id;joinReferences:user_id;foreignReferences:role_id"`
+	Roles []*Role `json:"roles" gorm:"many2many:role_user"`
 }
 
 func NewUser() *User {

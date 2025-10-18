@@ -11,9 +11,6 @@ type PermissionRole struct {
 	RoleId       string    `json:"role_id" gorm:"primaryKey"`
 	CreatedAt    time.Time `json:"created_at"`
 	UpdatedAt    null.Time `json:"updated_at"`
-
-	Permission *Permission `gorm:"foreignKey:PermissionId;references:id;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
-	Role       *Role       `gorm:"foreignKey:RoleId;references:id;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 }
 
 // TableName specifies the table name for the PermissionRole model
