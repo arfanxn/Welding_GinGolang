@@ -10,6 +10,41 @@ A Go-based REST API with JWT authentication, built using clean architecture prin
 - Clean architecture
 - Database migrations & seeding
 
+## Project Structure
+
+```
+├── internal/
+│   ├── cmd/                # Application entry point
+│   ├── infrastructure/     # Infrastructure layer
+│   └── module/             # Business modules
+│       └── user/           # User module
+├── pkg/                    # Shared packages
+├── docker-compose.yaml     # Docker services
+├── postman_collection.json # API documentation
+└── Makefile                # Available commands
+```
+
+## Branching Strategy
+
+### Core Branches
+- `master` - Production code (protected, requires PR)
+- `canary` - Development & integration branch
+  - Always contains the latest stable changes
+  - Recommended for API consumers and frontend development
+  - Feature branches should be based on this branch
+
+### Development Workflow
+1. Start a new feature:
+   ```bash
+   git checkout canary
+   git pull origin canary
+   git checkout -b feature/name
+   ```
+2. Make and commit your changes
+3. Push and create a pull request to `canary`
+4. After review, merge into `canary`
+5. For production releases, create a PR from `canary` to `master`
+
 ## Quick Start
 
 ### Prerequisites
@@ -18,67 +53,83 @@ A Go-based REST API with JWT authentication, built using clean architecture prin
 
 ### Local Development
 
-1. **Setup project**
+1. **Clone the repository**
    ```bash
    git clone https://github.com/arfanxn/welding-golang.git
    cd welding-golang
-   make setup
    ```
 
-2. **Start application**
+2. **Setup environment and dependencies**
    ```bash
-   # Run migrations and seed data
-   make migrate
+   make envs    # Create environment files from examples
+   make deps    # Install Go dependencies
+   ```
+
+3. **Run migrations and seed data**
+   ```bash
+   make migrate-up
    make seed
-   
-   # Start server
+   ```
+
+4. **Start the server**
+   ```bash
    make serve
    ```
-
-   Server runs at `http://localhost:8080`
+   - Server runs on `http://localhost:8080` (customize via `APP_PORT` in `.env`)
 
 ### Docker (Recommended)
 
-1. **Start with Docker**
+1. **Clone the repository**
    ```bash
    git clone https://github.com/arfanxn/welding-golang.git
    cd welding-golang
-   make setup
-   make up
    ```
 
-2. **Run migrations and seed data (Docker)**
+2. **Start services**
    ```bash
-   make docker-migrate
+   # Start all services
+   make docker-up
+   
+   # Or, to rebuild and start:
+   # make docker-up-build
+   ```
+
+3. **Run migrations and seed data**
+   ```bash
+   make docker-migrate-up
    make docker-seed
    ```
 
-   **Access points:**
-   - **API**: `http://localhost:8080`
-   - **Nginx**: `http://localhost` (port 80)
+**Access points:**
+- **API**: `http://localhost:8080`
+- **Nginx**: `http://localhost` (port 80)
 
 ## Available Commands
 
-Run `make help` to see all available commands:
-
 ### Local Development
-- `make setup` - Setup project (copy .env, install deps)
 - `make build` - Build the application
 - `make serve` - Start the application server
-- `make migrate` - Run database migrations (local)
+- `make migrate-up` - Run database migrations up (local)
+- `make migrate-down` - Rollback database migrations (local)
 - `make seed` - Seed database with sample data (local)
 
 ### Docker
-- `make up` - Start all services with Docker
-- `make down` - Stop and remove all containers
-- `make restart` - Restart all services
-- `make docker-migrate` - Run database migrations (Docker)
+- `make docker-up` - Start all services with Docker
+- `make docker-up-build` - Rebuild and start all services
+- `make docker-down` - Stop and remove all containers
+- `make docker-restart` - Restart all services with rebuild
+- `make docker-migrate-up` - Run database migrations (Docker)
+- `make docker-migrate-down` - Rollback database migrations (Docker)
 - `make docker-seed` - Seed database with sample data (Docker)
-- `make logs` - View container logs
-- `make ps` - List running containers
+- `make docker-logs` - View container logs
+- `make docker-ps` - List running containers
 
 ### Utilities
+- `make envs` - Create environment files from examples
+- `make deps` - Download Go module dependencies
 - `make clean` - Clean build artifacts and Docker resources
+- `make check-env` - Check if .env file exists
+- `make check-env-docker` - Check if .env.docker file exists
 
 ## API Documentation
 
@@ -97,26 +148,6 @@ Import the Postman collection for complete API documentation:
 ### Default Credentials
 - **Email**: `admin@gmail.com`
 - **Password**: `11112222`
-
-## Project Structure
-
-```
-├── internal/
-│   ├── infrastructure/     # Infrastructure layer
-│   └── module/            # Business modules
-│       └── user/          # User module
-├── pkg/                   # Shared packages
-├── docker-compose.yaml    # Docker services
-├── postman_collection.json # API documentation
-└── Makefile              # Available commands
-```
-
-## Environment Configuration
-
-Copy `.env.example` to `.env` and modify as needed:
-- Database connections
-- JWT secret
-- Application settings
 
 ## License
 
