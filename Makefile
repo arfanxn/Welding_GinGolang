@@ -17,7 +17,6 @@ help:
 	@echo "Welding - Available Commands:"
 	@echo ""
 	@echo "Local Development:"
-	@echo "  make setup           - Setup project (copy .env, install deps)"
 	@echo "  make build           - Build the application"
 	@echo "  make serve           - Start the application server"
 	@echo "  make migrate-up      - Run database migrations up (local)"
@@ -36,6 +35,8 @@ help:
 	@echo "  make docker-ps        - List running containers"
 	@echo ""
 	@echo "Utilities:"
+	@echo "  make envs            - Create environment files from examples"
+	@echo "  make deps            - Download Go module dependencies"
 	@echo "  make clean           - Clean build artifacts and Docker resources"
 	@echo "  make check-env       - Check if .env file exists"
 	@echo "  make check-env-docker - Check if .env.docker file exists"
@@ -59,9 +60,11 @@ clean:
 	docker system prune -f
 
 # ========== Development commands ==========
-setup:
+env:
 	@if [ ! -f $(ENV_FILE) ]; then cp .env.example $(ENV_FILE) && echo "created $(ENV_FILE) file from .env.example"; fi
-	@if [ ! -f .env.docker ]; then cp .env.example .env.docker && echo "created .env.docker file"; fi
+	@if [ ! -f .env.docker ]; then cp .env.example .env.docker && echo "created .env.docker file from .env.example"; fi
+
+deps:
 	go mod download
 
 build:

@@ -385,6 +385,996 @@
 					]
 				},
 				{
+					"name": "Permission",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/permissions?page=1&per_page=2",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "2"
+										},
+										{
+											"key": "search",
+											"value": "user.read",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "name",
+											"description": "sort name ascending",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "-name",
+											"description": "sort name descending",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/permissions?page=1&per_page=2",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"permissions"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "user.read",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "name",
+													"description": "sort name ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-name",
+													"description": "sort name descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Oct 2025 13:13:21 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "811"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Permissions berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": true,\n        \"prev_page\": null,\n        \"next_page\": 2,\n        \"last_page\": 5,\n        \"first_page_url\": \"http://localhost:8080/api/v1/permissions?page=1\",\n        \"prev_page_url\": null,\n        \"next_page_url\": \"http://localhost:8080/api/v1/permissions?page=2\",\n        \"last_page_url\": \"http://localhost:8080/api/v1/permissions?page=5\",\n        \"items\": [\n            {\n                \"id\": \"01K7KJ8RYDJWD3HFJTRCFB6SEB\",\n                \"name\": \"user.read\",\n                \"created_at\": \"2025-10-15T16:12:25.805724+07:00\",\n                \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                \"deleted_at\": null,\n                \"roles\": null\n            },\n            {\n                \"id\": \"01K7KJ8RYDJWD3HFJTRGCA1ZKN\",\n                \"name\": \"user.create\",\n                \"created_at\": \"2025-10-15T16:12:25.805725+07:00\",\n                \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                \"deleted_at\": null,\n                \"roles\": null\n            }\n        ],\n        \"total_items\": 9\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Role",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/roles?page=1&per_page=2&search=NOT FOUND",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "2"
+										},
+										{
+											"key": "search",
+											"value": "NOT FOUND"
+										},
+										{
+											"key": "sort",
+											"value": "name",
+											"description": "sort name ascending",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "-name",
+											"description": "sort name descending",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles?page=1&per_page=2",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "super admin",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "name",
+													"description": "sort name ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-name",
+													"description": "sort name descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Oct 2025 13:11:13 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "782"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Roles berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": true,\n        \"prev_page\": null,\n        \"next_page\": 2,\n        \"last_page\": 5,\n        \"first_page_url\": \"http://localhost:8080/api/v1/roles?page=1\",\n        \"prev_page_url\": null,\n        \"next_page_url\": \"http://localhost:8080/api/v1/roles?page=2\",\n        \"last_page_url\": \"http://localhost:8080/api/v1/roles?page=5\",\n        \"items\": [\n            {\n                \"id\": \"01K7KJ8RYMGS1FWJRZD000TCW0\",\n                \"name\": \"super admin\",\n                \"created_at\": \"2025-10-15T16:12:25.813+07:00\",\n                \"updated_at\": \"2025-10-15T16:12:25.813295+07:00\",\n                \"users\": null,\n                \"permissions\": null\n            },\n            {\n                \"id\": \"01K7KJ8RYN8QJMYKA1WQQQYZA6\",\n                \"name\": \"head\",\n                \"created_at\": \"2025-10-15T16:12:25.813003+07:00\",\n                \"updated_at\": \"2025-10-15T16:12:25.813295+07:00\",\n                \"users\": null,\n                \"permissions\": null\n            }\n        ],\n        \"total_items\": 10\n    }\n}"
+								},
+								{
+									"name": "200 (search)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles?page=1&per_page=2&search=super admin",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "super admin"
+												},
+												{
+													"key": "sort",
+													"value": "name",
+													"description": "sort name ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-name",
+													"description": "sort name descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Oct 2025 13:11:57 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "568"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Roles berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": false,\n        \"prev_page\": null,\n        \"next_page\": null,\n        \"last_page\": 1,\n        \"first_page_url\": \"http://localhost:8080/api/v1/roles?page=1\",\n        \"prev_page_url\": null,\n        \"next_page_url\": null,\n        \"last_page_url\": \"http://localhost:8080/api/v1/roles?page=1\",\n        \"items\": [\n            {\n                \"id\": \"01K7KJ8RYMGS1FWJRZD000TCW0\",\n                \"name\": \"super admin\",\n                \"created_at\": \"2025-10-15T16:12:25.813+07:00\",\n                \"updated_at\": \"2025-10-15T16:12:25.813295+07:00\",\n                \"users\": null,\n                \"permissions\": null\n            }\n        ],\n        \"total_items\": 1\n    }\n}"
+								},
+								{
+									"name": "200 (empty)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles?page=1&per_page=2&search=NOT FOUND",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "NOT FOUND"
+												},
+												{
+													"key": "sort",
+													"value": "name",
+													"description": "sort name ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-name",
+													"description": "sort name descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Oct 2025 13:12:49 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "387"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Roles berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": false,\n        \"prev_page\": null,\n        \"next_page\": null,\n        \"last_page\": 1,\n        \"first_page_url\": \"http://localhost:8080/api/v1/roles?page=1\",\n        \"prev_page_url\": null,\n        \"next_page_url\": null,\n        \"last_page_url\": \"http://localhost:8080/api/v1/roles?page=1\",\n        \"items\": [],\n        \"total_items\": 0\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/roles/01K7KJ8RYMGS1FWJRZD000TCW0?include=permissions&include=users",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										"01K7KJ8RYMGS1FWJRZD000TCW0"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "permissions"
+										},
+										{
+											"key": "include",
+											"value": "users"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles/01K7KJ8RYMGS1FWJRZD000TCW0?include=permissions&include=users",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"01K7KJ8RYMGS1FWJRZD000TCW0"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "permissions"
+												},
+												{
+													"key": "include",
+													"value": "users"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Oct 2025 08:39:27 GMT"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Role berhasil diambil\",\n    \"data\": {\n        \"role\": {\n            \"id\": \"01K7KJ8RYMGS1FWJRZD000TCW0\",\n            \"name\": \"super admin\",\n            \"created_at\": \"2025-10-15T16:12:25.813+07:00\",\n            \"updated_at\": \"2025-10-15T16:12:25.813295+07:00\",\n            \"users\": [\n                {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"Super Admin\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": null,\n                    \"created_at\": \"2024-10-16T01:12:25.881558+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:26.101812+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                }\n            ],\n            \"permissions\": [\n                {\n                    \"id\": \"01K7KJ8RYDJWD3HFJTRCFB6SEB\",\n                    \"name\": \"user.read\",\n                    \"created_at\": \"2025-10-15T16:12:25.805724+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                },\n                {\n                    \"id\": \"01K7KJ8RYDJWD3HFJTRGCA1ZKN\",\n                    \"name\": \"user.create\",\n                    \"created_at\": \"2025-10-15T16:12:25.805725+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                },\n                {\n                    \"id\": \"01K7KJ8RYDJWD3HFJTRJYSBTJ6\",\n                    \"name\": \"user.update\",\n                    \"created_at\": \"2025-10-15T16:12:25.805726+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                },\n                {\n                    \"id\": \"01K7KJ8RYDJWD3HFJTRP6VE1BZ\",\n                    \"name\": \"user.delete\",\n                    \"created_at\": \"2025-10-15T16:12:25.805726+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                },\n                {\n                    \"id\": \"01K7KJ8RYDJWD3HFJTRT5C0XPP\",\n                    \"name\": \"role.read\",\n                    \"created_at\": \"2025-10-15T16:12:25.805726+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                },\n                {\n                    \"id\": \"01K7KJ8RYDJWD3HFJTRVSDPYVZ\",\n                    \"name\": \"role.create\",\n                    \"created_at\": \"2025-10-15T16:12:25.805727+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                },\n                {\n                    \"id\": \"01K7KJ8RYDJWD3HFJTRYH4G2QN\",\n                    \"name\": \"role.update\",\n                    \"created_at\": \"2025-10-15T16:12:25.805727+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                },\n                {\n                    \"id\": \"01K7KJ8RYDJWD3HFJTS14AE7ZT\",\n                    \"name\": \"role.delete\",\n                    \"created_at\": \"2025-10-15T16:12:25.805727+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                },\n                {\n                    \"id\": \"01K7KJ8RYDJWD3HFJTS4KSDNA6\",\n                    \"name\": \"permission.read\",\n                    \"created_at\": \"2025-10-15T16:12:25.805727+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                }\n            ]\n        }\n    }\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles/NOT_FOUND?include=permissions&include=users",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"NOT_FOUND"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "permissions"
+												},
+												{
+													"key": "include",
+													"value": "users"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Oct 2025 08:42:37 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "56"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"Role not found\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "test role",
+											"type": "text"
+										},
+										{
+											"key": "permission_id",
+											"value": "01K7KJ8RYDJWD3HFJTRCFB6SEB",
+											"type": "text"
+										},
+										{
+											"key": "permission_id",
+											"value": "01K7KJ8RYDJWD3HFJTRGCA1ZKN",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/roles",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test role",
+													"type": "text"
+												},
+												{
+													"key": "permission_id",
+													"value": "01K7KJ8RYDJWD3HFJTRCFB6SEB",
+													"type": "text"
+												},
+												{
+													"key": "permission_id",
+													"value": "01K7KJ8RYDJWD3HFJTRGCA1ZKN",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Oct 2025 11:31:41 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "628"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Role berhasil disimpan\",\n    \"data\": {\n        \"role\": {\n            \"id\": \"01K7VHDY844Q851DAPP578BG51\",\n            \"name\": \"test role\",\n            \"created_at\": \"2025-10-18T18:31:41.964818+07:00\",\n            \"updated_at\": \"2025-10-18T18:31:41.967176+07:00\",\n            \"users\": null,\n            \"permissions\": [\n                {\n                    \"id\": \"01K7KJ8RYDJWD3HFJTRCFB6SEB\",\n                    \"name\": \"user.read\",\n                    \"created_at\": \"2025-10-15T16:12:25.805724+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                },\n                {\n                    \"id\": \"01K7KJ8RYDJWD3HFJTRGCA1ZKN\",\n                    \"name\": \"user.create\",\n                    \"created_at\": \"2025-10-15T16:12:25.805725+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                }\n            ]\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "test role updated",
+											"type": "text"
+										},
+										{
+											"key": "permission_id",
+											"value": "01K7KJ8RYDJWD3HFJTRT5C0XPP",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "permission_id",
+											"value": "01K7KJ8RYDJWD3HFJTRVSDPYVZ",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/roles/01K7VJDYZBE23MG5TE3R7QMTPF",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										"01K7VJDYZBE23MG5TE3R7QMTPF"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "422",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test role",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "permission_id",
+													"value": "01K7KJ8RYDJWD3HFJTRCFB6SEB",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "permission_id",
+													"value": "01K7KJ8RYDJWD3HFJTRGCA1ZKN",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles/01K7KJ8RYN8QJMYKA1X7GKVWKP",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"01K7KJ8RYN8QJMYKA1X7GKVWKP"
+											]
+										}
+									},
+									"status": "Unprocessable Entity",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Oct 2025 11:42:45 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "111"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 422,\n    \"status\": \"error\",\n    \"message\": \"Nama tidak boleh kosong\",\n    \"errors\": {\n        \"name\": [\n            \"Nama tidak boleh kosong\"\n        ]\n    }\n}"
+								},
+								{
+									"name": "200 (updated permissions)",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test role updated",
+													"type": "text"
+												},
+												{
+													"key": "permission_id",
+													"value": "01K7KJ8RYDJWD3HFJTRT5C0XPP",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "permission_id",
+													"value": "01K7KJ8RYDJWD3HFJTRVSDPYVZ",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles/01K7VJDYZBE23MG5TE3R7QMTPF",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"01K7VJDYZBE23MG5TE3R7QMTPF"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Oct 2025 12:59:17 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "637"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Role berhasil diperbarui\",\n    \"data\": {\n        \"role\": {\n            \"id\": \"01K7VJDYZBE23MG5TE3R7QMTPF\",\n            \"name\": \"test role updated\",\n            \"created_at\": \"2025-10-18T18:49:11.286042+07:00\",\n            \"updated_at\": \"2025-10-18T19:59:17.01598+07:00\",\n            \"users\": null,\n            \"permissions\": [\n                {\n                    \"id\": \"01K7KJ8RYDJWD3HFJTRT5C0XPP\",\n                    \"name\": \"role.read\",\n                    \"created_at\": \"2025-10-15T16:12:25.805726+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                },\n                {\n                    \"id\": \"01K7KJ8RYDJWD3HFJTRVSDPYVZ\",\n                    \"name\": \"role.create\",\n                    \"created_at\": \"2025-10-15T16:12:25.805727+07:00\",\n                    \"updated_at\": \"2025-10-15T16:12:25.807035+07:00\",\n                    \"deleted_at\": null,\n                    \"roles\": null\n                }\n            ]\n        }\n    }\n}"
+								},
+								{
+									"name": "200 (removed permissions)",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test role updated",
+													"type": "text"
+												},
+												{
+													"key": "permission_id",
+													"value": "01K7KJ8RYDJWD3HFJTRT5C0XPP",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "permission_id",
+													"value": "01K7KJ8RYDJWD3HFJTRVSDPYVZ",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles/01K7VJDYZBE23MG5TE3R7QMTPF",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"01K7VJDYZBE23MG5TE3R7QMTPF"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Oct 2025 13:00:55 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "273"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Role berhasil diperbarui\",\n    \"data\": {\n        \"role\": {\n            \"id\": \"01K7VJDYZBE23MG5TE3R7QMTPF\",\n            \"name\": \"test role updated\",\n            \"created_at\": \"2025-10-18T18:49:11.286042+07:00\",\n            \"updated_at\": \"2025-10-18T20:00:55.214358+07:00\",\n            \"users\": null,\n            \"permissions\": []\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Destroy",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "test role",
+											"type": "text"
+										},
+										{
+											"key": "permission_id",
+											"value": "01K7KJ8RYDJWD3HFJTRCFB6SEB",
+											"type": "text"
+										},
+										{
+											"key": "permission_id",
+											"value": "01K7KJ8RYDJWD3HFJTRGCA1ZKN",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/roles/01K7VHDY844Q851DAPP578BG51",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										"01K7VHDY844Q851DAPP578BG51"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test role",
+													"type": "text"
+												},
+												{
+													"key": "permission_id",
+													"value": "01K7KJ8RYDJWD3HFJTRCFB6SEB",
+													"type": "text"
+												},
+												{
+													"key": "permission_id",
+													"value": "01K7KJ8RYDJWD3HFJTRGCA1ZKN",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles/01K7HR8WZZBSS957Q9NSQ85MYA",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"01K7HR8WZZBSS957Q9NSQ85MYA"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Oct 2025 11:40:35 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "56"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"Role not found\"\n}"
+								},
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test role",
+													"type": "text"
+												},
+												{
+													"key": "permission_id",
+													"value": "01K7KJ8RYDJWD3HFJTRCFB6SEB",
+													"type": "text"
+												},
+												{
+													"key": "permission_id",
+													"value": "01K7KJ8RYDJWD3HFJTRGCA1ZKN",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles/01K7VHDY844Q851DAPP578BG51",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"01K7VHDY844Q851DAPP578BG51"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Oct 2025 11:40:57 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "65"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Role berhasil dihapus\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
 					"name": "Health",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
