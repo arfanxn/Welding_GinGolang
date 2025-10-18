@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/request"
-	"github.com/arfanxn/welding/pkg/errors"
+	"github.com/arfanxn/welding/pkg/errorutil"
 	"github.com/gin-gonic/gin"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 )
@@ -25,7 +25,7 @@ import (
 func MustBindValidate(c *gin.Context, req request.Request) {
 	// Step 1: Bind request data to the struct
 	if err := c.ShouldBind(req); err != nil {
-		err = errors.NewHttpError(http.StatusBadRequest, "Permintaan tidak valid. Silakan periksa kembali data yang dikirim.", nil)
+		err = errorutil.NewHttpError(http.StatusBadRequest, "Permintaan tidak valid. Silakan periksa kembali data yang dikirim.", nil)
 		panic(err)
 	}
 
@@ -48,7 +48,7 @@ func MustBindValidate(c *gin.Context, req request.Request) {
 			}
 
 			// Create and panic with a structured validation error
-			err = errors.NewHttpError(http.StatusUnprocessableEntity, message, errsMap)
+			err = errorutil.NewHttpError(http.StatusUnprocessableEntity, message, errsMap)
 			panic(err)
 		}
 
