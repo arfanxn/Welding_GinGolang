@@ -1,6 +1,6 @@
 package dto
 
-import "github.com/arfanxn/welding/internal/module/user/domain/entity"
+import "github.com/arfanxn/welding/internal/module/shared/domain/entity"
 
 type Login struct {
 	Email    string `json:"email"`

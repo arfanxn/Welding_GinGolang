@@ -4,11 +4,11 @@ import (
 	"net/http"
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/helper"
-	userEntity "github.com/arfanxn/welding/internal/module/user/domain/entity"
+	"github.com/arfanxn/welding/internal/infrastructure/http/response"
+	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/internal/module/user/presentation/http/request"
 	"github.com/arfanxn/welding/internal/module/user/usecase"
 	"github.com/arfanxn/welding/internal/module/user/usecase/dto"
-	"github.com/arfanxn/welding/pkg/response"
 	"github.com/gin-gonic/gin"
 )
 
@@ -40,31 +40,18 @@ func (h *userHandler) Login(c *gin.Context) {
 		panic(err)
 	}
 
-	c.JSON(http.StatusOK, response.Body{
-		Code:    http.StatusOK,
-		Status:  response.StatusSuccess,
-		Message: "Login berhasil",
-		Data:    gin.H{"user": loginResult.User, "token": loginResult.Token},
-	})
+	c.JSON(http.StatusOK, response.NewBodyWithData(
+		http.StatusOK,
+		"Login berhasil",
+		gin.H{"user": loginResult.User, "token": loginResult.Token},
+	))
 }
 
 func (h *userHandler) Logout(c *gin.Context) {
-	c.JSON(http.StatusOK, response.Body{
-		Code:    http.StatusOK,
-		Status:  response.StatusSuccess,
-		Message: "Logout berhasil",
-	})
+	c.JSON(http.StatusOK, response.NewBody(http.StatusOK, "Logout berhasil"))
 }
 
 func (h *userHandler) Me(c *gin.Context) {
-	user := c.MustGet("user").(*userEntity.User)
-	user.Password = ""
-
-	body := response.Body{
-		Code:    http.StatusOK,
-		Status:  response.StatusSuccess,
-		Message: "User berhasil diambil",
-		Data:    gin.H{"user": user},
-	}
-	c.JSON(body.Code, body)
+	user := c.MustGet("user").(*entity.User)
+	c.JSON(http.StatusOK, response.NewBodyWithData(http.StatusOK, "User berhasil diambil", gin.H{"user": user}))
 }

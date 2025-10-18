@@ -5,10 +5,10 @@ import (
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/jwt"
 	"github.com/arfanxn/welding/internal/infrastructure/logger"
-	"github.com/arfanxn/welding/internal/module/user/domain/entity"
+	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/internal/module/user/domain/repository"
 	"github.com/arfanxn/welding/internal/module/user/usecase/dto"
-	"github.com/arfanxn/welding/pkg/errors"
+	"github.com/arfanxn/welding/pkg/errorutil"
 	"go.uber.org/fx"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -43,12 +43,12 @@ func NewUserUsecase(params NewUserUsecaseParams) UserUsecase {
 }
 
 func (u *userUsecase) Register(user *entity.User) error {
-	err := u.userRepository.Store(user)
+	err := u.userRepository.Save(user)
 	return err
 }
 
 func (u *userUsecase) Login(loginDto *dto.Login) (*dto.LoginResult, error) {
-	unauthorizedError := errors.NewHttpError(http.StatusUnauthorized, "Email atau password salah", nil)
+	unauthorizedError := errorutil.NewHttpError(http.StatusUnauthorized, "Email atau password salah", nil)
 	user, err := u.userRepository.FindByEmail(loginDto.Email)
 	if err != nil {
 		return nil, unauthorizedError
