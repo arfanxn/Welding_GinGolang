@@ -24,6 +24,27 @@ A Go-based REST API with JWT authentication, built using clean architecture prin
 └── Makefile                # Available commands
 ```
 
+## Branching Strategy
+
+### Core Branches
+- `master` - Production code (protected, requires PR)
+- `canary` - Development & integration branch
+  - Always contains the latest stable changes
+  - Recommended for API consumers and frontend development
+  - Feature branches should be based on this branch
+
+### Development Workflow
+1. Start a new feature:
+   ```bash
+   git checkout canary
+   git pull origin canary
+   git checkout -b feature/name
+   ```
+2. Make and commit your changes
+3. Push and create a pull request to `canary`
+4. After review, merge into `canary`
+5. For production releases, create a PR from `canary` to `master`
+
 ## Quick Start
 
 ### Prerequisites
