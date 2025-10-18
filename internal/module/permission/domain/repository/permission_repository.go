@@ -11,6 +11,7 @@ type PermissionRepository interface {
 	Paginate(queryDto *dto.Query) (*dto.Pagination[*entity.Permission], error)
 	Find(id string) (*entity.Permission, error)
 	FindByName(name string) (*entity.Permission, error)
+	FindByIds(ids []string) ([]*entity.Permission, error)
 	Save(permission *entity.Permission) error
 	SaveMany(permissions []*entity.Permission) error
 }

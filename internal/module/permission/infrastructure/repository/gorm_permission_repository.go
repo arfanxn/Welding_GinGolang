@@ -85,6 +85,14 @@ func (r *GormPermissionRepository) FindByName(name string) (*entity.Permission, 
 	return &permission, nil
 }
 
+func (r *GormPermissionRepository) FindByIds(ids []string) ([]*entity.Permission, error) {
+	var permissions []*entity.Permission
+	if err := r.db.Where("id IN (?)", ids).Find(&permissions).Error; err != nil {
+		return nil, err
+	}
+	return permissions, nil
+}
+
 func (r *GormPermissionRepository) Save(permission *entity.Permission) error {
 	return r.db.Save(permission).Error
 }
