@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/arfanxn/welding/internal/module/shared/usecase/dto"
+	"github.com/arfanxn/welding/pkg/boolutil"
 	"github.com/gin-gonic/gin"
 	"github.com/guregu/null/v6"
 )
@@ -28,38 +29,44 @@ type Pagination[T any] struct {
 func NewPaginationFromContextPaginationDTO[T any](
 	c *gin.Context, paginationDto *dto.Pagination[T],
 ) *Pagination[T] {
-	var (
-		url          *url.URL = c.Request.URL
-		firstPageUrl string
-		prevPageUrl  null.String
-		nextPageUrl  null.String
-		lastPageUrl  string
-	)
+	// Get the current request URL
+	scheme := boolutil.Ternary(
+		c.Request.TLS != nil || c.GetHeader("X-Forwarded-Proto") == "https",
+		"https",
+		"http")
+	host := c.Request.Host
+	path := c.Request.URL.Path
 
-	q := url.Query()
-	q.Set("page", "1")
-	url.RawQuery = q.Encode()
-	firstPageUrl = url.String()
+	// Helper function to build full URL with pagination
+	buildPageUrl := func(page int) string {
+		u := url.URL{
+			Scheme:   scheme,
+			Host:     host,
+			Path:     path,
+			RawQuery: "",
+		}
+		q := u.Query()
+		q.Set("page", strconv.Itoa(page))
+		u.RawQuery = q.Encode()
+		return u.String()
+	}
+
+	// Build pagination URLs
+	firstPageUrl := buildPageUrl(1)
+	var prevPageUrl null.String
+	var nextPageUrl null.String
+	var lastPageUrl string
 
 	if paginationDto.PrevPage.Valid {
-		q := url.Query()
-		q.Set("page", strconv.FormatInt(paginationDto.PrevPage.Int64, 10))
-		url.RawQuery = q.Encode()
-		prevPageUrl = null.StringFrom(url.String())
+		prevPageUrl = null.StringFrom(buildPageUrl(int(paginationDto.PrevPage.Int64)))
 	}
 
 	if paginationDto.NextPage.Valid {
-		q := url.Query()
-		q.Set("page", strconv.FormatInt(paginationDto.NextPage.Int64, 10))
-		url.RawQuery = q.Encode()
-		nextPageUrl = null.StringFrom(url.String())
+		nextPageUrl = null.StringFrom(buildPageUrl(int(paginationDto.NextPage.Int64)))
 	}
 
 	if paginationDto.LastPage > 0 {
-		q := url.Query()
-		q.Set("page", strconv.Itoa(paginationDto.LastPage))
-		url.RawQuery = q.Encode()
-		lastPageUrl = url.String()
+		lastPageUrl = buildPageUrl(paginationDto.LastPage)
 	}
 
 	return &Pagination[T]{
