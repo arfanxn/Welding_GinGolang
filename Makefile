@@ -60,7 +60,7 @@ clean:
 	docker system prune -f
 
 # ========== Development commands ==========
-env:
+envs:
 	@if [ ! -f $(ENV_FILE) ]; then cp .env.example $(ENV_FILE) && echo "created $(ENV_FILE) file from .env.example"; fi
 	@if [ ! -f .env.docker ]; then cp .env.example .env.docker && echo "created .env.docker file from .env.example"; fi
 
