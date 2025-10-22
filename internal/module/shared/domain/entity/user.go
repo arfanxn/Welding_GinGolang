@@ -9,6 +9,7 @@ import (
 type User struct {
 	Id              string    `json:"id" gorm:"primarykey"`
 	Name            string    `json:"name"`
+	PhoneNumber     string    `json:"phone_number"`
 	Email           string    `json:"email"`
 	EmailVerifiedAt null.Time `json:"email_verified_at"`
 	Password        string    `json:"-"`
@@ -16,7 +17,8 @@ type User struct {
 	UpdatedAt       null.Time `json:"updated_at"`
 	DeletedAt       null.Time `json:"deleted_at"`
 
-	Roles []*Role `json:"roles" gorm:"many2many:role_user"`
+	Roles    []*Role   `json:"roles" gorm:"many2many:role_user"`
+	Employee *Employee `json:"employee" gorm:"foreignKey:UserId;references:Id"`
 }
 
 func NewUser() *User {

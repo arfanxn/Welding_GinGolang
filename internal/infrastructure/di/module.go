@@ -7,6 +7,7 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/http/jwt"
 	"github.com/arfanxn/welding/internal/infrastructure/logger"
 	"github.com/arfanxn/welding/internal/infrastructure/middleware"
+	employeeDi "github.com/arfanxn/welding/internal/module/employee/infrastructure/di"
 	permissionDi "github.com/arfanxn/welding/internal/module/permission/infrastructure/di"
 	permissionRoleDi "github.com/arfanxn/welding/internal/module/permission_role/infrastructure/di"
 	roleDi "github.com/arfanxn/welding/internal/module/role/infrastructure/di"
@@ -39,6 +40,7 @@ var Module = fx.Module("infrastructure",
 	roleUserDi.Module,
 	permissionDi.Module,
 	permissionRoleDi.Module,
+	employeeDi.Module,
 
 	// Logger
 	fx.WithLogger(func(logger *logger.Logger) fxevent.Logger {

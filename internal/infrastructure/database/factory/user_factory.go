@@ -18,6 +18,9 @@ var UserFactory = factory.NewFactory(&entity.User{}).
 	Attr("Name", func(args factory.Args) (any, error) {
 		return gofakeit.Name(), nil
 	}).
+	Attr("PhoneNumber", func(args factory.Args) (any, error) {
+		return gofakeit.Phone(), nil
+	}).
 	Attr("Email", func(args factory.Args) (any, error) {
 		return gofakeit.Email(), nil
 	}).

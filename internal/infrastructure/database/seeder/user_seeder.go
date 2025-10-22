@@ -2,6 +2,7 @@ package seeder
 
 import (
 	"github.com/arfanxn/welding/internal/infrastructure/database/factory"
+	employeeRepository "github.com/arfanxn/welding/internal/module/employee/domain/repository"
 	roleRepository "github.com/arfanxn/welding/internal/module/role/domain/repository"
 	roleUserRepository "github.com/arfanxn/welding/internal/module/role_user/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
@@ -13,6 +14,7 @@ var _ Seeder = (*UserSeeder)(nil)
 
 type UserSeeder struct {
 	userRepository     repository.UserRepository
+	employeeRepository employeeRepository.EmployeeRepository
 	roleRepository     roleRepository.RoleRepository
 	roleUserRepository roleUserRepository.RoleUserRepository
 }
@@ -21,6 +23,7 @@ type NewUserSeederParams struct {
 	fx.In
 
 	UserRepository     repository.UserRepository
+	EmployeeRepository employeeRepository.EmployeeRepository
 	RoleRepository     roleRepository.RoleRepository
 	RoleUserRepository roleUserRepository.RoleUserRepository
 }
@@ -28,6 +31,7 @@ type NewUserSeederParams struct {
 func NewUserSeeder(params NewUserSeederParams) Seeder {
 	return &UserSeeder{
 		userRepository:     params.UserRepository,
+		employeeRepository: params.EmployeeRepository,
 		roleRepository:     params.RoleRepository,
 		roleUserRepository: params.RoleUserRepository,
 	}
@@ -65,6 +69,22 @@ func (s *UserSeeder) Seed() error {
 	err := s.userRepository.SaveMany(users)
 	if err != nil {
 		return err
+	}
+
+	{
+		// ========== Employee ==========
+		employees := []*entity.Employee{}
+		for _, user := range users {
+			employee := factory.EmployeeFactory.MustCreateWithOption(map[string]any{
+				"UserId": user.Id,
+			}).(*entity.Employee)
+			employees = append(employees, employee)
+		}
+
+		err = s.employeeRepository.SaveMany(employees)
+		if err != nil {
+			return err
+		}
 	}
 
 	{
