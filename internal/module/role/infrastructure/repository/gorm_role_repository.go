@@ -73,12 +73,12 @@ func (r *GormRoleRepository) Get(q *query.Query) ([]*entity.Role, error) {
 	return roles, nil
 }
 
-func (r *GormRoleRepository) Paginate(query *query.Query) (*pagination.OffsetPagination[*entity.Role], error) {
+func (r *GormRoleRepository) Paginate(q *query.Query) (*pagination.OffsetPagination[*entity.Role], error) {
 	db := r.db.Model(&entity.Role{})
 
-	db = r.query(db, query)
+	db = r.query(db, q)
 
-	pagination, err := helper.GormDBPaginateWithQuery[*entity.Role](db, query)
+	pagination, err := helper.GormDBPaginateWithQuery[*entity.Role](db, q)
 	if err != nil {
 		return nil, err
 	}
