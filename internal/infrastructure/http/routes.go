@@ -56,6 +56,11 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 		user := protected.Group("/users")
 		user.GET("/me", params.UserHandler.Me)
 		user.DELETE("/logout", params.UserHandler.Logout)
+		user.GET("", params.UserHandler.Paginate)
+		user.GET("/:id", params.UserHandler.Find)
+		user.POST("", params.UserHandler.Store)
+		user.PUT("/:id", params.UserHandler.Update)
+		user.DELETE("/:id", params.UserHandler.Destroy)
 
 		role := protected.Group("/roles")
 		role.GET("", params.RoleHandler.Paginate)

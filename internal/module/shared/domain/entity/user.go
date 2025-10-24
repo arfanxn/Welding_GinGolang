@@ -22,7 +22,7 @@ type User struct {
 	Employee *Employee `json:"employee,omitempty" gorm:"foreignKey:UserId;references:Id"`
 
 	// Joins
-	EmploymentIdentityNumber string `json:"employment_identity_number,omitempty"`
+	EmploymentIdentityNumber string `json:"employment_identity_number,omitempty" gorm:"-"`
 }
 
 func NewUser() *User {
