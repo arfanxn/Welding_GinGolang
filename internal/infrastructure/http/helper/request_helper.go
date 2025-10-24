@@ -2,8 +2,10 @@ package helper
 
 import (
 	"net/http"
+	"net/url"
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/request"
+	"github.com/arfanxn/welding/pkg/boolutil"
 	"github.com/arfanxn/welding/pkg/errorutil"
 	"github.com/gin-gonic/gin"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
@@ -55,4 +57,29 @@ func MustBindValidate(c *gin.Context, req request.Request) {
 		// If it's not a validation error, panic with the original error
 		panic(err)
 	}
+}
+
+// URLFromC returns the URL of the current request
+//
+// Parameters:
+//   - c: Gin context containing the incoming HTTP request
+//
+// Returns:
+//   - url.URL: The URL of the current request
+func URLFromC(c *gin.Context) url.URL {
+	scheme := boolutil.Ternary(
+		c.Request.TLS != nil || c.GetHeader("X-Forwarded-Proto") == "https",
+		"https",
+		"http")
+	host := c.Request.Host
+	path := c.Request.URL.Path
+	rq := c.Request.URL.RawQuery
+
+	u := url.URL{
+		Scheme:   scheme,
+		Host:     host,
+		Path:     path,
+		RawQuery: rq,
+	}
+	return u
 }
