@@ -18,3 +18,7 @@ type Employee struct {
 func NewEmployee() *Employee {
 	return &Employee{}
 }
+
+func (e Employee) TableName() string {
+	return "employees"
+}

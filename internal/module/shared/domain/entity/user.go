@@ -17,10 +17,18 @@ type User struct {
 	UpdatedAt       null.Time `json:"updated_at"`
 	DeletedAt       null.Time `json:"deleted_at"`
 
-	Roles    []*Role   `json:"roles" gorm:"many2many:role_user"`
-	Employee *Employee `json:"employee" gorm:"foreignKey:UserId;references:Id"`
+	// Relations
+	Roles    []*Role   `json:"roles,omitempty" gorm:"many2many:role_user"`
+	Employee *Employee `json:"employee,omitempty" gorm:"foreignKey:UserId;references:Id"`
+
+	// Joins
+	EmploymentIdentityNumber string `json:"employment_identity_number,omitempty"`
 }
 
 func NewUser() *User {
 	return &User{}
+}
+
+func (u User) TableName() string {
+	return "users"
 }

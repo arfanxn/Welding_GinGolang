@@ -12,8 +12,8 @@ type Role struct {
 	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt null.Time `json:"updated_at" gorm:"autoUpdateTime"`
 
-	Users       []*User       `json:"users" gorm:"many2many:role_user"`
-	Permissions []*Permission `json:"permissions" gorm:"many2many:permission_role"`
+	Users       []*User       `json:"users,omitempty" gorm:"many2many:role_user"`
+	Permissions []*Permission `json:"permissions,omitempty" gorm:"many2many:permission_role"`
 }
 
 func NewRole() *Role {

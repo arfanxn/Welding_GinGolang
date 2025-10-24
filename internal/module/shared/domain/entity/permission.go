@@ -13,7 +13,7 @@ type Permission struct {
 	UpdatedAt null.Time `json:"updated_at"`
 	DeletedAt null.Time `json:"deleted_at"`
 
-	Roles []*Role `json:"roles" gorm:"many2many:permission_role"`
+	Roles []*Role `json:"roles,omitempty" gorm:"many2many:permission_role"`
 }
 
 func NewPermission() *Permission {
