@@ -8,8 +8,9 @@ import (
 	"github.com/arfanxn/welding/internal/module/role/domain/repository"
 	roleDto "github.com/arfanxn/welding/internal/module/role/usecase/dto"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
-	"github.com/arfanxn/welding/internal/module/shared/usecase/dto"
 	"github.com/arfanxn/welding/pkg/errorutil"
+	"github.com/arfanxn/welding/pkg/pagination"
+	"github.com/arfanxn/welding/pkg/query"
 	"github.com/arfanxn/welding/pkg/reflectutil"
 	"github.com/gookit/goutil"
 	"github.com/oklog/ulid/v2"
@@ -18,8 +19,8 @@ import (
 )
 
 type RoleUsecase interface {
-	Paginate(*dto.Query) (*dto.Pagination[*entity.Role], error)
-	Find(*dto.Query) (*entity.Role, error)
+	Paginate(*query.Query) (*pagination.OffsetPagination[*entity.Role], error)
+	Find(*query.Query) (*entity.Role, error)
 	Save(*roleDto.SaveRole) (*entity.Role, error)
 	Destroy(*roleDto.DestroyRole) error
 }
@@ -45,8 +46,8 @@ func NewRoleUsecase(params NewRoleUsecaseParams) RoleUsecase {
 	}
 }
 
-func (u *roleUsecase) Find(queryDto *dto.Query) (*entity.Role, error) {
-	roles, err := u.roleRepository.Get(queryDto)
+func (u *roleUsecase) Find(q *query.Query) (*entity.Role, error) {
+	roles, err := u.roleRepository.Get(q)
 	if err != nil {
 		return nil, err
 	}
@@ -56,8 +57,8 @@ func (u *roleUsecase) Find(queryDto *dto.Query) (*entity.Role, error) {
 	return roles[0], nil
 }
 
-func (u *roleUsecase) Paginate(query *dto.Query) (*dto.Pagination[*entity.Role], error) {
-	return u.roleRepository.Paginate(query)
+func (u *roleUsecase) Paginate(q *query.Query) (*pagination.OffsetPagination[*entity.Role], error) {
+	return u.roleRepository.Paginate(q)
 }
 
 // Save creates a new role or updates an existing one based on the provided DTO.

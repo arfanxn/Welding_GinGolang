@@ -4,11 +4,12 @@ import (
 	"net/http"
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/helper"
-	"github.com/arfanxn/welding/internal/infrastructure/http/request"
 	"github.com/arfanxn/welding/internal/infrastructure/http/response"
 	roleRequest "github.com/arfanxn/welding/internal/module/role/presentation/http/request"
 	"github.com/arfanxn/welding/internal/module/role/usecase"
 	roleDto "github.com/arfanxn/welding/internal/module/role/usecase/dto"
+	"github.com/arfanxn/welding/pkg/pagination"
+	"github.com/arfanxn/welding/pkg/query"
 	"github.com/gin-gonic/gin"
 )
 
@@ -31,10 +32,10 @@ func NewRoleHandler(roleUsecase usecase.RoleUsecase) RoleHandler {
 }
 
 func (h *roleHandler) Paginate(c *gin.Context) {
-	req := request.NewQuery()
-	helper.MustBindValidate(c, req)
+	q := query.NewQuery()
+	c.ShouldBind(q)
 
-	paginationDto, err := h.roleUsecase.Paginate(req.MustToQueryDTO())
+	paginationDto, err := h.roleUsecase.Paginate(q)
 	if err != nil {
 		panic(err)
 	}
@@ -42,7 +43,7 @@ func (h *roleHandler) Paginate(c *gin.Context) {
 	c.JSON(http.StatusOK, response.NewBodyWithData(
 		http.StatusOK,
 		"Roles berhasil diambil",
-		response.NewPaginationFromContextPaginationDTO(c, paginationDto),
+		pagination.PPFromOP(paginationDto, helper.URLFromC(c)),
 	))
 }
 
@@ -66,11 +67,11 @@ func (h *roleHandler) Store(c *gin.Context) {
 }
 
 func (h *roleHandler) Find(c *gin.Context) {
-	req := request.NewQuery()
-	req.AppendFilter("id == " + c.Param("id"))
-	helper.MustBindValidate(c, req)
+	q := query.NewQuery()
+	q.FilterById(c.Param("id"))
+	c.ShouldBind(q)
 
-	role, err := h.roleUsecase.Find(req.MustToQueryDTO())
+	role, err := h.roleUsecase.Find(q)
 	if err != nil {
 		panic(err)
 	}

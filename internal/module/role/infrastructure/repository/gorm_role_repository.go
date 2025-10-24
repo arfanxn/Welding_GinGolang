@@ -4,7 +4,8 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/database/helper"
 	"github.com/arfanxn/welding/internal/module/role/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
-	"github.com/arfanxn/welding/internal/module/shared/usecase/dto"
+	"github.com/arfanxn/welding/pkg/pagination"
+	"github.com/arfanxn/welding/pkg/query"
 	"github.com/arfanxn/welding/pkg/reflectutil"
 	"gorm.io/gorm"
 )
@@ -32,38 +33,38 @@ func (r *GormRoleRepository) All() ([]*entity.Role, error) {
 // query applies query filters and sorting to the database query based on the provided Query DTO.
 // It supports searching by name (case-insensitive) and sorting by name in ascending or descending order.
 // The modified *gorm.DB is returned with the applied scopes.
-func (r *GormRoleRepository) query(db *gorm.DB, queryDto *dto.Query) *gorm.DB {
-	if id, hasId := queryDto.GetFilterByCO("id", dto.QueryFilterOperatorEqual); hasId {
+func (r *GormRoleRepository) query(db *gorm.DB, q *query.Query) *gorm.DB {
+	if id := q.GetFilterById(); id != nil {
 		db = db.Where("id = ?", id.Value)
 	}
 
-	if search, hasSearch := queryDto.GetSearch(); hasSearch {
-		db = db.Where("name LIKE ?", "%"+search+"%")
+	if search := q.GetSearch(); !search.IsZero() {
+		db = db.Where("name LIKE ?", "%"+search.String+"%")
 	}
 
-	if _, shouldInclude := queryDto.GetInclude("permissions"); shouldInclude {
+	if !q.GetInclude("permissions").IsZero() {
 		db = db.Preload("Permissions")
 	}
 
-	if _, shouldInclude := queryDto.GetInclude("users"); shouldInclude {
+	if !q.GetInclude("users").IsZero() {
 		db = db.Preload("Users")
 	}
 
-	if sort, shouldSort := queryDto.GetSortByColumn("name"); shouldSort {
+	if sort := q.GetSort("name"); sort != nil {
 		db = db.Order("name " + sort.Order)
 	}
 
-	if sort, shouldSort := queryDto.GetSortByColumn("created_at"); shouldSort {
+	if sort := q.GetSort("created_at"); sort != nil {
 		db = db.Order("created_at " + sort.Order)
 	}
 
 	return db
 }
 
-func (r *GormRoleRepository) Get(queryDto *dto.Query) ([]*entity.Role, error) {
+func (r *GormRoleRepository) Get(q *query.Query) ([]*entity.Role, error) {
 	var roles []*entity.Role
 
-	db := r.query(r.db, queryDto)
+	db := r.query(r.db, q)
 
 	if err := db.Find(&roles).Error; err != nil {
 		return nil, err
@@ -72,12 +73,12 @@ func (r *GormRoleRepository) Get(queryDto *dto.Query) ([]*entity.Role, error) {
 	return roles, nil
 }
 
-func (r *GormRoleRepository) Paginate(query *dto.Query) (*dto.Pagination[*entity.Role], error) {
+func (r *GormRoleRepository) Paginate(query *query.Query) (*pagination.OffsetPagination[*entity.Role], error) {
 	db := r.db.Model(&entity.Role{})
 
 	db = r.query(db, query)
 
-	pagination, err := helper.GormDBPaginateWithQueryDTO[*entity.Role](db, query)
+	pagination, err := helper.GormDBPaginateWithQuery[*entity.Role](db, query)
 	if err != nil {
 		return nil, err
 	}
