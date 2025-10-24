@@ -59,8 +59,8 @@ func (h *roleHandler) Store(c *gin.Context) {
 		panic(err)
 	}
 
-	c.JSON(http.StatusOK, response.NewBodyWithData(
-		http.StatusOK,
+	c.JSON(http.StatusCreated, response.NewBodyWithData(
+		http.StatusCreated,
 		"Role berhasil disimpan",
 		gin.H{"role": role},
 	))

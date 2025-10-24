@@ -65,7 +65,7 @@ func (u *roleUsecase) Paginate(q *query.Query) (*pagination.OffsetPagination[*en
 // It validates the role data, checks for duplicate role names, and ensures all referenced permissions exist.
 //
 // Parameters:
-//   - srDto: The DTO containing role data to be saved
+//   - _dto: The DTO containing role data to be saved
 //
 // Returns:
 //   - *entity.Role: The saved role with updated fields
@@ -73,37 +73,37 @@ func (u *roleUsecase) Paginate(q *query.Query) (*pagination.OffsetPagination[*en
 //   - 404 if trying to update a non-existent role
 //   - 400 if any referenced permissions don't exist
 //   - 409 if a role with the same name already exists
-func (u *roleUsecase) Save(srDto *roleDto.SaveRole) (*entity.Role, error) {
+func (u *roleUsecase) Save(_dto *roleDto.SaveRole) (*entity.Role, error) {
 	var role *entity.Role
 	var err error
 
 	// Handle role creation or retrieval
-	if goutil.IsEmpty(srDto.Id) {
+	if goutil.IsEmpty(_dto.Id) {
 		// Create new role
 		role = entity.NewRole()
 		role.Id = ulid.Make().String()
 	} else {
 		// Find existing role
-		role, err = u.roleRepository.Find(srDto.Id)
+		role, err = u.roleRepository.Find(_dto.Id)
 		if err != nil {
+			if errors.Is(err, gorm.ErrRecordNotFound) {
+				return nil, errorutil.NewHttpError(http.StatusNotFound, "Role not found", nil)
+			}
 			return nil, err
-		}
-		if goutil.IsNil(role) {
-			return nil, errorutil.NewHttpError(http.StatusNotFound, "Role not found", nil)
 		}
 	}
 
-	role.Name = srDto.Name
+	role.Name = _dto.Name
 
 	// Handle permissions
-	if reflectutil.IsSlice(srDto.PermissionIds) {
-		permissions, err := u.permissionRepository.FindByIds(srDto.PermissionIds)
+	if reflectutil.IsSlice(_dto.PermissionIds) {
+		permissions, err := u.permissionRepository.FindByIds(_dto.PermissionIds)
 		if err != nil {
 			return nil, err
 		}
 
 		// Verify all requested permissions were found
-		if len(permissions) != len(srDto.PermissionIds) {
+		if len(permissions) != len(_dto.PermissionIds) {
 			return nil, errorutil.NewHttpError(
 				http.StatusBadRequest,
 				"One or more permissions not found",

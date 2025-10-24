@@ -93,6 +93,14 @@ func (r *GormRoleRepository) Find(id string) (*entity.Role, error) {
 	return &role, nil
 }
 
+func (r *GormRoleRepository) FindByIds(ids []string) ([]*entity.Role, error) {
+	var roles []*entity.Role
+	if err := r.db.Where("id IN (?)", ids).Find(&roles).Error; err != nil {
+		return nil, err
+	}
+	return roles, nil
+}
+
 func (r *GormRoleRepository) FindByName(name string) (*entity.Role, error) {
 	var role entity.Role
 	if err := r.db.Where("name = ?", name).First(&role).Error; err != nil {
