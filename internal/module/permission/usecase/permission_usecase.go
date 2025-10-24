@@ -3,11 +3,12 @@ package usecase
 import (
 	"github.com/arfanxn/welding/internal/module/permission/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
-	"github.com/arfanxn/welding/internal/module/shared/usecase/dto"
+	"github.com/arfanxn/welding/pkg/pagination"
+	"github.com/arfanxn/welding/pkg/query"
 )
 
 type PermissionUsecase interface {
-	Paginate(queryDto *dto.Query) (*dto.Pagination[*entity.Permission], error)
+	Paginate(q *query.Query) (*pagination.OffsetPagination[*entity.Permission], error)
 }
 
 type permissionUsecase struct {
@@ -20,6 +21,6 @@ func NewPermissionUsecase(permissionRepository repository.PermissionRepository) 
 	}
 }
 
-func (u *permissionUsecase) Paginate(queryDto *dto.Query) (*dto.Pagination[*entity.Permission], error) {
-	return u.permissionRepository.Paginate(queryDto)
+func (u *permissionUsecase) Paginate(q *query.Query) (*pagination.OffsetPagination[*entity.Permission], error) {
+	return u.permissionRepository.Paginate(q)
 }

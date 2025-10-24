@@ -4,9 +4,10 @@ import (
 	"net/http"
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/helper"
-	"github.com/arfanxn/welding/internal/infrastructure/http/request"
 	"github.com/arfanxn/welding/internal/infrastructure/http/response"
 	"github.com/arfanxn/welding/internal/module/permission/usecase"
+	"github.com/arfanxn/welding/pkg/pagination"
+	"github.com/arfanxn/welding/pkg/query"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,10 +26,10 @@ func NewPermissionHandler(permissionUsecase usecase.PermissionUsecase) Permissio
 }
 
 func (h *permissionHandler) Paginate(c *gin.Context) {
-	req := request.NewQuery()
-	helper.MustBindValidate(c, req)
+	q := query.NewQuery()
+	c.ShouldBind(q)
 
-	paginationDto, err := h.permissionUsecase.Paginate(req.MustToQueryDTO())
+	op, err := h.permissionUsecase.Paginate(q)
 	if err != nil {
 		panic(err)
 	}
@@ -36,6 +37,6 @@ func (h *permissionHandler) Paginate(c *gin.Context) {
 	c.JSON(http.StatusOK, response.NewBodyWithData(
 		http.StatusOK,
 		"Permissions berhasil diambil",
-		response.NewPaginationFromContextPaginationDTO(c, paginationDto),
+		pagination.PPFromOP(op, helper.URLFromC(c)),
 	))
 }

@@ -4,7 +4,8 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/database/helper"
 	"github.com/arfanxn/welding/internal/module/permission/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
-	"github.com/arfanxn/welding/internal/module/shared/usecase/dto"
+	"github.com/arfanxn/welding/pkg/pagination"
+	"github.com/arfanxn/welding/pkg/query"
 	"gorm.io/gorm"
 )
 
@@ -31,13 +32,13 @@ func (r *GormPermissionRepository) All() ([]*entity.Permission, error) {
 // scope applies query filters and sorting to the database query based on the provided Query DTO.
 // It supports searching by name (case-insensitive) and sorting by name in ascending or descending order.
 // The modified *gorm.DB is returned with the applied scopes.
-func (r *GormPermissionRepository) scope(db *gorm.DB, queryDto *dto.Query) *gorm.DB {
-	if search, hasSearch := queryDto.GetSearch(); hasSearch {
-		db = db.Where("name LIKE ?", "%"+search+"%")
+func (r *GormPermissionRepository) scope(db *gorm.DB, q *query.Query) *gorm.DB {
+	if search := q.GetSearch(); !search.IsZero() {
+		db = db.Where("name LIKE ?", "%"+search.String+"%")
 	}
 
-	if sortName, hasSortName := queryDto.GetSortByColumn("name"); hasSortName {
-		db = db.Order("name " + sortName.Order)
+	if sort := q.GetSort("name"); sort != nil {
+		db = db.Order("name " + sort.Order)
 	}
 
 	return db
@@ -46,10 +47,10 @@ func (r *GormPermissionRepository) scope(db *gorm.DB, queryDto *dto.Query) *gorm
 // Get retrieves a list of permissions based on the provided query DTO.
 // It applies the scope function to the database query to filter and sort the results.
 // The modified *gorm.DB is returned with the applied scopes.
-func (r *GormPermissionRepository) Get(queryDto *dto.Query) ([]*entity.Permission, error) {
+func (r *GormPermissionRepository) Get(q *query.Query) ([]*entity.Permission, error) {
 	var permissions []*entity.Permission
 
-	db := r.scope(r.db, queryDto)
+	db := r.scope(r.db, q)
 
 	if err := db.Find(&permissions).Error; err != nil {
 		return nil, err
@@ -58,11 +59,11 @@ func (r *GormPermissionRepository) Get(queryDto *dto.Query) ([]*entity.Permissio
 	return permissions, nil
 }
 
-func (r *GormPermissionRepository) Paginate(queryDto *dto.Query) (*dto.Pagination[*entity.Permission], error) {
+func (r *GormPermissionRepository) Paginate(q *query.Query) (*pagination.OffsetPagination[*entity.Permission], error) {
 	db := r.db.Model(&entity.Permission{})
 
-	db = r.scope(db, queryDto)
-	pagination, err := helper.GormDBPaginateWithQueryDTO[*entity.Permission](db, queryDto)
+	db = r.scope(db, q)
+	pagination, err := helper.GormDBPaginateWithQuery[*entity.Permission](db, q)
 	if err != nil {
 		return nil, err
 	}
