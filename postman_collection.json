@@ -289,7 +289,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/v1/users/me",
+									"raw": "{{BASE_URL}}/api/v1/users/me?include=roles&include=roles.permissions",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -298,6 +298,16 @@
 										"v1",
 										"users",
 										"me"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "roles"
+										},
+										{
+											"key": "include",
+											"value": "roles.permissions"
+										}
 									]
 								}
 							},
@@ -501,7 +511,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -594,7 +603,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -649,7 +657,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -853,7 +860,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -985,7 +991,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -1061,7 +1066,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -1123,7 +1127,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
