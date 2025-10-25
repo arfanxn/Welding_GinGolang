@@ -60,6 +60,7 @@ func (m *AuthenticateMiddleware) MiddlewareFunc() gin.HandlerFunc {
 
 		c.Set("claims", claims)
 		c.Set("user", user)
+		c.Set("user_id", user.Id)
 		c.Next()
 	}
 }

@@ -5,7 +5,6 @@ import (
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/helper"
 	"github.com/arfanxn/welding/internal/infrastructure/http/response"
-	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/internal/module/user/presentation/http/request"
 	"github.com/arfanxn/welding/internal/module/user/usecase"
 	"github.com/arfanxn/welding/internal/module/user/usecase/dto"
@@ -60,7 +59,17 @@ func (h *userHandler) Logout(c *gin.Context) {
 }
 
 func (h *userHandler) Me(c *gin.Context) {
-	user := c.MustGet("user").(*entity.User)
+	userId := c.MustGet("user_id").(string)
+
+	q := query.NewQuery()
+	q.FilterById(userId)
+	c.ShouldBind(q)
+
+	user, err := h.userUsecase.Find(q)
+	if err != nil {
+		panic(err)
+	}
+
 	c.JSON(http.StatusOK, response.NewBodyWithData(http.StatusOK, "User berhasil diambil", gin.H{"user": user}))
 }
 
