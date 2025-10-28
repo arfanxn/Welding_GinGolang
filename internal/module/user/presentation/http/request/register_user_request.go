@@ -5,14 +5,14 @@ import (
 	is "github.com/go-ozzo/ozzo-validation/v4/is"
 )
 
-type RegisterUserRequest struct {
+type RegisterUser struct {
 	Name                 string `json:"name"`
 	Email                string `json:"email"`
 	Password             string `json:"password"`
 	PasswordConfirmation string `json:"password_confirmation"`
 }
 
-func (r *RegisterUserRequest) Validate() error {
+func (r *RegisterUser) Validate() error {
 	return validation.ValidateStruct(r,
 		validation.Field(&r.Name,
 			validation.Required.Error("Nama wajib diisi"),

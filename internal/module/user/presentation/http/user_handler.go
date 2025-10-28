@@ -36,7 +36,7 @@ func NewUserHandler(userUsecase usecase.UserUsecase) UserHandler {
 }
 
 func (h *userHandler) Login(c *gin.Context) {
-	var req request.LoginUserRequest
+	var req request.LoginUser
 	helper.MustBindValidate(c, &req)
 
 	loginResult, err := h.userUsecase.Login(&dto.Login{
