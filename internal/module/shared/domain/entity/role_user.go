@@ -8,7 +8,7 @@ import (
 
 type RoleUser struct {
 	RoleId    string    `json:"role_id" gorm:"primaryKey"`
-	UserId    string    `json:"user_id" gorm:"primaryKey"`
+	UserId    string    `json:"user_id"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt null.Time `json:"updated_at"`
 
