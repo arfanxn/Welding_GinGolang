@@ -14,6 +14,1563 @@
 					"name": "User",
 					"item": [
 						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Test With Invitation Code",
+											"type": "text"
+										},
+										{
+											"key": "phone_number",
+											"value": "6288899990000",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "test_with_invitation_code@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "11112222",
+											"type": "text"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "11112222",
+											"type": "text"
+										},
+										{
+											"key": "invitation_code",
+											"value": "469985",
+											"type": "text"
+										},
+										{
+											"key": "employment_identity_number",
+											"value": "693908944000595811",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/users/register",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"register"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201 (without invitation code)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "Test Without Invitation Code",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288899990000",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_without_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "password_confirmation",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "invitation_code",
+													"value": "112233",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "5555544444",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/register",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"register"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 29 Oct 2025 08:34:48 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "420"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Registrasi berhasil\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K8QHNYKKA90CFNXJ23YM7PW0\",\n            \"name\": \"Test Without Invitation Code\",\n            \"phone_number\": \"6288899990000\",\n            \"email\": \"test_without_invitation_code@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-10-29T08:34:48.661056087Z\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-10-29T08:34:48.663797837Z\",\n            \"updated_at\": \"2025-10-29T08:34:48.664381712Z\"\n        }\n    }\n}"
+								},
+								{
+									"name": "201 (with invitation code, role manager)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "Test With Invitation Code",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288899991111",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "password_confirmation",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "invitation_code",
+													"value": "662546",
+													"type": "text"
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "693908944000595810",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/register",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"register"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 30 Oct 2025 03:18:13 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "786"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Registrasi berhasil\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K8SHYZDMBENGJABC2T5HQPD6\",\n            \"name\": \"Test With Invitation Code\",\n            \"phone_number\": \"6288899991111\",\n            \"email\": \"test_with_invitation_code@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-10-30T10:18:13.277505+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-10-30T10:18:13.283773+07:00\",\n            \"updated_at\": \"2025-10-30T10:18:13.304847+07:00\",\n            \"roles\": [\n                {\n                    \"id\": \"01K7KJ8RYN8QJMYKA1WTZNZVYT\",\n                    \"name\": \"manager\",\n                    \"created_at\": \"2025-10-29T15:33:08.999+07:00\",\n                    \"updated_at\": \"2025-10-29T15:33:08.999247+07:00\"\n                }\n            ],\n            \"employee\": {\n                \"user_id\": \"01K8SHYZDMBENGJABC2T5HQPD6\",\n                \"employment_identity_number\": \"693908944000595810\",\n                \"created_at\": \"2025-10-30T10:18:13.291654+07:00\",\n                \"updated_at\": \"2025-10-30T10:18:13.288734+07:00\",\n                \"user\": null\n            }\n        }\n    }\n}"
+								},
+								{
+									"name": "201 (with invitation code, role supervisor)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "Test With Invitation Code",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288899991111",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "password_confirmation",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "invitation_code",
+													"value": "776301",
+													"type": "text"
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "693908944000595810",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/register",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"register"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 10:35:28 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "799"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Registrasi berhasil\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K8ZFS1X1J53TS4P2084QENV1\",\n            \"name\": \"Test With Invitation Code\",\n            \"phone_number\": \"6288899991111\",\n            \"email\": \"test_with_invitation_code@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-11-01T17:35:28.543322+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-11-01T17:35:28.545766+07:00\",\n            \"updated_at\": \"2025-11-01T17:35:28.563766+07:00\",\n            \"roles\": [\n                {\n                    \"id\": \"01K7KJ8RYN8QJMYKA1WYFRKSYN\",\n                    \"name\": \"supervisor\",\n                    \"is_default\": false,\n                    \"created_at\": \"2025-10-31T19:54:03.170146+07:00\",\n                    \"updated_at\": \"2025-10-31T19:54:03.170863+07:00\"\n                }\n            ],\n            \"employee\": {\n                \"user_id\": \"01K8ZFS1X1J53TS4P2084QENV1\",\n                \"employment_identity_number\": \"693908944000595810\",\n                \"created_at\": \"2025-11-01T17:35:28.553295+07:00\",\n                \"updated_at\": \"2025-11-01T17:35:28.550991+07:00\"\n            }\n        }\n    }\n}"
+								},
+								{
+									"name": "404 (invitation code not found)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "Test Without Invitation Code",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288899990000",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_without_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "password_confirmation",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "invitation_code",
+													"value": "112233",
+													"type": "text"
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "5555544444",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/register",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"register"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 29 Oct 2025 08:39:16 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "71"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"Kode undangan tidak ditemukan\"\n}"
+								},
+								{
+									"name": "400 (invitation code is expired)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "Test With Invitation Code",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288899990000",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "password_confirmation",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "invitation_code",
+													"value": "469985",
+													"type": "text"
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "693908944000595811",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/register",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"register"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 18:58:23 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "72"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Kode undangan sudah kadaluarsa\"\n}"
+								},
+								{
+									"name": "400 (invitation code is used)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "Test With Invitation Code",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288899990000",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "password_confirmation",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "invitation_code",
+													"value": "469985",
+													"type": "text"
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "693908944000595811",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/register",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"register"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 19:01:02 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "71"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Kode undangan sudah digunakan\"\n}"
+								},
+								{
+									"name": "422",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "Jack",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "phone_number",
+													"value": "6288899990000",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "email",
+													"value": "jack@gmail.com",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "password_confirmation",
+													"value": "11112222",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "invitation_code",
+													"value": "112233",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "5555544444",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/register",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"register"
+											]
+										}
+									},
+									"status": "Unprocessable Entity",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 29 Oct 2025 07:57:42 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "281"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 422,\n    \"status\": \"error\",\n    \"message\": \"Nomor telepon wajib diisi\",\n    \"errors\": {\n        \"email\": [\n            \"Email wajib diisi\"\n        ],\n        \"name\": [\n            \"Nama wajib diisi\"\n        ],\n        \"password\": [\n            \"Kata sandi wajib diisi\"\n        ],\n        \"password_confirmation\": [\n            \"Konfirmasi kata sandi wajib diisi\"\n        ],\n        \"phone_number\": [\n            \"Nomor telepon wajib diisi\"\n        ]\n    }\n}"
+								},
+								{
+									"name": "422 (employment_identity_number is required)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "Test Without Invitation Code",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288899990000",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_without_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "password_confirmation",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "invitation_code",
+													"value": "662546",
+													"type": "text"
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "5555544444",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/register",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"register"
+											]
+										}
+									},
+									"status": "Unprocessable Entity",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 29 Oct 2025 08:40:27 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "179"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"code\": 422,\n    \"status\": \"error\",\n    \"message\": \"NIP wajib diisi jika menggunakan kode undangan\",\n    \"errors\": {\n        \"employment_identity_number\": [\n            \"NIP wajib diisi jika menggunakan kode undangan\"\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Reset Password",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "test_with_invitation_code@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "859155",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "22223333",
+											"type": "text"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "22223333",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/users/reset-password",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"reset-password"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "304758",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "22223333",
+													"type": "text"
+												},
+												{
+													"key": "password_confirmation",
+													"value": "22223333",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/reset-password",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"reset-password"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 19:23:34 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "426"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Password berhasil direset\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K90CRG4QMN42JMEFXB7C2N4N\",\n            \"name\": \"Test With Invitation Code\",\n            \"phone_number\": \"6288899990000\",\n            \"email\": \"test_with_invitation_code@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-11-02T02:01:59.061289+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-11-02T02:01:59.064025+07:00\",\n            \"updated_at\": \"2025-11-02T02:01:59.100395+07:00\"\n        }\n    }\n}"
+								},
+								{
+									"name": "400 (wrong code)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "112233",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/reset-password",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"reset-password"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 15:05:51 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "63"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Kode reset password salah\"\n}"
+								},
+								{
+									"name": "404 (user not found)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "695925",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/reset-password",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"reset-password"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 15:06:47 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "62"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"User tidak ditemukan\"\n}"
+								},
+								{
+									"name": "400 (code is expired)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "204399",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/reset-password",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"reset-password"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 15:08:41 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "74"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Kode reset password sudah kadaluarsa\"\n}"
+								},
+								{
+									"name": "400 (code is used)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "204399",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/reset-password",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"reset-password"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 15:10:03 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "73"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Kode reset password sudah digunakan\"\n}"
+								},
+								{
+									"name": "422 (password confirmation is required)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "876459",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "22223333",
+													"type": "text"
+												},
+												{
+													"key": "password_confirmation",
+													"value": "22223333",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/reset-password",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"reset-password"
+											]
+										}
+									},
+									"status": "Unprocessable Entity",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 19:09:23 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "148"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"code\": 422,\n    \"status\": \"error\",\n    \"message\": \"Konfirmasi kata sandi wajib diisi\",\n    \"errors\": {\n        \"password_confirmation\": [\n            \"Konfirmasi kata sandi wajib diisi\"\n        ]\n    }\n}"
+								},
+								{
+									"name": "422 (password mismatch)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "876459",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "22223333",
+													"type": "text"
+												},
+												{
+													"key": "password_confirmation",
+													"value": "22224444",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/reset-password",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"reset-password"
+											]
+										}
+									},
+									"status": "Unprocessable Entity",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 19:14:18 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "126"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 422,\n    \"status\": \"error\",\n    \"message\": \"Kata sandi tidak cocok\",\n    \"errors\": {\n        \"password_confirmation\": [\n            \"Kata sandi tidak cocok\"\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Verify Email Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "test_with_invitation_code@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "876459",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/users/verify-email",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"verify-email"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "876459",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/verify-email",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"verify-email"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 15:11:37 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "458"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Email berhasil diverifikasi\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K8ZFS1X1J53TS4P2084QENV1\",\n            \"name\": \"Test With Invitation Code\",\n            \"phone_number\": \"6288899991111\",\n            \"email\": \"test_with_invitation_code@gmail.com\",\n            \"email_verified_at\": \"2025-11-01T22:11:37.850031+07:00\",\n            \"activated_at\": \"2025-11-01T17:35:28.543322+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-11-01T17:35:28.545766+07:00\",\n            \"updated_at\": \"2025-11-01T22:11:37.852363+07:00\"\n        }\n    }\n}"
+								},
+								{
+									"name": "400 (wrong code)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "112233",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/verify-email",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"verify-email"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 15:05:51 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "63"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Kode verifikasi salah\"\n}"
+								},
+								{
+									"name": "404 (user not found)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "695925",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/verify-email",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"verify-email"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 15:06:47 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "62"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"User tidak ditemukan\"\n}"
+								},
+								{
+									"name": "400 (code is expired)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "204399",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/verify-email",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"verify-email"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 15:08:41 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "74"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Kode verifikasi sudah kadaluarsa\"\n}"
+								},
+								{
+									"name": "400 (code is used)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "204399",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/verify-email",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"verify-email"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 15:10:03 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "73"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Kode verifikasi sudah digunakan\"\n}"
+								},
+								{
+									"name": "404 (user email is already verified)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "876459",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/verify-email",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"verify-email"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 15:10:45 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "66"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Email sudah diverifikasi\"\n}"
+								}
+							]
+						},
+						{
 							"name": "Login",
 							"request": {
 								"method": "POST",
@@ -23,7 +1580,7 @@
 									"formdata": [
 										{
 											"key": "email",
-											"value": "admin@gmail.com",
+											"value": "super_admin@gmail.com",
 											"type": "text"
 										},
 										{
@@ -332,11 +1889,13 @@
 									},
 									"status": "OK",
 									"code": 200,
-									"_postman_previewlanguage": null,
+									"_postman_previewlanguage": "json",
 									"header": [
 										{
 											"key": "Content-Type",
-											"value": "application/json; charset=utf-8"
+											"value": "application/json",
+											"description": "",
+											"type": "text"
 										},
 										{
 											"key": "Date",
@@ -349,6 +1908,56 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"User berhasil diambil\",\n    \"data\": {\n        \"user\": {\n            \"Id\": \"01K73V4CZAPZ0Y6MDK969AHM44\",\n            \"name\": \"Admin\",\n            \"birth_date\": \"2000-01-01T00:00:00Z\",\n            \"email\": \"admin@gmail.com\",\n            \"email_verified_at\": \"2025-10-09T13:37:47+07:00\",\n            \"created_at\": \"2025-10-09T13:37:47+07:00\",\n            \"updated_at\": \"2025-10-09T13:37:47+07:00\",\n            \"deleted_at\": null\n        }\n    }\n}"
+								},
+								{
+									"name": "200 (with relations)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/me?include=roles&include=roles.permissions",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"me"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "roles"
+												},
+												{
+													"key": "include",
+													"value": "roles.permissions"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 31 Oct 2025 13:32:50 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "963"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"User berhasil diambil\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K7HR9A6WKK0W67W8S7F8755X\",\n            \"name\": \"Admin\",\n            \"phone_number\": \"2480486338\",\n            \"email\": \"admin@gmail.com\",\n            \"email_verified_at\": \"2025-10-31T19:54:03.316599+07:00\",\n            \"activated_at\": \"1822-11-11T10:17:55.578425+07:07\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2024-12-06T23:12:04.432694+07:00\",\n            \"updated_at\": \"2024-12-17T12:37:09.959624+07:00\",\n            \"roles\": [\n                {\n                    \"id\": \"01K7KJ8RYN8QJMYKA1WNBHQ22K\",\n                    \"name\": \"admin\",\n                    \"is_default\": false,\n                    \"created_at\": \"2025-10-31T19:54:03.170139+07:00\",\n                    \"updated_at\": \"2025-10-31T19:54:03.170863+07:00\",\n                    \"permissions\": [\n                        {\n                            \"id\": \"01K8X5A2M5ZCY9AW6Z78SPRK7R\",\n                            \"name\": \"user.read\",\n                            \"created_at\": \"2025-10-31T19:54:03.15819+07:00\"\n                        },\n                        {\n                            \"id\": \"01K8X5A2M6KF43E0PR58YDGJW3\",\n                            \"name\": \"role.read\",\n                            \"created_at\": \"2025-10-31T19:54:03.15819+07:00\"\n                        },\n                        {\n                            \"id\": \"01K8X5A2M6KF43E0PR5HZMWR08\",\n                            \"name\": \"permission.read\",\n                            \"created_at\": \"2025-10-31T19:54:03.15819+07:00\"\n                        }\n                    ]\n                }\n            ],\n            \"employment_identity_number\": \"873482120930800238\"\n        }\n    }\n}"
 								},
 								{
 									"name": "401",
@@ -389,6 +1998,113 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"code\": 401,\n    \"status\": \"error\",\n    \"message\": \"Token tidak valid atau sudah kadaluarsa\"\n}"
+								},
+								{
+									"name": "401 (email not verified)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/me?include=roles&include=roles.permissions",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"me"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "roles"
+												},
+												{
+													"key": "include",
+													"value": "roles.permissions"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 22:29:05 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "99"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"code\": 401,\n    \"status\": \"error\",\n    \"message\": \"Email belum terverifikasi, silahkan verifikasi email Anda\"\n}"
+								},
+								{
+									"name": "429",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/me?include=roles&include=roles.permissions",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"me"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "roles"
+												},
+												{
+													"key": "include",
+													"value": "roles.permissions"
+												}
+											]
+										}
+									},
+									"status": "Too Many Requests",
+									"code": 429,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 02 Nov 2025 12:15:53 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "67"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 429,\n    \"status\": \"error\",\n    \"message\": \"Terlalu banyak permintaan\"\n}"
 								}
 							]
 						},
@@ -541,7 +2257,7 @@
 									"formdata": []
 								},
 								"url": {
-									"raw": "{{BASE_URL}}/api/v1/users/01K7KJ8RYN8QJMYKA1WNBHQ22K?include=roles&include=roles.permissions",
+									"raw": "{{BASE_URL}}/api/v1/users/01K7HR8N4Z9TE0ENB0K1275MNW?include=roles&include=roles.permissions",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -549,7 +2265,7 @@
 										"api",
 										"v1",
 										"users",
-										"01K7KJ8RYN8QJMYKA1WNBHQ22K"
+										"01K7HR8N4Z9TE0ENB0K1275MNW"
 									],
 									"query": [
 										{
@@ -704,13 +2420,14 @@
 										},
 										{
 											"key": "role_id",
-											"value": "01K7KJ8RYN8QJMYKA1WQQQYZA6",
+											"value": "01K8SW84Z6T1FM90KES0G0BMM1",
 											"type": "text"
 										},
 										{
-											"key": "role_id",
-											"value": "01K7KJ8RYN8QJMYKA1WTZNZVYT",
-											"type": "text"
+											"key": "employment_identity_number",
+											"value": "873482120930800227",
+											"type": "text",
+											"disabled": true
 										}
 									]
 								},
@@ -802,7 +2519,7 @@
 									"body": "{\n    \"code\": 409,\n    \"status\": \"error\",\n    \"message\": \"User already exists\"\n}"
 								},
 								{
-									"name": "201",
+									"name": "201 (employee)",
 									"originalRequest": {
 										"method": "POST",
 										"header": [],
@@ -831,12 +2548,12 @@
 												},
 												{
 													"key": "role_id",
-													"value": "01K7KJ8RYN8QJMYKA1WQQQYZA6",
+													"value": "01K7KJ8RYN8QJMYKA1X78V9C0T",
 													"type": "text"
 												},
 												{
-													"key": "role_id",
-													"value": "01K7KJ8RYN8QJMYKA1WTZNZVYT",
+													"key": "employment_identity_number",
+													"value": "873482120930800227",
 													"type": "text"
 												}
 											]
@@ -865,15 +2582,90 @@
 										},
 										{
 											"key": "Date",
-											"value": "Fri, 24 Oct 2025 15:39:13 GMT"
+											"value": "Fri, 31 Oct 2025 14:35:44 GMT"
 										},
 										{
 											"key": "Content-Length",
-											"value": "642"
+											"value": "767"
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"User berhasil disimpan\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K8BDZFE4CV65Y76JH1E0C3BP\",\n            \"name\": \"test user\",\n            \"phone_number\": \"6288822224444\",\n            \"email\": \"test_user@gmail.com\",\n            \"email_verified_at\": null,\n            \"created_at\": \"2025-10-24T22:39:13.341256+07:00\",\n            \"updated_at\": \"2025-10-24T22:39:13.344067+07:00\",\n            \"deleted_at\": null,\n            \"roles\": [\n                {\n                    \"id\": \"01K7KJ8RYN8QJMYKA1WQQQYZA6\",\n                    \"name\": \"head\",\n                    \"created_at\": \"2025-10-22T15:59:10.273015+07:00\",\n                    \"updated_at\": \"2025-10-22T15:59:10.273544+07:00\"\n                },\n                {\n                    \"id\": \"01K7KJ8RYN8QJMYKA1WTZNZVYT\",\n                    \"name\": \"manager\",\n                    \"created_at\": \"2025-10-22T15:59:10.273017+07:00\",\n                    \"updated_at\": \"2025-10-22T15:59:10.273544+07:00\"\n                }\n            ]\n        }\n    }\n}"
+									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"User berhasil disimpan\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K8XB49794K1MPJDJ6RWFZXMP\",\n            \"name\": \"test user\",\n            \"phone_number\": \"6288822224444\",\n            \"email\": \"test_user@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-10-31T21:35:44.744126+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-10-31T21:35:44.74552+07:00\",\n            \"updated_at\": \"2025-10-31T21:35:44.761007+07:00\",\n            \"roles\": [\n                {\n                    \"id\": \"01K7KJ8RYN8QJMYKA1X78V9C0T\",\n                    \"name\": \"operator\",\n                    \"is_default\": false,\n                    \"created_at\": \"2025-10-31T19:54:03.170463+07:00\",\n                    \"updated_at\": \"2025-10-31T19:54:03.170863+07:00\"\n                }\n            ],\n            \"employee\": {\n                \"user_id\": \"01K8XB49794K1MPJDJ6RWFZXMP\",\n                \"employment_identity_number\": \"873482120930800227\",\n                \"created_at\": \"2025-10-31T21:35:44.752731+07:00\",\n                \"updated_at\": \"2025-10-31T21:35:44.748342+07:00\"\n            }\n        }\n    }\n}"
+								},
+								{
+									"name": "201 (customer)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test user",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288822224444",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_user@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "role_id",
+													"value": "01K8SW84Z6T1FM90KES0G0BMM1",
+													"type": "text"
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "873482120930800227",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 31 Oct 2025 14:59:34 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "569"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"User berhasil disimpan\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K8XCFXTG65JY19CS4YNVZHV8\",\n            \"name\": \"test user\",\n            \"phone_number\": \"6288822224444\",\n            \"email\": \"test_user@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-10-31T21:59:34.829846+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-10-31T21:59:34.970356+07:00\",\n            \"updated_at\": \"2025-10-31T21:59:34.980541+07:00\",\n            \"roles\": [\n                {\n                    \"id\": \"01K8SW84Z6T1FM90KES0G0BMM1\",\n                    \"name\": \"customer\",\n                    \"is_default\": true,\n                    \"created_at\": \"2025-10-31T19:54:03.170468+07:00\",\n                    \"updated_at\": \"2025-10-31T19:54:03.170863+07:00\"\n                }\n            ]\n        }\n    }\n}"
 								}
 							]
 						},
@@ -907,18 +2699,18 @@
 										},
 										{
 											"key": "role_id",
-											"value": "01K7KJ8RYN8QJMYKA1WQQQYZA6",
+											"value": "01K7KJ8RYN8QJMYKA1WYFRKSYN",
 											"type": "text"
 										},
 										{
-											"key": "role_id",
-											"value": "01K7KJ8RYN8QJMYKA1WTZNZVYT",
+											"key": "employment_identity_number",
+											"value": "873482120930800227",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{BASE_URL}}/api/v1/users/01K8B908B624EC8ZHSNB98TC0Q",
+									"raw": "{{BASE_URL}}/api/v1/users/01K7HR3Z46X1B3X7XQ2JFKF2DM",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -926,7 +2718,7 @@
 										"api",
 										"v1",
 										"users",
-										"01K8B908B624EC8ZHSNB98TC0Q"
+										"01K7HR3Z46X1B3X7XQ2JFKF2DM"
 									]
 								}
 							},
@@ -1036,18 +2828,18 @@
 												},
 												{
 													"key": "role_id",
-													"value": "01K7KJ8RYN8QJMYKA1WQQQYZA6",
+													"value": "01K7KJ8RYN8QJMYKA1WYFRKSYN",
 													"type": "text"
 												},
 												{
-													"key": "role_id",
-													"value": "01K7KJ8RYN8QJMYKA1WTZNZVYT",
+													"key": "employment_identity_number",
+													"value": "873482120930800227",
 													"type": "text"
 												}
 											]
 										},
 										"url": {
-											"raw": "{{BASE_URL}}/api/v1/users/01K8B908B624EC8ZHSNB98TC0Q",
+											"raw": "{{BASE_URL}}/api/v1/users/01K8ZE2RZK34W5GZR0V5E7VA1K",
 											"host": [
 												"{{BASE_URL}}"
 											],
@@ -1055,7 +2847,7 @@
 												"api",
 												"v1",
 												"users",
-												"01K8B908B624EC8ZHSNB98TC0Q"
+												"01K8ZE2RZK34W5GZR0V5E7VA1K"
 											]
 										}
 									},
@@ -1071,15 +2863,364 @@
 										},
 										{
 											"key": "Date",
-											"value": "Fri, 24 Oct 2025 15:18:49 GMT"
+											"value": "Sat, 01 Nov 2025 10:06:52 GMT"
 										},
 										{
 											"key": "Content-Length",
-											"value": "644"
+											"value": "771"
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"User berhasil diperbarui\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K8B908B624EC8ZHSNB98TC0Q\",\n            \"name\": \"test user\",\n            \"phone_number\": \"6288822224444\",\n            \"email\": \"test_user@gmail.com\",\n            \"email_verified_at\": null,\n            \"created_at\": \"2025-10-24T21:12:15.962634+07:00\",\n            \"updated_at\": \"2025-10-24T22:18:49.312809+07:00\",\n            \"deleted_at\": null,\n            \"roles\": [\n                {\n                    \"id\": \"01K7KJ8RYN8QJMYKA1WQQQYZA6\",\n                    \"name\": \"head\",\n                    \"created_at\": \"2025-10-22T15:59:10.273015+07:00\",\n                    \"updated_at\": \"2025-10-22T15:59:10.273544+07:00\"\n                },\n                {\n                    \"id\": \"01K7KJ8RYN8QJMYKA1WTZNZVYT\",\n                    \"name\": \"manager\",\n                    \"created_at\": \"2025-10-22T15:59:10.273017+07:00\",\n                    \"updated_at\": \"2025-10-22T15:59:10.273544+07:00\"\n                }\n            ]\n        }\n    }\n}"
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"User berhasil diperbarui\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K8ZE2RZK34W5GZR0V5E7VA1K\",\n            \"name\": \"test user\",\n            \"phone_number\": \"6288822224444\",\n            \"email\": \"test_user@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-11-01T17:06:52.683646+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-11-01T17:05:49.93978+07:00\",\n            \"updated_at\": \"2025-11-01T17:06:52.691197+07:00\",\n            \"roles\": [\n                {\n                    \"id\": \"01K7KJ8RYN8QJMYKA1WYFRKSYN\",\n                    \"name\": \"supervisor\",\n                    \"is_default\": false,\n                    \"created_at\": \"2025-10-31T19:54:03.170146+07:00\",\n                    \"updated_at\": \"2025-10-31T19:54:03.170863+07:00\"\n                }\n            ],\n            \"employee\": {\n                \"user_id\": \"01K8ZE2RZK34W5GZR0V5E7VA1K\",\n                \"employment_identity_number\": \"873482120930800227\",\n                \"created_at\": \"2025-11-01T17:06:52.689641+07:00\",\n                \"updated_at\": \"2025-11-01T17:06:52.686484+07:00\"\n            }\n        }\n    }\n}"
+								},
+								{
+									"name": "403 (cannot update super_admin)",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test user",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288822224444",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_user@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYN8QJMYKA1WYFRKSYN",
+													"type": "text"
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "873482120930800227",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/01K7HR3Z46X1B3X7XQ2JFKF2DM",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"01K7HR3Z46X1B3X7XQ2JFKF2DM"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 02 Nov 2025 11:16:57 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "89"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 403,\n    \"status\": \"error\",\n    \"message\": \"User dengan role super_admin tidak dapat diubah\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Toggle Activation",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/users/01K7HR3Z46X1B3X7XQ2JFKF2DM/activation/toggle",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"01K7HR3Z46X1B3X7XQ2JFKF2DM",
+										"activation",
+										"toggle"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test user",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288822224444",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_user@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYN8QJMYKA1WQQQYZA6",
+													"type": "text"
+												},
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYN8QJMYKA1WTZNZVYT",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/01K85J9H0XBJG7K3MFGD6AN3PM",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"01K85J9H0XBJG7K3MFGD6AN3PM"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 24 Oct 2025 15:14:20 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "56"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"User tidak ditemukan\"\n}"
+								},
+								{
+									"name": "200 (activated)",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/01K8X9619CX7Y5SQ27QV32X3Z3/activation/toggle",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"01K8X9619CX7Y5SQ27QV32X3Z3",
+												"activation",
+												"toggle"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 31 Oct 2025 14:03:12 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "392"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"User berhasil diaktifkan\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K8X9619CX7Y5SQ27QV32X3Z3\",\n            \"name\": \"test user\",\n            \"phone_number\": \"6288822224444\",\n            \"email\": \"test_user@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-10-31T21:03:12.89127+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-10-31T21:01:45.004314+07:00\",\n            \"updated_at\": \"2025-10-31T21:03:12.891845+07:00\"\n        }\n    }\n}"
+								},
+								{
+									"name": "200 (deactived)",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/01K8X9619CX7Y5SQ27QV32X3Z3/activation/toggle",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"01K8X9619CX7Y5SQ27QV32X3Z3",
+												"activation",
+												"toggle"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 31 Oct 2025 14:05:51 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "396"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"User berhasil dinonaktifkan\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K8X9619CX7Y5SQ27QV32X3Z3\",\n            \"name\": \"test user\",\n            \"phone_number\": \"6288822224444\",\n            \"email\": \"test_user@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": null,\n            \"deactivated_at\": \"2025-10-31T21:05:51.890673+07:00\",\n            \"created_at\": \"2025-10-31T21:01:45.004314+07:00\",\n            \"updated_at\": \"2025-10-31T21:05:51.892117+07:00\"\n        }\n    }\n}"
+								},
+								{
+									"name": "403 (user action is forbidden)",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/01K7HR3Z46X1B3X7XQ2JFKF2DM/activation/toggle",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"01K7HR3Z46X1B3X7XQ2JFKF2DM",
+												"activation",
+												"toggle"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 02 Nov 2025 10:38:23 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "71"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 403,\n    \"status\": \"error\",\n    \"message\": \"User tidak memiliki hak akses\"\n}"
+								},
+								{
+									"name": "403 (cannot deactive super_admin)",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/01K7HR3Z46X1B3X7XQ2JFKF2DM/activation/toggle",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"01K7HR3Z46X1B3X7XQ2JFKF2DM",
+												"activation",
+												"toggle"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 02 Nov 2025 11:14:54 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "89"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 403,\n    \"status\": \"error\",\n    \"message\": \"User dengan role super_admin tidak dapat diubah\"\n}"
 								}
 							]
 						},
@@ -1089,7 +3230,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/v1/users/01K8B908B624EC8ZHSNB98TC0Q",
+									"raw": "{{BASE_URL}}/api/v1/users/01K7HR3Z46X1B3X7XQ2JFKF2DM",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -1097,7 +3238,7 @@
 										"api",
 										"v1",
 										"users",
-										"01K8B908B624EC8ZHSNB98TC0Q"
+										"01K7HR3Z46X1B3X7XQ2JFKF2DM"
 									]
 								}
 							},
@@ -1140,7 +3281,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"User not found\"\n}"
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"User tidak ditemukan\"\n}"
 								},
 								{
 									"name": "200",
@@ -1162,11 +3303,13 @@
 									},
 									"status": "OK",
 									"code": 200,
-									"_postman_previewlanguage": null,
+									"_postman_previewlanguage": "json",
 									"header": [
 										{
 											"key": "Content-Type",
-											"value": "application/json; charset=utf-8"
+											"value": "application/json",
+											"description": "",
+											"type": "text"
 										},
 										{
 											"key": "Date",
@@ -1179,6 +3322,47 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"User berhasil dihapus\"\n}"
+								},
+								{
+									"name": "403 (cannot destroy super_admin)",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/01K7HR3Z46X1B3X7XQ2JFKF2DM",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"01K7HR3Z46X1B3X7XQ2JFKF2DM"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 02 Nov 2025 11:15:56 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "90"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 403,\n    \"status\": \"error\",\n    \"message\": \"User dengan role super_admin tidak dapat dihapus\"\n}"
 								}
 							]
 						}
@@ -2073,6 +4257,158 @@
 							]
 						},
 						{
+							"name": "Set Default",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/roles/01K8SW84Z6T1FM90KES0G0BMM1/set-default",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										"01K8SW84Z6T1FM90KES0G0BMM1",
+										"set-default"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles/01K8SW84Z6T1FM90KES0G0BMM1/set-default",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"01K8SW84Z6T1FM90KES0G0BMM1",
+												"set-default"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 02 Nov 2025 11:48:30 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "255"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Role berhasil diset default\",\n    \"data\": {\n        \"role\": {\n            \"id\": \"01K8SW84Z6T1FM90KES0G0BMM1\",\n            \"name\": \"customer\",\n            \"is_default\": true,\n            \"created_at\": \"2025-11-02T17:29:00.085279+07:00\",\n            \"updated_at\": \"2025-11-02T18:48:30.132021+07:00\"\n        }\n    }\n}"
+								},
+								{
+									"name": "400 (cannot set default role to default)",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles/01K8SW84Z6T1FM90KES0G0BMM1/set-default",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"01K8SW84Z6T1FM90KES0G0BMM1",
+												"set-default"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 02 Nov 2025 11:45:43 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "80"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Role default tidak dapat diset default\"\n}"
+								},
+								{
+									"name": "403 (cannot set super_admin as default)",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles/01K7KJ8RYMGS1FWJRZD000TCW0/set-default",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"01K7KJ8RYMGS1FWJRZD000TCW0",
+												"set-default"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 02 Nov 2025 11:42:47 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "84"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 403,\n    \"status\": \"error\",\n    \"message\": \"Role super_admin tidak dapat diset default\"\n}"
+								}
+							]
+						},
+						{
 							"name": "Destroy",
 							"request": {
 								"method": "DELETE",
@@ -2208,6 +4544,419 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Role berhasil dihapus\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Code",
+					"item": [
+						{
+							"name": "Create User Register Invitation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "role_id",
+											"value": "01K7KJ8RYN8QJMYKA1WYFRKSYN",
+											"type": "text"
+										},
+										{
+											"key": "expired_at",
+											"value": "2025-11-20 15:35:05",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/codes/user-register-invitation",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"codes",
+										"user-register-invitation"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "404 (role not found)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYN8QJMYKA1WTZNZVYV",
+													"type": "text"
+												},
+												{
+													"key": "expired_at",
+													"value": "2025-11-20",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/codes/user-register-invitation",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"codes",
+												"user-register-invitation"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 29 Oct 2025 04:35:10 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "56"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"Role not found\"\n}"
+								},
+								{
+									"name": "201",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYN8QJMYKA1WTZNZVYT",
+													"type": "text"
+												},
+												{
+													"key": "expired_at",
+													"value": "2025-11-20 15:35:05",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/codes/user-register-invitation",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"codes",
+												"user-register-invitation"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 29 Oct 2025 07:53:58 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "387"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Kode undangan registrasi berhasil dibuat\",\n    \"data\": {\n        \"code\": {\n            \"id\": \"01K8QFB696VZ4DWK0M4NH0ZJT8\",\n            \"type\": \"user_register_invitation\",\n            \"value\": \"401089\",\n            \"meta\": {\n                \"role_id\": \"01K7KJ8RYN8QJMYKA1WTZNZVYT\"\n            },\n            \"used_at\": null,\n            \"expired_at\": \"2025-11-20T15:35:05Z\",\n            \"created_at\": \"2025-10-29T14:53:58.822171+07:00\",\n            \"updated_at\": \"2025-10-29T14:53:58.822171+07:00\"\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Create User Email Verification",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "test_with_invitation_code@gmail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/codes/user-email-verification",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"codes",
+										"user-email-verification"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation@gmail.com",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/codes/user-email-verification",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"codes",
+												"user-email-verification"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 14:49:32 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "102"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Kode verifikasi email berhasil dibuat dan dikirim ke email\"\n}"
+								},
+								{
+									"name": "422",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "@gmail.com",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/codes/user-email-verification",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"codes",
+												"user-email-verification"
+											]
+										}
+									},
+									"status": "Unprocessable Entity",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 14:43:50 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "114"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 422,\n    \"status\": \"error\",\n    \"message\": \"Format email tidak valid\",\n    \"errors\": {\n        \"email\": [\n            \"Format email tidak valid\"\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Create User Reset Password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "test_with_invitation_code@gmail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/codes/user-reset-password",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"codes",
+										"user-reset-password"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "test_with_invitation_code@gmail.com",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/codes/user-reset-password",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"codes",
+												"user-reset-password"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 19:03:29 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "100"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Kode reset password berhasil dibuat dan dikirim ke email\"\n}"
+								},
+								{
+									"name": "422",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "email",
+													"value": "@gmail.com",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/codes/user-reset-password",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"codes",
+												"user-reset-password"
+											]
+										}
+									},
+									"status": "Unprocessable Entity",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 01 Nov 2025 14:43:50 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "114"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 422,\n    \"status\": \"error\",\n    \"message\": \"Format email tidak valid\",\n    \"errors\": {\n        \"email\": [\n            \"Format email tidak valid\"\n        ]\n    }\n}"
 								}
 							]
 						}

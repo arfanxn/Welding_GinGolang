@@ -2,9 +2,10 @@ package seeder
 
 import (
 	"github.com/arfanxn/welding/internal/infrastructure/database/factory"
-	"github.com/arfanxn/welding/internal/module/permission/domain/enum"
+	permissionEnum "github.com/arfanxn/welding/internal/module/permission/domain/enum"
 	permissionRepository "github.com/arfanxn/welding/internal/module/permission/domain/repository"
 	permissionRoleRepository "github.com/arfanxn/welding/internal/module/permission_role/domain/repository"
+	"github.com/arfanxn/welding/internal/module/role/domain/enum"
 	"github.com/arfanxn/welding/internal/module/role/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/samber/lo"
@@ -38,39 +39,44 @@ func NewRoleSeeder(params NewRoleSeederParams) Seeder {
 func (s *RoleSeeder) Seed() error {
 	superAdminRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYMGS1FWJRZD000TCW0",
-		"Name": "super admin",
+		"Name": enum.SuperAdmin,
 	}).(*entity.Role)
 	adminRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1WNBHQ22K",
-		"Name": "admin",
+		"Name": enum.Admin,
 	}).(*entity.Role)
 	headRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1WQQQYZA6",
-		"Name": "head",
+		"Name": enum.Head,
 	}).(*entity.Role)
 	managerRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1WTZNZVYT",
-		"Name": "manager",
+		"Name": enum.Manager,
 	}).(*entity.Role)
 	supervisorRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1WYFRKSYN",
-		"Name": "supervisor",
+		"Name": enum.Supervisor,
 	}).(*entity.Role)
 	engineerRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1X0VNR31G",
-		"Name": "engineer",
+		"Name": enum.Engineer,
 	}).(*entity.Role)
 	staffRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1X405T2FF",
-		"Name": "staff",
+		"Name": enum.Staff,
 	}).(*entity.Role)
 	operatorRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1X78V9C0T",
-		"Name": "operator",
+		"Name": enum.Operator,
 	}).(*entity.Role)
 	customerServiceAdminRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1X7GKVWKP",
-		"Name": "customer service admin",
+		"Name": enum.CustomerServiceAdmin,
+	}).(*entity.Role)
+	customerRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+		"Id":        "01K8SW84Z6T1FM90KES0G0BMM1",
+		"IsDefault": true, // Set as default role
+		"Name":      enum.DefaultRoleName,
 	}).(*entity.Role)
 
 	roles := []*entity.Role{
@@ -83,6 +89,7 @@ func (s *RoleSeeder) Seed() error {
 		staffRole,
 		operatorRole,
 		customerServiceAdminRole,
+		customerRole,
 	}
 
 	// Save all roles to the database
@@ -92,7 +99,7 @@ func (s *RoleSeeder) Seed() error {
 	}
 
 	// Create a map of role names to role objects for easy lookup
-	roleMap := make(map[string]*entity.Role)
+	roleMap := make(map[enum.RoleName]*entity.Role)
 	for _, role := range roles {
 		roleMap[role.Name] = role
 	}
@@ -125,16 +132,16 @@ func (s *RoleSeeder) Seed() error {
 
 		// Define basic permissions that should be granted to all non-super-admin roles
 		// These are the minimum permissions needed for basic system navigation
-		exceptSuperAdminPermissionNames := []enum.PermissionName{
-			enum.UserRead,       // Allow viewing user listings
-			enum.RoleRead,       // Allow viewing role definitions
-			enum.PermissionRead, // Allow viewing available permissions
+		exceptSuperAdminPermissionNames := []permissionEnum.PermissionName{
+			permissionEnum.UsersIndex,
+			permissionEnum.RolesIndex,
+			permissionEnum.PermissionsIndex,
 		}
 
 		// Filter the complete permission list to only include the basic permissions
 		// This creates a subset of permissions that will be assigned to regular roles
 		exceptSuperAdminPermissions := lo.Filter(permissions, func(permission *entity.Permission, _ int) bool {
-			return lo.Contains(exceptSuperAdminPermissionNames, enum.PermissionName(permission.Name))
+			return lo.Contains(exceptSuperAdminPermissionNames, permissionEnum.PermissionName(permission.Name))
 		})
 
 		// Get all roles except super admin to assign basic permissions

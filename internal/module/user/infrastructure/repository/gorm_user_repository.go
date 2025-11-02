@@ -2,13 +2,18 @@ package repository
 
 import (
 	"strings"
+	"time"
 
 	"github.com/arfanxn/welding/internal/infrastructure/database/helper"
+	permissionEnum "github.com/arfanxn/welding/internal/module/permission/domain/enum"
+	roleEnum "github.com/arfanxn/welding/internal/module/role/domain/enum"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/internal/module/user/domain/repository"
 	"github.com/arfanxn/welding/pkg/pagination"
 	"github.com/arfanxn/welding/pkg/query"
 	"github.com/arfanxn/welding/pkg/reflectutil"
+	"github.com/gookit/goutil"
+	"github.com/guregu/null/v6"
 	"gorm.io/gorm"
 )
 
@@ -105,15 +110,91 @@ func (r *GormUserRepository) FindByEmail(email string) (*entity.User, error) {
 	return &user, nil
 }
 
+// HasPermissionNames checks if a user has all the specified permissions.
+// The permissions parameter is an array of permission names.
+func (r *GormUserRepository) HasPermissionNames(user *entity.User, permissionNames []permissionEnum.PermissionName) (bool, error) {
+	if len(permissionNames) == 0 {
+		return true, nil
+	}
+
+	db := r.db.Model(&entity.User{}).
+		Joins("JOIN role_user ON role_user.user_id = users.id").
+		Joins("JOIN roles ON roles.id = role_user.role_id").
+		Joins("JOIN permission_role ON permission_role.role_id = roles.id").
+		Joins("JOIN permissions ON permissions.id = permission_role.permission_id").
+		Where("users.id = ?", user.Id).
+		Where("permissions.name IN (?)", permissionNames)
+
+	var count int64
+	err := db.Distinct("permission_role.permission_id").
+		Count(&count).Error
+
+	if err != nil {
+		return false, err
+	}
+
+	// Only return true if the user has all the specified permissions
+	return count == int64(len(permissionNames)), nil
+}
+
+// HasRoleNames checks if a user has all the specified roles.
+// The roleNames parameter is an array of role names.
+func (r *GormUserRepository) HasRoleNames(user *entity.User, roleNames []roleEnum.RoleName) (bool, error) {
+	if len(roleNames) == 0 {
+		return true, nil
+	}
+
+	db := r.db.Model(&entity.User{}).
+		Joins("JOIN role_user ON role_user.user_id = users.id").
+		Joins("JOIN roles ON roles.id = role_user.role_id").
+		Where("users.id = ?", user.Id).
+		Where("roles.name IN (?)", roleNames)
+
+	var count int64
+	err := db.Distinct("role_user.role_id").
+		Count(&count).Error
+
+	if err != nil {
+		return false, err
+	}
+
+	// Only return true if the user has all the specified roles
+	return count == int64(len(roleNames)), nil
+}
+
+func (r *GormUserRepository) ToggleActivation(user *entity.User) (*entity.User, error) {
+	if user.ActivatedAt.Valid {
+		user.ActivatedAt = null.TimeFromPtr(nil)
+		user.DeactivatedAt = null.TimeFrom(time.Now())
+	} else {
+		user.ActivatedAt = null.TimeFrom(time.Now())
+		user.DeactivatedAt = null.TimeFromPtr(nil)
+	}
+
+	if err := r.db.Save(user).Error; err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
 func (r *GormUserRepository) Save(user *entity.User) error {
-	// Start transaction
+	// 1. Start database transaction
 	tx := r.db.Begin()
 	if tx.Error != nil {
 		return tx.Error
 	}
 
-	// Save role record (without permissions to prevent M2M race conditions)
-	err := tx.Omit("Roles").Save(user).Error
+	// 2. Defer a rollback in case anything fails
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+			panic(r)
+		}
+	}()
+
+	// 3. Save user record (without roles and employee to prevent M2M race conditions)
+	err := tx.Omit("Roles", "Employee").Save(user).Error
 	if err != nil {
 		tx.Rollback()
 		if helper.IsPostgresDuplicateKeyError(err) {
@@ -122,17 +203,41 @@ func (r *GormUserRepository) Save(user *entity.User) error {
 		return err
 	}
 
-	// Update permissions if any provided
-	if reflectutil.IsSlice(user.Roles) {
-		// Replace all role-permission associations
-		// Note: role.Permissions should contain only Permission{ID: X} structs
+	// 4. Handle employee association if it exists
+	if !goutil.IsNil(user.Employee) {
+		// 4.1 Set the UserID if not set
+		if goutil.IsEmpty(user.Employee.UserId) {
+			user.Employee.UserId = user.Id
+		}
+
+		// 4.2 Save the employee record
+		if err := tx.Save(user.Employee).Error; err != nil {
+			tx.Rollback()
+			return err
+		}
+
+		// 4.3 Refresh the employee association
+		if err := tx.Model(user).Association("Employee").Replace(user.Employee); err != nil {
+			tx.Rollback()
+			return err
+		}
+	} else {
+		// 4.4 Delete the employee record if it doesn't exist
+		tx.Model(&user).Association("Employee").Delete(&user.Employee)
+
+	}
+
+	// 5. Update roles if any provided
+	if reflectutil.IsSlice(user.Roles) && len(user.Roles) > 0 {
 		if err := tx.Model(user).Association("Roles").Replace(user.Roles); err != nil {
 			tx.Rollback()
 			return err
 		}
 	}
 
-	// Commit transaction
+	// 6. Commit the transaction if everything is successful
+	// Note: No need to refresh user as GORM's Save and Replace methods
+	// already update the passed struct with the latest database values
 	return tx.Commit().Error
 }
 

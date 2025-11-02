@@ -14,7 +14,7 @@ func (r *LoginUser) Validate() error {
 	return validation.ValidateStruct(r,
 		validation.Field(&r.Email,
 			validation.Required.Error("Email wajib diisi"),
-			validation.Length(3, 64).Error("Panjang email harus antara 3-64 karakter"),
+			validation.Length(3, 50).Error("Panjang email harus antara 3-50 karakter"),
 			is.EmailFormat.Error("Format email tidak valid"),
 		),
 		validation.Field(&r.Password,

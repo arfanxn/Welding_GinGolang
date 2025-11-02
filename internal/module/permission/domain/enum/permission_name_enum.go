@@ -3,15 +3,20 @@ package enum
 type PermissionName string
 
 const (
-	UserRead       PermissionName = "user.read"
-	UserCreate     PermissionName = "user.create"
-	UserUpdate     PermissionName = "user.update"
-	UserDelete     PermissionName = "user.delete"
-	RoleRead       PermissionName = "role.read"
-	RoleCreate     PermissionName = "role.create"
-	RoleUpdate     PermissionName = "role.update"
-	RoleDelete     PermissionName = "role.delete"
-	PermissionRead PermissionName = "permission.read"
+	UsersIndex   PermissionName = "users.index"
+	UsersShow    PermissionName = "users.show"
+	UsersStore   PermissionName = "users.store"
+	UsersUpdate  PermissionName = "users.update"
+	UsersDestroy PermissionName = "users.destroy"
+
+	RolesIndex   PermissionName = "roles.index"
+	RolesShow    PermissionName = "roles.show"
+	RolesStore   PermissionName = "roles.store"
+	RolesUpdate  PermissionName = "roles.update"
+	RolesDestroy PermissionName = "roles.destroy"
+
+	PermissionsIndex PermissionName = "permissions.index"
+	PermissionsShow  PermissionName = "permissions.show"
 )
 
 func (p PermissionName) String() string {
@@ -19,13 +24,18 @@ func (p PermissionName) String() string {
 }
 
 var PermissionNames = []PermissionName{
-	UserRead,
-	UserCreate,
-	UserUpdate,
-	UserDelete,
-	RoleRead,
-	RoleCreate,
-	RoleUpdate,
-	RoleDelete,
-	PermissionRead,
+	UsersIndex,
+	UsersShow,
+	UsersStore,
+	UsersUpdate,
+	UsersDestroy,
+
+	RolesIndex,
+	RolesShow,
+	RolesStore,
+	RolesUpdate,
+	RolesDestroy,
+
+	PermissionsIndex,
+	PermissionsShow,
 }

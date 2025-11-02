@@ -93,6 +93,14 @@ func (r *GormRoleRepository) Find(id string) (*entity.Role, error) {
 	return &role, nil
 }
 
+func (r *GormRoleRepository) FindDefault() (*entity.Role, error) {
+	var role entity.Role
+	if err := r.db.Where("is_default = ?", true).First(&role).Error; err != nil {
+		return nil, err
+	}
+	return &role, nil
+}
+
 func (r *GormRoleRepository) FindByIds(ids []string) ([]*entity.Role, error) {
 	var roles []*entity.Role
 	if err := r.db.Where("id IN (?)", ids).Find(&roles).Error; err != nil {
@@ -137,6 +145,28 @@ func (r *GormRoleRepository) Save(role *entity.Role) error {
 	}
 
 	// Commit transaction
+	return tx.Commit().Error
+}
+
+func (r *GormRoleRepository) SetDefault(role *entity.Role) error {
+	tx := r.db.Begin()
+	if tx.Error != nil {
+		return tx.Error
+	}
+
+	// Set all roles to not default
+	if err := tx.Model(&entity.Role{}).Where("id != ?", role.Id).Update("is_default", false).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	// Set the specified role as default
+	role.IsDefault = true
+	if err := tx.Save(role).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+
 	return tx.Commit().Error
 }
 

@@ -6,7 +6,9 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/http"
 	"github.com/arfanxn/welding/internal/infrastructure/http/jwt"
 	"github.com/arfanxn/welding/internal/infrastructure/logger"
+	"github.com/arfanxn/welding/internal/infrastructure/mail"
 	"github.com/arfanxn/welding/internal/infrastructure/middleware"
+	codeDi "github.com/arfanxn/welding/internal/module/code/infrastructure/di"
 	employeeDi "github.com/arfanxn/welding/internal/module/employee/infrastructure/di"
 	permissionDi "github.com/arfanxn/welding/internal/module/permission/infrastructure/di"
 	permissionRoleDi "github.com/arfanxn/welding/internal/module/permission_role/infrastructure/di"
@@ -26,12 +28,18 @@ var Module = fx.Module("infrastructure",
 		config.NewConfigFromEnv,
 		database.NewPostgresGormDBFromConfig,
 		logger.NewLoggerFromConfig,
+		mail.NewSmtpMailServiceFromConfig,
 		jwt.NewJWTServiceFromConfig,
 		http.NewRouterFromConfig,
 		func(engine *gin.Engine) gin.IRouter { return engine },
 
 		// Middleware(s)
+		middleware.NewHttpErrorRecoveryMiddleware,
+		middleware.NewRateLimiterMiddleware,
 		middleware.NewAuthenticateMiddleware,
+		middleware.NewAuthorizeMiddleware,
+		middleware.NewUserActiveMiddleware,
+		middleware.NewUserEmailVerifiedMiddleware,
 	),
 
 	// Modules
@@ -41,6 +49,7 @@ var Module = fx.Module("infrastructure",
 	permissionDi.Module,
 	permissionRoleDi.Module,
 	employeeDi.Module,
+	codeDi.Module,
 
 	// Logger
 	fx.WithLogger(func(logger *logger.Logger) fxevent.Logger {

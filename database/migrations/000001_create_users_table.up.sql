@@ -5,9 +5,10 @@ CREATE TABLE users (
   email VARCHAR(50) NOT NULL,
   email_verified_at TIMESTAMP WITH TIME ZONE,
   password VARCHAR(255) NOT NULL,
+  activated_at TIMESTAMP WITH TIME ZONE,
+  deactivated_at TIMESTAMP WITH TIME ZONE,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE,
-  deleted_at TIMESTAMP WITH TIME ZONE,
   
   CONSTRAINT uc_users_email UNIQUE (email),
   CONSTRAINT uc_users_phone_number UNIQUE (phone_number)

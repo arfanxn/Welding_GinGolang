@@ -5,6 +5,7 @@ import (
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/helper"
 	"github.com/arfanxn/welding/internal/infrastructure/http/response"
+	"github.com/arfanxn/welding/internal/module/role/domain/enum"
 	roleRequest "github.com/arfanxn/welding/internal/module/role/presentation/http/request"
 	"github.com/arfanxn/welding/internal/module/role/usecase"
 	roleDto "github.com/arfanxn/welding/internal/module/role/usecase/dto"
@@ -18,6 +19,7 @@ type RoleHandler interface {
 	Find(c *gin.Context)
 	Store(c *gin.Context)
 	Update(c *gin.Context)
+	SetDefault(c *gin.Context)
 	Destroy(c *gin.Context)
 }
 
@@ -35,7 +37,7 @@ func (h *roleHandler) Paginate(c *gin.Context) {
 	q := query.NewQuery()
 	c.ShouldBind(q)
 
-	paginationDto, err := h.roleUsecase.Paginate(q)
+	paginationDto, err := h.roleUsecase.Paginate(c.Request.Context(), q)
 	if err != nil {
 		panic(err)
 	}
@@ -51,8 +53,8 @@ func (h *roleHandler) Store(c *gin.Context) {
 	req := roleRequest.NewStoreRole()
 	helper.MustBindValidate(c, req)
 
-	role, err := h.roleUsecase.Save(&roleDto.SaveRole{
-		Name:          req.Name,
+	role, err := h.roleUsecase.Save(c.Request.Context(), &roleDto.SaveRole{
+		Name:          enum.RoleName(req.Name),
 		PermissionIds: req.PermissionIds,
 	})
 	if err != nil {
@@ -71,7 +73,7 @@ func (h *roleHandler) Find(c *gin.Context) {
 	q.FilterById(c.Param("id"))
 	c.ShouldBind(q)
 
-	role, err := h.roleUsecase.Find(q)
+	role, err := h.roleUsecase.Find(c.Request.Context(), q)
 	if err != nil {
 		panic(err)
 	}
@@ -88,9 +90,9 @@ func (h *roleHandler) Update(c *gin.Context) {
 	req.Id = c.Param("id")
 	helper.MustBindValidate(c, req)
 
-	role, err := h.roleUsecase.Save(&roleDto.SaveRole{
+	role, err := h.roleUsecase.Save(c.Request.Context(), &roleDto.SaveRole{
 		Id:            req.Id,
-		Name:          req.Name,
+		Name:          enum.RoleName(req.Name),
 		PermissionIds: req.PermissionIds,
 	})
 	if err != nil {
@@ -104,12 +106,29 @@ func (h *roleHandler) Update(c *gin.Context) {
 	))
 }
 
+func (h *roleHandler) SetDefault(c *gin.Context) {
+	req := roleRequest.NewSetDefaultRole()
+	req.Id = c.Param("id")
+	helper.MustBindValidate(c, req)
+
+	role, err := h.roleUsecase.SetDefault(c.Request.Context(), &roleDto.SetDefaultRole{Id: req.Id})
+	if err != nil {
+		panic(err)
+	}
+
+	c.JSON(http.StatusOK, response.NewBodyWithData(
+		http.StatusOK,
+		"Role berhasil diset default",
+		gin.H{"role": role},
+	))
+}
+
 func (h *roleHandler) Destroy(c *gin.Context) {
 	req := roleRequest.NewDestroyRole()
 	req.Id = c.Param("id")
 	helper.MustBindValidate(c, req)
 
-	err := h.roleUsecase.Destroy(&roleDto.DestroyRole{Id: req.Id})
+	err := h.roleUsecase.Destroy(c.Request.Context(), &roleDto.DestroyRole{Id: req.Id})
 	if err != nil {
 		panic(err)
 	}

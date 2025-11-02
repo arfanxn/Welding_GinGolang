@@ -49,6 +49,32 @@ var UserFactory = factory.NewFactory(&entity.User{}).
 
 		return gofakeit.DateRange(time.Now().Add(-time.Hour*24*365), end), nil
 	}).
+	// ActivatedAt represents when the user was activated.
+	// - 50% chance to generate an activation timestamp
+	// - If activated, the timestamp will be between user creation time and now
+	// - If not activated, returns null
+	Attr("ActivatedAt", func(args factory.Args) (any, error) {
+		user := args.Instance().(*entity.User)
+		isActivated := gofakeit.Bool()
+		if isActivated {
+			activatedAt := gofakeit.DateRange(user.CreatedAt, time.Now())
+			return null.TimeFrom(activatedAt), nil
+		}
+		return null.TimeFromPtr(nil), nil
+	}).
+
+	// DeactivatedAt represents when the user was deactivated.
+	// - Only set if the user was never activated (ActivatedAt is zero)
+	// - If deactivated, the timestamp will be between user creation time and now
+	// - Returns null if the user was activated (non-zero ActivatedAt)
+	Attr("DeactivatedAt", func(args factory.Args) (any, error) {
+		user := args.Instance().(*entity.User)
+		if user.ActivatedAt.IsZero() {
+			deactivatedAt := gofakeit.DateRange(user.CreatedAt, time.Now())
+			return null.TimeFrom(deactivatedAt), nil
+		}
+		return null.TimeFromPtr(nil), nil
+	}).
 	Attr("UpdatedAt", func(args factory.Args) (any, error) {
 		createdAt := args.Instance().(*entity.User).CreatedAt
 
@@ -58,8 +84,5 @@ var UserFactory = factory.NewFactory(&entity.User{}).
 				TimeFrom(gofakeit.DateRange(createdAt, time.Now())), nil
 		}
 
-		return null.TimeFromPtr(nil), nil
-	}).
-	Attr("DeletedAt", func(args factory.Args) (any, error) {
 		return null.TimeFromPtr(nil), nil
 	})

@@ -6,7 +6,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func HttpErrorRecoveryMiddlewareFunc() gin.HandlerFunc {
+type HttpErrorRecoveryMiddleware interface {
+	Middleware
+}
+
+type httpErrorRecoveryMiddleware struct {
+}
+
+func NewHttpErrorRecoveryMiddleware() HttpErrorRecoveryMiddleware {
+	return &httpErrorRecoveryMiddleware{}
+}
+
+func (m *httpErrorRecoveryMiddleware) MiddlewareFunc() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if r := recover(); r != nil {

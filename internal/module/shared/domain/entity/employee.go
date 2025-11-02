@@ -4,15 +4,16 @@ import (
 	"time"
 
 	"github.com/guregu/null/v6"
+	"gorm.io/gorm"
 )
 
 type Employee struct {
 	UserId                   string    `json:"user_id" gorm:"primarykey"`
 	EmploymentIdentityNumber string    `json:"employment_identity_number"`
-	CreatedAt                time.Time `json:"created_at"`
-	UpdatedAt                null.Time `json:"updated_at"`
+	CreatedAt                time.Time `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt                null.Time `json:"updated_at" gorm:"autoUpdateTime"`
 
-	User *User `json:"user" gorm:"foreignKey:UserId;references:Id"`
+	User *User `json:"user,omitempty" gorm:"foreignKey:UserId;references:Id"`
 }
 
 func NewEmployee() *Employee {
@@ -21,4 +22,8 @@ func NewEmployee() *Employee {
 
 func (e Employee) TableName() string {
 	return "employees"
+}
+
+func (u *Employee) BeforeSave(tx *gorm.DB) error {
+	return nil
 }

@@ -13,6 +13,9 @@ var RoleFactory = factory.NewFactory(&entity.Role{}).
 	Attr("Id", func(args factory.Args) (any, error) {
 		return ulid.Make().String(), nil
 	}).
+	Attr("IsDefault", func(args factory.Args) (any, error) {
+		return false, nil
+	}).
 	Attr("CreatedAt", func(args factory.Args) (any, error) {
 		return time.Now(), nil
 	}).

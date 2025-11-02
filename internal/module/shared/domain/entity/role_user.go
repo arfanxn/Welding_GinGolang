@@ -9,8 +9,8 @@ import (
 type RoleUser struct {
 	RoleId    string    `json:"role_id" gorm:"primaryKey"`
 	UserId    string    `json:"user_id"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt null.Time `json:"updated_at"`
+	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt null.Time `json:"updated_at" gorm:"autoUpdateTime"`
 
 	Role *Role `gorm:"foreignKey:RoleId;references:id;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	User *User `gorm:"foreignKey:UserId;references:id;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`

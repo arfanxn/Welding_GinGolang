@@ -56,7 +56,12 @@ check-env-docker:
 	fi
 
 clean:
-	@if [ -f bin/welding ]; then rm bin/welding && echo "removed `bin/welding` binary"; fi
+	@if [ -f bin/welding ]; then rm bin/welding; fi
+	@for dir in docker/*/data; do \
+	    if [ -d "$$dir" ]; then \
+	        rm -rf "$$dir"; \
+	    fi; \
+	done
 	docker system prune -f
 
 # ========== Development commands ==========
@@ -108,3 +113,11 @@ docker-logs:
 
 docker-ps:
 	docker compose ps
+
+docker-fresh:
+	@make docker-down
+	@make clean
+	@make docker-up-build
+	@make docker-ps
+	@make docker-migrate-up
+	@make docker-seed

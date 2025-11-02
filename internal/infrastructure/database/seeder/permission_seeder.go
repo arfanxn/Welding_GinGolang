@@ -1,12 +1,9 @@
 package seeder
 
 import (
-	"time"
-
 	"github.com/arfanxn/welding/internal/module/permission/domain/enum"
 	"github.com/arfanxn/welding/internal/module/permission/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
-	"github.com/guregu/null/v6"
 	"github.com/oklog/ulid/v2"
 )
 
@@ -26,11 +23,8 @@ func (s *PermissionSeeder) Seed() error {
 
 	for _, permissionName := range permissionNames {
 		permissions = append(permissions, &entity.Permission{
-			Id:        ulid.Make().String(),
-			Name:      permissionName.String(),
-			CreatedAt: time.Now(),
-			UpdatedAt: null.Time{},
-			DeletedAt: null.Time{},
+			Id:   ulid.Make().String(),
+			Name: permissionName,
 		})
 	}
 

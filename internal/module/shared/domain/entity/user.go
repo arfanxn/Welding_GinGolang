@@ -3,7 +3,11 @@ package entity
 import (
 	"time"
 
+	"github.com/gookit/goutil"
 	"github.com/guregu/null/v6"
+	"github.com/oklog/ulid/v2"
+	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 type User struct {
@@ -13,9 +17,10 @@ type User struct {
 	Email           string    `json:"email"`
 	EmailVerifiedAt null.Time `json:"email_verified_at"`
 	Password        string    `json:"-"`
-	CreatedAt       time.Time `json:"created_at"`
-	UpdatedAt       null.Time `json:"updated_at"`
-	DeletedAt       null.Time `json:"deleted_at"`
+	ActivatedAt     null.Time `json:"activated_at"`
+	DeactivatedAt   null.Time `json:"deactivated_at"`
+	CreatedAt       time.Time `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt       null.Time `json:"updated_at" gorm:"autoUpdateTime"`
 
 	// Relations
 	Roles    []*Role   `json:"roles,omitempty" gorm:"many2many:role_user"`
@@ -31,4 +36,28 @@ func NewUser() *User {
 
 func (u User) TableName() string {
 	return "users"
+}
+
+func (u *User) BeforeSave(tx *gorm.DB) error {
+	if goutil.IsEmpty(u.Id) {
+		u.Id = ulid.Make().String()
+	}
+	return nil
+}
+
+func (u *User) SetPassword(password string) error {
+	hashedPasswordBytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	u.Password = string(hashedPasswordBytes)
+	return nil
+}
+
+func (u User) IsEmailVerified() bool {
+	return u.EmailVerifiedAt.Valid
+}
+
+func (u User) IsActive() bool {
+	return u.ActivatedAt.Valid && !u.DeactivatedAt.Valid
 }

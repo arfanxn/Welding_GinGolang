@@ -1,12 +1,18 @@
 package seeder
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/arfanxn/welding/internal/infrastructure/database/factory"
 	employeeRepository "github.com/arfanxn/welding/internal/module/employee/domain/repository"
+	"github.com/arfanxn/welding/internal/module/role/domain/enum"
 	roleRepository "github.com/arfanxn/welding/internal/module/role/domain/repository"
 	roleUserRepository "github.com/arfanxn/welding/internal/module/role_user/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/internal/module/user/domain/repository"
+	"github.com/guregu/null/v6"
+	"github.com/iancoleman/strcase"
 	"go.uber.org/fx"
 )
 
@@ -38,25 +44,26 @@ func NewUserSeeder(params NewUserSeederParams) Seeder {
 }
 
 func (s *UserSeeder) Seed() error {
+	var err error
+
 	superAdmin := factory.UserFactory.MustCreateWithOption(map[string]any{
-		"Id":    "01K7HR3Z46X1B3X7XQ2JFKF2DM",
-		"Name":  "Super Admin",
-		"Email": "super_admin@gmail.com",
+		"Id":              "01K7HR3Z46X1B3X7XQ2JFKF2DM",
+		"Name":            strcase.ToCamel(enum.SuperAdmin.String()),
+		"EmailVerifiedAt": null.TimeFrom(time.Now()),
+		"ActivatedAt":     null.TimeFrom(time.Now()),
+		"DeactivatedAt":   null.TimeFromPtr(nil),
 	}).(*entity.User)
 	admin := factory.UserFactory.MustCreateWithOption(map[string]any{
-		"Id":    "01K7HR9A6WKK0W67W8S7F8755X",
-		"Name":  "Admin",
-		"Email": "admin@gmail.com",
+		"Id":   "01K7HR9A6WKK0W67W8S7F8755X",
+		"Name": strcase.ToCamel(enum.Admin.String()),
 	}).(*entity.User)
 	head := factory.UserFactory.MustCreateWithOption(map[string]any{
-		"Id":    "01K7HR8N4Z9TE0ENB0K1275MNW",
-		"Name":  "Head",
-		"Email": "head@gmail.com",
+		"Id":   "01K7HR8N4Z9TE0ENB0K1275MNW",
+		"Name": strcase.ToCamel(enum.Head.String()),
 	}).(*entity.User)
 	customerServiceAdmin := factory.UserFactory.MustCreateWithOption(map[string]any{
-		"Id":    "01K7HR8WZZBSS957Q9NSQ85MYA",
-		"Name":  "Customer Service Admin",
-		"Email": "customer_service_admin@gmail.com",
+		"Id":   "01K7HR8WZZBSS957Q9NSQ85MYA",
+		"Name": strcase.ToCamel(enum.CustomerServiceAdmin.String()),
 	}).(*entity.User)
 
 	users := []*entity.User{
@@ -66,7 +73,11 @@ func (s *UserSeeder) Seed() error {
 		customerServiceAdmin,
 	}
 
-	err := s.userRepository.SaveMany(users)
+	for _, user := range users {
+		user.Email = fmt.Sprintf("%s@gmail.com", strcase.ToSnake(user.Name))
+	}
+
+	err = s.userRepository.SaveMany(users)
 	if err != nil {
 		return err
 	}
@@ -85,6 +96,7 @@ func (s *UserSeeder) Seed() error {
 		if err != nil {
 			return err
 		}
+
 	}
 
 	{
@@ -101,7 +113,7 @@ func (s *UserSeeder) Seed() error {
 		}
 
 		// Create a map of role names to role objects for easy lookup
-		roleMap := make(map[string]*entity.Role)
+		roleMap := make(map[enum.RoleName]*entity.Role)
 		for _, role := range roles {
 			roleMap[role.Name] = role
 		}
@@ -110,25 +122,24 @@ func (s *UserSeeder) Seed() error {
 		roleUsers := []*entity.RoleUser{
 			// Super Admin role assignment
 			factory.RoleUserFactory.MustCreateWithOption(map[string]any{
-				"RoleId": roleMap["super admin"].Id,
+				"RoleId": roleMap[enum.SuperAdmin].Id,
 				"UserId": superAdmin.Id,
 			}).(*entity.RoleUser),
-
 			// Admin role assignment
 			factory.RoleUserFactory.MustCreateWithOption(map[string]any{
-				"RoleId": roleMap["admin"].Id,
+				"RoleId": roleMap[enum.Admin].Id,
 				"UserId": admin.Id,
 			}).(*entity.RoleUser),
 
 			// Head role assignment
 			factory.RoleUserFactory.MustCreateWithOption(map[string]any{
-				"RoleId": roleMap["head"].Id,
+				"RoleId": roleMap[enum.Head].Id,
 				"UserId": head.Id,
 			}).(*entity.RoleUser),
 
 			// Customer Service Admin role assignment
 			factory.RoleUserFactory.MustCreateWithOption(map[string]any{
-				"RoleId": roleMap["customer service admin"].Id,
+				"RoleId": roleMap[enum.CustomerServiceAdmin].Id,
 				"UserId": customerServiceAdmin.Id,
 			}).(*entity.RoleUser),
 		}
@@ -138,6 +149,7 @@ func (s *UserSeeder) Seed() error {
 		if err != nil {
 			return err
 		}
+
 	}
 
 	return nil
