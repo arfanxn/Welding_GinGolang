@@ -10,7 +10,7 @@ endif
 
 .PHONY: help check-env check-env-docker clean setup build serve migrate-up migrate-down seed \
 	docker-migrate-up docker-migrate-down docker-seed docker-up-build docker-up \
-	docker-down docker-restart docker-logs docker-ps
+	docker-down docker-restart docker-logs docker-ps docker-fresh
 
 # ========== Default target ==========
 help:

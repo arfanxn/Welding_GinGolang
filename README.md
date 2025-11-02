@@ -123,6 +123,7 @@ A Go-based REST API with JWT authentication, built using clean architecture prin
 - `make docker-seed` - Seed database with sample data (Docker)
 - `make docker-logs` - View container logs
 - `make docker-ps` - List running containers
+- `make docker-fresh` - Fresh start (stop, remove, and rebuild)
 
 ### Utilities
 - `make envs` - Create environment files from examples
