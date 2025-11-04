@@ -81,7 +81,7 @@ func (u *userUsecase) Register(ctx context.Context, _dto *dto.Register) (*entity
 	)
 
 	// 1. Handle invitation code if provided
-	if !_dto.InvitationCode.IsZero() {
+	if _dto.InvitationCode.Valid {
 		// 1.1 Find the code in the repository
 		code, err = u.codeRepository.FindByTypeAndValue(enum.UserRegisterInvitation, _dto.InvitationCode.String)
 		if err != nil {

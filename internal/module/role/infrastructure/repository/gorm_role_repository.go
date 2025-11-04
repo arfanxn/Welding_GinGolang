@@ -6,7 +6,7 @@ import (
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/pkg/pagination"
 	"github.com/arfanxn/welding/pkg/query"
-	"github.com/arfanxn/welding/pkg/reflectutil"
+	"github.com/gookit/goutil"
 	"gorm.io/gorm"
 )
 
@@ -135,7 +135,7 @@ func (r *GormRoleRepository) Save(role *entity.Role) error {
 	}
 
 	// Update permissions if any provided
-	if reflectutil.IsSlice(role.Permissions) {
+	if !goutil.IsEmpty(role.Permissions) {
 		// Replace all role-permission associations
 		// Note: role.Permissions should contain only Permission{ID: X} structs
 		if err := tx.Model(role).Association("Permissions").Replace(role.Permissions); err != nil {

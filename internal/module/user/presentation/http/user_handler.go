@@ -53,8 +53,8 @@ func (h *userHandler) Register(c *gin.Context) {
 		PhoneNumber:              req.PhoneNumber,
 		Email:                    req.Email,
 		Password:                 req.Password,
-		InvitationCode:           null.StringFrom(req.InvitationCode),
-		EmploymentIdentityNumber: null.StringFrom(req.EmploymentIdentityNumber),
+		InvitationCode:           boolutil.Ternary(req.InvitationCode != "", null.StringFrom(req.InvitationCode), null.String{}),
+		EmploymentIdentityNumber: boolutil.Ternary(req.EmploymentIdentityNumber != "", null.StringFrom(req.EmploymentIdentityNumber), null.String{}),
 	})
 	if err != nil {
 		panic(err)

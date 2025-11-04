@@ -13,7 +13,6 @@ import (
 	roleDto "github.com/arfanxn/welding/internal/module/role/usecase/dto"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/pkg/errorutil"
-	"github.com/arfanxn/welding/pkg/reflectutil"
 	"github.com/gookit/goutil"
 	"go.uber.org/fx"
 	"gorm.io/gorm"
@@ -71,7 +70,7 @@ func (p *rolePolicy) Save(ctx context.Context, _dto *roleDto.SaveRole) (*entity.
 	}
 
 	// Handle permissions
-	if reflectutil.IsSlice(_dto.PermissionIds) {
+	if !goutil.IsEmpty(_dto.PermissionIds) {
 		permissions, err := p.permissionRepository.FindByIds(_dto.PermissionIds)
 		if err != nil {
 			return nil, err

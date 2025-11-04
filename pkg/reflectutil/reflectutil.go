@@ -110,7 +110,3 @@ func GetStructName(v any) string {
 	}
 	return t.Name()
 }
-
-func IsSlice(v any) bool {
-	return reflect.TypeOf(v).Kind() == reflect.Slice
-}

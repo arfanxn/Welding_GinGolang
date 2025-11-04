@@ -11,7 +11,6 @@ import (
 	"github.com/arfanxn/welding/internal/module/user/domain/repository"
 	"github.com/arfanxn/welding/internal/module/user/usecase/dto"
 	"github.com/arfanxn/welding/pkg/errorutil"
-	"github.com/arfanxn/welding/pkg/reflectutil"
 	"github.com/gookit/goutil"
 	"go.uber.org/fx"
 	"gorm.io/gorm"
@@ -82,7 +81,7 @@ func (p *userPolicy) Save(ctx context.Context, _dto *dto.SaveUser) (*entity.User
 	}
 
 	// 3. Validate new roles being assigned
-	if reflectutil.IsSlice(_dto.RoleIds) {
+	if !goutil.IsEmpty(_dto.RoleIds) {
 		roles, err := p.roleRepository.FindByIds(_dto.RoleIds)
 		if err != nil {
 			return nil, err
@@ -109,7 +108,7 @@ func (p *userPolicy) Save(ctx context.Context, _dto *dto.SaveUser) (*entity.User
 		}
 
 		user.Roles = roles
-	} else if goutil.IsEmpty(_dto.RoleIds) {
+	} else {
 		defaultRole, err := p.roleRepository.FindDefault()
 		if err != nil {
 			// TODO: return custom error on repository instead of gorm's error

@@ -11,7 +11,6 @@ import (
 	"github.com/arfanxn/welding/internal/module/user/domain/repository"
 	"github.com/arfanxn/welding/pkg/pagination"
 	"github.com/arfanxn/welding/pkg/query"
-	"github.com/arfanxn/welding/pkg/reflectutil"
 	"github.com/gookit/goutil"
 	"github.com/guregu/null/v6"
 	"gorm.io/gorm"
@@ -228,7 +227,7 @@ func (r *GormUserRepository) Save(user *entity.User) error {
 	}
 
 	// 5. Update roles if any provided
-	if reflectutil.IsSlice(user.Roles) && len(user.Roles) > 0 {
+	if !goutil.IsEmpty(user.Roles) {
 		if err := tx.Model(user).Association("Roles").Replace(user.Roles); err != nil {
 			tx.Rollback()
 			return err
