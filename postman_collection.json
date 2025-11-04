@@ -23,7 +23,7 @@
 									"formdata": [
 										{
 											"key": "name",
-											"value": "Test With Invitation Code",
+											"value": "Test Without Invitation Code",
 											"type": "text"
 										},
 										{
@@ -33,7 +33,7 @@
 										},
 										{
 											"key": "email",
-											"value": "test_with_invitation_code@gmail.com",
+											"value": "test_without_invitation_code@gmail.com",
 											"type": "text"
 										},
 										{
@@ -49,12 +49,14 @@
 										{
 											"key": "invitation_code",
 											"value": "469985",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "employment_identity_number",
 											"value": "693908944000595811",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										}
 									]
 								},
@@ -73,7 +75,7 @@
 							},
 							"response": [
 								{
-									"name": "201 (without invitation code)",
+									"name": "201 (without invitation code, role customer)",
 									"originalRequest": {
 										"method": "POST",
 										"header": [],
@@ -107,13 +109,13 @@
 												},
 												{
 													"key": "invitation_code",
-													"value": "112233",
+													"value": "469985",
 													"type": "text",
 													"disabled": true
 												},
 												{
 													"key": "employment_identity_number",
-													"value": "5555544444",
+													"value": "693908944000595811",
 													"type": "text",
 													"disabled": true
 												}
@@ -144,15 +146,15 @@
 										},
 										{
 											"key": "Date",
-											"value": "Wed, 29 Oct 2025 08:34:48 GMT"
+											"value": "Tue, 04 Nov 2025 17:08:08 GMT"
 										},
 										{
 											"key": "Content-Length",
-											"value": "420"
+											"value": "604"
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Registrasi berhasil\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K8QHNYKKA90CFNXJ23YM7PW0\",\n            \"name\": \"Test Without Invitation Code\",\n            \"phone_number\": \"6288899990000\",\n            \"email\": \"test_without_invitation_code@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-10-29T08:34:48.661056087Z\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-10-29T08:34:48.663797837Z\",\n            \"updated_at\": \"2025-10-29T08:34:48.664381712Z\"\n        }\n    }\n}"
+									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Registrasi berhasil\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K97XE725ZVGTNMMCN7DQP28Q\",\n            \"name\": \"Test Without Invitation Code\",\n            \"phone_number\": \"6288899990000\",\n            \"email\": \"test_without_invitation_code@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-11-05T00:08:08.900023+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-11-05T00:08:08.901193+07:00\",\n            \"updated_at\": \"2025-11-05T00:08:08.912202+07:00\",\n            \"roles\": [\n                {\n                    \"id\": \"01K8SW84Z6T1FM90KES0G0BMM1\",\n                    \"name\": \"customer\",\n                    \"is_default\": true,\n                    \"created_at\": \"2025-11-03T08:58:38.475023+07:00\",\n                    \"updated_at\": \"2025-11-03T08:58:38.475352+07:00\"\n                }\n            ]\n        }\n    }\n}"
 								},
 								{
 									"name": "201 (with invitation code, role manager)",
@@ -1199,7 +1201,7 @@
 							]
 						},
 						{
-							"name": "Verify Email Copy",
+							"name": "Verify Email",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -2056,6 +2058,56 @@
 									"body": "{\n    \"code\": 401,\n    \"status\": \"error\",\n    \"message\": \"Email belum terverifikasi, silahkan verifikasi email Anda\"\n}"
 								},
 								{
+									"name": "401 (user is deactived, please contact admin)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/me?include=roles&include=roles.permissions",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"me"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "roles"
+												},
+												{
+													"key": "include",
+													"value": "roles.permissions"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 02 Nov 2025 12:25:31 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "82"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 401,\n    \"status\": \"error\",\n    \"message\": \"User tidak aktif, silahkan hubungi admin\"\n}"
+								},
+								{
 									"name": "429",
 									"originalRequest": {
 										"method": "GET",
@@ -2090,7 +2142,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -3163,7 +3214,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -3206,7 +3256,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -3348,7 +3397,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -4390,7 +4438,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
