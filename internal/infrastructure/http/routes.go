@@ -80,15 +80,24 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 		)
 
 		user := protected.Group("/users")
+
+		// Me
 		user.GET("/me", params.UserHandler.Me)
+		user.PATCH("/me/password", params.UserHandler.UpdateMePassword)
+
+		// Logout
 		user.DELETE("/logout", params.UserHandler.Logout)
+
+		// Users
 		user.GET("", requirePermissionName(permissionEnum.UsersIndex), params.UserHandler.Paginate)
 		user.GET("/:id", requirePermissionName(permissionEnum.UsersShow), params.UserHandler.Find)
 		user.POST("", requirePermissionName(permissionEnum.UsersStore), params.UserHandler.Store)
 		user.PUT("/:id", requirePermissionName(permissionEnum.UsersUpdate), params.UserHandler.Update)
+		user.PATCH("/:id/password", requirePermissionName(permissionEnum.UsersUpdate), params.UserHandler.UpdatePassword)
 		user.PATCH("/:id/activation/toggle", requirePermissionName(permissionEnum.UsersUpdate), params.UserHandler.ToggleActivation)
 		user.DELETE("/:id", requirePermissionName(permissionEnum.UsersDestroy), params.UserHandler.Destroy)
 
+		// Roles
 		role := protected.Group("/roles")
 		role.GET("", requirePermissionName(permissionEnum.RolesIndex), params.RoleHandler.Paginate)
 		role.GET("/:id", requirePermissionName(permissionEnum.RolesShow), params.RoleHandler.Find)
@@ -97,9 +106,11 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 		role.PATCH("/:id/set-default", requirePermissionName(permissionEnum.RolesUpdate), params.RoleHandler.SetDefault)
 		role.DELETE("/:id", requirePermissionName(permissionEnum.RolesDestroy), params.RoleHandler.Destroy)
 
+		// Permissions
 		permission := protected.Group("/permissions")
 		permission.GET("", requirePermissionName(permissionEnum.PermissionsIndex), params.PermissionHandler.Paginate)
 
+		// Codes
 		code := protected.Group("/codes")
 		code.POST("/user-register-invitation", requirePermissionName(permissionEnum.UsersStore), params.CodeHandler.CreateUserRegisterInvitation)
 

@@ -6,14 +6,17 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/http/helper"
 	"github.com/arfanxn/welding/internal/infrastructure/http/response"
 	"github.com/arfanxn/welding/internal/module/shared/contextkey"
+	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/internal/module/user/presentation/http/request"
 	"github.com/arfanxn/welding/internal/module/user/usecase"
 	"github.com/arfanxn/welding/internal/module/user/usecase/dto"
 	"github.com/arfanxn/welding/pkg/boolutil"
+	"github.com/arfanxn/welding/pkg/errorutil"
 	"github.com/arfanxn/welding/pkg/pagination"
 	"github.com/arfanxn/welding/pkg/query"
 	"github.com/gin-gonic/gin"
 	"github.com/guregu/null/v6"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -28,6 +31,8 @@ type UserHandler interface {
 	Paginate(c *gin.Context)
 	Store(c *gin.Context)
 	Update(c *gin.Context)
+	UpdatePassword(c *gin.Context)
+	UpdateMePassword(c *gin.Context)
 	ToggleActivation(c *gin.Context)
 	Destroy(c *gin.Context)
 }
@@ -221,6 +226,56 @@ func (h *userHandler) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, response.NewBodyWithData(
 		http.StatusOK,
 		"User berhasil diperbarui",
+		gin.H{"user": user},
+	))
+}
+
+func (h *userHandler) UpdatePassword(c *gin.Context) {
+	req := &request.UpdateUserPassword{}
+	req.Id = c.Param("id")
+	helper.MustBindValidate(c, req)
+
+	user, err := h.userUsecase.UpdatePassword(c.Request.Context(), &dto.UpdateUserPassword{
+		Id:       req.Id,
+		Password: req.Password,
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	c.JSON(http.StatusOK, response.NewBodyWithData(
+		http.StatusOK,
+		"Password berhasil diperbarui",
+		gin.H{"user": user},
+	))
+}
+
+func (h *userHandler) UpdateMePassword(c *gin.Context) {
+	// Bind and validate the request payload
+	req := &request.UpdateUserMePassword{}
+	helper.MustBindValidate(c, req)
+
+	// Get the authenticated user from context
+	user := c.MustGet(contextkey.UserKey).(*entity.User)
+
+	// Verify current password matches
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.CurrentPassword)); err != nil {
+		panic(errorutil.NewHttpError(http.StatusUnauthorized, "Password saat ini salah", nil))
+	}
+
+	// Update user's password
+	user, err := h.userUsecase.UpdatePassword(c.Request.Context(), &dto.UpdateUserPassword{
+		Id:       user.Id,
+		Password: req.Password,
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	// Return success response with updated user data
+	c.JSON(http.StatusOK, response.NewBodyWithData(
+		http.StatusOK,
+		"Password berhasil diperbarui",
 		gin.H{"user": user},
 	))
 }

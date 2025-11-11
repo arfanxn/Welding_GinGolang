@@ -7,6 +7,7 @@ import (
 
 	roleEnum "github.com/arfanxn/welding/internal/module/role/domain/enum"
 	roleRepository "github.com/arfanxn/welding/internal/module/role/domain/repository"
+	"github.com/arfanxn/welding/internal/module/shared/contextkey"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/internal/module/user/domain/repository"
 	"github.com/arfanxn/welding/internal/module/user/usecase/dto"
@@ -18,6 +19,7 @@ import (
 
 type UserPolicy interface {
 	Save(ctx context.Context, _dto *dto.SaveUser) (*entity.User, error)
+	UpdatePassword(ctx context.Context, _dto *dto.UpdateUserPassword) (*entity.User, error)
 	ToggleActivation(ctx context.Context, _dto *dto.ToggleActivation) (*entity.User, error)
 	Destroy(ctx context.Context, _dto *dto.DestroyUser) (*entity.User, error)
 }
@@ -121,6 +123,44 @@ func (p *userPolicy) Save(ctx context.Context, _dto *dto.SaveUser) (*entity.User
 	}
 
 	// Return the user if all validations pass
+	return user, nil
+}
+
+// UpdatePassword checks if the authenticated user is authorized to update another user's password.
+func (p *userPolicy) UpdatePassword(
+	ctx context.Context,
+	_dto *dto.UpdateUserPassword,
+) (*entity.User, error) {
+	// Get the currently authenticated user from context
+	authUser := ctx.Value(contextkey.UserKey).(*entity.User)
+
+	// Find the target user whose password is being updated
+	user, err := p.userRepository.Find(_dto.Id)
+	if err != nil {
+		// Return 404 if user is not found
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errorutil.NewHttpError(http.StatusNotFound, "User tidak ditemukan", nil)
+		}
+		return nil, err
+	}
+
+	// Check if the target user is a SuperAdmin
+	isSuperAdmin, err := p.userRepository.HasRoleNames(user, []roleEnum.RoleName{roleEnum.SuperAdmin})
+	if err != nil {
+		return nil, err
+	}
+
+	// If the target user is a SuperAdmin, only allow them to update their own password
+	// Prevent other users (even other SuperAdmins) from updating a SuperAdmin's password
+	if isSuperAdmin && authUser.Id != user.Id {
+		return nil, errorutil.NewHttpError(
+			http.StatusForbidden,
+			"User dengan role "+string(roleEnum.SuperAdmin)+" tidak dapat diubah",
+			nil,
+		)
+	}
+
+	// If all checks pass, return the user to proceed with password update
 	return user, nil
 }
 

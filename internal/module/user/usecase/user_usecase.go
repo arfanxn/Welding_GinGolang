@@ -34,6 +34,7 @@ type UserUsecase interface {
 	Find(ctx context.Context, q *query.Query) (*entity.User, error)
 	Paginate(ctx context.Context, q *query.Query) (*pagination.OffsetPagination[*entity.User], error)
 	Save(ctx context.Context, _dto *dto.SaveUser) (*entity.User, error)
+	UpdatePassword(ctx context.Context, _dto *dto.UpdateUserPassword) (*entity.User, error)
 	ToggleActivation(ctx context.Context, _dto *dto.ToggleActivation) (*entity.User, error)
 	Destroy(ctx context.Context, _dto *dto.DestroyUser) error
 }
@@ -302,6 +303,22 @@ func (u *userUsecase) Save(ctx context.Context, _dto *dto.SaveUser) (*entity.Use
 		if errors.Is(err, gorm.ErrDuplicatedKey) {
 			return nil, errorutil.NewHttpError(http.StatusConflict, "User already exists", nil)
 		}
+		return nil, err
+	}
+
+	return user, nil
+}
+
+func (u *userUsecase) UpdatePassword(ctx context.Context, _dto *dto.UpdateUserPassword) (*entity.User, error) {
+	user, err := u.userPolicy.UpdatePassword(ctx, _dto)
+	if err != nil {
+		return nil, err
+	}
+
+	user.SetPassword(_dto.Password)
+
+	err = u.userRepository.Save(user)
+	if err != nil {
 		return nil, err
 	}
 

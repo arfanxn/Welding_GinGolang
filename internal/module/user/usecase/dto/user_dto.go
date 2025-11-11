@@ -45,6 +45,11 @@ type SaveUser struct {
 	EmploymentIdentityNumber null.String `json:"employment_identity_number"`
 }
 
+type UpdateUserPassword struct {
+	Id       string `json:"id"`
+	Password string `json:"password"`
+}
+
 type ToggleActivation struct {
 	Id string `json:"id"`
 }
