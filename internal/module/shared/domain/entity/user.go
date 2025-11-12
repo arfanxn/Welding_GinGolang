@@ -3,6 +3,7 @@ package entity
 import (
 	"time"
 
+	"github.com/arfanxn/welding/pkg/boolutil"
 	"github.com/gookit/goutil"
 	"github.com/guregu/null/v6"
 	"github.com/oklog/ulid/v2"
@@ -27,7 +28,7 @@ type User struct {
 	Employee *Employee `json:"employee,omitempty" gorm:"foreignKey:UserId;references:Id"`
 
 	// Joins
-	EmploymentIdentityNumber string `json:"employment_identity_number,omitempty" gorm:"->"`
+	EmploymentIdentityNumber null.String `json:"employment_identity_number,omitempty" gorm:"->"`
 }
 
 func NewUser() *User {
@@ -52,6 +53,27 @@ func (u *User) SetPassword(password string) error {
 	}
 	u.Password = string(hashedPasswordBytes)
 	return nil
+}
+
+func (u *User) SetEmploymentIdentityNumber(ein null.String) {
+	u.Employee = boolutil.Ternary(ein.Valid,
+		&Employee{
+			UserId:                   u.Id,
+			EmploymentIdentityNumber: ein.String,
+		},
+		nil,
+	)
+	u.EmploymentIdentityNumber = ein
+}
+
+func (u *User) MarkActivated() {
+	u.ActivatedAt = null.TimeFrom(time.Now())
+	u.DeactivatedAt = null.TimeFromPtr(nil)
+}
+
+func (u *User) MarkDeactivated() {
+	u.ActivatedAt = null.TimeFromPtr(nil)
+	u.DeactivatedAt = null.TimeFrom(time.Now())
 }
 
 func (u User) IsEmailVerified() bool {

@@ -68,6 +68,10 @@ func (c *Code) SetMeta(meta map[string]any) error {
 	return nil
 }
 
+func (c *Code) MarkUsed() {
+	c.UsedAt = null.TimeFrom(time.Now())
+}
+
 func (c *Code) IsUsed() bool {
 	return c.UsedAt.Valid
 }

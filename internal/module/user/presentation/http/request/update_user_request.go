@@ -35,7 +35,6 @@ func (r *UpdateUser) Validate() error {
 			is.Email.Error("Format email tidak valid"),
 		),
 		validation.Field(&r.Password,
-			validation.Required.Error("Kata sandi wajib diisi"),
 			validation.Length(8, 255).Error("Panjang kata sandi minimal 8 karakter"),
 		),
 		validation.Field(&r.RoleIds,

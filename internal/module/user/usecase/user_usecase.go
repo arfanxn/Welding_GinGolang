@@ -14,6 +14,7 @@ import (
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/internal/module/user/domain/repository"
 	"github.com/arfanxn/welding/internal/module/user/infrastructure/policy"
+	"github.com/arfanxn/welding/internal/module/user/usecase/action"
 	"github.com/arfanxn/welding/internal/module/user/usecase/dto"
 	"github.com/arfanxn/welding/pkg/errorutil"
 	"github.com/arfanxn/welding/pkg/pagination"
@@ -40,6 +41,9 @@ type UserUsecase interface {
 }
 
 type userUsecase struct {
+	registerUserAction action.RegisterUserAction
+	saveUserAction     action.SaveUserAction
+
 	userPolicy     policy.UserPolicy
 	userRepository repository.UserRepository
 	roleRepository roleRepository.RoleRepository
@@ -51,6 +55,9 @@ type userUsecase struct {
 type NewUserUsecaseParams struct {
 	fx.In
 
+	RegisterUserAction action.RegisterUserAction
+	SaveUserAction     action.SaveUserAction
+
 	UserPolicy     policy.UserPolicy
 	UserRepository repository.UserRepository
 	RoleRepository roleRepository.RoleRepository
@@ -61,6 +68,9 @@ type NewUserUsecaseParams struct {
 
 func NewUserUsecase(params NewUserUsecaseParams) UserUsecase {
 	return &userUsecase{
+		registerUserAction: params.RegisterUserAction,
+		saveUserAction:     params.SaveUserAction,
+
 		userPolicy:     params.UserPolicy,
 		userRepository: params.UserRepository,
 		roleRepository: params.RoleRepository,
@@ -75,67 +85,9 @@ func NewUserUsecase(params NewUserUsecaseParams) UserUsecase {
 // 2. Creates a new user with the provided details
 // 3. If an invitation code was used, marks it as used
 func (u *userUsecase) Register(ctx context.Context, _dto *dto.Register) (*entity.User, error) {
-	var (
-		code    *entity.Code
-		err     error
-		roleIds = []string{} // Initialize empty role IDs slice
-	)
-
-	// 1. Handle invitation code if provided
-	if _dto.InvitationCode.Valid {
-		// 1.1 Find the code in the repository
-		code, err = u.codeRepository.FindByTypeAndValue(enum.UserRegisterInvitation, _dto.InvitationCode.String)
-		if err != nil {
-			// 1.2 Handle code not found error
-			if errors.Is(err, gorm.ErrRecordNotFound) {
-				return nil, errorutil.NewHttpError(http.StatusNotFound, "Kode undangan tidak ditemukan", nil)
-			}
-			return nil, err
-		}
-
-		// 1.3 Validate code status
-		if code.IsUsed() {
-			return nil, errorutil.NewHttpError(http.StatusBadRequest, "Kode undangan sudah digunakan", nil)
-		}
-
-		// 1.4 Check code expiration
-		if code.IsExpired() {
-			return nil, errorutil.NewHttpError(http.StatusBadRequest, "Kode undangan sudah kadaluarsa", nil)
-		}
-
-		// 1.5 Extract role information from code metadata
-		codeMeta, err := code.GetMeta()
-		if err != nil {
-			return nil, err
-		}
-
-		// 1.6 Get role ID from code metadata and assign to user
-		roleId := codeMeta["role_id"].(string)
-		roleIds = []string{roleId}
-	}
-
-	// 2. Create user with provided details
-	saveUserDto := &dto.SaveUser{
-		Name:                     _dto.Name,
-		PhoneNumber:              _dto.PhoneNumber,
-		Email:                    _dto.Email,
-		Password:                 _dto.Password,
-		RoleIds:                  roleIds, // Includes role from invitation if provided
-		EmploymentIdentityNumber: _dto.EmploymentIdentityNumber,
-	}
-
-	// 2.1 Save the new user
-	user, err := u.Save(ctx, saveUserDto)
+	user, err := u.registerUserAction.Handle(ctx, nil, _dto)
 	if err != nil {
 		return nil, err
-	}
-
-	// 3. If invitation code was used, mark it as used
-	if !_dto.InvitationCode.IsZero() {
-		code.UsedAt = null.TimeFrom(time.Now())
-		if err := u.codeRepository.Save(code); err != nil {
-			return nil, err
-		}
 	}
 
 	return user, nil
@@ -278,35 +230,7 @@ func (u *userUsecase) Save(ctx context.Context, _dto *dto.SaveUser) (*entity.Use
 		return nil, err
 	}
 
-	user.Name = _dto.Name
-	user.PhoneNumber = _dto.PhoneNumber
-	if user.Email != _dto.Email {
-		user.EmailVerifiedAt = null.TimeFromPtr(nil)
-	}
-	user.Email = _dto.Email
-	if err := user.SetPassword(_dto.Password); err != nil {
-		return nil, err
-	}
-	user.ActivatedAt = null.TimeFrom(time.Now())
-	user.DeactivatedAt = null.TimeFromPtr(nil) // Set to null
-
-	if _dto.EmploymentIdentityNumber.Valid {
-		user.Employee = &entity.Employee{
-			UserId:                   user.Id,
-			EmploymentIdentityNumber: _dto.EmploymentIdentityNumber.String,
-		}
-	} else {
-		user.Employee = nil
-	}
-
-	if err := u.userRepository.Save(user); err != nil {
-		if errors.Is(err, gorm.ErrDuplicatedKey) {
-			return nil, errorutil.NewHttpError(http.StatusConflict, "User already exists", nil)
-		}
-		return nil, err
-	}
-
-	return user, nil
+	return u.saveUserAction.Handle(ctx, user, _dto)
 }
 
 func (u *userUsecase) UpdatePassword(ctx context.Context, _dto *dto.UpdateUserPassword) (*entity.User, error) {

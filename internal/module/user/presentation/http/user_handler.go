@@ -2,6 +2,7 @@ package http
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/helper"
 	"github.com/arfanxn/welding/internal/infrastructure/http/response"
@@ -31,6 +32,7 @@ type UserHandler interface {
 	Paginate(c *gin.Context)
 	Store(c *gin.Context)
 	Update(c *gin.Context)
+	UpdateMeProfile(c *gin.Context)
 	UpdatePassword(c *gin.Context)
 	UpdateMePassword(c *gin.Context)
 	ToggleActivation(c *gin.Context)
@@ -191,6 +193,7 @@ func (h *userHandler) Store(c *gin.Context) {
 		PhoneNumber:              req.PhoneNumber,
 		Email:                    req.Email,
 		Password:                 req.Password,
+		ActivatedAt:              null.TimeFrom(time.Now()),
 		RoleIds:                  req.RoleIds,
 		EmploymentIdentityNumber: null.NewString(req.EmploymentIdentityNumber, req.EmploymentIdentityNumber != ""),
 	})
@@ -230,13 +233,37 @@ func (h *userHandler) Update(c *gin.Context) {
 	))
 }
 
+func (h *userHandler) UpdateMeProfile(c *gin.Context) {
+	req := &request.UpdateUserMeProfile{}
+	helper.MustBindValidate(c, req)
+
+	user := c.MustGet(contextkey.UserKey).(*entity.User)
+
+	user, err := h.userUsecase.Save(c.Request.Context(), &dto.SaveUser{
+		Id:                       null.StringFrom(user.Id),
+		Name:                     req.Name,
+		PhoneNumber:              req.PhoneNumber,
+		Email:                    req.Email,
+		EmploymentIdentityNumber: null.NewString(req.EmploymentIdentityNumber, req.EmploymentIdentityNumber != ""),
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	c.JSON(http.StatusOK, response.NewBodyWithData(
+		http.StatusOK,
+		"User berhasil diperbarui",
+		gin.H{"user": user},
+	))
+}
+
 func (h *userHandler) UpdatePassword(c *gin.Context) {
 	req := &request.UpdateUserPassword{}
 	req.Id = c.Param("id")
 	helper.MustBindValidate(c, req)
 
-	user, err := h.userUsecase.UpdatePassword(c.Request.Context(), &dto.UpdateUserPassword{
-		Id:       req.Id,
+	user, err := h.userUsecase.Save(c.Request.Context(), &dto.SaveUser{
+		Id:       null.StringFrom(req.Id),
 		Password: req.Password,
 	})
 	if err != nil {
@@ -260,12 +287,12 @@ func (h *userHandler) UpdateMePassword(c *gin.Context) {
 
 	// Verify current password matches
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.CurrentPassword)); err != nil {
-		panic(errorutil.NewHttpError(http.StatusUnauthorized, "Password saat ini salah", nil))
+		panic(errorutil.NewHttpError(http.StatusBadRequest, "Password saat ini salah", nil))
 	}
 
 	// Update user's password
-	user, err := h.userUsecase.UpdatePassword(c.Request.Context(), &dto.UpdateUserPassword{
-		Id:       user.Id,
+	user, err := h.userUsecase.Save(c.Request.Context(), &dto.SaveUser{
+		Id:       null.StringFrom(user.Id),
 		Password: req.Password,
 	})
 	if err != nil {

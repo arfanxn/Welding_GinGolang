@@ -42,6 +42,8 @@ type SaveUser struct {
 	Email                    string      `json:"email"`
 	Password                 string      `json:"password"`
 	RoleIds                  []string    `json:"role_ids"`
+	ActivatedAt              null.Time   `json:"activated_at"`
+	DeactivatedAt            null.Time   `json:"deactivated_at"`
 	EmploymentIdentityNumber null.String `json:"employment_identity_number"`
 }
 

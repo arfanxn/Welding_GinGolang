@@ -232,12 +232,36 @@ func (r *GormUserRepository) Save(user *entity.User) error {
 			tx.Rollback()
 			return err
 		}
+
 	}
 
 	// 6. Commit the transaction if everything is successful
-	// Note: No need to refresh user as GORM's Save and Replace methods
-	// already update the passed struct with the latest database values
-	return tx.Commit().Error
+	if err := tx.Commit().Error; err != nil {
+		return err
+	}
+
+	// Create a new query builder for the User model
+	db := r.db.Model(&entity.User{})
+
+	// Conditionally preload the Employee association if it exists on the user
+	// This ensures we have the latest employee data after the update
+	if !goutil.IsNil(user.Employee) {
+		db = db.Preload("Employee")
+	}
+
+	// Conditionally preload the Roles association if the user has any roles
+	// This ensures we have the complete and up-to-date role information
+	if !goutil.IsEmpty(user.Roles) {
+		db = db.Preload("Roles")
+	}
+
+	// Fetch the latest user data from the database, including the preloaded associations
+	// This ensures we return a fully hydrated user object with all relationships
+	if err := db.First(user, "id = ?", user.Id).Error; err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (r *GormUserRepository) SaveMany(users []*entity.User) error {

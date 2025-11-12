@@ -12,7 +12,6 @@ import (
 	"github.com/arfanxn/welding/internal/module/user/domain/repository"
 	"github.com/arfanxn/welding/internal/module/user/usecase/dto"
 	"github.com/arfanxn/welding/pkg/errorutil"
-	"github.com/gookit/goutil"
 	"go.uber.org/fx"
 	"gorm.io/gorm"
 )
@@ -36,93 +35,41 @@ type NewUserPolicyParams struct {
 	RoleRepository roleRepository.RoleRepository
 }
 
-func NewUserPolicy(
-	params NewUserPolicyParams,
-) UserPolicy {
+func NewUserPolicy(params NewUserPolicyParams) UserPolicy {
 	return &userPolicy{
 		userRepository: params.UserRepository,
 		roleRepository: params.RoleRepository,
 	}
 }
 
+// Save handles the policy checks and validation for saving a user.
+// It ensures proper authorization and business rules are followed when creating or updating a user.
+// Returns the user entity if all validations pass, or an error if any check fails.
 func (p *userPolicy) Save(ctx context.Context, _dto *dto.SaveUser) (*entity.User, error) {
-	// Initialize variables to hold user data and error
-	var (
-		user *entity.User
-		err  error
-	)
+	authUser := ctx.Value(contextkey.UserKey).(*entity.User)
 
-	// 1. Handle user creation or retrieval
-	if _dto.Id.IsZero() {
-		// Create new user if ID is zero (new user)
-		user = entity.NewUser()
-	} else {
-		// Find existing user by ID
-		user, err = p.userRepository.Find(_dto.Id.String)
-		if err != nil {
-			// Return 404 if user not found
-			if errors.Is(err, gorm.ErrRecordNotFound) {
-				return nil, errorutil.NewHttpError(http.StatusNotFound, "User tidak ditemukan", nil)
-			}
-			// Return other errors as-is
-			return nil, err
-		}
+	user, err := p.getUserForSave(_dto)
+	if err != nil {
+		return nil, err
+	}
 
-		// 2. Check if user has SuperAdmin role
-		isSuperAdmin, err := p.userRepository.HasRoleNames(user, []roleEnum.RoleName{roleEnum.SuperAdmin})
-		if err != nil {
+	isSuperAdmin, err := p.checkSuperAdminStatus(user)
+	if err != nil {
+		return nil, err
+	}
+
+	if isSuperAdmin {
+		if err := p.validateSuperAdminUpdate(authUser, user, _dto); err != nil {
 			return nil, err
-		}
-		if isSuperAdmin {
-			return nil, errorutil.NewHttpError(
-				http.StatusForbidden,
-				"User dengan role "+string(roleEnum.SuperAdmin)+" tidak dapat diubah",
-				nil,
-			)
 		}
 	}
 
-	// 3. Validate new roles being assigned
-	if !goutil.IsEmpty(_dto.RoleIds) {
-		roles, err := p.roleRepository.FindByIds(_dto.RoleIds)
-		if err != nil {
+	if len(_dto.RoleIds) > 0 {
+		if err := p.validateRoleAssignments(_dto.RoleIds); err != nil {
 			return nil, err
 		}
-
-		if len(roles) != len(_dto.RoleIds) {
-			return nil, errorutil.NewHttpError(
-				http.StatusBadRequest,
-				"One or more roles not found",
-				nil,
-			)
-		}
-
-		// Check if any of the new roles is SuperAdmin
-		for _, role := range roles {
-			if role.Name == roleEnum.SuperAdmin {
-				// Prevent assignment of SuperAdmin role
-				return nil, errorutil.NewHttpError(
-					http.StatusForbidden,
-					"Role "+string(roleEnum.SuperAdmin)+" tidak dapat ditambahkan ke user",
-					nil,
-				)
-			}
-		}
-
-		user.Roles = roles
-	} else {
-		defaultRole, err := p.roleRepository.FindDefault()
-		if err != nil {
-			// TODO: return custom error on repository instead of gorm's error
-			if errors.Is(err, gorm.ErrRecordNotFound) {
-				return nil, errorutil.NewHttpError(http.StatusBadRequest, "Default role is not configured", nil)
-			}
-			return nil, err
-		}
-		user.Roles = []*entity.Role{defaultRole}
 	}
 
-	// Return the user if all validations pass
 	return user, nil
 }
 
@@ -131,83 +78,55 @@ func (p *userPolicy) UpdatePassword(
 	ctx context.Context,
 	_dto *dto.UpdateUserPassword,
 ) (*entity.User, error) {
-	// Get the currently authenticated user from context
 	authUser := ctx.Value(contextkey.UserKey).(*entity.User)
 
-	// Find the target user whose password is being updated
-	user, err := p.userRepository.Find(_dto.Id)
-	if err != nil {
-		// Return 404 if user is not found
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, errorutil.NewHttpError(http.StatusNotFound, "User tidak ditemukan", nil)
-		}
-		return nil, err
-	}
-
-	// Check if the target user is a SuperAdmin
-	isSuperAdmin, err := p.userRepository.HasRoleNames(user, []roleEnum.RoleName{roleEnum.SuperAdmin})
+	user, err := p.findUser(_dto.Id)
 	if err != nil {
 		return nil, err
 	}
 
-	// If the target user is a SuperAdmin, only allow them to update their own password
-	// Prevent other users (even other SuperAdmins) from updating a SuperAdmin's password
+	isSuperAdmin, err := p.checkSuperAdminStatus(user)
+	if err != nil {
+		return nil, err
+	}
+
 	if isSuperAdmin && authUser.Id != user.Id {
-		return nil, errorutil.NewHttpError(
-			http.StatusForbidden,
-			"User dengan role "+string(roleEnum.SuperAdmin)+" tidak dapat diubah",
-			nil,
-		)
+		return nil, p.superAdminForbiddenError()
 	}
 
-	// If all checks pass, return the user to proceed with password update
 	return user, nil
 }
 
 func (p *userPolicy) ToggleActivation(ctx context.Context, _dto *dto.ToggleActivation) (*entity.User, error) {
-	user, err := p.userRepository.Find(_dto.Id)
+	user, err := p.findUser(_dto.Id)
 	if err != nil {
-		// TODO: return custom error on repository instead of gorm's error
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, errorutil.NewHttpError(http.StatusNotFound, "User tidak ditemukan", nil)
-		}
 		return nil, err
 	}
 
-	isSuperAdmin, err := p.userRepository.HasRoleNames(user, []roleEnum.RoleName{roleEnum.SuperAdmin})
+	isSuperAdmin, err := p.checkSuperAdminStatus(user)
 	if err != nil {
 		return nil, err
 	}
+
 	if isSuperAdmin {
-		return nil, errorutil.NewHttpError(
-			http.StatusForbidden,
-			"User dengan role "+string(roleEnum.SuperAdmin)+" tidak dapat diubah",
-			nil,
-		)
+		return nil, p.superAdminForbiddenError()
 	}
 
 	return user, nil
 }
 
 // Destroy validates if a user can be deleted based on certain business rules
-func (p *userPolicy) Destroy(ctx context.Context, _dto *dto.DestroyUser) (*entity.User, error) {
-	// 1. Attempt to find the user by ID
-	user, err := p.userRepository.Find(_dto.Id)
-
-	if err != nil {
-		// 2. If user not found, return 404 error
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, errorutil.NewHttpError(http.StatusNotFound, "User tidak ditemukan", nil)
-		}
-		// 3. For other errors, return them as-is
-		return nil, err
-	}
-
-	// 4. Check if user has any protected roles
-	isSuperAdmin, err := p.userRepository.HasRoleNames(user, []roleEnum.RoleName{roleEnum.SuperAdmin})
+func (p *userPolicy) Destroy(_ context.Context, _dto *dto.DestroyUser) (*entity.User, error) {
+	user, err := p.findUser(_dto.Id)
 	if err != nil {
 		return nil, err
 	}
+
+	isSuperAdmin, err := p.checkSuperAdminStatus(user)
+	if err != nil {
+		return nil, err
+	}
+
 	if isSuperAdmin {
 		return nil, errorutil.NewHttpError(
 			http.StatusForbidden,
@@ -216,6 +135,88 @@ func (p *userPolicy) Destroy(ctx context.Context, _dto *dto.DestroyUser) (*entit
 		)
 	}
 
-	// 6. If all validations pass, return the user (allowing the delete operation to proceed)
 	return user, nil
+}
+
+// Private helper methods
+
+func (p *userPolicy) getUserForSave(_dto *dto.SaveUser) (*entity.User, error) {
+	if _dto.Id.IsZero() {
+		return entity.NewUser(), nil
+	}
+
+	user, err := p.findUser(_dto.Id.String)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
+func (p *userPolicy) findUser(userId string) (*entity.User, error) {
+	user, err := p.userRepository.Find(userId)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errorutil.NewHttpError(http.StatusNotFound, "User tidak ditemukan", nil)
+		}
+		return nil, err
+	}
+	return user, nil
+}
+
+func (p *userPolicy) checkSuperAdminStatus(user *entity.User) (bool, error) {
+	return p.userRepository.HasRoleNames(user, []roleEnum.RoleName{roleEnum.SuperAdmin})
+}
+
+func (p *userPolicy) validateSuperAdminUpdate(authUser, targetUser *entity.User, _dto *dto.SaveUser) error {
+	// Only allow self-updates for SuperAdmins
+	if authUser.Id != targetUser.Id {
+		return p.superAdminForbiddenError()
+	}
+
+	// Prevent role changes for SuperAdmins
+	if _dto.RoleIds != nil {
+		return errorutil.NewHttpError(
+			http.StatusForbidden,
+			"User dengan role "+string(roleEnum.SuperAdmin)+" tidak dapat diubah role",
+			nil,
+		)
+	}
+
+	return nil
+}
+
+func (p *userPolicy) validateRoleAssignments(roleIDs []string) error {
+	roles, err := p.roleRepository.FindByIds(roleIDs)
+	if err != nil {
+		return err
+	}
+
+	if len(roles) != len(roleIDs) {
+		return errorutil.NewHttpError(
+			http.StatusBadRequest,
+			"Satu atau lebih role tidak ditemukan",
+			nil,
+		)
+	}
+
+	for _, role := range roles {
+		if role.Name == roleEnum.SuperAdmin {
+			return errorutil.NewHttpError(
+				http.StatusForbidden,
+				"Role "+string(roleEnum.SuperAdmin)+" tidak dapat ditambahkan ke user",
+				nil,
+			)
+		}
+	}
+
+	return nil
+}
+
+func (p *userPolicy) superAdminForbiddenError() error {
+	return errorutil.NewHttpError(
+		http.StatusForbidden,
+		"User dengan role "+string(roleEnum.SuperAdmin)+" tidak dapat diubah",
+		nil,
+	)
 }

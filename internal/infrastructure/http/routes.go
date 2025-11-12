@@ -83,6 +83,7 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 
 		// Me
 		user.GET("/me", params.UserHandler.Me)
+		user.PUT("/me", params.UserHandler.UpdateMeProfile)
 		user.PATCH("/me/password", params.UserHandler.UpdateMePassword)
 
 		// Logout
