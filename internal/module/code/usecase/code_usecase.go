@@ -2,9 +2,7 @@ package usecase
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"net/http"
 	"time"
 
 	"github.com/arfanxn/welding/internal/infrastructure/logger"
@@ -15,10 +13,8 @@ import (
 	"github.com/arfanxn/welding/internal/module/code/usecase/dto"
 	roleRepository "github.com/arfanxn/welding/internal/module/role/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
-	"github.com/arfanxn/welding/pkg/errorutil"
 	"github.com/guregu/null/v6"
 	"go.uber.org/zap"
-	"gorm.io/gorm"
 )
 
 type CodeUsecase interface {
@@ -51,25 +47,41 @@ func NewCodeUsecase(
 	}
 }
 
+// CreateUserRegisterInvitation generates a new user registration invitation code with the specified role and expiration.
+// It performs the following steps:
+// 1. Validates the invitation request using the code policy
+// 2. Creates a new invitation code with type UserRegisterInvitation
+// 3. Associates the role ID with the code using metadata
+// 4. Sets the expiration time for the invitation
+// 5. Persists the code to the repository
+//
+// Parameters:
+//   - ctx: Context for request-scoped values, cancellation signals, and deadlines
+//   - _dto: Data transfer object containing invitation details (role ID and expiration time)
+//
+// Returns:
+//   - *entity.Code: The created invitation code
+//   - error: Any error that occurred during the process
 func (s *codeUsecase) CreateUserRegisterInvitation(ctx context.Context, _dto *dto.CreateUserRegisterInvitation) (*entity.Code, error) {
 	var err error
 
-	role, err := s.roleRepository.Find(_dto.RoleId)
+	// Validate the invitation request
+	err = s.codePolicy.CreateUserRegisterInvitation(ctx, _dto)
 	if err != nil {
-		// TODO: return custom error on repository instead of gorm's error
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, errorutil.NewHttpError(http.StatusNotFound, "Role not found", nil)
-		}
 		return nil, err
 	}
 
+	// Create new invitation code
 	code := &entity.Code{}
 	code.Type = enum.UserRegisterInvitation
+	// Store role ID in metadata for later reference
 	code.SetMeta(map[string]any{
-		"role_id": role.Id,
+		"role_id": _dto.RoleId,
 	})
+	// Set when the invitation will expire
 	code.ExpiredAt = _dto.ExpiredAt
 
+	// Save the invitation code to the repository
 	err = s.codeRepository.Save(code)
 	if err != nil {
 		return nil, err

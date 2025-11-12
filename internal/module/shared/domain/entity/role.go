@@ -27,8 +27,12 @@ func (r *Role) BeforeSave(tx *gorm.DB) (err error) {
 	return nil
 }
 
+func (r *Role) IsSuperAdmin() bool {
+	return r.Name == enum.SuperAdmin
+}
+
 func (r *Role) IsUpdateable() bool {
-	return r.Name != enum.SuperAdmin
+	return !r.IsSuperAdmin()
 }
 
 func (r *Role) IsSaveable() bool {
@@ -36,5 +40,5 @@ func (r *Role) IsSaveable() bool {
 }
 
 func (r *Role) IsDestroyable() bool {
-	return r.Name != enum.SuperAdmin && !r.IsDefault
+	return !r.IsSuperAdmin() && !r.IsDefault
 }
