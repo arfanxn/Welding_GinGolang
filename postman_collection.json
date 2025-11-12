@@ -2160,6 +2160,347 @@
 							]
 						},
 						{
+							"name": "Update Me Profile",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "User me profile",
+											"type": "text"
+										},
+										{
+											"key": "phone_number",
+											"value": "6288822224444",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "user_me_profile@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "employment_identity_number",
+											"value": "873482120930800227",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/users/me",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"me"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "User me profile",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288822224444",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "user_me_profile@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "873482120930800226",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/me",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"me"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 12 Nov 2025 09:46:24 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "652"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"User berhasil diperbarui\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n            \"name\": \"User me profile\",\n            \"phone_number\": \"6288822224444\",\n            \"email\": \"user_me_profile@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-11-03T08:58:38.49375+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-08-22T09:40:33.916845+07:00\",\n            \"updated_at\": \"2025-11-12T16:46:24.487545+07:00\",\n            \"employee\": {\n                \"user_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"employment_identity_number\": \"873482120930800226\",\n                \"created_at\": \"2025-11-12T16:46:24.488376+07:00\",\n                \"updated_at\": \"2025-11-12T16:46:24.486353+07:00\"\n            },\n            \"employment_identity_number\": \"873482120930800226\"\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Me Password",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "current_password",
+											"value": "11112222",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "33334444",
+											"type": "text"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "33334444",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/users/me/password",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"me",
+										"password"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "current_password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "33334444",
+													"type": "text"
+												},
+												{
+													"key": "password_confirmation",
+													"value": "33334444",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/me/password",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"me",
+												"password"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 11 Nov 2025 14:14:23 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "426"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Password berhasil diperbarui\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n            \"name\": \"SuperAdmin\",\n            \"phone_number\": \"3725850716\",\n            \"email\": \"super_admin@gmail.com\",\n            \"email_verified_at\": \"2025-11-03T08:58:38.493749+07:00\",\n            \"activated_at\": \"2025-11-03T08:58:38.49375+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-08-22T09:40:33.916845+07:00\",\n            \"updated_at\": \"2025-11-11T21:14:23.851706+07:00\"\n        }\n    }\n}"
+								},
+								{
+									"name": "422",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "current_password",
+													"value": "xxxxxxxx",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "password",
+													"value": "xxxxxxxx",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "password_confirmation",
+													"value": "xxxxbbbb",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/me/password",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"me",
+												"password"
+											]
+										}
+									},
+									"status": "Unprocessable Entity",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 11 Nov 2025 14:13:52 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "239"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 422,\n    \"status\": \"error\",\n    \"message\": \"Kata sandi saat ini wajib diisi\",\n    \"errors\": {\n        \"current_password\": [\n            \"Kata sandi saat ini wajib diisi\"\n        ],\n        \"password\": [\n            \"Kata sandi wajib diisi\"\n        ],\n        \"password_confirmation\": [\n            \"Konfirmasi kata sandi wajib diisi\"\n        ]\n    }\n}"
+								},
+								{
+									"name": "400",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "current_password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "33334444",
+													"type": "text"
+												},
+												{
+													"key": "password_confirmation",
+													"value": "33334444",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/me/password",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"me",
+												"password"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 12 Nov 2025 09:10:48 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "65"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Password saat ini salah\"\n}"
+								}
+							]
+						},
+						{
 							"name": "Index",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -2730,12 +3071,12 @@
 									"formdata": [
 										{
 											"key": "name",
-											"value": "test user",
+											"value": "test user updated",
 											"type": "text"
 										},
 										{
 											"key": "phone_number",
-											"value": "6288822224444",
+											"value": "6288822225555",
 											"type": "text"
 										},
 										{
@@ -2755,13 +3096,13 @@
 										},
 										{
 											"key": "employment_identity_number",
-											"value": "873482120930800227",
+											"value": "873482120930800222",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{BASE_URL}}/api/v1/users/01K7HR3Z46X1B3X7XQ2JFKF2DM",
+									"raw": "{{BASE_URL}}/api/v1/users/01K97XE725ZVGTNMMCN7DQP28Q",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -2769,86 +3110,11 @@
 										"api",
 										"v1",
 										"users",
-										"01K7HR3Z46X1B3X7XQ2JFKF2DM"
+										"01K97XE725ZVGTNMMCN7DQP28Q"
 									]
 								}
 							},
 							"response": [
-								{
-									"name": "404",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [],
-										"body": {
-											"mode": "formdata",
-											"formdata": [
-												{
-													"key": "name",
-													"value": "test user",
-													"type": "text"
-												},
-												{
-													"key": "phone_number",
-													"value": "6288822224444",
-													"type": "text"
-												},
-												{
-													"key": "email",
-													"value": "test_user@gmail.com",
-													"type": "text"
-												},
-												{
-													"key": "password",
-													"value": "11112222",
-													"type": "text"
-												},
-												{
-													"key": "role_id",
-													"value": "01K7KJ8RYN8QJMYKA1WQQQYZA6",
-													"type": "text"
-												},
-												{
-													"key": "role_id",
-													"value": "01K7KJ8RYN8QJMYKA1WTZNZVYT",
-													"type": "text"
-												}
-											]
-										},
-										"url": {
-											"raw": "{{BASE_URL}}/api/v1/users/01K85J9H0XBJG7K3MFGD6AN3PM",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"api",
-												"v1",
-												"users",
-												"01K85J9H0XBJG7K3MFGD6AN3PM"
-											]
-										}
-									},
-									"status": "Not Found",
-									"code": 404,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json",
-											"description": "",
-											"type": "text"
-										},
-										{
-											"key": "Date",
-											"value": "Fri, 24 Oct 2025 15:14:20 GMT"
-										},
-										{
-											"key": "Content-Length",
-											"value": "56"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"User not found\"\n}"
-								},
 								{
 									"name": "200",
 									"originalRequest": {
@@ -2998,6 +3264,320 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"code\": 403,\n    \"status\": \"error\",\n    \"message\": \"User dengan role super_admin tidak dapat diubah\"\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test user",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288822224444",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_user@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYN8QJMYKA1WQQQYZA6",
+													"type": "text"
+												},
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYN8QJMYKA1WTZNZVYT",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/01K85J9H0XBJG7K3MFGD6AN3PM",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"01K85J9H0XBJG7K3MFGD6AN3PM"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 24 Oct 2025 15:14:20 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "56"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"User not found\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Password",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "password",
+											"value": "11112222",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/users/01K7HR3Z46X1B3X7XQ2JFKF2DM/password",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"01K7HR3Z46X1B3X7XQ2JFKF2DM",
+										"password"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/01K7HR3Z46X1B3X7XQ2JFKF2DM/password",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"01K7HR3Z46X1B3X7XQ2JFKF2DM",
+												"password"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 11 Nov 2025 14:10:18 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "426"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Password berhasil diperbarui\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n            \"name\": \"SuperAdmin\",\n            \"phone_number\": \"3725850716\",\n            \"email\": \"super_admin@gmail.com\",\n            \"email_verified_at\": \"2025-11-03T08:58:38.493749+07:00\",\n            \"activated_at\": \"2025-11-03T08:58:38.49375+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-08-22T09:40:33.916845+07:00\",\n            \"updated_at\": \"2025-11-11T21:10:18.117582+07:00\"\n        }\n    }\n}"
+								},
+								{
+									"name": "403 (cannot update super_admin)",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test user",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288822224444",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_user@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYN8QJMYKA1WYFRKSYN",
+													"type": "text"
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "873482120930800227",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/01K7HR3Z46X1B3X7XQ2JFKF2DM",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"01K7HR3Z46X1B3X7XQ2JFKF2DM"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 02 Nov 2025 11:16:57 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "89"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 403,\n    \"status\": \"error\",\n    \"message\": \"User dengan role super_admin tidak dapat diubah\"\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test user",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288822224444",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_user@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text"
+												},
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYN8QJMYKA1WQQQYZA6",
+													"type": "text"
+												},
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYN8QJMYKA1WTZNZVYT",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/01K85J9H0XBJG7K3MFGD6AN3PM",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"01K85J9H0XBJG7K3MFGD6AN3PM"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 24 Oct 2025 15:14:20 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "56"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"User not found\"\n}"
 								}
 							]
 						},
@@ -3926,12 +4506,14 @@
 										{
 											"key": "permission_id",
 											"value": "01K85J9H0YKWBWS43R64NC912J",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "permission_id",
 											"value": "01K85J9H0YKWBWS43R6KVF0G8Q",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										}
 									]
 								},
@@ -4014,7 +4596,74 @@
 									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Role berhasil disimpan\",\n    \"data\": {\n        \"role\": {\n            \"id\": \"01K8BFC0SG8ZHEMVG6Y6HR3MY4\",\n            \"name\": \"test role\",\n            \"created_at\": \"2025-10-24T23:03:32.795908+07:00\",\n            \"updated_at\": \"2025-10-24T23:03:32.800277+07:00\",\n            \"permissions\": [\n                {\n                    \"id\": \"01K85J9H0YKWBWS43R64NC912J\",\n                    \"name\": \"user.create\",\n                    \"created_at\": \"2025-10-22T15:59:10.238053+07:00\",\n                    \"updated_at\": \"2025-10-22T15:59:10.258603+07:00\",\n                    \"deleted_at\": null\n                },\n                {\n                    \"id\": \"01K85J9H0YKWBWS43R6KVF0G8Q\",\n                    \"name\": \"role.delete\",\n                    \"created_at\": \"2025-10-22T15:59:10.23817+07:00\",\n                    \"updated_at\": \"2025-10-22T15:59:10.258603+07:00\",\n                    \"deleted_at\": null\n                }\n            ]\n        }\n    }\n}"
 								},
 								{
-									"name": "400 (One or more permissions not found)",
+									"name": "201 (without permissions)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test role",
+													"type": "text"
+												},
+												{
+													"key": "permission_id",
+													"value": "01K85J9H0YKWBWS43R64NC912J",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "permission_id",
+													"value": "01K85J9H0YKWBWS43R6KVF0G8Q",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/roles",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"roles"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 12 Nov 2025 11:06:53 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "252"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Role berhasil disimpan\",\n    \"data\": {\n        \"role\": {\n            \"id\": \"01K9VVYG39PB51PCE58SXCKEH8\",\n            \"name\": \"test role\",\n            \"is_default\": false,\n            \"created_at\": \"2025-11-12T18:06:53.929465+07:00\",\n            \"updated_at\": \"2025-11-12T18:06:53.929465+07:00\"\n        }\n    }\n}"
+								},
+								{
+									"name": "400 (one or more permissions not found)",
 									"originalRequest": {
 										"method": "POST",
 										"header": [],
@@ -4089,20 +4738,20 @@
 										},
 										{
 											"key": "permission_id",
-											"value": "01K7KJ8RYDJWD3HFJTRT5C0XPP",
+											"value": "01K93Q04K4K116CBH0PAXQVFS2",
 											"type": "text",
 											"disabled": true
 										},
 										{
 											"key": "permission_id",
-											"value": "01K7KJ8RYDJWD3HFJTRVSDPYVZ",
+											"value": "01K93Q04K4K116CBH0PRVXGFFJ",
 											"type": "text",
 											"disabled": true
 										}
 									]
 								},
 								"url": {
-									"raw": "{{BASE_URL}}/api/v1/roles/01K7VJDYZBE23MG5TE3R7QMTPF",
+									"raw": "{{BASE_URL}}/api/v1/roles/01K9VVYG39PB51PCE58SXCKEH8",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -4110,7 +4759,7 @@
 										"api",
 										"v1",
 										"roles",
-										"01K7VJDYZBE23MG5TE3R7QMTPF"
+										"01K9VVYG39PB51PCE58SXCKEH8"
 									]
 								}
 							},
@@ -4255,20 +4904,20 @@
 												},
 												{
 													"key": "permission_id",
-													"value": "01K7KJ8RYDJWD3HFJTRT5C0XPP",
+													"value": "01K93Q04K4K116CBH0PAXQVFS2",
 													"type": "text",
 													"disabled": true
 												},
 												{
 													"key": "permission_id",
-													"value": "01K7KJ8RYDJWD3HFJTRVSDPYVZ",
+													"value": "01K93Q04K4K116CBH0PRVXGFFJ",
 													"type": "text",
 													"disabled": true
 												}
 											]
 										},
 										"url": {
-											"raw": "{{BASE_URL}}/api/v1/roles/01K7VJDYZBE23MG5TE3R7QMTPF",
+											"raw": "{{BASE_URL}}/api/v1/roles/01K9VVYG39PB51PCE58SXCKEH8",
 											"host": [
 												"{{BASE_URL}}"
 											],
@@ -4276,7 +4925,7 @@
 												"api",
 												"v1",
 												"roles",
-												"01K7VJDYZBE23MG5TE3R7QMTPF"
+												"01K9VVYG39PB51PCE58SXCKEH8"
 											]
 										}
 									},
@@ -4287,20 +4936,21 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
+											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "Date",
-											"value": "Sat, 18 Oct 2025 13:00:55 GMT"
+											"value": "Wed, 12 Nov 2025 11:11:15 GMT"
 										},
 										{
 											"key": "Content-Length",
-											"value": "273"
+											"value": "262"
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Role berhasil diperbarui\",\n    \"data\": {\n        \"role\": {\n            \"id\": \"01K7VJDYZBE23MG5TE3R7QMTPF\",\n            \"name\": \"test role updated\",\n            \"created_at\": \"2025-10-18T18:49:11.286042+07:00\",\n            \"updated_at\": \"2025-10-18T20:00:55.214358+07:00\",\n            \"users\": null,\n            \"permissions\": []\n        }\n    }\n}"
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Role berhasil diperbarui\",\n    \"data\": {\n        \"role\": {\n            \"id\": \"01K9VVYG39PB51PCE58SXCKEH8\",\n            \"name\": \"test role updated\",\n            \"is_default\": false,\n            \"created_at\": \"2025-11-12T18:06:53.929465+07:00\",\n            \"updated_at\": \"2025-11-12T18:11:15.223435+07:00\"\n        }\n    }\n}"
 								}
 							]
 						},
@@ -4609,7 +5259,7 @@
 									"formdata": [
 										{
 											"key": "role_id",
-											"value": "01K7KJ8RYN8QJMYKA1WYFRKSYN",
+											"value": "01K7KJ8RYMGS1FWJRZD000TCW0",
 											"type": "text"
 										},
 										{
@@ -4633,61 +5283,6 @@
 								}
 							},
 							"response": [
-								{
-									"name": "404 (role not found)",
-									"originalRequest": {
-										"method": "POST",
-										"header": [],
-										"body": {
-											"mode": "formdata",
-											"formdata": [
-												{
-													"key": "role_id",
-													"value": "01K7KJ8RYN8QJMYKA1WTZNZVYV",
-													"type": "text"
-												},
-												{
-													"key": "expired_at",
-													"value": "2025-11-20",
-													"type": "text"
-												}
-											]
-										},
-										"url": {
-											"raw": "{{BASE_URL}}/api/v1/codes/user-register-invitation",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"api",
-												"v1",
-												"codes",
-												"user-register-invitation"
-											]
-										}
-									},
-									"status": "Not Found",
-									"code": 404,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json",
-											"description": "",
-											"type": "text"
-										},
-										{
-											"key": "Date",
-											"value": "Wed, 29 Oct 2025 04:35:10 GMT"
-										},
-										{
-											"key": "Content-Length",
-											"value": "56"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"Role not found\"\n}"
-								},
 								{
 									"name": "201",
 									"originalRequest": {
@@ -4742,6 +5337,116 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Kode undangan registrasi berhasil dibuat\",\n    \"data\": {\n        \"code\": {\n            \"id\": \"01K8QFB696VZ4DWK0M4NH0ZJT8\",\n            \"type\": \"user_register_invitation\",\n            \"value\": \"401089\",\n            \"meta\": {\n                \"role_id\": \"01K7KJ8RYN8QJMYKA1WTZNZVYT\"\n            },\n            \"used_at\": null,\n            \"expired_at\": \"2025-11-20T15:35:05Z\",\n            \"created_at\": \"2025-10-29T14:53:58.822171+07:00\",\n            \"updated_at\": \"2025-10-29T14:53:58.822171+07:00\"\n        }\n    }\n}"
+								},
+								{
+									"name": "403 (cannot invite super_admin)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYMGS1FWJRZD000TCW0",
+													"type": "text"
+												},
+												{
+													"key": "expired_at",
+													"value": "2025-11-20 15:35:05",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/codes/user-register-invitation",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"codes",
+												"user-register-invitation"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 12 Nov 2025 10:26:19 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "94"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 403,\n    \"status\": \"error\",\n    \"message\": \"Role super_admin tidak dapat ditambahkan ke undangan\"\n}"
+								},
+								{
+									"name": "404 (role not found)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYN8QJMYKA1WTZNZVYV",
+													"type": "text"
+												},
+												{
+													"key": "expired_at",
+													"value": "2025-11-20",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/codes/user-register-invitation",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"codes",
+												"user-register-invitation"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 29 Oct 2025 04:35:10 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "56"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"Role not found\"\n}"
 								}
 							]
 						},
