@@ -2253,7 +2253,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -2482,7 +2481,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -3071,38 +3069,43 @@
 									"formdata": [
 										{
 											"key": "name",
-											"value": "test user updated",
+											"value": "Super Admin Updated",
 											"type": "text"
 										},
 										{
 											"key": "phone_number",
 											"value": "6288822225555",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "email",
-											"value": "test_user@gmail.com",
-											"type": "text"
+											"value": "test_user_updated@gmail.com",
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "password",
 											"value": "11112222",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "role_id",
 											"value": "01K7KJ8RYN8QJMYKA1WYFRKSYN",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "employment_identity_number",
 											"value": "873482120930800222",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										}
 									]
 								},
 								"url": {
-									"raw": "{{BASE_URL}}/api/v1/users/01K97XE725ZVGTNMMCN7DQP28Q",
+									"raw": "{{BASE_URL}}/api/v1/users/01K7HR3Z46X1B3X7XQ2JFKF2DM",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -3110,7 +3113,7 @@
 										"api",
 										"v1",
 										"users",
-										"01K97XE725ZVGTNMMCN7DQP28Q"
+										"01K7HR3Z46X1B3X7XQ2JFKF2DM"
 									]
 								}
 							},
@@ -3189,6 +3192,166 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"User berhasil diperbarui\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K8ZE2RZK34W5GZR0V5E7VA1K\",\n            \"name\": \"test user\",\n            \"phone_number\": \"6288822224444\",\n            \"email\": \"test_user@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-11-01T17:06:52.683646+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-11-01T17:05:49.93978+07:00\",\n            \"updated_at\": \"2025-11-01T17:06:52.691197+07:00\",\n            \"roles\": [\n                {\n                    \"id\": \"01K7KJ8RYN8QJMYKA1WYFRKSYN\",\n                    \"name\": \"supervisor\",\n                    \"is_default\": false,\n                    \"created_at\": \"2025-10-31T19:54:03.170146+07:00\",\n                    \"updated_at\": \"2025-10-31T19:54:03.170863+07:00\"\n                }\n            ],\n            \"employee\": {\n                \"user_id\": \"01K8ZE2RZK34W5GZR0V5E7VA1K\",\n                \"employment_identity_number\": \"873482120930800227\",\n                \"created_at\": \"2025-11-01T17:06:52.689641+07:00\",\n                \"updated_at\": \"2025-11-01T17:06:52.686484+07:00\"\n            }\n        }\n    }\n}"
+								},
+								{
+									"name": "200 (partial update)",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test user updated",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288822225555",
+													"type": "text"
+												},
+												{
+													"key": "email",
+													"value": "test_user_updated@gmail.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYN8QJMYKA1WYFRKSYN",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "873482120930800222",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/01K97XE725ZVGTNMMCN7DQP28Q",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"01K97XE725ZVGTNMMCN7DQP28Q"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 12 Nov 2025 11:28:10 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "443"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"User berhasil diperbarui\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K97XE725ZVGTNMMCN7DQP28Q\",\n            \"name\": \"test user updated\",\n            \"phone_number\": \"6288822225555\",\n            \"email\": \"test_user_updated@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-11-05T00:08:08.900023+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-11-05T00:08:08.901193+07:00\",\n            \"updated_at\": \"2025-11-12T18:28:10.305006+07:00\",\n            \"employment_identity_number\": null\n        }\n    }\n}"
+								},
+								{
+									"name": "200 (patial update on super_admin)",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "Super Admin Updated",
+													"type": "text"
+												},
+												{
+													"key": "phone_number",
+													"value": "6288822225555",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "email",
+													"value": "test_user_updated@gmail.com",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "password",
+													"value": "11112222",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "role_id",
+													"value": "01K7KJ8RYN8QJMYKA1WYFRKSYN",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "employment_identity_number",
+													"value": "873482120930800222",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/users/01K7HR3Z46X1B3X7XQ2JFKF2DM",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"01K7HR3Z46X1B3X7XQ2JFKF2DM"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 12 Nov 2025 11:35:17 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "438"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"User berhasil diperbarui\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n            \"name\": \"Super Admin Updated\",\n            \"phone_number\": \"6288822224444\",\n            \"email\": \"super_admin@gmail.com\",\n            \"email_verified_at\": null,\n            \"activated_at\": \"2025-11-03T08:58:38.49375+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-08-22T09:40:33.916845+07:00\",\n            \"updated_at\": \"2025-11-12T18:35:17.706674+07:00\",\n            \"employment_identity_number\": null\n        }\n    }\n}"
 								},
 								{
 									"name": "403 (cannot update super_admin)",
@@ -4936,7 +5099,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
