@@ -13,6 +13,8 @@ import (
 	"github.com/arfanxn/welding/pkg/errorutil"
 	"github.com/arfanxn/welding/pkg/pagination"
 	"github.com/arfanxn/welding/pkg/query"
+	"github.com/gookit/goutil"
+	"github.com/samber/lo"
 	"go.uber.org/fx"
 	"gorm.io/gorm"
 )
@@ -70,7 +72,15 @@ func (u *roleUsecase) Save(ctx context.Context, _dto *roleDto.SaveRole) (*entity
 		return nil, err
 	}
 
-	role.Name = _dto.Name
+	if !goutil.IsEmpty(_dto.Name.String()) {
+		role.Name = _dto.Name
+	}
+
+	if !goutil.IsEmpty(_dto.PermissionIds) {
+		role.Permissions = lo.Map(_dto.PermissionIds, func(permId string, _ int) *entity.Permission {
+			return &entity.Permission{Id: permId}
+		})
+	}
 
 	// Save the role
 	if err := u.roleRepository.Save(role); err != nil {

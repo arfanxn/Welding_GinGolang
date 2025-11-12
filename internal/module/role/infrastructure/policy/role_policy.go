@@ -84,7 +84,6 @@ func (p *rolePolicy) Save(ctx context.Context, _dto *roleDto.SaveRole) (*entity.
 				nil,
 			)
 		}
-		role.Permissions = permissions
 	}
 
 	return role, nil

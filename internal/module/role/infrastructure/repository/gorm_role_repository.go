@@ -145,7 +145,20 @@ func (r *GormRoleRepository) Save(role *entity.Role) error {
 	}
 
 	// Commit transaction
-	return tx.Commit().Error
+	if err := tx.Commit().Error; err != nil {
+		return err
+	}
+
+	db := r.db.Model(&entity.Role{})
+	if !goutil.IsEmpty(role.Permissions) {
+		db = db.Preload("Permissions")
+	}
+
+	if err := db.First(role, "id = ?", role.Id).Error; err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (r *GormRoleRepository) SetDefault(role *entity.Role) error {
