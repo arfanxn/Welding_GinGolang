@@ -69,6 +69,16 @@ var (
 	ErrRoleDefaultNotConfigured Errorx = New("role default not configured")
 
 	// ========================================
+	// Permission Errors
+	// ========================================
+
+	// ErrPermissionNotFound is returned when a specific permission is not found
+	ErrPermissionNotFound Errorx = New("permission not found")
+
+	// ErrPermissionAlreadyExists is returned when attempting to create a permission that already exists
+	ErrPermissionAlreadyExists Errorx = New("permission already exists")
+
+	// ========================================
 	// Code Errors
 	// ========================================
 
