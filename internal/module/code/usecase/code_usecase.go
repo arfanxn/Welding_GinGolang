@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/arfanxn/welding/internal/infrastructure/id"
 	"github.com/arfanxn/welding/internal/infrastructure/logger"
 	"github.com/arfanxn/welding/internal/infrastructure/mail"
 	"github.com/arfanxn/welding/internal/module/code/domain/enum"
@@ -24,6 +25,7 @@ type CodeUsecase interface {
 }
 
 type codeUsecase struct {
+	idService      id.IdService
 	logger         *logger.Logger
 	codePolicy     policy.CodePolicy
 	codeRepository repository.CodeRepository
@@ -32,6 +34,7 @@ type codeUsecase struct {
 }
 
 func NewCodeUsecase(
+	idService id.IdService,
 	logger *logger.Logger,
 	codePolicy policy.CodePolicy,
 	codeRepository repository.CodeRepository,
@@ -39,6 +42,7 @@ func NewCodeUsecase(
 	mailService mail.MailService,
 ) CodeUsecase {
 	return &codeUsecase{
+		idService:      idService,
 		logger:         logger,
 		codePolicy:     codePolicy,
 		codeRepository: codeRepository,
@@ -73,6 +77,7 @@ func (s *codeUsecase) CreateUserRegisterInvitation(ctx context.Context, _dto *dt
 
 	// Create new invitation code
 	code := &entity.Code{}
+	code.Id = s.idService.Generate()
 	code.Type = enum.UserRegisterInvitation
 	// Store role ID in metadata for later reference
 	code.SetMeta(map[string]any{
@@ -94,6 +99,7 @@ func (s *codeUsecase) CreateUserEmailVerification(ctx context.Context, _dto *dto
 	var err error
 
 	code := &entity.Code{}
+	code.Id = s.idService.Generate()
 	code.Type = enum.UserEmailVerification
 	code.CodeableId = null.StringFrom(_dto.Email)
 	code.CodeableType = null.StringFrom("email")
@@ -124,6 +130,7 @@ func (s *codeUsecase) CreateUserResetPassword(ctx context.Context, _dto *dto.Cre
 	var err error
 
 	code := &entity.Code{}
+	code.Id = s.idService.Generate()
 	code.Type = enum.UserResetPassword
 	code.CodeableId = null.StringFrom(_dto.Email)
 	code.CodeableType = null.StringFrom("email")

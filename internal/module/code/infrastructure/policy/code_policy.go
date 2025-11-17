@@ -2,15 +2,12 @@ package policy
 
 import (
 	"context"
-	"errors"
-	"net/http"
 
 	codeRepository "github.com/arfanxn/welding/internal/module/code/domain/repository"
 	"github.com/arfanxn/welding/internal/module/code/usecase/dto"
 	roleRepository "github.com/arfanxn/welding/internal/module/role/domain/repository"
-	"github.com/arfanxn/welding/pkg/errorutil"
+	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
 	"go.uber.org/fx"
-	"gorm.io/gorm"
 )
 
 type CodePolicy interface {
@@ -51,17 +48,12 @@ func (p *codePolicy) CreateUserRegisterInvitation(ctx context.Context, _dto *dto
 	// Retrieve the role to validate its existence and type
 	role, err := p.roleRepository.Find(_dto.RoleId)
 	if err != nil {
-		// TODO: return custom error on repository instead of gorm's error
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			// Return 404 if the specified role doesn't exist
-			return errorutil.NewHttpError(http.StatusNotFound, "Role tidak ditemukan", nil)
-		}
 		return err
 	}
 
 	// Prevent creating invitations for super admin roles
 	if role.IsSuperAdmin() {
-		return errorutil.NewHttpError(http.StatusForbidden, "Role "+string(role.Name)+" tidak dapat ditambahkan ke undangan", nil)
+		return errorx.ErrUserSuperAdminAssignmentForbidden
 	}
 
 	// Return nil if all validations pass

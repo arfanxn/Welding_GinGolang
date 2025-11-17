@@ -3,6 +3,7 @@ package repository
 import (
 	"errors"
 
+	"github.com/arfanxn/welding/internal/infrastructure/database/helper"
 	"github.com/arfanxn/welding/internal/module/code/domain/enum"
 	"github.com/arfanxn/welding/internal/module/code/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
@@ -71,7 +72,14 @@ func (r *GormCodeRepository) FindByCodeableAndTypeAndValue(codeableId string, co
 }
 
 func (r *GormCodeRepository) Save(code *entity.Code) error {
-	return r.db.Save(code).Error
+	err := r.db.Save(code).Error
+	if err != nil {
+		if helper.IsPostgresDuplicateKeyError(err) {
+			return errorx.ErrCodeAlreadyExists
+		}
+		return err
+	}
+	return nil
 }
 
 func (r *GormCodeRepository) SaveMany(codes []*entity.Code) error {

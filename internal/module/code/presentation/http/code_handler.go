@@ -1,6 +1,7 @@
 package http
 
 import (
+	"errors"
 	"net/http"
 	"time"
 
@@ -9,7 +10,10 @@ import (
 	"github.com/arfanxn/welding/internal/module/code/presentation/http/request"
 	"github.com/arfanxn/welding/internal/module/code/usecase"
 	"github.com/arfanxn/welding/internal/module/code/usecase/dto"
+	roleEnum "github.com/arfanxn/welding/internal/module/role/domain/enum"
+	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
 	"github.com/arfanxn/welding/pkg/errorutil"
+	"github.com/arfanxn/welding/pkg/httperror"
 	"github.com/gin-gonic/gin"
 )
 
@@ -38,6 +42,15 @@ func (h *codeHandler) CreateUserRegisterInvitation(c *gin.Context) {
 		ExpiredAt: errorutil.Must(time.Parse(time.DateTime, req.ExpiredAt)),
 	})
 	if err != nil {
+		if errors.Is(err, errorx.ErrRoleNotFound) {
+			httperror.Panic(http.StatusNotFound, "Role tidak ditemukan", nil)
+		}
+		if errors.Is(err, errorx.ErrUserSuperAdminAssignmentForbidden) {
+			httperror.Panic(http.StatusForbidden, "Role "+string(roleEnum.SuperAdmin)+" tidak dapat ditambahkan ke undangan", nil)
+		}
+		if errors.Is(err, errorx.ErrCodeAlreadyExists) {
+			httperror.Panic(http.StatusConflict, "Gagal membuat kode undangan", nil)
+		}
 		panic(err)
 	}
 
@@ -57,6 +70,9 @@ func (h *codeHandler) CreateUserEmailVerification(c *gin.Context) {
 		&dto.CreateUserEmailVerification{Email: req.Email},
 	)
 	if err != nil {
+		if errors.Is(err, errorx.ErrCodeAlreadyExists) {
+			httperror.Panic(http.StatusConflict, "Gagal membuat kode verifikasi email", nil)
+		}
 		panic(err)
 	}
 
@@ -75,6 +91,9 @@ func (h *codeHandler) CreateUserResetPassword(c *gin.Context) {
 		&dto.CreateUserResetPassword{Email: req.Email},
 	)
 	if err != nil {
+		if errors.Is(err, errorx.ErrCodeAlreadyExists) {
+			httperror.Panic(http.StatusConflict, "Gagal membuat kode reset password", nil)
+		}
 		panic(err)
 	}
 

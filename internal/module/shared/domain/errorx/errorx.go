@@ -75,6 +75,9 @@ var (
 	// ErrCodeNotFound is returned when a verification code is not found
 	ErrCodeNotFound Errorx = New("code not found")
 
+	// ErrCodeAlreadyExists is returned when attempting to create a code that already exists
+	ErrCodeAlreadyExists Errorx = New("code already exists")
+
 	// ErrCodeAlreadyUsed is returned when attempting to use a code that has already been used
 	ErrCodeAlreadyUsed Errorx = New("code already used")
 
