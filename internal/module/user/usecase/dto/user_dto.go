@@ -1,17 +1,18 @@
 package dto
 
 import (
+	"time"
+
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
-	"github.com/guregu/null/v6"
 )
 
 type Register struct {
-	Name                     string      `json:"name"`
-	PhoneNumber              string      `json:"phone_number"`
-	Email                    string      `json:"email"`
-	Password                 string      `json:"password"`
-	InvitationCode           null.String `json:"invitation_code"`
-	EmploymentIdentityNumber null.String `json:"employment_identity_number"`
+	Name                     string  `json:"name"`
+	PhoneNumber              string  `json:"phone_number"`
+	Email                    string  `json:"email"`
+	Password                 string  `json:"password"`
+	InvitationCode           *string `json:"invitation_code"`
+	EmploymentIdentityNumber *string `json:"employment_identity_number"`
 }
 
 type VerifyEmail struct {
@@ -36,15 +37,20 @@ type LoginResult struct {
 }
 
 type SaveUser struct {
-	Id                       null.String `json:"id"`
-	Name                     string      `json:"name"`
-	PhoneNumber              string      `json:"phone_number"`
-	Email                    string      `json:"email"`
-	Password                 string      `json:"password"`
-	RoleIds                  []string    `json:"role_ids"`
-	ActivatedAt              null.Time   `json:"activated_at"`
-	DeactivatedAt            null.Time   `json:"deactivated_at"`
-	EmploymentIdentityNumber null.String `json:"employment_identity_number"`
+	Id                       *string    `json:"id"`
+	Name                     *string    `json:"name"`
+	PhoneNumber              *string    `json:"phone_number"`
+	Email                    *string    `json:"email"`
+	Password                 *string    `json:"password"`
+	RoleIds                  []string   `json:"role_ids"`
+	ActivatedAt              *time.Time `json:"activated_at"`
+	DeactivatedAt            *time.Time `json:"deactivated_at"`
+	EmploymentIdentityNumber *string    `json:"employment_identity_number"`
+}
+
+type UpdateUserMePassword struct {
+	CurrentPassword string `json:"current_password"`
+	Password        string `json:"password"`
 }
 
 type UpdateUserPassword struct {

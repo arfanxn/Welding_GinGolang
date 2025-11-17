@@ -1,9 +1,12 @@
 package repository
 
 import (
+	"errors"
+
 	"github.com/arfanxn/welding/internal/infrastructure/database/helper"
 	"github.com/arfanxn/welding/internal/module/role/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
+	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
 	"github.com/arfanxn/welding/pkg/pagination"
 	"github.com/arfanxn/welding/pkg/query"
 	"github.com/gookit/goutil"
@@ -88,6 +91,9 @@ func (r *GormRoleRepository) Paginate(q *query.Query) (*pagination.OffsetPaginat
 func (r *GormRoleRepository) Find(id string) (*entity.Role, error) {
 	var role entity.Role
 	if err := r.db.Where("id = ?", id).First(&role).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errorx.ErrRoleNotFound
+		}
 		return nil, err
 	}
 	return &role, nil
@@ -96,6 +102,9 @@ func (r *GormRoleRepository) Find(id string) (*entity.Role, error) {
 func (r *GormRoleRepository) FindDefault() (*entity.Role, error) {
 	var role entity.Role
 	if err := r.db.Where("is_default = ?", true).First(&role).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errorx.ErrRoleDefaultNotConfigured
+		}
 		return nil, err
 	}
 	return &role, nil
@@ -104,6 +113,9 @@ func (r *GormRoleRepository) FindDefault() (*entity.Role, error) {
 func (r *GormRoleRepository) FindByIds(ids []string) ([]*entity.Role, error) {
 	var roles []*entity.Role
 	if err := r.db.Where("id IN (?)", ids).Find(&roles).Error; err != nil {
+		if len(roles) != len(ids) {
+			return nil, errorx.ErrRolesNotFound
+		}
 		return nil, err
 	}
 	return roles, nil
@@ -112,6 +124,9 @@ func (r *GormRoleRepository) FindByIds(ids []string) ([]*entity.Role, error) {
 func (r *GormRoleRepository) FindByName(name string) (*entity.Role, error) {
 	var role entity.Role
 	if err := r.db.Where("name = ?", name).First(&role).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errorx.ErrRoleNotFound
+		}
 		return nil, err
 	}
 	return &role, nil
@@ -129,7 +144,7 @@ func (r *GormRoleRepository) Save(role *entity.Role) error {
 	if err != nil {
 		tx.Rollback()
 		if helper.IsPostgresDuplicateKeyError(err) {
-			return gorm.ErrDuplicatedKey
+			return errorx.ErrRoleAlreadyExists
 		}
 		return err
 	}

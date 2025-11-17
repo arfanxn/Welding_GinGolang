@@ -81,20 +81,21 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 
 		user := protected.Group("/users")
 
+		// Logout
+		user.DELETE("/logout", params.UserHandler.Logout)
+
 		// Me
 		user.GET("/me", params.UserHandler.Me)
 		user.PUT("/me", params.UserHandler.UpdateMeProfile)
 		user.PATCH("/me/password", params.UserHandler.UpdateMePassword)
 
-		// Logout
-		user.DELETE("/logout", params.UserHandler.Logout)
-
 		// Users
 		user.GET("", requirePermissionName(permissionEnum.UsersIndex), params.UserHandler.Paginate)
-		user.GET("/:id", requirePermissionName(permissionEnum.UsersShow), params.UserHandler.Find)
+		user.GET("/:id", requirePermissionName(permissionEnum.UsersShow), params.UserHandler.Show)
 		user.POST("", requirePermissionName(permissionEnum.UsersStore), params.UserHandler.Store)
 		user.PUT("/:id", requirePermissionName(permissionEnum.UsersUpdate), params.UserHandler.Update)
-		user.PATCH("/:id/password", requirePermissionName(permissionEnum.UsersUpdate), params.UserHandler.UpdatePassword)
+		// ! Deprecated
+		// user.PATCH("/:id/password", requirePermissionName(permissionEnum.UsersUpdate), params.UserHandler.UpdatePassword)
 		user.PATCH("/:id/activation/toggle", requirePermissionName(permissionEnum.UsersUpdate), params.UserHandler.ToggleActivation)
 		user.DELETE("/:id", requirePermissionName(permissionEnum.UsersDestroy), params.UserHandler.Destroy)
 

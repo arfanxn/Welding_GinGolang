@@ -1,6 +1,7 @@
 package http
 
 import (
+	"errors"
 	"net/http"
 	"time"
 
@@ -8,16 +9,15 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/http/response"
 	"github.com/arfanxn/welding/internal/module/shared/contextkey"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
+	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
 	"github.com/arfanxn/welding/internal/module/user/presentation/http/request"
 	"github.com/arfanxn/welding/internal/module/user/usecase"
 	"github.com/arfanxn/welding/internal/module/user/usecase/dto"
 	"github.com/arfanxn/welding/pkg/boolutil"
-	"github.com/arfanxn/welding/pkg/errorutil"
+	"github.com/arfanxn/welding/pkg/httperror"
 	"github.com/arfanxn/welding/pkg/pagination"
 	"github.com/arfanxn/welding/pkg/query"
 	"github.com/gin-gonic/gin"
-	"github.com/guregu/null/v6"
-	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -28,12 +28,13 @@ type UserHandler interface {
 	Login(c *gin.Context)
 	Logout(c *gin.Context)
 	Me(c *gin.Context)
-	Find(c *gin.Context)
+	Show(c *gin.Context)
 	Paginate(c *gin.Context)
 	Store(c *gin.Context)
 	Update(c *gin.Context)
 	UpdateMeProfile(c *gin.Context)
-	UpdatePassword(c *gin.Context)
+	// ! Deprecated
+	// UpdatePassword(c *gin.Context)
 	UpdateMePassword(c *gin.Context)
 	ToggleActivation(c *gin.Context)
 	Destroy(c *gin.Context)
@@ -60,10 +61,22 @@ func (h *userHandler) Register(c *gin.Context) {
 		PhoneNumber:              req.PhoneNumber,
 		Email:                    req.Email,
 		Password:                 req.Password,
-		InvitationCode:           boolutil.Ternary(req.InvitationCode != "", null.StringFrom(req.InvitationCode), null.String{}),
-		EmploymentIdentityNumber: boolutil.Ternary(req.EmploymentIdentityNumber != "", null.StringFrom(req.EmploymentIdentityNumber), null.String{}),
+		InvitationCode:           req.InvitationCode,
+		EmploymentIdentityNumber: req.EmploymentIdentityNumber,
 	})
 	if err != nil {
+		if errors.Is(err, errorx.ErrCodeNotFound) {
+			httperror.Panic(http.StatusBadRequest, "Kode undangan tidak ditemukan", nil)
+		}
+		if errors.Is(err, errorx.ErrCodeAlreadyUsed) {
+			httperror.Panic(http.StatusBadRequest, "Kode undangan sudah digunakan", nil)
+		}
+		if errors.Is(err, errorx.ErrCodeExpired) {
+			httperror.Panic(http.StatusBadRequest, "Kode undangan sudah expired", nil)
+		}
+		if errors.Is(err, errorx.ErrRoleDefaultNotConfigured) {
+			httperror.Panic(http.StatusBadRequest, "Role default belum dikonfigurasi", nil)
+		}
 		panic(err)
 	}
 
@@ -83,6 +96,21 @@ func (h *userHandler) VerifyEmail(c *gin.Context) {
 		Code:  req.Code,
 	})
 	if err != nil {
+		if errors.Is(err, errorx.ErrCodeNotFound) {
+			httperror.Panic(http.StatusBadRequest, "Kode verifikasi salah", nil)
+		}
+		if errors.Is(err, errorx.ErrCodeAlreadyUsed) {
+			httperror.Panic(http.StatusBadRequest, "Kode verifikasi sudah digunakan", nil)
+		}
+		if errors.Is(err, errorx.ErrCodeExpired) {
+			httperror.Panic(http.StatusBadRequest, "Kode verifikasi sudah kadaluarsa", nil)
+		}
+		if errors.Is(err, errorx.ErrUserNotFound) {
+			httperror.Panic(http.StatusNotFound, "User tidak ditemukan", nil)
+		}
+		if errors.Is(err, errorx.ErrUserEmailAlreadyVerified) {
+			httperror.Panic(http.StatusBadRequest, "Email sudah diverifikasi", nil)
+		}
 		panic(err)
 	}
 
@@ -103,6 +131,18 @@ func (h *userHandler) ResetPassword(c *gin.Context) {
 		Password: req.Password,
 	})
 	if err != nil {
+		if errors.Is(err, errorx.ErrCodeNotFound) {
+			httperror.Panic(http.StatusBadRequest, "Kode reset password salah", nil)
+		}
+		if errors.Is(err, errorx.ErrCodeAlreadyUsed) {
+			httperror.Panic(http.StatusBadRequest, "Kode reset password sudah digunakan", nil)
+		}
+		if errors.Is(err, errorx.ErrCodeExpired) {
+			httperror.Panic(http.StatusBadRequest, "Kode reset password sudah kadaluarsa", nil)
+		}
+		if errors.Is(err, errorx.ErrUserNotFound) {
+			httperror.Panic(http.StatusNotFound, "User tidak ditemukan", nil)
+		}
 		panic(err)
 	}
 
@@ -122,6 +162,9 @@ func (h *userHandler) Login(c *gin.Context) {
 		Password: req.Password,
 	})
 	if err != nil {
+		if errors.Is(err, errorx.ErrUserPasswordIncorrect) {
+			httperror.Panic(http.StatusUnauthorized, "Email atau password salah", nil)
+		}
 		panic(err)
 	}
 
@@ -143,7 +186,7 @@ func (h *userHandler) Me(c *gin.Context) {
 	q.FilterById(userId)
 	c.ShouldBind(q)
 
-	user, err := h.userUsecase.Find(c.Request.Context(), q)
+	user, err := h.userUsecase.Show(c.Request.Context(), q)
 	if err != nil {
 		panic(err)
 	}
@@ -151,13 +194,16 @@ func (h *userHandler) Me(c *gin.Context) {
 	c.JSON(http.StatusOK, response.NewBodyWithData(http.StatusOK, "User berhasil diambil", gin.H{"user": user}))
 }
 
-func (h *userHandler) Find(c *gin.Context) {
+func (h *userHandler) Show(c *gin.Context) {
 	q := query.NewQuery()
 	q.FilterById(c.Param("id"))
 	c.ShouldBind(q)
 
-	user, err := h.userUsecase.Find(c.Request.Context(), q)
+	user, err := h.userUsecase.Show(c.Request.Context(), q)
 	if err != nil {
+		if errors.Is(err, errorx.ErrUserNotFound) {
+			httperror.Panic(http.StatusNotFound, "User tidak ditemukan", nil)
+		}
 		panic(err)
 	}
 
@@ -188,16 +234,27 @@ func (h *userHandler) Store(c *gin.Context) {
 	req := &request.StoreUser{}
 	helper.MustBindValidate(c, req)
 
-	user, err := h.userUsecase.Save(c.Request.Context(), &dto.SaveUser{
-		Name:                     req.Name,
-		PhoneNumber:              req.PhoneNumber,
-		Email:                    req.Email,
-		Password:                 req.Password,
-		ActivatedAt:              null.TimeFrom(time.Now()),
+	activatedAt := time.Now()
+
+	user, err := h.userUsecase.Store(c.Request.Context(), &dto.SaveUser{
+		Name:                     &req.Name,
+		PhoneNumber:              &req.PhoneNumber,
+		Email:                    &req.Email,
+		Password:                 &req.Password,
+		ActivatedAt:              &activatedAt,
 		RoleIds:                  req.RoleIds,
-		EmploymentIdentityNumber: null.NewString(req.EmploymentIdentityNumber, req.EmploymentIdentityNumber != ""),
+		EmploymentIdentityNumber: req.EmploymentIdentityNumber,
 	})
 	if err != nil {
+		if errors.Is(err, errorx.ErrRolesNotFound) {
+			httperror.Panic(http.StatusBadRequest, "Satu atau lebih role tidak ditemukan", nil)
+		}
+		if errors.Is(err, errorx.ErrUserSuperAdminAssignmentForbidden) {
+			httperror.Panic(http.StatusForbidden, "Role super admin tidak dapat ditambahkan", nil)
+		}
+		if errors.Is(err, errorx.ErrUserAlreadyExists) {
+			httperror.Panic(http.StatusConflict, "User sudah ada", nil)
+		}
 		panic(err)
 	}
 
@@ -213,16 +270,34 @@ func (h *userHandler) Update(c *gin.Context) {
 	req.Id = c.Param("id")
 	helper.MustBindValidate(c, req)
 
-	user, err := h.userUsecase.Save(c.Request.Context(), &dto.SaveUser{
-		Id:                       null.StringFrom(req.Id),
+	user, err := h.userUsecase.Update(c.Request.Context(), &dto.SaveUser{
+		Id:                       &req.Id,
 		Name:                     req.Name,
 		PhoneNumber:              req.PhoneNumber,
 		Email:                    req.Email,
 		Password:                 req.Password,
 		RoleIds:                  req.RoleIds,
-		EmploymentIdentityNumber: null.NewString(req.EmploymentIdentityNumber, req.EmploymentIdentityNumber != ""),
+		EmploymentIdentityNumber: req.EmploymentIdentityNumber,
 	})
 	if err != nil {
+		if errors.Is(err, errorx.ErrUserNotFound) {
+			httperror.Panic(http.StatusNotFound, "User tidak ditemukan", nil)
+		}
+		if errors.Is(err, errorx.ErrRolesNotFound) {
+			httperror.Panic(http.StatusBadRequest, "Satu atau lebih role tidak ditemukan", nil)
+		}
+		if errors.Is(err, errorx.ErrUserSuperAdminCannotBeModified) {
+			httperror.Panic(http.StatusForbidden, "User super admin tidak dapat diubah", nil)
+		}
+		if errors.Is(err, errorx.ErrUserSuperAdminRoleCannotBeChanged) {
+			httperror.Panic(http.StatusForbidden, "User super admin tidak dapat mengubah role", nil)
+		}
+		if errors.Is(err, errorx.ErrUserSuperAdminAssignmentForbidden) {
+			httperror.Panic(http.StatusForbidden, "Role super admin tidak dapat ditambahkan", nil)
+		}
+		if errors.Is(err, errorx.ErrUserAlreadyExists) {
+			httperror.Panic(http.StatusConflict, "User sudah ada", nil)
+		}
 		panic(err)
 	}
 
@@ -239,14 +314,17 @@ func (h *userHandler) UpdateMeProfile(c *gin.Context) {
 
 	user := c.MustGet(contextkey.UserKey).(*entity.User)
 
-	user, err := h.userUsecase.Save(c.Request.Context(), &dto.SaveUser{
-		Id:                       null.StringFrom(user.Id),
+	user, err := h.userUsecase.Update(c.Request.Context(), &dto.SaveUser{
+		Id:                       &user.Id,
 		Name:                     req.Name,
 		PhoneNumber:              req.PhoneNumber,
 		Email:                    req.Email,
-		EmploymentIdentityNumber: null.NewString(req.EmploymentIdentityNumber, req.EmploymentIdentityNumber != ""),
+		EmploymentIdentityNumber: req.EmploymentIdentityNumber,
 	})
 	if err != nil {
+		if errors.Is(err, errorx.ErrUserAlreadyExists) {
+			httperror.Panic(http.StatusConflict, "User sudah ada", nil)
+		}
 		panic(err)
 	}
 
@@ -257,14 +335,16 @@ func (h *userHandler) UpdateMeProfile(c *gin.Context) {
 	))
 }
 
+/*
+! Deprecated
 func (h *userHandler) UpdatePassword(c *gin.Context) {
 	req := &request.UpdateUserPassword{}
 	req.Id = c.Param("id")
 	helper.MustBindValidate(c, req)
 
 	user, err := h.userUsecase.Save(c.Request.Context(), &dto.SaveUser{
-		Id:       null.StringFrom(req.Id),
-		Password: req.Password,
+		Id:       &req.Id,
+		Password: &req.Password,
 	})
 	if err != nil {
 		panic(err)
@@ -276,26 +356,22 @@ func (h *userHandler) UpdatePassword(c *gin.Context) {
 		gin.H{"user": user},
 	))
 }
+*/
 
 func (h *userHandler) UpdateMePassword(c *gin.Context) {
 	// Bind and validate the request payload
 	req := &request.UpdateUserMePassword{}
 	helper.MustBindValidate(c, req)
 
-	// Get the authenticated user from context
-	user := c.MustGet(contextkey.UserKey).(*entity.User)
-
-	// Verify current password matches
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.CurrentPassword)); err != nil {
-		panic(errorutil.NewHttpError(http.StatusBadRequest, "Password saat ini salah", nil))
-	}
-
 	// Update user's password
-	user, err := h.userUsecase.Save(c.Request.Context(), &dto.SaveUser{
-		Id:       null.StringFrom(user.Id),
-		Password: req.Password,
+	user, err := h.userUsecase.UpdateMePassword(c.Request.Context(), &dto.UpdateUserMePassword{
+		CurrentPassword: req.CurrentPassword,
+		Password:        req.Password,
 	})
 	if err != nil {
+		if errors.Is(err, errorx.ErrUserPasswordIncorrect) {
+			httperror.Panic(http.StatusBadRequest, "Password saat ini tidak sesuai", nil)
+		}
 		panic(err)
 	}
 
@@ -314,6 +390,12 @@ func (h *userHandler) ToggleActivation(c *gin.Context) {
 
 	user, err := h.userUsecase.ToggleActivation(c.Request.Context(), &dto.ToggleActivation{Id: req.Id})
 	if err != nil {
+		if errors.Is(err, errorx.ErrUserNotFound) {
+			httperror.Panic(http.StatusNotFound, "User tidak ditemukan", nil)
+		}
+		if errors.Is(err, errorx.ErrUserSuperAdminCannotBeModified) {
+			httperror.Panic(http.StatusForbidden, "User super admin tidak dapat diubah", nil)
+		}
 		panic(err)
 	}
 
@@ -333,6 +415,12 @@ func (h *userHandler) Destroy(c *gin.Context) {
 
 	err := h.userUsecase.Destroy(c.Request.Context(), &dto.DestroyUser{Id: req.Id})
 	if err != nil {
+		if errors.Is(err, errorx.ErrUserNotFound) {
+			httperror.Panic(http.StatusNotFound, "User tidak ditemukan", nil)
+		}
+		if errors.Is(err, errorx.ErrUserSuperAdminCannotBeModified) {
+			httperror.Panic(http.StatusForbidden, "User super admin tidak dapat dihapus", nil)
+		}
 		panic(err)
 	}
 

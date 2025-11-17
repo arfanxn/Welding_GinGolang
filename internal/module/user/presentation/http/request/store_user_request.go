@@ -11,7 +11,7 @@ type StoreUser struct {
 	Email                    string   `form:"email" json:"email"`
 	Password                 string   `form:"password" json:"password"`
 	RoleIds                  []string `form:"role_id" json:"role_ids"`
-	EmploymentIdentityNumber string   `form:"employment_identity_number" json:"employment_identity_number"`
+	EmploymentIdentityNumber *string  `form:"employment_identity_number" json:"employment_identity_number"`
 }
 
 func (r *StoreUser) Validate() error {

@@ -7,13 +7,13 @@ import (
 )
 
 type RegisterUser struct {
-	Name                     string `form:"name" json:"name"`
-	PhoneNumber              string `form:"phone_number" json:"phone_number"`
-	Email                    string `form:"email" json:"email"`
-	Password                 string `form:"password" json:"password"`
-	PasswordConfirmation     string `form:"password_confirmation" json:"password_confirmation"`
-	InvitationCode           string `form:"invitation_code" json:"invitation_code"`
-	EmploymentIdentityNumber string `form:"employment_identity_number" json:"employment_identity_number"`
+	Name                     string  `form:"name" json:"name"`
+	PhoneNumber              string  `form:"phone_number" json:"phone_number"`
+	Email                    string  `form:"email" json:"email"`
+	Password                 string  `form:"password" json:"password"`
+	PasswordConfirmation     string  `form:"password_confirmation" json:"password_confirmation"`
+	InvitationCode           *string `form:"invitation_code" json:"invitation_code"`
+	EmploymentIdentityNumber *string `form:"employment_identity_number" json:"employment_identity_number"`
 }
 
 func (r *RegisterUser) Validate() error {

@@ -7,12 +7,12 @@ import (
 
 type UpdateUser struct {
 	Id                       string   `form:"id" json:"id"`
-	Name                     string   `form:"name" json:"name"`
-	PhoneNumber              string   `form:"phone_number" json:"phone_number"`
-	Email                    string   `form:"email" json:"email"`
-	Password                 string   `form:"password" json:"password"`
+	Name                     *string  `form:"name" json:"name"`
+	PhoneNumber              *string  `form:"phone_number" json:"phone_number"`
+	Email                    *string  `form:"email" json:"email"`
+	Password                 *string  `form:"password" json:"password"`
 	RoleIds                  []string `form:"role_id" json:"role_ids"`
-	EmploymentIdentityNumber string   `form:"employment_identity_number" json:"employment_identity_number"`
+	EmploymentIdentityNumber *string  `form:"employment_identity_number" json:"employment_identity_number"`
 }
 
 func (r *UpdateUser) Validate() error {
@@ -41,7 +41,9 @@ func (r *UpdateUser) Validate() error {
 			),
 		),
 		validation.Field(&r.EmploymentIdentityNumber,
-			validation.Length(10, 50).Error("Panjang NIP harus antara 10-50 karakter"),
+			validation.When(r.EmploymentIdentityNumber != nil,
+				validation.Length(10, 50).Error("Panjang NIP harus antara 10-50 karakter"),
+			),
 		),
 	)
 }

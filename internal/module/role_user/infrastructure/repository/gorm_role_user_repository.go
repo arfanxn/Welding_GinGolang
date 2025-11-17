@@ -25,3 +25,15 @@ func (r *GormRoleUserRepository) Save(roleUser *entity.RoleUser) error {
 func (r *GormRoleUserRepository) SaveMany(roleUsers []*entity.RoleUser) error {
 	return r.db.CreateInBatches(roleUsers, 100).Error
 }
+
+func (r *GormRoleUserRepository) DestroyByUserId(userId string) error {
+	return r.db.Delete(&entity.RoleUser{}, "user_id = ?", userId).Error
+}
+
+func (r *GormRoleUserRepository) Destroy(roleUser *entity.RoleUser) error {
+	return r.db.Delete(roleUser).Error
+}
+
+func (r *GormRoleUserRepository) DestroyMany(roleUsers []*entity.RoleUser) error {
+	return r.db.Delete(roleUsers).Error
+}

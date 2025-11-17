@@ -8,13 +8,9 @@ import (
 	"github.com/brianvoe/gofakeit/v7"
 	"github.com/gookit/goutil"
 	"github.com/guregu/null/v6"
-	"github.com/oklog/ulid/v2"
 )
 
 var EmployeeFactory = factory.NewFactory(&entity.Employee{}).
-	Attr("UserId", func(args factory.Args) (any, error) {
-		return ulid.Make().String(), nil
-	}).
 	Attr("EmploymentIdentityNumber", func(args factory.Args) (any, error) {
 		return goutil.ToString(gofakeit.IntRange(100000000000000000, 900000000000000000))
 	}).

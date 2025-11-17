@@ -11,6 +11,7 @@ import (
 type UserRepository interface {
 	Get(query *query.Query) ([]*entity.User, error)
 	Paginate(query *query.Query) (*pagination.OffsetPagination[*entity.User], error)
+	First(query *query.Query) (*entity.User, error)
 	Find(id string) (*entity.User, error)
 	FindByEmail(email string) (*entity.User, error)
 	HasPermissionNames(user *entity.User, permissionNames []permissionEnum.PermissionName) (bool, error)

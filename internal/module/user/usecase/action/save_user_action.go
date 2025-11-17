@@ -2,95 +2,191 @@ package action
 
 import (
 	"context"
-	"errors"
-	"net/http"
 
+	"github.com/arfanxn/welding/internal/infrastructure/id"
+	"github.com/arfanxn/welding/internal/infrastructure/security"
+	employeeRepository "github.com/arfanxn/welding/internal/module/employee/domain/repository"
 	roleRepository "github.com/arfanxn/welding/internal/module/role/domain/repository"
+	roleUserRepository "github.com/arfanxn/welding/internal/module/role_user/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	userRepository "github.com/arfanxn/welding/internal/module/user/domain/repository"
 	"github.com/arfanxn/welding/internal/module/user/usecase/dto"
-	"github.com/arfanxn/welding/pkg/errorutil"
+	"github.com/arfanxn/welding/pkg/query"
 	"github.com/gookit/goutil"
 	"github.com/guregu/null/v6"
 	"github.com/samber/lo"
-	"gorm.io/gorm"
+	"go.uber.org/fx"
 )
 
 type SaveUserAction interface {
-	Handle(ctx context.Context, user *entity.User, _dto *dto.SaveUser) (*entity.User, error)
+	Handle(ctx context.Context, _dto *dto.SaveUser) (*entity.User, error)
 }
 
 type saveUserAction struct {
-	userRepository userRepository.UserRepository
-	roleRepository roleRepository.RoleRepository
+	passwordService security.PasswordService
+	idService       id.IdService
+
+	userRepository     userRepository.UserRepository
+	employeeRepository employeeRepository.EmployeeRepository
+	roleRepository     roleRepository.RoleRepository
+	roleUserRepository roleUserRepository.RoleUserRepository
 }
 
-func NewSaveUserAction(
-	userRepository userRepository.UserRepository,
-	roleRepository roleRepository.RoleRepository,
-) SaveUserAction {
+type NewSaveUserActionParams struct {
+	fx.In
+
+	IdService       id.IdService
+	PasswordService security.PasswordService
+
+	UserRepository     userRepository.UserRepository
+	EmployeeRepository employeeRepository.EmployeeRepository
+	RoleRepository     roleRepository.RoleRepository
+	RoleUserRepository roleUserRepository.RoleUserRepository
+}
+
+func NewSaveUserAction(params NewSaveUserActionParams) SaveUserAction {
 	return &saveUserAction{
-		userRepository: userRepository,
-		roleRepository: roleRepository,
+		passwordService: params.PasswordService,
+		idService:       params.IdService,
+
+		userRepository:     params.UserRepository,
+		employeeRepository: params.EmployeeRepository,
+		roleRepository:     params.RoleRepository,
+		roleUserRepository: params.RoleUserRepository,
 	}
 }
 
-func (a *saveUserAction) Handle(ctx context.Context, user *entity.User, _dto *dto.SaveUser) (*entity.User, error) {
-	var err error
+// Handle saves or updates a user based on the provided DTO.
+// It handles both creating new users and updating existing users, including:
+// - Basic user information (name, phone, email, password)
+// - Account activation/deactivation status
+// - User role assignments
+// - Employee association with employment identity number
+//
+// Parameters:
+//   - ctx: Context for the operation
+//   - _dto: SaveUser DTO containing user data to save
+//
+// Returns:
+//   - *entity.User: The saved/updated user with all associations
+//   - error: Any error encountered during the operation
+func (a *saveUserAction) Handle(ctx context.Context, _dto *dto.SaveUser) (*entity.User, error) {
+	// Initialize query and include relationships
+	var (
+		q      = query.NewQuery()
+		user   *entity.User
+		userId string
+		err    error
+	)
 
-	if user == nil {
-		if _dto.Id.Valid {
-			user, err = a.userRepository.Find(_dto.Id.String)
-			if err != nil {
-				if errors.Is(err, gorm.ErrRecordNotFound) {
-					return nil, errorutil.NewHttpError(http.StatusNotFound, "User not found", nil)
-				}
-				return nil, err
-			}
-		} else {
-			user = entity.NewUser()
+	// Conditionally include Employee relationship only when employee data is provided
+	// This optimizes database queries by avoiding unnecessary JOIN operations
+	if !(goutil.IsEmptyReal(_dto.EmploymentIdentityNumber)) {
+		q.Include("Employee")
+	}
+
+	// Conditionally include Roles relationship only when role assignments are provided
+	// This optimizes database queries by avoiding unnecessary JOIN operations
+	if !goutil.IsEmptyReal(_dto.RoleIds) {
+		q.Include("Roles")
+	}
+
+	// Retrieve existing user or create new one
+	if !goutil.IsEmptyReal(_dto.Id) {
+		// Update scenario: fetch existing user
+		userId = *_dto.Id
+		q = q.FilterById(userId)
+		user, err = a.userRepository.First(q)
+		if err != nil {
+			return nil, err
 		}
+	} else {
+		// Create scenario: initialize new user with generated ID
+		userId = a.idService.Generate()
+		q = q.FilterById(userId)
+		user = &entity.User{Id: userId}
 	}
 
-	if !goutil.IsEmpty(_dto.Name) {
-		user.Name = _dto.Name
+	// Update basic user information if provided
+	if !goutil.IsEmptyReal(_dto.Name) {
+		user.Name = *_dto.Name
 	}
-	if !goutil.IsEmpty(_dto.PhoneNumber) {
-		user.PhoneNumber = _dto.PhoneNumber
+	if !goutil.IsEmptyReal(_dto.PhoneNumber) {
+		user.PhoneNumber = *_dto.PhoneNumber
 	}
-	if !goutil.IsEmpty(_dto.Email) {
-		if user.Email != _dto.Email {
+
+	// Handle email update - reset email verification if email changed
+	if !goutil.IsEmptyReal(_dto.Email) {
+		if user.Email != *_dto.Email {
 			user.EmailVerifiedAt = null.TimeFromPtr(nil)
 		}
-		user.Email = _dto.Email
+		user.Email = *_dto.Email
 	}
-	if !goutil.IsEmpty(_dto.Password) {
-		if err := user.SetPassword(_dto.Password); err != nil {
+
+	// Handle password update with hashing
+	if !goutil.IsEmptyReal(_dto.Password) {
+		user.Password, err = a.passwordService.Hash(*_dto.Password)
+		if err != nil {
 			return nil, err
 		}
 	}
-	if _dto.ActivatedAt.Valid {
-		user.ActivatedAt = _dto.ActivatedAt
+
+	// Handle account activation/deactivation
+	if !goutil.IsEmptyReal(_dto.ActivatedAt) {
+		user.ActivatedAt = null.TimeFromPtr(_dto.ActivatedAt)
 		user.DeactivatedAt = null.TimeFromPtr(nil)
 	}
-	if _dto.DeactivatedAt.Valid {
+	if !goutil.IsEmptyReal(_dto.DeactivatedAt) {
 		user.ActivatedAt = null.TimeFromPtr(nil)
-		user.DeactivatedAt = _dto.DeactivatedAt
+		user.DeactivatedAt = null.TimeFromPtr(_dto.DeactivatedAt)
 	}
 
-	user.SetEmploymentIdentityNumber(_dto.EmploymentIdentityNumber)
-
-	if len(_dto.RoleIds) > 0 {
-		user.Roles = lo.Map(_dto.RoleIds, func(roleId string, _ int) *entity.Role {
-			return &entity.Role{Id: roleId}
-
-		})
-	}
-
+	// Save user basic information
 	if err := a.userRepository.Save(user); err != nil {
-		if errors.Is(err, gorm.ErrDuplicatedKey) {
-			return nil, errorutil.NewHttpError(http.StatusConflict, "User already exists", nil)
+		return nil, err
+	}
+
+	// Handle role assignments - replace all existing roles with new ones
+	if _dto.RoleIds != nil {
+		// Remove all existing role associations for this user
+		if err := a.roleUserRepository.DestroyByUserId(user.Id); err != nil {
+			return nil, err
 		}
+
+		if !goutil.IsEmptyReal(_dto.RoleIds[0]) {
+			// Create new role associations
+			rus := lo.Map(_dto.RoleIds, func(roleId string, _ int) *entity.RoleUser {
+				return &entity.RoleUser{RoleId: roleId, UserId: user.Id}
+			})
+			if err := a.roleUserRepository.SaveMany(rus); err != nil {
+				return nil, err
+			}
+		}
+	}
+
+	// Handle employee association based on employment identity number
+	if _dto.EmploymentIdentityNumber != nil {
+		if !(goutil.IsEmptyReal(_dto.EmploymentIdentityNumber)) {
+			// Create or update employee record
+			if user.Employee == nil {
+				user.Employee = &entity.Employee{UserId: user.Id}
+			}
+			user.Employee.EmploymentIdentityNumber = *_dto.EmploymentIdentityNumber
+			if err := a.employeeRepository.Save(user.Employee); err != nil {
+				return nil, err
+			}
+		} else {
+			// Remove employee record if employment identity number is empty
+			if err := a.employeeRepository.DestroyByUserId(user.Id); err != nil {
+				return nil, err
+			}
+			user.Employee = nil
+		}
+	}
+
+	// Fetch complete user with all associations to return
+	user, err = a.userRepository.First(q)
+	if err != nil {
 		return nil, err
 	}
 

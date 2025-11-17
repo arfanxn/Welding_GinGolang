@@ -3,12 +3,7 @@ package entity
 import (
 	"time"
 
-	"github.com/arfanxn/welding/pkg/boolutil"
-	"github.com/gookit/goutil"
 	"github.com/guregu/null/v6"
-	"github.com/oklog/ulid/v2"
-	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
 )
 
 type User struct {
@@ -28,7 +23,7 @@ type User struct {
 	Employee *Employee `json:"employee,omitempty" gorm:"foreignKey:UserId;references:Id"`
 
 	// Joins
-	EmploymentIdentityNumber null.String `json:"employment_identity_number,omitempty" gorm:"->"`
+	EmploymentIdentityNumber *null.String `json:"employment_identity_number,omitempty" gorm:"->"`
 }
 
 func NewUser() *User {
@@ -39,33 +34,6 @@ func (u User) TableName() string {
 	return "users"
 }
 
-func (u *User) BeforeSave(tx *gorm.DB) error {
-	if goutil.IsEmpty(u.Id) {
-		u.Id = ulid.Make().String()
-	}
-	return nil
-}
-
-func (u *User) SetPassword(password string) error {
-	hashedPasswordBytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	if err != nil {
-		return err
-	}
-	u.Password = string(hashedPasswordBytes)
-	return nil
-}
-
-func (u *User) SetEmploymentIdentityNumber(ein null.String) {
-	u.Employee = boolutil.Ternary(ein.Valid,
-		&Employee{
-			UserId:                   u.Id,
-			EmploymentIdentityNumber: ein.String,
-		},
-		nil,
-	)
-	u.EmploymentIdentityNumber = ein
-}
-
 func (u *User) MarkActivated() {
 	u.ActivatedAt = null.TimeFrom(time.Now())
 	u.DeactivatedAt = null.TimeFromPtr(nil)
@@ -74,6 +42,10 @@ func (u *User) MarkActivated() {
 func (u *User) MarkDeactivated() {
 	u.ActivatedAt = null.TimeFromPtr(nil)
 	u.DeactivatedAt = null.TimeFrom(time.Now())
+}
+
+func (u *User) MarkEmailVerified() {
+	u.EmailVerifiedAt = null.TimeFrom(time.Now())
 }
 
 func (u User) IsEmailVerified() bool {

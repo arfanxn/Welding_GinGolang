@@ -104,6 +104,21 @@ func (q *Query) FilterById(id string) *Query {
 	return q
 }
 
+func (q *Query) Filter(column, operator, value string) *Query {
+	q.Filters = append(q.Filters, column+operator+value)
+	return q
+}
+
+func (q *Query) Include(include string) *Query {
+	q.Includes = append(q.Includes, include)
+	return q
+}
+
+func (q *Query) Sort(column, order string) *Query {
+	q.Sorts = append(q.Sorts, column+order)
+	return q
+}
+
 func (q *Query) GetFilterById() *Filter {
 	return q.GetFilter("id", OperatorEqual)
 }

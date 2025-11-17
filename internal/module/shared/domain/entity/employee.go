@@ -8,7 +8,7 @@ import (
 )
 
 type Employee struct {
-	UserId                   string    `json:"user_id" gorm:"primarykey"`
+	UserId                   string    `json:"user_id" gorm:"primaryKey"`
 	EmploymentIdentityNumber string    `json:"employment_identity_number"`
 	CreatedAt                time.Time `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt                null.Time `json:"updated_at" gorm:"autoUpdateTime"`
