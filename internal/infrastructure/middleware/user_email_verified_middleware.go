@@ -7,7 +7,7 @@ import (
 	"github.com/arfanxn/welding/internal/module/shared/contextkey"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	userRepository "github.com/arfanxn/welding/internal/module/user/domain/repository"
-	"github.com/arfanxn/welding/pkg/errorutil"
+	"github.com/arfanxn/welding/pkg/httperror"
 	"github.com/gin-gonic/gin"
 )
 
@@ -51,11 +51,11 @@ func (m *userEmailVerifiedMiddleware) MiddlewareFunc() gin.HandlerFunc {
 
 		// Enforce email verification for non-SuperAdmin users
 		if !isSuperAdmin && !user.IsEmailVerified() {
-			panic(errorutil.NewHttpError(
+			httperror.Panic(
 				http.StatusUnauthorized,
 				"Email belum terverifikasi, silahkan verifikasi email Anda",
 				nil,
-			))
+			)
 		}
 
 		// Proceed to the next handler if all checks pass

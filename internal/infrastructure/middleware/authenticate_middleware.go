@@ -8,8 +8,9 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/http/jwt"
 	"github.com/arfanxn/welding/internal/module/shared/contextkey"
 	userRepository "github.com/arfanxn/welding/internal/module/user/domain/repository"
-	"github.com/arfanxn/welding/pkg/errorutil"
+	"github.com/arfanxn/welding/pkg/httperror"
 	"github.com/gin-gonic/gin"
+	"github.com/gookit/goutil"
 	"go.uber.org/fx"
 )
 
@@ -46,33 +47,33 @@ func (m *authenticateMiddleware) MiddlewareFunc() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 1. Get the Authorization header from the request
 		authHeader := c.GetHeader("Authorization")
-		if authHeader == "" {
-			panic(errorutil.NewHttpError(http.StatusUnauthorized, "Header Authorization diperlukan", nil))
+		if goutil.IsEmpty(authHeader) {
+			httperror.Panic(http.StatusUnauthorized, "Header Authorization diperlukan", nil)
 		}
 
 		// 2. Extract and validate the Bearer token format
 		// Expected format: "Bearer <token>"
 		tokenParts := strings.Split(authHeader, " ")
 		if len(tokenParts) != 2 || strings.ToLower(tokenParts[0]) != "bearer" {
-			panic(errorutil.NewHttpError(http.StatusUnauthorized, "Format header Authorization tidak valid. Format yang benar: Bearer <token>", nil))
+			httperror.Panic(http.StatusUnauthorized, "Format header Authorization tidak valid. Format yang benar: Bearer <token>", nil)
 		}
 
 		// 3. Verify the JWT token and extract claims
 		tokenStr := tokenParts[1]
 		claims, err := m.JWTService.VerifyToken(tokenStr)
 		if err != nil {
-			panic(errorutil.NewHttpError(http.StatusUnauthorized, "Token tidak valid atau sudah kadaluarsa", nil))
+			httperror.Panic(http.StatusUnauthorized, "Token tidak valid atau sudah kadaluarsa", nil)
 		}
 
 		// 4. Verify that the user exists in the database
 		user, err := m.UserRepository.Find(claims.UserID)
 		if err != nil {
-			panic(errorutil.NewHttpError(http.StatusUnauthorized, "User tidak ditemukan", nil))
+			httperror.Panic(http.StatusUnauthorized, "User tidak ditemukan", nil)
 		}
 
 		// 5. Check if the user account is active
 		if !user.IsActive() {
-			panic(errorutil.NewHttpError(http.StatusUnauthorized, "User tidak aktif, silahkan hubungi admin", nil))
+			httperror.Panic(http.StatusUnauthorized, "User tidak aktif, silahkan hubungi admin", nil)
 		}
 
 		// 6. Store user information in both Gin context and request context

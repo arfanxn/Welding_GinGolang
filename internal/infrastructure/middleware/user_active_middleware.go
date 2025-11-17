@@ -5,7 +5,7 @@ import (
 
 	"github.com/arfanxn/welding/internal/module/shared/contextkey"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
-	"github.com/arfanxn/welding/pkg/errorutil"
+	"github.com/arfanxn/welding/pkg/httperror"
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,7 +29,7 @@ func (m *userActiveMiddleware) MiddlewareFunc() gin.HandlerFunc {
 
 		// Check if the user account is active
 		if !user.IsActive() {
-			panic(errorutil.NewHttpError(http.StatusUnauthorized, "User tidak aktif, silahkan hubungi admin", nil))
+			httperror.Panic(http.StatusUnauthorized, "User tidak aktif, silahkan hubungi admin", nil)
 		}
 
 		c.Next()

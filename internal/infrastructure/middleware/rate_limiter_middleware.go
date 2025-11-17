@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 
-	"github.com/arfanxn/welding/pkg/errorutil"
+	"github.com/arfanxn/welding/pkg/httperror"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/time/rate"
 )
@@ -26,13 +26,7 @@ func NewRateLimiterMiddleware() RateLimiterMiddleware {
 func (r *rateLimiterMiddleware) MiddlewareFunc() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if !r.limiter.Allow() {
-			panic(
-				errorutil.NewHttpError(
-					http.StatusTooManyRequests,
-					"Terlalu banyak permintaan",
-					nil,
-				),
-			)
+			httperror.Panic(http.StatusTooManyRequests, "Terlalu banyak permintaan", nil)
 		}
 
 		c.Next()

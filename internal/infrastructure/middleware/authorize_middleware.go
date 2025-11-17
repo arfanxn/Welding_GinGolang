@@ -7,7 +7,7 @@ import (
 	"github.com/arfanxn/welding/internal/module/shared/contextkey"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	userRepository "github.com/arfanxn/welding/internal/module/user/domain/repository"
-	"github.com/arfanxn/welding/pkg/errorutil"
+	"github.com/arfanxn/welding/pkg/httperror"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/fx"
 )
@@ -46,7 +46,7 @@ func (m *authorizeMiddleware) RequirePermissionNames(
 		}
 
 		if !hasPermissions {
-			panic(errorutil.NewHttpError(http.StatusForbidden, "User tidak memiliki hak akses", nil))
+			httperror.Panic(http.StatusForbidden, "User tidak memiliki hak akses", nil)
 		}
 
 		c.Next()
