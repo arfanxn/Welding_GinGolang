@@ -9,15 +9,34 @@ import (
 )
 
 type Config struct {
-	AppName     string `env:"APP_NAME"`
-	AppHost     string `env:"APP_HOST"`
-	AppPort     string `env:"APP_PORT"`
-	GinMode     string `env:"GIN_MODE"`
+	// App
+	AppName string `env:"APP_NAME"`
+	AppHost string `env:"APP_HOST"`
+	AppPort string `env:"APP_PORT"`
+
+	// Gin
+	GinMode string `env:"GIN_MODE"`
+
+	// Database
 	PostgresDSN string `env:"POSTGRES_DSN"`
+
+	// Log
 	LogLevel    string `env:"LOG_LEVEL"`
 	LogFilepath string `env:"LOG_FILEPATH"`
+
+	// JWT
 	JWTSecret   string `env:"JWT_SECRET"`
 	JWTDuration int    `env:"JWT_DURATION"`
+
+	// Mail
+	MailHost        string `env:"MAIL_HOST"`
+	MailPort        int    `env:"MAIL_PORT"`
+	MailIdentity    string `env:"MAIL_IDENTITY"`
+	MailUsername    string `env:"MAIL_USERNAME"`
+	MailPassword    string `env:"MAIL_PASSWORD"`
+	MailEncryption  string `env:"MAIL_ENCRYPTION"`
+	MailFromAddress string `env:"MAIL_FROM_ADDRESS"`
+	MailFromName    string `env:"MAIL_FROM_NAME"`
 }
 
 // NewConfigFromEnv creates a new Config instance with values from environment variables

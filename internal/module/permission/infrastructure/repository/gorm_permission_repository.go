@@ -1,0 +1,122 @@
+package repository
+
+import (
+	"errors"
+
+	"github.com/arfanxn/welding/internal/infrastructure/database/helper"
+	"github.com/arfanxn/welding/internal/module/permission/domain/repository"
+	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
+	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
+	"github.com/arfanxn/welding/pkg/pagination"
+	"github.com/arfanxn/welding/pkg/query"
+	"gorm.io/gorm"
+)
+
+var _ repository.PermissionRepository = (*GormPermissionRepository)(nil)
+
+type GormPermissionRepository struct {
+	db *gorm.DB
+}
+
+func NewGormPermissionRepository(db *gorm.DB) repository.PermissionRepository {
+	return &GormPermissionRepository{
+		db: db,
+	}
+}
+
+func (r *GormPermissionRepository) All() ([]*entity.Permission, error) {
+	var permissions []*entity.Permission
+	if err := r.db.Find(&permissions).Error; err != nil {
+		return nil, err
+	}
+	return permissions, nil
+}
+
+// query applies query filters and sorting to the database query based on the provided Query DTO.
+// It supports searching by name (case-insensitive) and sorting by name in ascending or descending order.
+// The modified *gorm.DB is returned with the applied query.
+func (r *GormPermissionRepository) query(db *gorm.DB, q *query.Query) *gorm.DB {
+	if search := q.GetSearch(); search != nil {
+		db = db.Where("name ILIKE ?", "%"+*search+"%")
+	}
+
+	if sort := q.GetSort("name"); sort != nil {
+		db = db.Order("name " + sort.Order)
+	}
+
+	return db
+}
+
+// Get retrieves a list of permissions based on the provided query DTO.
+// It applies the scope function to the database query to filter and sort the results.
+// The modified *gorm.DB is returned with the applied scopes.
+func (r *GormPermissionRepository) Get(q *query.Query) ([]*entity.Permission, error) {
+	var permissions []*entity.Permission
+
+	db := r.query(r.db, q)
+
+	if err := db.Find(&permissions).Error; err != nil {
+		return nil, err
+	}
+
+	return permissions, nil
+}
+
+func (r *GormPermissionRepository) Paginate(q *query.Query) (*pagination.OffsetPagination[*entity.Permission], error) {
+	db := r.db.Model(&entity.Permission{})
+
+	db = r.query(db, q)
+	pagination, err := helper.GormDBPaginateWithQuery[*entity.Permission](db, q)
+	if err != nil {
+		return nil, err
+	}
+	return pagination, nil
+}
+
+func (r *GormPermissionRepository) Find(id string) (*entity.Permission, error) {
+	var permission entity.Permission
+	if err := r.db.Where("id = ?", id).First(&permission).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errorx.ErrPermissionNotFound
+		}
+		return nil, err
+	}
+	return &permission, nil
+}
+
+func (r *GormPermissionRepository) FindByName(name string) (*entity.Permission, error) {
+	var permission entity.Permission
+	if err := r.db.Where("name = ?", name).First(&permission).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errorx.ErrPermissionNotFound
+		}
+		return nil, err
+	}
+	return &permission, nil
+}
+
+func (r *GormPermissionRepository) FindByIds(ids []string) ([]*entity.Permission, error) {
+	var permissions []*entity.Permission
+	if err := r.db.Where("id IN (?)", ids).Find(&permissions).Error; err != nil {
+		return nil, err
+	}
+	if len(permissions) != len(ids) {
+		return nil, errorx.ErrPermissionsNotFound
+	}
+	return permissions, nil
+}
+
+func (r *GormPermissionRepository) Save(permission *entity.Permission) error {
+	err := r.db.Save(permission).Error
+	if err != nil {
+		if helper.IsPostgresDuplicateKeyError(err) {
+			return errorx.ErrPermissionAlreadyExists
+		}
+		return err
+	}
+	return nil
+}
+
+func (r *GormPermissionRepository) SaveMany(permissions []*entity.Permission) error {
+	return r.db.CreateInBatches(permissions, 100).Error
+}

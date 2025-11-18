@@ -21,7 +21,7 @@ RUN apk add --no-cache ca-certificates tzdata && \
 # Set working directory and copy the binary
 WORKDIR /app
 COPY --from=builder /server .
-COPY --from=builder /src/internal/infrastructure/database  ./internal/infrastructure/database
+COPY --from=builder /src/database/migrations  ./database/migrations
 
 # Create logs directory and set permissions
 RUN mkdir -p /app/logs && \

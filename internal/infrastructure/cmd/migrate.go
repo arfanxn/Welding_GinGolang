@@ -44,6 +44,8 @@ func _migrate(params _migrateParams) error {
 	params.Logger.Info("==========migrating database==========")
 	defer os.Exit(0)
 
+	migrationPath := "database/migrations"
+
 	db, err := params.GormDB.DB()
 	if err != nil {
 		params.Logger.Error("failed to get database connection", zap.Error(err))
@@ -57,7 +59,7 @@ func _migrate(params _migrateParams) error {
 		return err
 	}
 
-	m, err := migrate.NewWithDatabaseInstance("file://internal/infrastructure/database/postgres/migration", "postgres", driver)
+	m, err := migrate.NewWithDatabaseInstance("file://"+migrationPath, "postgres", driver)
 	if err != nil {
 		params.Logger.Error("failed to create migrate instance", zap.Error(err))
 		return err

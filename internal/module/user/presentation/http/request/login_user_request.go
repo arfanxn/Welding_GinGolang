@@ -5,16 +5,16 @@ import (
 	is "github.com/go-ozzo/ozzo-validation/v4/is"
 )
 
-type LoginUserRequest struct {
+type LoginUser struct {
 	Email    string `form:"email" json:"email"`
 	Password string `form:"password" json:"password"`
 }
 
-func (r *LoginUserRequest) Validate() error {
+func (r *LoginUser) Validate() error {
 	return validation.ValidateStruct(r,
 		validation.Field(&r.Email,
 			validation.Required.Error("Email wajib diisi"),
-			validation.Length(3, 64).Error("Panjang email harus antara 3-64 karakter"),
+			validation.Length(3, 50).Error("Panjang email harus antara 3-50 karakter"),
 			is.EmailFormat.Error("Format email tidak valid"),
 		),
 		validation.Field(&r.Password,

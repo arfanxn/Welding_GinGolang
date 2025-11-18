@@ -1,19 +1,26 @@
 package middleware
 
 import (
+	"context"
 	"net/http"
 	"strings"
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/jwt"
+	"github.com/arfanxn/welding/internal/module/shared/contextkey"
 	userRepository "github.com/arfanxn/welding/internal/module/user/domain/repository"
-	"github.com/arfanxn/welding/pkg/errors"
+	"github.com/arfanxn/welding/pkg/httperror"
 	"github.com/gin-gonic/gin"
+	"github.com/gookit/goutil"
 	"go.uber.org/fx"
 )
 
-var _ Middleware = (*AuthenticateMiddleware)(nil)
+var _ Middleware = (*authenticateMiddleware)(nil)
 
-type AuthenticateMiddleware struct {
+type AuthenticateMiddleware interface {
+	Middleware
+}
+
+type authenticateMiddleware struct {
 	UserRepository userRepository.UserRepository
 	JWTService     jwt.JWTService
 }
@@ -27,39 +34,62 @@ type NewAuthenticateMiddlewareParams struct {
 
 func NewAuthenticateMiddleware(
 	params NewAuthenticateMiddlewareParams,
-) (*AuthenticateMiddleware, error) {
-	return &AuthenticateMiddleware{
+) (AuthenticateMiddleware, error) {
+	return &authenticateMiddleware{
 		UserRepository: params.UserRepository,
 		JWTService:     params.JWTService,
 	}, nil
 }
 
-func (m *AuthenticateMiddleware) MiddlewareFunc() gin.HandlerFunc {
+// MiddlewareFunc returns a Gin middleware handler function that handles JWT authentication
+// and user verification for protected routes.
+func (m *authenticateMiddleware) MiddlewareFunc() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// 1. Get the Authorization header from the request
 		authHeader := c.GetHeader("Authorization")
-		if authHeader == "" {
-			panic(errors.NewHttpError(http.StatusUnauthorized, "Header Authorization diperlukan", nil))
+		if goutil.IsEmpty(authHeader) {
+			httperror.Panic(http.StatusUnauthorized, "Header Authorization diperlukan", nil)
 		}
 
-		// Extract the token from the Authorization header (format: "Bearer <token>")
+		// 2. Extract and validate the Bearer token format
+		// Expected format: "Bearer <token>"
 		tokenParts := strings.Split(authHeader, " ")
 		if len(tokenParts) != 2 || strings.ToLower(tokenParts[0]) != "bearer" {
-			panic(errors.NewHttpError(http.StatusUnauthorized, "Format header Authorization tidak valid. Format yang benar: Bearer <token>", nil))
+			httperror.Panic(http.StatusUnauthorized, "Format header Authorization tidak valid. Format yang benar: Bearer <token>", nil)
 		}
 
+		// 3. Verify the JWT token and extract claims
 		tokenStr := tokenParts[1]
 		claims, err := m.JWTService.VerifyToken(tokenStr)
 		if err != nil {
-			panic(errors.NewHttpError(http.StatusUnauthorized, "Token tidak valid atau sudah kadaluarsa", nil))
+			httperror.Panic(http.StatusUnauthorized, "Token tidak valid atau sudah kadaluarsa", nil)
 		}
 
+		// 4. Verify that the user exists in the database
 		user, err := m.UserRepository.Find(claims.UserID)
 		if err != nil {
-			panic(errors.NewHttpError(http.StatusUnauthorized, "User tidak ditemukan", nil))
+			httperror.Panic(http.StatusUnauthorized, "User tidak ditemukan", nil)
 		}
 
-		c.Set("claims", claims)
-		c.Set("user", user)
+		// 5. Check if the user account is active
+		if !user.IsActive() {
+			httperror.Panic(http.StatusUnauthorized, "User tidak aktif, silahkan hubungi admin", nil)
+		}
+
+		// 6. Store user information in both Gin context and request context
+		// This makes the user data available to subsequent handlers
+		ctx := c.Request.Context()
+		for key, value := range map[contextkey.ContextKey]any{
+			contextkey.UserIdKey: user.Id, // Store user ID
+			contextkey.ClaimsKey: claims,  // Store JWT claims
+			contextkey.UserKey:   user,    // Store full user object
+		} {
+			c.Set(key, value)                        // Set in Gin context
+			ctx = context.WithValue(ctx, key, value) // Set in request context
+		}
+		c.Request = c.Request.WithContext(ctx)
+
+		// 7. Proceed to the next middleware/handler in the chain
 		c.Next()
 	}
 }
