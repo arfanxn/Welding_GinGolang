@@ -3807,11 +3807,14 @@
 									},
 									"status": "Forbidden",
 									"code": 403,
-									"_postman_previewlanguage": null,
+									"_postman_previewlanguage": "json",
 									"header": [
 										{
 											"key": "Content-Type",
-											"value": "application/json; charset=utf-8"
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
 										},
 										{
 											"key": "Date",
