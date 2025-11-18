@@ -36,8 +36,8 @@ func (r *GormPermissionRepository) All() ([]*entity.Permission, error) {
 // It supports searching by name (case-insensitive) and sorting by name in ascending or descending order.
 // The modified *gorm.DB is returned with the applied query.
 func (r *GormPermissionRepository) query(db *gorm.DB, q *query.Query) *gorm.DB {
-	if search := q.GetSearch(); !search.IsZero() {
-		db = db.Where("name LIKE ?", "%"+search.String+"%")
+	if search := q.GetSearch(); search != nil {
+		db = db.Where("name ILIKE ?", "%"+*search+"%")
 	}
 
 	if sort := q.GetSort("name"); sort != nil {
@@ -99,6 +99,9 @@ func (r *GormPermissionRepository) FindByIds(ids []string) ([]*entity.Permission
 	var permissions []*entity.Permission
 	if err := r.db.Where("id IN (?)", ids).Find(&permissions).Error; err != nil {
 		return nil, err
+	}
+	if len(permissions) != len(ids) {
+		return nil, errorx.ErrPermissionsNotFound
 	}
 	return permissions, nil
 }

@@ -2,27 +2,24 @@ package usecase
 
 import (
 	"context"
-	"errors"
-	"net/http"
 
 	permissionRepository "github.com/arfanxn/welding/internal/module/permission/domain/repository"
 	"github.com/arfanxn/welding/internal/module/role/domain/repository"
 	"github.com/arfanxn/welding/internal/module/role/infrastructure/policy"
+	"github.com/arfanxn/welding/internal/module/role/usecase/dto"
 	roleDto "github.com/arfanxn/welding/internal/module/role/usecase/dto"
+	"github.com/arfanxn/welding/internal/module/role/usecase/step"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
-	"github.com/arfanxn/welding/pkg/errorutil"
 	"github.com/arfanxn/welding/pkg/pagination"
 	"github.com/arfanxn/welding/pkg/query"
-	"github.com/gookit/goutil"
-	"github.com/samber/lo"
 	"go.uber.org/fx"
-	"gorm.io/gorm"
 )
 
 type RoleUsecase interface {
 	Paginate(context.Context, *query.Query) (*pagination.OffsetPagination[*entity.Role], error)
-	Find(context.Context, *query.Query) (*entity.Role, error)
-	Save(context.Context, *roleDto.SaveRole) (*entity.Role, error)
+	Show(context.Context, *query.Query) (*entity.Role, error)
+	Store(context.Context, *roleDto.SaveRole) (*entity.Role, error)
+	Update(context.Context, *roleDto.SaveRole) (*entity.Role, error)
 	SetDefault(context.Context, *roleDto.SetDefaultRole) (*entity.Role, error)
 	Destroy(context.Context, *roleDto.DestroyRole) error
 }
@@ -30,6 +27,8 @@ type RoleUsecase interface {
 var _ RoleUsecase = (*roleUsecase)(nil)
 
 type roleUsecase struct {
+	storeRoleStep        step.StoreRoleStep
+	updateRoleStep       step.UpdateRoleStep
 	rolePolicy           policy.RolePolicy
 	roleRepository       repository.RoleRepository
 	permissionRepository permissionRepository.PermissionRepository
@@ -38,6 +37,8 @@ type roleUsecase struct {
 type NewRoleUsecaseParams struct {
 	fx.In
 
+	StoreRoleStep        step.StoreRoleStep
+	UpdateRoleStep       step.UpdateRoleStep
 	RolePolicy           policy.RolePolicy
 	RoleRepository       repository.RoleRepository
 	PermissionRepository permissionRepository.PermissionRepository
@@ -45,61 +46,48 @@ type NewRoleUsecaseParams struct {
 
 func NewRoleUsecase(params NewRoleUsecaseParams) RoleUsecase {
 	return &roleUsecase{
+		storeRoleStep:        params.StoreRoleStep,
+		updateRoleStep:       params.UpdateRoleStep,
 		rolePolicy:           params.RolePolicy,
 		roleRepository:       params.RoleRepository,
 		permissionRepository: params.PermissionRepository,
 	}
 }
 
-func (u *roleUsecase) Find(ctx context.Context, q *query.Query) (*entity.Role, error) {
-	roles, err := u.roleRepository.Get(q)
-	if err != nil {
-		return nil, err
-	}
-	if len(roles) == 0 {
-		return nil, errorutil.NewHttpError(http.StatusNotFound, "Role tidak ditemukan", nil)
-	}
-	return roles[0], nil
+func (u *roleUsecase) Show(ctx context.Context, q *query.Query) (*entity.Role, error) {
+	return u.roleRepository.First(q)
 }
 
 func (u *roleUsecase) Paginate(ctx context.Context, q *query.Query) (*pagination.OffsetPagination[*entity.Role], error) {
 	return u.roleRepository.Paginate(q)
 }
 
-func (u *roleUsecase) Save(ctx context.Context, _dto *roleDto.SaveRole) (*entity.Role, error) {
-	role, err := u.rolePolicy.Save(ctx, _dto)
-	if err != nil {
+func (u *roleUsecase) Store(ctx context.Context, _dto *dto.SaveRole) (*entity.Role, error) {
+	if err := u.rolePolicy.Store(ctx, _dto); err != nil {
 		return nil, err
 	}
 
-	if !goutil.IsEmpty(_dto.Name.String()) {
-		role.Name = _dto.Name
-	}
+	return u.storeRoleStep.Handle(ctx, _dto)
+}
 
-	if !goutil.IsEmpty(_dto.PermissionIds) {
-		role.Permissions = lo.Map(_dto.PermissionIds, func(permId string, _ int) *entity.Permission {
-			return &entity.Permission{Id: permId}
-		})
-	}
-
-	// Save the role
-	if err := u.roleRepository.Save(role); err != nil {
-		if errors.Is(err, gorm.ErrDuplicatedKey) {
-			return nil, errorutil.NewHttpError(http.StatusConflict, "Role name already exists", nil)
-		}
+func (u *roleUsecase) Update(ctx context.Context, _dto *roleDto.SaveRole) (*entity.Role, error) {
+	if err := u.rolePolicy.Update(ctx, _dto); err != nil {
 		return nil, err
 	}
 
-	return role, nil
+	return u.updateRoleStep.Handle(ctx, _dto)
 }
 
 func (u *roleUsecase) SetDefault(ctx context.Context, _dto *roleDto.SetDefaultRole) (*entity.Role, error) {
-	role, err := u.rolePolicy.SetDefault(ctx, _dto)
+	if err := u.rolePolicy.SetDefault(ctx, _dto); err != nil {
+		return nil, err
+	}
+
+	role, err := u.roleRepository.Find(_dto.Id)
 	if err != nil {
 		return nil, err
 	}
 
-	// Save the role
 	if err := u.roleRepository.SetDefault(role); err != nil {
 		return nil, err
 	}
@@ -108,7 +96,11 @@ func (u *roleUsecase) SetDefault(ctx context.Context, _dto *roleDto.SetDefaultRo
 }
 
 func (u *roleUsecase) Destroy(ctx context.Context, _dto *roleDto.DestroyRole) error {
-	role, err := u.rolePolicy.Destroy(ctx, _dto)
+	if err := u.rolePolicy.Destroy(ctx, _dto); err != nil {
+		return err
+	}
+
+	role, err := u.roleRepository.Find(_dto.Id)
 	if err != nil {
 		return err
 	}

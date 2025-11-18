@@ -1,4 +1,4 @@
-package action
+package step
 
 import (
 	"context"
@@ -15,27 +15,27 @@ import (
 	"gorm.io/gorm"
 )
 
-type RegisterUserAction interface {
+type RegisterUserStep interface {
 	Handle(ctx context.Context, _dto *dto.Register) (*entity.User, error)
 }
 
-type registerUserAction struct {
-	saveUserAction SaveUserAction
+type registerUserStep struct {
+	saveUserStep SaveUserStep
 
 	userRepository userRepository.UserRepository
 	codeRepository codeRepository.CodeRepository
 	roleRepository roleRepository.RoleRepository
 }
 
-func NewRegisterUserAction(
-	saveUserAction SaveUserAction,
+func NewRegisterUserStep(
+	saveUserStep SaveUserStep,
 
 	userRepository userRepository.UserRepository,
 	codeRepository codeRepository.CodeRepository,
 	roleRepository roleRepository.RoleRepository,
-) RegisterUserAction {
-	return &registerUserAction{
-		saveUserAction: saveUserAction,
+) RegisterUserStep {
+	return &registerUserStep{
+		saveUserStep: saveUserStep,
 
 		userRepository: userRepository,
 		codeRepository: codeRepository,
@@ -58,7 +58,7 @@ func NewRegisterUserAction(
 // Returns:
 //   - *entity.User: The newly registered user with all associations
 //   - error: Any error encountered during the registration process
-func (a *registerUserAction) Handle(
+func (s *registerUserStep) Handle(
 	ctx context.Context,
 	_dto *dto.Register,
 ) (*entity.User, error) {
@@ -73,7 +73,7 @@ func (a *registerUserAction) Handle(
 	// Handle invitation-based registration
 	if isWithInvitationCode {
 		// Find invitation code by type and value
-		code, err = a.codeRepository.FindByTypeAndValue(enum.UserRegisterInvitation, *_dto.InvitationCode)
+		code, err = s.codeRepository.FindByTypeAndValue(enum.UserRegisterInvitation, *_dto.InvitationCode)
 		if err != nil {
 			if errors.Is(err, gorm.ErrRecordNotFound) {
 				return nil, errorx.ErrCodeNotFound
@@ -101,7 +101,7 @@ func (a *registerUserAction) Handle(
 		roleIds = []string{roleId}
 	} else {
 		// Handle default registration without invitation code
-		defaultRole, err := a.roleRepository.FindDefault()
+		defaultRole, err := s.roleRepository.FindDefault()
 		if err != nil {
 			return nil, err
 		}
@@ -112,7 +112,7 @@ func (a *registerUserAction) Handle(
 	activatedAt := time.Now()
 
 	// Create the user account using the save user action
-	user, err := a.saveUserAction.Handle(ctx, &dto.SaveUser{
+	user, err := s.saveUserStep.Handle(ctx, &dto.SaveUser{
 		Name:                     &_dto.Name,
 		PhoneNumber:              &_dto.PhoneNumber,
 		Email:                    &_dto.Email,
@@ -125,7 +125,7 @@ func (a *registerUserAction) Handle(
 	// Mark invitation code as used if one was provided
 	if isWithInvitationCode {
 		code.MarkUsed()
-		if err := a.codeRepository.Save(code); err != nil {
+		if err := s.codeRepository.Save(code); err != nil {
 			return nil, err
 		}
 	}

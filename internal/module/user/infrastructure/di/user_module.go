@@ -6,7 +6,7 @@ import (
 	userRepositoryImpl "github.com/arfanxn/welding/internal/module/user/infrastructure/repository"
 	"github.com/arfanxn/welding/internal/module/user/presentation/http"
 	"github.com/arfanxn/welding/internal/module/user/usecase"
-	"github.com/arfanxn/welding/internal/module/user/usecase/action"
+	"github.com/arfanxn/welding/internal/module/user/usecase/step"
 	"go.uber.org/fx"
 )
 
@@ -15,8 +15,8 @@ var Module = fx.Module(
 	fx.Provide(
 		userRepositoryImpl.NewGormUserRepository,
 		policy.NewUserPolicy,
-		action.NewRegisterUserAction,
-		action.NewSaveUserAction,
+		step.NewRegisterUserStep,
+		step.NewSaveUserStep,
 		usecase.NewUserUsecase,
 		http.NewUserHandler,
 	),

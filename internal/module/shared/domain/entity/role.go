@@ -4,10 +4,7 @@ import (
 	"time"
 
 	"github.com/arfanxn/welding/internal/module/role/domain/enum"
-	"github.com/gookit/goutil"
 	"github.com/guregu/null/v6"
-	"github.com/oklog/ulid/v2"
-	"gorm.io/gorm"
 )
 
 type Role struct {
@@ -25,11 +22,8 @@ func NewRole() *Role {
 	return &Role{}
 }
 
-func (u *Role) BeforeSave(tx *gorm.DB) error {
-	if goutil.IsEmpty(u.Id) {
-		u.Id = ulid.Make().String()
-	}
-	return nil
+func (u *Role) TableName() string {
+	return "roles"
 }
 
 func (r *Role) IsSuperAdmin() bool {

@@ -27,7 +27,6 @@ func (s *UpdateRole) Validate() error {
 			validation.Length(26, 26).Error("Id harus 26 karakter"),
 		),
 		validation.Field(&s.Name,
-			validation.Required.Error("Nama tidak boleh kosong"),
 			validation.Length(3, 50).Error("Nama harus di antara 3 dan 50 karakter"),
 		),
 		validation.Field(&s.PermissionIds,

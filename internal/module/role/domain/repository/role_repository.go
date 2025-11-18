@@ -10,6 +10,7 @@ type RoleRepository interface {
 	All() ([]*entity.Role, error)
 	Get(*query.Query) ([]*entity.Role, error)
 	Paginate(*query.Query) (*pagination.OffsetPagination[*entity.Role], error)
+	First(*query.Query) (*entity.Role, error)
 	Find(id string) (*entity.Role, error)
 	FindDefault() (*entity.Role, error)
 	FindByIds(ids []string) ([]*entity.Role, error)

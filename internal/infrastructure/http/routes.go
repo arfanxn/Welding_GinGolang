@@ -102,7 +102,7 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 		// Roles
 		role := protected.Group("/roles")
 		role.GET("", requirePermissionName(permissionEnum.RolesIndex), params.RoleHandler.Paginate)
-		role.GET("/:id", requirePermissionName(permissionEnum.RolesShow), params.RoleHandler.Find)
+		role.GET("/:id", requirePermissionName(permissionEnum.RolesShow), params.RoleHandler.Show)
 		role.POST("", requirePermissionName(permissionEnum.RolesStore), params.RoleHandler.Store)
 		role.PUT("/:id", requirePermissionName(permissionEnum.RolesUpdate), params.RoleHandler.Update)
 		role.PATCH("/:id/set-default", requirePermissionName(permissionEnum.RolesUpdate), params.RoleHandler.SetDefault)

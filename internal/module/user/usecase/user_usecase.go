@@ -15,8 +15,8 @@ import (
 	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
 	"github.com/arfanxn/welding/internal/module/user/domain/repository"
 	"github.com/arfanxn/welding/internal/module/user/infrastructure/policy"
-	"github.com/arfanxn/welding/internal/module/user/usecase/action"
 	"github.com/arfanxn/welding/internal/module/user/usecase/dto"
+	"github.com/arfanxn/welding/internal/module/user/usecase/step"
 	"github.com/arfanxn/welding/pkg/pagination"
 	"github.com/arfanxn/welding/pkg/query"
 	"github.com/guregu/null/v6"
@@ -42,8 +42,8 @@ type UserUsecase interface {
 }
 
 type userUsecase struct {
-	registerUserAction action.RegisterUserAction
-	saveUserAction     action.SaveUserAction
+	registerUserStep step.RegisterUserStep
+	saveUserStep     step.SaveUserStep
 
 	userPolicy     policy.UserPolicy
 	userRepository repository.UserRepository
@@ -58,8 +58,8 @@ type userUsecase struct {
 type NewUserUsecaseParams struct {
 	fx.In
 
-	RegisterUserAction action.RegisterUserAction
-	SaveUserAction     action.SaveUserAction
+	RegisterUserStep step.RegisterUserStep
+	SaveUserStep     step.SaveUserStep
 
 	UserPolicy     policy.UserPolicy
 	UserRepository repository.UserRepository
@@ -73,8 +73,8 @@ type NewUserUsecaseParams struct {
 
 func NewUserUsecase(params NewUserUsecaseParams) UserUsecase {
 	return &userUsecase{
-		registerUserAction: params.RegisterUserAction,
-		saveUserAction:     params.SaveUserAction,
+		registerUserStep: params.RegisterUserStep,
+		saveUserStep:     params.SaveUserStep,
 
 		userPolicy:     params.UserPolicy,
 		userRepository: params.UserRepository,
@@ -92,7 +92,7 @@ func NewUserUsecase(params NewUserUsecaseParams) UserUsecase {
 // 2. Creates a new user with the provided details
 // 3. If an invitation code was used, marks it as used
 func (u *userUsecase) Register(ctx context.Context, _dto *dto.Register) (*entity.User, error) {
-	user, err := u.registerUserAction.Handle(ctx, _dto)
+	user, err := u.registerUserStep.Handle(ctx, _dto)
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +220,7 @@ func (u *userUsecase) Store(ctx context.Context, _dto *dto.SaveUser) (*entity.Us
 		return nil, err
 	}
 
-	return u.saveUserAction.Handle(ctx, _dto)
+	return u.saveUserStep.Handle(ctx, _dto)
 }
 
 func (u *userUsecase) Update(ctx context.Context, _dto *dto.SaveUser) (*entity.User, error) {
@@ -228,7 +228,7 @@ func (u *userUsecase) Update(ctx context.Context, _dto *dto.SaveUser) (*entity.U
 		return nil, err
 	}
 
-	return u.saveUserAction.Handle(ctx, _dto)
+	return u.saveUserStep.Handle(ctx, _dto)
 }
 
 func (u *userUsecase) UpdateMePassword(ctx context.Context, _dto *dto.UpdateUserMePassword) (*entity.User, error) {
@@ -239,7 +239,7 @@ func (u *userUsecase) UpdateMePassword(ctx context.Context, _dto *dto.UpdateUser
 		return nil, err
 	}
 
-	return u.saveUserAction.Handle(ctx, &dto.SaveUser{
+	return u.saveUserStep.Handle(ctx, &dto.SaveUser{
 		Id:       &userId,
 		Password: &_dto.Password,
 	})

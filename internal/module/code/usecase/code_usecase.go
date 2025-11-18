@@ -12,6 +12,7 @@ import (
 	"github.com/arfanxn/welding/internal/module/code/domain/repository"
 	"github.com/arfanxn/welding/internal/module/code/infrastructure/policy"
 	"github.com/arfanxn/welding/internal/module/code/usecase/dto"
+	"github.com/arfanxn/welding/internal/module/code/usecase/service"
 	roleRepository "github.com/arfanxn/welding/internal/module/role/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/guregu/null/v6"
@@ -26,6 +27,7 @@ type CodeUsecase interface {
 
 type codeUsecase struct {
 	idService      id.IdService
+	codeService    service.CodeService
 	logger         *logger.Logger
 	codePolicy     policy.CodePolicy
 	codeRepository repository.CodeRepository
@@ -35,6 +37,7 @@ type codeUsecase struct {
 
 func NewCodeUsecase(
 	idService id.IdService,
+	codeService service.CodeService,
 	logger *logger.Logger,
 	codePolicy policy.CodePolicy,
 	codeRepository repository.CodeRepository,
@@ -43,6 +46,7 @@ func NewCodeUsecase(
 ) CodeUsecase {
 	return &codeUsecase{
 		idService:      idService,
+		codeService:    codeService,
 		logger:         logger,
 		codePolicy:     codePolicy,
 		codeRepository: codeRepository,
@@ -78,6 +82,7 @@ func (s *codeUsecase) CreateUserRegisterInvitation(ctx context.Context, _dto *dt
 	// Create new invitation code
 	code := &entity.Code{}
 	code.Id = s.idService.Generate()
+	code.Value = s.codeService.Generate()
 	code.Type = enum.UserRegisterInvitation
 	// Store role ID in metadata for later reference
 	code.SetMeta(map[string]any{
@@ -100,6 +105,7 @@ func (s *codeUsecase) CreateUserEmailVerification(ctx context.Context, _dto *dto
 
 	code := &entity.Code{}
 	code.Id = s.idService.Generate()
+	code.Value = s.codeService.Generate()
 	code.Type = enum.UserEmailVerification
 	code.CodeableId = null.StringFrom(_dto.Email)
 	code.CodeableType = null.StringFrom("email")
@@ -131,6 +137,7 @@ func (s *codeUsecase) CreateUserResetPassword(ctx context.Context, _dto *dto.Cre
 
 	code := &entity.Code{}
 	code.Id = s.idService.Generate()
+	code.Value = s.codeService.Generate()
 	code.Type = enum.UserResetPassword
 	code.CodeableId = null.StringFrom(_dto.Email)
 	code.CodeableType = null.StringFrom("email")

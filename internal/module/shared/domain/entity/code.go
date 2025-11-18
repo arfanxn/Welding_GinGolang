@@ -2,16 +2,11 @@ package entity
 
 import (
 	"encoding/json"
-	"strconv"
 	"time"
 
 	"github.com/arfanxn/welding/internal/module/code/domain/enum"
-	"github.com/arfanxn/welding/pkg/numberutil"
-	"github.com/gookit/goutil"
 	"github.com/guregu/null/v6"
-	"github.com/oklog/ulid/v2"
 	"gorm.io/datatypes"
-	"gorm.io/gorm"
 )
 
 type Code struct {
@@ -30,19 +25,6 @@ type Code struct {
 // TableName specifies the table name for the Code model
 func (Code) TableName() string {
 	return "codes"
-}
-
-func (c *Code) BeforeSave(tx *gorm.DB) error {
-
-	if goutil.IsZero(c.Id) {
-		c.Id = ulid.Make().String()
-	}
-
-	if goutil.IsZero(c.Value) {
-		c.Value = strconv.Itoa(numberutil.Random(100000, 999999))
-	}
-
-	return nil
 }
 
 func (c *Code) GetMeta() (map[string]any, error) {

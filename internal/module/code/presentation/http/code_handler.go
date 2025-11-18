@@ -12,7 +12,6 @@ import (
 	"github.com/arfanxn/welding/internal/module/code/usecase/dto"
 	roleEnum "github.com/arfanxn/welding/internal/module/role/domain/enum"
 	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
-	"github.com/arfanxn/welding/pkg/errorutil"
 	"github.com/arfanxn/welding/pkg/httperror"
 	"github.com/gin-gonic/gin"
 )
@@ -37,9 +36,14 @@ func (h *codeHandler) CreateUserRegisterInvitation(c *gin.Context) {
 	var req request.CreateUserRegisterInvitation
 	helper.MustBindValidate(c, &req)
 
+	expiredAt, err := time.Parse(time.DateTime, req.ExpiredAt)
+	if err != nil {
+		panic(err)
+	}
+
 	code, err := h.codeUsecase.CreateUserRegisterInvitation(c.Request.Context(), &dto.CreateUserRegisterInvitation{
 		RoleId:    req.RoleId,
-		ExpiredAt: errorutil.Must(time.Parse(time.DateTime, req.ExpiredAt)),
+		ExpiredAt: expiredAt,
 	})
 	if err != nil {
 		if errors.Is(err, errorx.ErrRoleNotFound) {

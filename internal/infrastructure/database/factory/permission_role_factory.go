@@ -8,10 +8,12 @@ import (
 	"github.com/guregu/null/v6"
 )
 
-var PermissionRoleFactory = factory.NewFactory(&entity.PermissionRole{}).
-	Attr("CreatedAt", func(args factory.Args) (any, error) {
-		return time.Now(), nil
-	}).
-	Attr("UpdatedAt", func(args factory.Args) (any, error) {
-		return null.TimeFromPtr(nil), nil
-	})
+func NewPermissionRoleFactory() *factory.Factory {
+	return factory.NewFactory(&entity.PermissionRole{}).
+		Attr("CreatedAt", func(args factory.Args) (any, error) {
+			return time.Now(), nil
+		}).
+		Attr("UpdatedAt", func(args factory.Args) (any, error) {
+			return null.TimeFromPtr(nil), nil
+		})
+}

@@ -11,6 +11,7 @@ import (
 	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
 	"github.com/arfanxn/welding/internal/module/user/domain/repository"
 	"github.com/arfanxn/welding/internal/module/user/usecase/dto"
+	"github.com/gookit/goutil"
 	"go.uber.org/fx"
 )
 
@@ -72,12 +73,12 @@ func (p *userPolicy) Update(ctx context.Context, _dto *dto.SaveUser) error {
 	if isTargetUserSuperAdmin {
 		// Only allow self-updates for SuperAdmins
 		if authUser.Id != targetUser.Id {
-			return errorx.ErrUserSuperAdminCannotBeModified
+			return errorx.ErrUserSuperAdminUpdateForbidden
 		}
 
 		// Prevent role changes for SuperAdmins
 		if _dto.RoleIds != nil {
-			return errorx.ErrUserSuperAdminRoleCannotBeChanged
+			return errorx.ErrUserSuperAdminRoleChangeForbidden
 		}
 	}
 
@@ -117,7 +118,7 @@ func (p *userPolicy) UpdatePassword(
 	}
 
 	if isSuperAdmin && authUser.Id != user.Id {
-		return nil, errorx.ErrUserSuperAdminCannotBeModified
+		return nil, errorx.ErrUserSuperAdminUpdateForbidden
 	}
 
 	return user, nil
@@ -136,7 +137,7 @@ func (p *userPolicy) ToggleActivation(ctx context.Context, _dto *dto.ToggleActiv
 	}
 
 	if isSuperAdmin {
-		return errorx.ErrUserSuperAdminCannotBeModified
+		return errorx.ErrUserSuperAdminUpdateForbidden
 	}
 
 	return nil
@@ -155,7 +156,7 @@ func (p *userPolicy) Destroy(_ context.Context, _dto *dto.DestroyUser) error {
 	}
 
 	if isSuperAdmin {
-		return errorx.ErrUserSuperAdminCannotBeModified
+		return errorx.ErrUserSuperAdminUpdateForbidden
 	}
 
 	return nil
@@ -174,6 +175,14 @@ func (p *userPolicy) isSuperAdmin(user *entity.User) (bool, error) {
 }
 
 func (p *userPolicy) validateRoleAssignments(roleIDs []string) error {
+	if goutil.IsEmpty(roleIDs) {
+		return nil
+	}
+
+	if goutil.IsEmpty(roleIDs[0]) {
+		return nil
+	}
+
 	roles, err := p.roleRepository.FindByIds(roleIDs)
 	if err != nil {
 		return err

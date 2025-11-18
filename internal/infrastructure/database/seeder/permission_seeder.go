@@ -1,20 +1,34 @@
 package seeder
 
 import (
+	"github.com/arfanxn/welding/internal/infrastructure/id"
 	"github.com/arfanxn/welding/internal/module/permission/domain/enum"
 	"github.com/arfanxn/welding/internal/module/permission/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
-	"github.com/oklog/ulid/v2"
+	"go.uber.org/fx"
 )
 
 var _ Seeder = (*PermissionSeeder)(nil)
 
 type PermissionSeeder struct {
+	idService            id.IdService
 	permissionRepository repository.PermissionRepository
 }
 
-func NewPermissionSeeder(permissionRepository repository.PermissionRepository) Seeder {
-	return &PermissionSeeder{permissionRepository: permissionRepository}
+type NewPermissionSeederParams struct {
+	fx.In
+
+	IdService            id.IdService
+	PermissionRepository repository.PermissionRepository
+}
+
+func NewPermissionSeeder(
+	params NewPermissionSeederParams,
+) Seeder {
+	return &PermissionSeeder{
+		idService:            params.IdService,
+		permissionRepository: params.PermissionRepository,
+	}
 }
 
 func (s *PermissionSeeder) Seed() error {
@@ -23,7 +37,7 @@ func (s *PermissionSeeder) Seed() error {
 
 	for _, permissionName := range permissionNames {
 		permissions = append(permissions, &entity.Permission{
-			Id:   ulid.Make().String(),
+			Id:   s.idService.Generate(),
 			Name: permissionName,
 		})
 	}

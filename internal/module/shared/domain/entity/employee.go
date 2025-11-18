@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/guregu/null/v6"
-	"gorm.io/gorm"
 )
 
 type Employee struct {
@@ -22,8 +21,4 @@ func NewEmployee() *Employee {
 
 func (e Employee) TableName() string {
 	return "employees"
-}
-
-func (u *Employee) BeforeSave(tx *gorm.DB) error {
-	return nil
 }

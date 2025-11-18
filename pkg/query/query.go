@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/creasty/defaults"
-	"github.com/guregu/null/v6"
 )
 
 const (
@@ -68,7 +67,7 @@ type Query struct {
 	// Search is a free-text search query.
 	// Implementation depends on the specific endpoint.
 	// Example: ?search=admin
-	Search null.String `form:"search" json:"search"`
+	Search *string `form:"search" json:"search"`
 
 	// Includes specifies related models to be loaded (eager loading).
 	// Format: "relation" or "relation1,relation2"
@@ -139,11 +138,11 @@ func (q *Query) GetOffset() int {
 	return (q.Page - 1) * q.PerPage
 }
 
-func (q *Query) GetSearch() null.String {
+func (q *Query) GetSearch() *string {
 	return q.Search
 }
 
-func (q *Query) GetInclude(include string) null.String {
+func (q *Query) GetInclude(include string) *string {
 	// Create a case-insensitive regex pattern that matches the exact include string
 	// with optional surrounding whitespace
 	pattern := `(?i)^\s*` + regexp.QuoteMeta(include) + `\s*$`
@@ -151,10 +150,10 @@ func (q *Query) GetInclude(include string) null.String {
 
 	for _, i := range q.Includes {
 		if re.MatchString(i) {
-			return null.StringFrom(i)
+			return &i
 		}
 	}
-	return null.String{}
+	return nil
 }
 
 func (q *Query) GetFilter(column string, operator string) *Filter {

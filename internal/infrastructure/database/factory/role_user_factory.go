@@ -8,10 +8,13 @@ import (
 	"github.com/guregu/null/v6"
 )
 
-var RoleUserFactory = factory.NewFactory(&entity.RoleUser{}).
-	Attr("CreatedAt", func(args factory.Args) (any, error) {
-		return time.Now(), nil
-	}).
-	Attr("UpdatedAt", func(args factory.Args) (any, error) {
-		return null.TimeFromPtr(nil), nil
-	})
+func NewRoleUserFactory() *factory.Factory {
+	return factory.NewFactory(&entity.RoleUser{}).
+		Attr("CreatedAt", func(args factory.Args) (any, error) {
+			return time.Now(), nil
+		}).
+		Attr("UpdatedAt", func(args factory.Args) (any, error) {
+			return null.TimeFromPtr(nil), nil
+		})
+
+}

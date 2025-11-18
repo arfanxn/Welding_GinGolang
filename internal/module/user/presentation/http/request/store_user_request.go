@@ -34,7 +34,6 @@ func (r *StoreUser) Validate() error {
 			validation.Length(8, 255).Error("Panjang kata sandi minimal 8 karakter"),
 		),
 		validation.Field(&r.RoleIds,
-			validation.Required.Error("Role wajib diisi"),
 			validation.Each(
 				is.Alphanumeric.Error("Role id hanya huruf dan angka yang diperbolehkan"),
 				validation.Length(26, 26).Error("Role id harus 26 karakter"),

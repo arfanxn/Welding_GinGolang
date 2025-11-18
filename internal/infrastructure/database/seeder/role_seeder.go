@@ -1,13 +1,14 @@
 package seeder
 
 import (
-	"github.com/arfanxn/welding/internal/infrastructure/database/factory"
+	"github.com/arfanxn/welding/internal/infrastructure/id"
 	permissionEnum "github.com/arfanxn/welding/internal/module/permission/domain/enum"
 	permissionRepository "github.com/arfanxn/welding/internal/module/permission/domain/repository"
 	permissionRoleRepository "github.com/arfanxn/welding/internal/module/permission_role/domain/repository"
 	"github.com/arfanxn/welding/internal/module/role/domain/enum"
 	"github.com/arfanxn/welding/internal/module/role/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
+	"github.com/bluele/factory-go/factory"
 	"github.com/samber/lo"
 	"go.uber.org/fx"
 )
@@ -15,6 +16,9 @@ import (
 var _ Seeder = (*RoleSeeder)(nil)
 
 type RoleSeeder struct {
+	idService                id.IdService
+	roleFactory              *factory.Factory
+	permissionRoleFactory    *factory.Factory
 	roleRepository           repository.RoleRepository
 	permissionRepository     permissionRepository.PermissionRepository
 	permissionRoleRepository permissionRoleRepository.PermissionRoleRepository
@@ -23,6 +27,9 @@ type RoleSeeder struct {
 type NewRoleSeederParams struct {
 	fx.In
 
+	IdService                id.IdService
+	RoleFactory              *factory.Factory `name:"role_factory"`
+	PermissionRoleFactory    *factory.Factory `name:"permission_role_factory"`
 	RoleRepository           repository.RoleRepository
 	PermissionRepository     permissionRepository.PermissionRepository
 	PermissionRoleRepository permissionRoleRepository.PermissionRoleRepository
@@ -30,6 +37,9 @@ type NewRoleSeederParams struct {
 
 func NewRoleSeeder(params NewRoleSeederParams) Seeder {
 	return &RoleSeeder{
+		idService:                params.IdService,
+		roleFactory:              params.RoleFactory,
+		permissionRoleFactory:    params.PermissionRoleFactory,
 		roleRepository:           params.RoleRepository,
 		permissionRepository:     params.PermissionRepository,
 		permissionRoleRepository: params.PermissionRoleRepository,
@@ -37,43 +47,46 @@ func NewRoleSeeder(params NewRoleSeederParams) Seeder {
 }
 
 func (s *RoleSeeder) Seed() error {
-	superAdminRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+	roleFactory := s.roleFactory
+	permissionRoleFactory := s.permissionRoleFactory
+
+	superAdminRole := roleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYMGS1FWJRZD000TCW0",
 		"Name": enum.SuperAdmin,
 	}).(*entity.Role)
-	adminRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+	adminRole := roleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1WNBHQ22K",
 		"Name": enum.Admin,
 	}).(*entity.Role)
-	headRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+	headRole := roleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1WQQQYZA6",
 		"Name": enum.Head,
 	}).(*entity.Role)
-	managerRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+	managerRole := roleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1WTZNZVYT",
 		"Name": enum.Manager,
 	}).(*entity.Role)
-	supervisorRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+	supervisorRole := roleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1WYFRKSYN",
 		"Name": enum.Supervisor,
 	}).(*entity.Role)
-	engineerRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+	engineerRole := roleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1X0VNR31G",
 		"Name": enum.Engineer,
 	}).(*entity.Role)
-	staffRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+	staffRole := roleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1X405T2FF",
 		"Name": enum.Staff,
 	}).(*entity.Role)
-	operatorRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+	operatorRole := roleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1X78V9C0T",
 		"Name": enum.Operator,
 	}).(*entity.Role)
-	customerServiceAdminRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+	customerServiceAdminRole := roleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1X7GKVWKP",
 		"Name": enum.CustomerServiceAdmin,
 	}).(*entity.Role)
-	customerRole := factory.RoleFactory.MustCreateWithOption(map[string]any{
+	customerRole := roleFactory.MustCreateWithOption(map[string]any{
 		"Id":        "01K8SW84Z6T1FM90KES0G0BMM1",
 		"IsDefault": true, // Set as default role
 		"Name":      enum.DefaultRoleName,
@@ -124,7 +137,7 @@ func (s *RoleSeeder) Seed() error {
 		// Assign all available permissions to super admin role
 		// This ensures super admins have full access to all features
 		for _, permission := range superAdminPermissions {
-			permissionRoles = append(permissionRoles, factory.PermissionRoleFactory.MustCreateWithOption(map[string]any{
+			permissionRoles = append(permissionRoles, permissionRoleFactory.MustCreateWithOption(map[string]any{
 				"RoleId":       superAdminRole.Id,
 				"PermissionId": permission.Id,
 			}).(*entity.PermissionRole))
@@ -153,7 +166,7 @@ func (s *RoleSeeder) Seed() error {
 		// This ensures all roles have at least the minimum required access
 		for _, role := range rolesExceptSuperAdmin {
 			for _, permission := range exceptSuperAdminPermissions {
-				permissionRoles = append(permissionRoles, factory.PermissionRoleFactory.MustCreateWithOption(map[string]any{
+				permissionRoles = append(permissionRoles, permissionRoleFactory.MustCreateWithOption(map[string]any{
 					"RoleId":       role.Id,
 					"PermissionId": permission.Id,
 				}).(*entity.PermissionRole))

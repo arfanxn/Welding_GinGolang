@@ -1,4 +1,4 @@
-package action
+package step
 
 import (
 	"context"
@@ -18,11 +18,11 @@ import (
 	"go.uber.org/fx"
 )
 
-type SaveUserAction interface {
+type SaveUserStep interface {
 	Handle(ctx context.Context, _dto *dto.SaveUser) (*entity.User, error)
 }
 
-type saveUserAction struct {
+type saveUserStep struct {
 	passwordService security.PasswordService
 	idService       id.IdService
 
@@ -32,7 +32,7 @@ type saveUserAction struct {
 	roleUserRepository roleUserRepository.RoleUserRepository
 }
 
-type NewSaveUserActionParams struct {
+type NewSaveUserStepParams struct {
 	fx.In
 
 	IdService       id.IdService
@@ -44,8 +44,8 @@ type NewSaveUserActionParams struct {
 	RoleUserRepository roleUserRepository.RoleUserRepository
 }
 
-func NewSaveUserAction(params NewSaveUserActionParams) SaveUserAction {
-	return &saveUserAction{
+func NewSaveUserStep(params NewSaveUserStepParams) SaveUserStep {
+	return &saveUserStep{
 		passwordService: params.PasswordService,
 		idService:       params.IdService,
 
@@ -70,7 +70,7 @@ func NewSaveUserAction(params NewSaveUserActionParams) SaveUserAction {
 // Returns:
 //   - *entity.User: The saved/updated user with all associations
 //   - error: Any error encountered during the operation
-func (a *saveUserAction) Handle(ctx context.Context, _dto *dto.SaveUser) (*entity.User, error) {
+func (s *saveUserStep) Handle(ctx context.Context, _dto *dto.SaveUser) (*entity.User, error) {
 	// Initialize query and include relationships
 	var (
 		q      = query.NewQuery()
@@ -81,13 +81,13 @@ func (a *saveUserAction) Handle(ctx context.Context, _dto *dto.SaveUser) (*entit
 
 	// Conditionally include Employee relationship only when employee data is provided
 	// This optimizes database queries by avoiding unnecessary JOIN operations
-	if !(goutil.IsEmptyReal(_dto.EmploymentIdentityNumber)) {
+	if _dto.EmploymentIdentityNumber != nil {
 		q.Include("Employee")
 	}
 
 	// Conditionally include Roles relationship only when role assignments are provided
 	// This optimizes database queries by avoiding unnecessary JOIN operations
-	if !goutil.IsEmptyReal(_dto.RoleIds) {
+	if _dto.RoleIds != nil {
 		q.Include("Roles")
 	}
 
@@ -96,13 +96,13 @@ func (a *saveUserAction) Handle(ctx context.Context, _dto *dto.SaveUser) (*entit
 		// Update scenario: fetch existing user
 		userId = *_dto.Id
 		q = q.FilterById(userId)
-		user, err = a.userRepository.First(q)
+		user, err = s.userRepository.First(q)
 		if err != nil {
 			return nil, err
 		}
 	} else {
 		// Create scenario: initialize new user with generated ID
-		userId = a.idService.Generate()
+		userId = s.idService.Generate()
 		q = q.FilterById(userId)
 		user = &entity.User{Id: userId}
 	}
@@ -125,7 +125,7 @@ func (a *saveUserAction) Handle(ctx context.Context, _dto *dto.SaveUser) (*entit
 
 	// Handle password update with hashing
 	if !goutil.IsEmptyReal(_dto.Password) {
-		user.Password, err = a.passwordService.Hash(*_dto.Password)
+		user.Password, err = s.passwordService.Hash(*_dto.Password)
 		if err != nil {
 			return nil, err
 		}
@@ -142,14 +142,14 @@ func (a *saveUserAction) Handle(ctx context.Context, _dto *dto.SaveUser) (*entit
 	}
 
 	// Save user basic information
-	if err := a.userRepository.Save(user); err != nil {
+	if err := s.userRepository.Save(user); err != nil {
 		return nil, err
 	}
 
 	// Handle role assignments - replace all existing roles with new ones
 	if _dto.RoleIds != nil {
 		// Remove all existing role associations for this user
-		if err := a.roleUserRepository.DestroyByUserId(user.Id); err != nil {
+		if err := s.roleUserRepository.DestroyByUserId(user.Id); err != nil {
 			return nil, err
 		}
 
@@ -158,7 +158,7 @@ func (a *saveUserAction) Handle(ctx context.Context, _dto *dto.SaveUser) (*entit
 			rus := lo.Map(_dto.RoleIds, func(roleId string, _ int) *entity.RoleUser {
 				return &entity.RoleUser{RoleId: roleId, UserId: user.Id}
 			})
-			if err := a.roleUserRepository.SaveMany(rus); err != nil {
+			if err := s.roleUserRepository.SaveMany(rus); err != nil {
 				return nil, err
 			}
 		}
@@ -172,12 +172,12 @@ func (a *saveUserAction) Handle(ctx context.Context, _dto *dto.SaveUser) (*entit
 				user.Employee = &entity.Employee{UserId: user.Id}
 			}
 			user.Employee.EmploymentIdentityNumber = *_dto.EmploymentIdentityNumber
-			if err := a.employeeRepository.Save(user.Employee); err != nil {
+			if err := s.employeeRepository.Save(user.Employee); err != nil {
 				return nil, err
 			}
 		} else {
 			// Remove employee record if employment identity number is empty
-			if err := a.employeeRepository.DestroyByUserId(user.Id); err != nil {
+			if err := s.employeeRepository.DestroyByUserId(user.Id); err != nil {
 				return nil, err
 			}
 			user.Employee = nil
@@ -185,7 +185,7 @@ func (a *saveUserAction) Handle(ctx context.Context, _dto *dto.SaveUser) (*entit
 	}
 
 	// Fetch complete user with all associations to return
-	user, err = a.userRepository.First(q)
+	user, err = s.userRepository.First(q)
 	if err != nil {
 		return nil, err
 	}

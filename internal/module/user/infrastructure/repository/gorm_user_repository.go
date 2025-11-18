@@ -42,19 +42,19 @@ func (r *GormUserRepository) query(db *gorm.DB, q *query.Query) *gorm.DB {
 		db = db.Where(userTableName+".id = ?", f.Value)
 	}
 
-	if search := q.GetSearch(); !search.IsZero() {
-		db = db.Where(userTableName+".name LIKE ?", "%"+search.String+"%")
+	if search := q.GetSearch(); search != nil {
+		db = db.Where(userTableName+".name ILIKE ?", "%"+*search+"%")
 	}
 
-	if !q.GetInclude("employee").IsZero() {
+	if q.GetInclude("employee") != nil {
 		db = db.Preload("Employee")
 	}
 
-	if !q.GetInclude("roles").IsZero() {
+	if q.GetInclude("roles") != nil {
 		db = db.Preload("Roles")
 	}
 
-	if !q.GetInclude("roles.permissions").IsZero() {
+	if q.GetInclude("roles.permissions") != nil {
 		db = db.Preload("Roles.Permissions")
 	}
 

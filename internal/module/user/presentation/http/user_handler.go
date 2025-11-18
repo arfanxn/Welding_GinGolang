@@ -7,6 +7,7 @@ import (
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/helper"
 	"github.com/arfanxn/welding/internal/infrastructure/http/response"
+	roleEnum "github.com/arfanxn/welding/internal/module/role/domain/enum"
 	"github.com/arfanxn/welding/internal/module/shared/contextkey"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
@@ -76,6 +77,9 @@ func (h *userHandler) Register(c *gin.Context) {
 		}
 		if errors.Is(err, errorx.ErrRoleDefaultNotConfigured) {
 			httperror.Panic(http.StatusBadRequest, "Role default belum dikonfigurasi", nil)
+		}
+		if errors.Is(err, errorx.ErrUserAlreadyExists) {
+			httperror.Panic(http.StatusConflict, "User sudah ada", nil)
 		}
 		panic(err)
 	}
@@ -247,10 +251,10 @@ func (h *userHandler) Store(c *gin.Context) {
 	})
 	if err != nil {
 		if errors.Is(err, errorx.ErrRolesNotFound) {
-			httperror.Panic(http.StatusBadRequest, "Satu atau lebih role tidak ditemukan", nil)
+			httperror.Panic(http.StatusNotFound, "Satu atau lebih role tidak ditemukan", nil)
 		}
 		if errors.Is(err, errorx.ErrUserSuperAdminAssignmentForbidden) {
-			httperror.Panic(http.StatusForbidden, "Role super admin tidak dapat ditambahkan", nil)
+			httperror.Panic(http.StatusForbidden, "User tidak dapat diberi role "+string(roleEnum.SuperAdmin), nil)
 		}
 		if errors.Is(err, errorx.ErrUserAlreadyExists) {
 			httperror.Panic(http.StatusConflict, "User sudah ada", nil)
@@ -284,16 +288,16 @@ func (h *userHandler) Update(c *gin.Context) {
 			httperror.Panic(http.StatusNotFound, "User tidak ditemukan", nil)
 		}
 		if errors.Is(err, errorx.ErrRolesNotFound) {
-			httperror.Panic(http.StatusBadRequest, "Satu atau lebih role tidak ditemukan", nil)
+			httperror.Panic(http.StatusNotFound, "Satu atau lebih role tidak ditemukan", nil)
 		}
-		if errors.Is(err, errorx.ErrUserSuperAdminCannotBeModified) {
+		if errors.Is(err, errorx.ErrUserSuperAdminUpdateForbidden) {
 			httperror.Panic(http.StatusForbidden, "User super admin tidak dapat diubah", nil)
 		}
-		if errors.Is(err, errorx.ErrUserSuperAdminRoleCannotBeChanged) {
-			httperror.Panic(http.StatusForbidden, "User super admin tidak dapat mengubah role", nil)
+		if errors.Is(err, errorx.ErrUserSuperAdminRoleChangeForbidden) {
+			httperror.Panic(http.StatusForbidden, "User super admin tidak dapat diubah role", nil)
 		}
 		if errors.Is(err, errorx.ErrUserSuperAdminAssignmentForbidden) {
-			httperror.Panic(http.StatusForbidden, "Role super admin tidak dapat ditambahkan", nil)
+			httperror.Panic(http.StatusForbidden, "User tidak dapat diberi role "+string(roleEnum.SuperAdmin), nil)
 		}
 		if errors.Is(err, errorx.ErrUserAlreadyExists) {
 			httperror.Panic(http.StatusConflict, "User sudah ada", nil)
@@ -393,8 +397,8 @@ func (h *userHandler) ToggleActivation(c *gin.Context) {
 		if errors.Is(err, errorx.ErrUserNotFound) {
 			httperror.Panic(http.StatusNotFound, "User tidak ditemukan", nil)
 		}
-		if errors.Is(err, errorx.ErrUserSuperAdminCannotBeModified) {
-			httperror.Panic(http.StatusForbidden, "User super admin tidak dapat diubah", nil)
+		if errors.Is(err, errorx.ErrUserSuperAdminUpdateForbidden) {
+			httperror.Panic(http.StatusForbidden, "User dengan role "+string(roleEnum.SuperAdmin)+" tidak dapat dinonaktifkan", nil)
 		}
 		panic(err)
 	}
@@ -418,8 +422,8 @@ func (h *userHandler) Destroy(c *gin.Context) {
 		if errors.Is(err, errorx.ErrUserNotFound) {
 			httperror.Panic(http.StatusNotFound, "User tidak ditemukan", nil)
 		}
-		if errors.Is(err, errorx.ErrUserSuperAdminCannotBeModified) {
-			httperror.Panic(http.StatusForbidden, "User super admin tidak dapat dihapus", nil)
+		if errors.Is(err, errorx.ErrUserSuperAdminUpdateForbidden) {
+			httperror.Panic(http.StatusForbidden, "User dengan role "+string(roleEnum.SuperAdmin)+" tidak dapat dihapus", nil)
 		}
 		panic(err)
 	}
