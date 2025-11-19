@@ -91,13 +91,7 @@ func (s *registerUserStep) Handle(
 			return nil, errorx.ErrCodeExpired
 		}
 
-		// Extract role ID from invitation code metadata
-		codeMeta, err := code.GetMeta()
-		if err != nil {
-			return nil, err
-		}
-
-		roleId := codeMeta["role_id"].(string)
+		roleId := code.Meta.GetString("role_id")
 		roleIds = []string{roleId}
 	} else {
 		// Handle default registration without invitation code

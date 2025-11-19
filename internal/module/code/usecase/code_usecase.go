@@ -15,6 +15,7 @@ import (
 	"github.com/arfanxn/welding/internal/module/code/usecase/service"
 	roleRepository "github.com/arfanxn/welding/internal/module/role/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
+	"github.com/arfanxn/welding/pkg/types"
 	"github.com/guregu/null/v6"
 	"go.uber.org/zap"
 )
@@ -85,9 +86,9 @@ func (s *codeUsecase) CreateUserRegisterInvitation(ctx context.Context, _dto *dt
 	code.Value = s.codeService.Generate()
 	code.Type = enum.UserRegisterInvitation
 	// Store role ID in metadata for later reference
-	code.SetMeta(map[string]any{
+	code.Meta = types.JSONMap{
 		"role_id": _dto.RoleId,
-	})
+	}
 	// Set when the invitation will expire
 	code.ExpiredAt = _dto.ExpiredAt
 
@@ -109,7 +110,6 @@ func (s *codeUsecase) CreateUserEmailVerification(ctx context.Context, _dto *dto
 	code.Type = enum.UserEmailVerification
 	code.CodeableId = null.StringFrom(_dto.Email)
 	code.CodeableType = null.StringFrom("email")
-	code.SetMeta(nil)
 	code.ExpiredAt = time.Now().Add(time.Minute * 30)
 
 	err = s.codeRepository.Save(code)
@@ -141,7 +141,6 @@ func (s *codeUsecase) CreateUserResetPassword(ctx context.Context, _dto *dto.Cre
 	code.Type = enum.UserResetPassword
 	code.CodeableId = null.StringFrom(_dto.Email)
 	code.CodeableType = null.StringFrom("email")
-	code.SetMeta(nil)
 	code.ExpiredAt = time.Now().Add(time.Minute * 30)
 
 	err = s.codeRepository.Save(code)
