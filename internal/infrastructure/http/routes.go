@@ -6,6 +6,7 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/http/response"
 	"github.com/arfanxn/welding/internal/infrastructure/logger"
 	"github.com/arfanxn/welding/internal/infrastructure/middleware"
+	activityHttp "github.com/arfanxn/welding/internal/module/activity/presentation/http"
 	codeHttp "github.com/arfanxn/welding/internal/module/code/presentation/http"
 	permissionEnum "github.com/arfanxn/welding/internal/module/permission/domain/enum"
 	permissionHttp "github.com/arfanxn/welding/internal/module/permission/presentation/http"
@@ -26,6 +27,7 @@ type RegisterRoutesParams struct {
 
 	// Middlewares
 	HttpErrorRecoveryMiddleware middleware.HttpErrorRecoveryMiddleware
+	RequestContextMiddleware    middleware.RequestContextMiddleware
 	RateLimiterMiddleware       middleware.RateLimiterMiddleware
 	AuthenticateMiddleware      middleware.AuthenticateMiddleware
 	AuthorizeMiddleware         middleware.AuthorizeMiddleware
@@ -37,6 +39,7 @@ type RegisterRoutesParams struct {
 	RoleHandler       roleHttp.RoleHandler
 	PermissionHandler permissionHttp.PermissionHandler
 	CodeHandler       codeHttp.CodeHandler
+	ActivityHandler   activityHttp.ActivityHandler
 }
 
 func RegisterRoutes(params RegisterRoutesParams) error {
@@ -44,6 +47,7 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 	apiV1 := params.Router.Group("/api/v1")
 	apiV1.Use(
 		params.HttpErrorRecoveryMiddleware.MiddlewareFunc(),
+		params.RequestContextMiddleware.MiddlewareFunc(),
 		params.RateLimiterMiddleware.MiddlewareFunc(),
 	)
 	apiV1.GET("/health", func(c *gin.Context) {
@@ -64,6 +68,9 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 		code := apiV1.Group("/codes")
 		code.POST("/user-email-verification", params.CodeHandler.CreateUserEmailVerification)
 		code.POST("/user-reset-password", params.CodeHandler.CreateUserResetPassword)
+
+		activity := apiV1.Group("/activities")
+		activity.GET("/enums", params.ActivityHandler.EnumValues)
 	}
 	{
 		// --------------------------------------------------
@@ -115,6 +122,11 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 		// Codes
 		code := protected.Group("/codes")
 		code.POST("/user-register-invitation", requirePermissionName(permissionEnum.UsersStore), params.CodeHandler.CreateUserRegisterInvitation)
+
+		// Activity
+		activity := protected.Group("/activities")
+		activity.GET("", requirePermissionName(permissionEnum.ActivitiesIndex), params.ActivityHandler.Index)
+		activity.GET("/:id", requirePermissionName(permissionEnum.ActivitiesShow), params.ActivityHandler.Show)
 
 	}
 

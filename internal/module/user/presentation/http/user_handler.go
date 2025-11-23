@@ -180,6 +180,11 @@ func (h *userHandler) Login(c *gin.Context) {
 }
 
 func (h *userHandler) Logout(c *gin.Context) {
+	err := h.userUsecase.Logout(c.Request.Context())
+	if err != nil {
+		panic(err)
+	}
+
 	c.JSON(http.StatusOK, response.NewBody(http.StatusOK, "Logout berhasil"))
 }
 
@@ -230,7 +235,7 @@ func (h *userHandler) Paginate(c *gin.Context) {
 	c.JSON(http.StatusOK, response.NewBodyWithData(
 		http.StatusOK,
 		"Users berhasil diambil",
-		pagination.PPFromOP(op, helper.URLFromC(c)),
+		pagination.FromOPToPP(op, helper.URLFromC(c)),
 	))
 }
 

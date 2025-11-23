@@ -10,6 +10,7 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/mail"
 	"github.com/arfanxn/welding/internal/infrastructure/middleware"
 	"github.com/arfanxn/welding/internal/infrastructure/security"
+	activityDi "github.com/arfanxn/welding/internal/module/activity/infrastructure/di"
 	codeDi "github.com/arfanxn/welding/internal/module/code/infrastructure/di"
 	employeeDi "github.com/arfanxn/welding/internal/module/employee/infrastructure/di"
 	permissionDi "github.com/arfanxn/welding/internal/module/permission/infrastructure/di"
@@ -39,6 +40,7 @@ var Module = fx.Module("infrastructure",
 
 		// Middleware(s)
 		middleware.NewHttpErrorRecoveryMiddleware,
+		middleware.NewRequestContextMiddleware,
 		middleware.NewRateLimiterMiddleware,
 		middleware.NewAuthenticateMiddleware,
 		middleware.NewAuthorizeMiddleware,
@@ -54,6 +56,7 @@ var Module = fx.Module("infrastructure",
 	permissionRoleDi.Module,
 	employeeDi.Module,
 	codeDi.Module,
+	activityDi.Module,
 
 	// Logger
 	fx.WithLogger(func(logger *logger.Logger) fxevent.Logger {

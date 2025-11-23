@@ -17,6 +17,9 @@ const (
 
 	PermissionsIndex PermissionName = "permissions.index"
 	PermissionsShow  PermissionName = "permissions.show"
+
+	ActivitiesIndex PermissionName = "activities.index"
+	ActivitiesShow  PermissionName = "activities.show"
 )
 
 func (p PermissionName) String() string {
@@ -38,4 +41,7 @@ var PermissionNames = []PermissionName{
 
 	PermissionsIndex,
 	PermissionsShow,
+
+	ActivitiesIndex,
+	ActivitiesShow,
 }

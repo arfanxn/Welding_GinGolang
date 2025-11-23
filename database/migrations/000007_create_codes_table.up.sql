@@ -15,7 +15,6 @@ CREATE TABLE codes (
   CONSTRAINT codes_type_check CHECK (type IN ('user_register_invitation', 'user_email_verification', 'user_reset_password')),
   CONSTRAINT codes_value_check CHECK (value ~ '^[0-9]{6}$'),
   CONSTRAINT codes_used_at_check CHECK (used_at <= expired_at),
-  CONSTRAINT codes_expired_at_check CHECK (expired_at > CURRENT_TIMESTAMP),
   CONSTRAINT codes_type_value_unique UNIQUE (type, value)
 );
 

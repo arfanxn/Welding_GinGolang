@@ -35,6 +35,17 @@ func (r *GormCodeRepository) Find(id string) (*entity.Code, error) {
 	return &code, nil
 }
 
+func (r *GormCodeRepository) FindByType(_type enum.CodeType) (*entity.Code, error) {
+	var code entity.Code
+	if err := r.db.Where("type = ?", _type).First(&code).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errorx.ErrCodeNotFound
+		}
+		return nil, err
+	}
+	return &code, nil
+}
+
 func (r *GormCodeRepository) FindByValue(value string) (*entity.Code, error) {
 	var code entity.Code
 	if err := r.db.Where("value = ?", value).First(&code).Error; err != nil {

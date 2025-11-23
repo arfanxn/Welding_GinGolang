@@ -80,7 +80,7 @@ func NewPagePagination[T any](
 }
 
 // Convert OffsetPagination to PagePagination
-func PPFromOP[T any](op *OffsetPagination[T], u url.URL) *PagePagination[T] {
+func FromOPToPP[T any](op *OffsetPagination[T], u url.URL) *PagePagination[T] {
 	offset := op.Offset
 	hasOffset := offset >= 0
 	perPage := op.Limit

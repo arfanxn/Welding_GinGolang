@@ -8,6 +8,7 @@ import (
 type CodeRepository interface {
 	Find(id string) (*entity.Code, error)
 	FindByValue(value string) (*entity.Code, error)
+	FindByType(_type enum.CodeType) (*entity.Code, error)
 	FindByTypeAndValue(_type enum.CodeType, value string) (*entity.Code, error)
 	FindByCodeableAndTypeAndValue(codeableId string, codeableType string, _type enum.CodeType, value string) (*entity.Code, error)
 	Save(code *entity.Code) error

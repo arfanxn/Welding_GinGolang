@@ -38,28 +38,30 @@ func (r *GormRoleRepository) All() ([]*entity.Role, error) {
 func (r *GormRoleRepository) query(db *gorm.DB, q *query.Query) *gorm.DB {
 	roleTableName := entity.NewRole().TableName()
 
-	if id := q.GetFilterById(); id != nil {
-		db = db.Where(roleTableName+".id = ?", id.Value)
-	}
+	if q != nil {
+		if id := q.GetFilterById(); id != nil {
+			db = db.Where(roleTableName+".id = ?", id.Value)
+		}
 
-	if search := q.GetSearch(); search != nil {
-		db = db.Where(roleTableName+".name ILIKE ?", "%"+*search+"%")
-	}
+		if search := q.GetSearch(); search != nil {
+			db = db.Where(roleTableName+".name ILIKE ?", "%"+*search+"%")
+		}
 
-	if q.GetInclude("permissions") != nil {
-		db = db.Preload("Permissions")
-	}
+		if q.GetInclude("permissions") != nil {
+			db = db.Preload("Permissions")
+		}
 
-	if q.GetInclude("users") != nil {
-		db = db.Preload("Users")
-	}
+		if q.GetInclude("users") != nil {
+			db = db.Preload("Users")
+		}
 
-	if sort := q.GetSort("name"); sort != nil {
-		db = db.Order(roleTableName + ".name " + sort.Order)
-	}
+		if sort := q.GetSort("name"); sort != nil {
+			db = db.Order(roleTableName + ".name " + sort.Order)
+		}
 
-	if sort := q.GetSort("created_at"); sort != nil {
-		db = db.Order(roleTableName + ".created_at " + sort.Order)
+		if sort := q.GetSort("created_at"); sort != nil {
+			db = db.Order(roleTableName + ".created_at " + sort.Order)
+		}
 	}
 
 	return db
@@ -90,14 +92,17 @@ func (r *GormRoleRepository) Paginate(q *query.Query) (*pagination.OffsetPaginat
 }
 
 func (r *GormRoleRepository) First(q *query.Query) (*entity.Role, error) {
-	roles, err := r.Get(q)
-	if err != nil {
+	var role *entity.Role
+
+	db := r.query(r.db, q)
+
+	if err := db.First(&role).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errorx.ErrRoleNotFound
+		}
 		return nil, err
 	}
-	if len(roles) == 0 {
-		return nil, errorx.ErrRoleNotFound
-	}
-	role := roles[0]
+
 	return role, nil
 }
 

@@ -7,6 +7,9 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/http/jwt"
 	"github.com/arfanxn/welding/internal/infrastructure/logger"
 	"github.com/arfanxn/welding/internal/infrastructure/security"
+	activityEnum "github.com/arfanxn/welding/internal/module/activity/domain/enum"
+	activityDto "github.com/arfanxn/welding/internal/module/activity/usecase/dto"
+	activityService "github.com/arfanxn/welding/internal/module/activity/usecase/service"
 	"github.com/arfanxn/welding/internal/module/code/domain/enum"
 	codeRepository "github.com/arfanxn/welding/internal/module/code/domain/repository"
 	roleRepository "github.com/arfanxn/welding/internal/module/role/domain/repository"
@@ -19,6 +22,7 @@ import (
 	"github.com/arfanxn/welding/internal/module/user/usecase/step"
 	"github.com/arfanxn/welding/pkg/pagination"
 	"github.com/arfanxn/welding/pkg/query"
+	"github.com/arfanxn/welding/pkg/typeutil"
 	"github.com/guregu/null/v6"
 	"go.uber.org/fx"
 )
@@ -30,6 +34,7 @@ type UserUsecase interface {
 	VerifyEmail(ctx context.Context, verifyDto *dto.VerifyEmail) (*entity.User, error)
 	ResetPassword(ctx context.Context, _dto *dto.ResetPassword) (*entity.User, error)
 	Login(ctx context.Context, loginDto *dto.Login) (*dto.LoginResult, error)
+	Logout(ctx context.Context) error
 	Show(ctx context.Context, q *query.Query) (*entity.User, error)
 	Paginate(ctx context.Context, q *query.Query) (*pagination.OffsetPagination[*entity.User], error)
 	Store(ctx context.Context, _dto *dto.SaveUser) (*entity.User, error)
@@ -53,6 +58,8 @@ type userUsecase struct {
 	jwtService      jwt.JWTService
 	passwordService security.PasswordService
 	logger          *logger.Logger
+
+	activityService activityService.ActivityService
 }
 
 type NewUserUsecaseParams struct {
@@ -69,6 +76,8 @@ type NewUserUsecaseParams struct {
 	JWTService      jwt.JWTService
 	PasswordService security.PasswordService
 	Logger          *logger.Logger
+
+	ActivityService activityService.ActivityService
 }
 
 func NewUserUsecase(params NewUserUsecaseParams) UserUsecase {
@@ -84,6 +93,8 @@ func NewUserUsecase(params NewUserUsecaseParams) UserUsecase {
 		jwtService:      params.JWTService,
 		passwordService: params.PasswordService,
 		logger:          params.Logger,
+
+		activityService: params.ActivityService,
 	}
 }
 
@@ -94,6 +105,14 @@ func NewUserUsecase(params NewUserUsecaseParams) UserUsecase {
 func (u *userUsecase) Register(ctx context.Context, _dto *dto.Register) (*entity.User, error) {
 	user, err := u.registerUserStep.Handle(ctx, _dto)
 	if err != nil {
+		return nil, err
+	}
+
+	if _, err = u.activityService.Record(ctx, &activityDto.CreateActivity{
+		Causer:  user,
+		Action:  activityEnum.UsersRegister,
+		Subject: user,
+	}); err != nil {
 		return nil, err
 	}
 
@@ -138,6 +157,14 @@ func (u *userUsecase) VerifyEmail(ctx context.Context, _dto *dto.VerifyEmail) (*
 		return nil, err
 	}
 
+	if _, err = u.activityService.Record(ctx, &activityDto.CreateActivity{
+		Causer:  user,
+		Action:  activityEnum.UsersVerifyEmail,
+		Subject: user,
+	}); err != nil {
+		return nil, err
+	}
+
 	return user, nil
 }
 
@@ -179,16 +206,24 @@ func (u *userUsecase) ResetPassword(ctx context.Context, _dto *dto.ResetPassword
 		return nil, err
 	}
 
+	if _, err = u.activityService.Record(ctx, &activityDto.CreateActivity{
+		Causer:  user,
+		Action:  activityEnum.UsersResetPassword,
+		Subject: user,
+	}); err != nil {
+		return nil, err
+	}
+
 	return user, nil
 }
 
-func (u *userUsecase) Login(ctx context.Context, loginDto *dto.Login) (*dto.LoginResult, error) {
-	user, err := u.userRepository.FindByEmail(loginDto.Email)
+func (u *userUsecase) Login(ctx context.Context, _dto *dto.Login) (*dto.LoginResult, error) {
+	user, err := u.userRepository.FindByEmail(_dto.Email)
 	if err != nil {
 		return nil, errorx.ErrUserPasswordIncorrect
 	}
 
-	if err = u.passwordService.Check(user.Password, loginDto.Password); err != nil {
+	if err = u.passwordService.Check(user.Password, _dto.Password); err != nil {
 		return nil, errorx.ErrUserPasswordIncorrect
 	}
 
@@ -197,10 +232,31 @@ func (u *userUsecase) Login(ctx context.Context, loginDto *dto.Login) (*dto.Logi
 		return nil, errorx.ErrUserPasswordIncorrect
 	}
 
+	if _, err = u.activityService.Record(ctx, &activityDto.CreateActivity{
+		Causer:  user,
+		Action:  activityEnum.UsersLogin,
+		Subject: user,
+	}); err != nil {
+		return nil, err
+	}
+
 	return &dto.LoginResult{
 		User:  user,
 		Token: token,
 	}, nil
+}
+
+func (u *userUsecase) Logout(ctx context.Context) error {
+	// Record logout activity
+	if _, err := u.activityService.Record(ctx, &activityDto.CreateActivity{
+		Causer:  contextkey.GetUser(ctx),
+		Action:  activityEnum.UsersLogout,
+		Subject: contextkey.GetUser(ctx),
+	}); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (u *userUsecase) Show(ctx context.Context, q *query.Query) (*entity.User, error) {
@@ -208,11 +264,34 @@ func (u *userUsecase) Show(ctx context.Context, q *query.Query) (*entity.User, e
 	if err != nil {
 		return nil, err
 	}
+
+	if _, err = u.activityService.Record(ctx, &activityDto.CreateActivity{
+		Causer:  contextkey.GetUser(ctx),
+		Action:  activityEnum.UsersShow,
+		Subject: user,
+	}); err != nil {
+		return nil, err
+	}
+
 	return user, nil
 }
 
 func (u *userUsecase) Paginate(ctx context.Context, q *query.Query) (*pagination.OffsetPagination[*entity.User], error) {
-	return u.userRepository.Paginate(q)
+	op, err := u.userRepository.Paginate(q)
+	if err != nil {
+		return nil, err
+	}
+
+	if _, err = u.activityService.Record(ctx, &activityDto.CreateActivity{
+		Causer:      contextkey.GetUser(ctx),
+		Action:      activityEnum.UsersIndex,
+		SubjectType: typeutil.Ptr(activityEnum.UserSubjectType),
+	}); err != nil {
+		return nil, err
+	}
+
+	return op, err
+
 }
 
 func (u *userUsecase) Store(ctx context.Context, _dto *dto.SaveUser) (*entity.User, error) {
@@ -220,7 +299,20 @@ func (u *userUsecase) Store(ctx context.Context, _dto *dto.SaveUser) (*entity.Us
 		return nil, err
 	}
 
-	return u.saveUserStep.Handle(ctx, _dto)
+	user, err := u.saveUserStep.Handle(ctx, _dto)
+	if err != nil {
+		return nil, err
+	}
+
+	if _, err = u.activityService.Record(ctx, &activityDto.CreateActivity{
+		Causer:  contextkey.GetUser(ctx),
+		Action:  activityEnum.UsersStore,
+		Subject: user,
+	}); err != nil {
+		return nil, err
+	}
+
+	return user, nil
 }
 
 func (u *userUsecase) Update(ctx context.Context, _dto *dto.SaveUser) (*entity.User, error) {
@@ -228,7 +320,20 @@ func (u *userUsecase) Update(ctx context.Context, _dto *dto.SaveUser) (*entity.U
 		return nil, err
 	}
 
-	return u.saveUserStep.Handle(ctx, _dto)
+	user, err := u.saveUserStep.Handle(ctx, _dto)
+	if err != nil {
+		return nil, err
+	}
+
+	if _, err = u.activityService.Record(ctx, &activityDto.CreateActivity{
+		Causer:  contextkey.GetUser(ctx),
+		Action:  activityEnum.UsersUpdate,
+		Subject: user,
+	}); err != nil {
+		return nil, err
+	}
+
+	return user, nil
 }
 
 func (u *userUsecase) UpdateMePassword(ctx context.Context, _dto *dto.UpdateUserMePassword) (*entity.User, error) {
@@ -239,10 +344,23 @@ func (u *userUsecase) UpdateMePassword(ctx context.Context, _dto *dto.UpdateUser
 		return nil, err
 	}
 
-	return u.saveUserStep.Handle(ctx, &dto.SaveUser{
+	user, err := u.saveUserStep.Handle(ctx, &dto.SaveUser{
 		Id:       &userId,
 		Password: &_dto.Password,
 	})
+	if err != nil {
+		return nil, err
+	}
+
+	if _, err = u.activityService.Record(ctx, &activityDto.CreateActivity{
+		Causer:  contextkey.GetUser(ctx),
+		Action:  activityEnum.UsersUpdateMePassword,
+		Subject: user,
+	}); err != nil {
+		return nil, err
+	}
+
+	return user, nil
 }
 
 /*
@@ -267,17 +385,30 @@ func (u *userUsecase) UpdatePassword(ctx context.Context, _dto *dto.UpdateUserPa
 }
 */
 
-func (u *userUsecase) ToggleActivation(ctx context.Context, _dto *dto.ToggleActivation) (*entity.User, error) {
+func (u *userUsecase) ToggleActivation(ctx context.Context, _dto *dto.ToggleActivation) (user *entity.User, err error) {
 	if err := u.userPolicy.ToggleActivation(ctx, _dto); err != nil {
 		return nil, err
 	}
 
-	user, err := u.userRepository.Find(_dto.Id)
+	user, err = u.userRepository.Find(_dto.Id)
 	if err != nil {
 		return nil, err
 	}
 
-	return u.userRepository.ToggleActivation(user)
+	user, err = u.userRepository.ToggleActivation(user)
+	if err != nil {
+		return nil, err
+	}
+
+	if _, err = u.activityService.Record(ctx, &activityDto.CreateActivity{
+		Causer:  contextkey.GetUser(ctx),
+		Action:  activityEnum.UsersToggleActivation,
+		Subject: user,
+	}); err != nil {
+		return nil, err
+	}
+
+	return user, nil
 }
 
 func (u *userUsecase) Destroy(ctx context.Context, _dto *dto.DestroyUser) error {
@@ -290,5 +421,18 @@ func (u *userUsecase) Destroy(ctx context.Context, _dto *dto.DestroyUser) error 
 		return err
 	}
 
-	return u.userRepository.Destroy(user)
+	err = u.userRepository.Destroy(user)
+	if err != nil {
+		return err
+	}
+
+	if _, err = u.activityService.Record(ctx, &activityDto.CreateActivity{
+		Causer:  contextkey.GetUser(ctx),
+		Action:  activityEnum.UsersDestroy,
+		Subject: user,
+	}); err != nil {
+		return err
+	}
+
+	return nil
 }

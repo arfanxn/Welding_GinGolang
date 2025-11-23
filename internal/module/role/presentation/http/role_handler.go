@@ -14,7 +14,6 @@ import (
 	"github.com/arfanxn/welding/pkg/httperror"
 	"github.com/arfanxn/welding/pkg/pagination"
 	"github.com/arfanxn/welding/pkg/query"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-gonic/gin"
 )
 
@@ -41,8 +40,6 @@ func (h *roleHandler) Paginate(c *gin.Context) {
 	q := query.NewQuery()
 	c.ShouldBind(q)
 
-	spew.Dump(q)
-
 	paginationDto, err := h.roleUsecase.Paginate(c.Request.Context(), q)
 	if err != nil {
 		panic(err)
@@ -51,7 +48,7 @@ func (h *roleHandler) Paginate(c *gin.Context) {
 	c.JSON(http.StatusOK, response.NewBodyWithData(
 		http.StatusOK,
 		"Roles berhasil diambil",
-		pagination.PPFromOP(paginationDto, helper.URLFromC(c)),
+		pagination.FromOPToPP(paginationDto, helper.URLFromC(c)),
 	))
 }
 

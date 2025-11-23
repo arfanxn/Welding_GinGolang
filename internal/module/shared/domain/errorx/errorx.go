@@ -121,4 +121,20 @@ var (
 
 	// ErrEmployeeNotFound is returned when an employee record is not found
 	ErrEmployeeNotFound Errorx = New("employee not found")
+
+	// ========================================
+	// Activity Errors
+	// ========================================
+
+	// ErrActivityNotFound is returned when an activity record is not found
+	ErrActivityNotFound Errorx = New("activity not found")
+
+	// ErrActivityInvalidAction is returned when an invalid action is provided
+	ErrActivityInvalidAction Errorx = New("activity invalid action")
+
+	// ErrActivityInvalidCauserType is returned when an invalid causer type is provided
+	ErrActivityInvalidCauserType Errorx = New("activity invalid causer type")
+
+	// ErrActivityInvalidSubjectType is returned when an invalid subject type is provided
+	ErrActivityInvalidSubjectType Errorx = New("activity invalid subject type")
 )

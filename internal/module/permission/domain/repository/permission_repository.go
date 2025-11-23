@@ -10,6 +10,7 @@ type PermissionRepository interface {
 	All() ([]*entity.Permission, error)
 	Get(q *query.Query) ([]*entity.Permission, error)
 	Paginate(q *query.Query) (*pagination.OffsetPagination[*entity.Permission], error)
+	First(q *query.Query) (*entity.Permission, error)
 	Find(id string) (*entity.Permission, error)
 	FindByName(name string) (*entity.Permission, error)
 	FindByIds(ids []string) ([]*entity.Permission, error)

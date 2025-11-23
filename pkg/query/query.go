@@ -38,9 +38,10 @@ var Operators = []string{
 }
 
 type Filter struct {
-	Column   string `json:"column"`
-	Operator string `json:"operator"`
-	Value    string `json:"value"`
+	Column   string   `json:"column"`
+	Operator string   `json:"operator"`
+	Value    string   `json:"value"`
+	Values   []string `json:"values"`
 }
 
 const (
@@ -79,6 +80,7 @@ type Query struct {
 	// Supported operators: ==, !=, >, >=, <, <=, IN, NOT IN, etc.
 	// Examples:
 	// - ?filter=name==admin
+	// - ?filter=created_atBETWEEN2023-01-01,2023-01-31
 	// - ?filter=created_at>2023-01-01
 	// - ?filter=statusINactive,pending
 	Filters []string `form:"filter" json:"filter" default:"[]"`
@@ -168,11 +170,13 @@ func (q *Query) GetFilter(column string, operator string) *Filter {
 
 	for _, filter := range q.Filters {
 		matches := re.FindStringSubmatch(filter)
-		if len(matches) > 1 {
+		if len(matches) > 1 { // Check if we have a match with capture groups
+			trimmedMatch := strings.TrimSpace(matches[1])
 			return &Filter{
 				Column:   column,
 				Operator: operator,
-				Value:    strings.TrimSpace(matches[1]),
+				Value:    trimmedMatch,
+				Values:   strings.Split(trimmedMatch, ","),
 			}
 		}
 	}
