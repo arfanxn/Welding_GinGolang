@@ -23,7 +23,7 @@
 									"formdata": [
 										{
 											"key": "name",
-											"value": "Test With Invitation Code",
+											"value": "Test Without Invitation Code",
 											"type": "text"
 										},
 										{
@@ -33,7 +33,7 @@
 										},
 										{
 											"key": "email",
-											"value": "test_with_invitation_code@gmail.com",
+											"value": "test_without_invitation_code@gmail.com",
 											"type": "text"
 										},
 										{
@@ -49,12 +49,14 @@
 										{
 											"key": "invitation_code",
 											"value": "434377",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "employment_identity_number",
 											"value": "693908944000595811",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										}
 									]
 								},
@@ -654,12 +656,12 @@
 									"formdata": [
 										{
 											"key": "email",
-											"value": "test_with_invitation_code@gmail.com",
+											"value": "test_without_invitation_code@gmail.com",
 											"type": "text"
 										},
 										{
 											"key": "code",
-											"value": "536000",
+											"value": "764665",
 											"type": "text"
 										},
 										{
@@ -1122,12 +1124,12 @@
 									"formdata": [
 										{
 											"key": "email",
-											"value": "test_with_invitation_code@gmail.com",
+											"value": "test_without_invitation_code@gmail.com",
 											"type": "text"
 										},
 										{
 											"key": "code",
-											"value": "322158",
+											"value": "884331",
 											"type": "text"
 										}
 									]
@@ -3031,7 +3033,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -3812,7 +3813,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -6194,7 +6194,7 @@
 									"formdata": [
 										{
 											"key": "email",
-											"value": "test_with_invitation_code@gmail.com",
+											"value": "test_without_invitation_code@gmail.com",
 											"type": "text"
 										}
 									]
@@ -6325,7 +6325,7 @@
 									"formdata": [
 										{
 											"key": "email",
-											"value": "test_with_invitation_code@gmail.com",
+											"value": "test_without_invitation_code@gmail.com",
 											"type": "text"
 										}
 									]
@@ -6443,6 +6443,1897 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"code\": 422,\n    \"status\": \"error\",\n    \"message\": \"Format email tidak valid\",\n    \"errors\": {\n        \"email\": [\n            \"Format email tidak valid\"\n        ]\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Activity",
+					"item": [
+						{
+							"name": "Enums",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/activities/enums",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"activities",
+										"enums"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities/enums",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities",
+												"enums"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 22 Nov 2025 04:41:59 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "675"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activity enums berhasil diambil\",\n    \"data\": {\n        \"actions\": [\n            \"users.register\",\n            \"users.reset_password\",\n            \"users.verify_email\",\n            \"users.login\",\n            \"users.logout\",\n            \"users.me\",\n            \"users.update_me_profile\",\n            \"users.update_me_password\",\n            \"users.index\",\n            \"users.show\",\n            \"users.store\",\n            \"users.update\",\n            \"users.toggle_activation\",\n            \"users.destroy\",\n            \"permissions.index\",\n            \"roles.index\",\n            \"roles.show\",\n            \"roles.store\",\n            \"roles.update\",\n            \"roles.set_default\",\n            \"roles.destroy\",\n            \"codes.create_user_register_invitation\",\n            \"codes.create_user_email_verification\",\n            \"codes.create_user_reset_password\"\n        ],\n        \"causer_types\": [\n            \"user\",\n            \"email\",\n            \"guest\",\n            \"system\"\n        ],\n        \"subject_types\": [\n            \"user\",\n            \"permission\",\n            \"role\",\n            \"code\"\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/activities?page=1&per_page=10&include=causer&include=subject&filter=action==users.login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"activities"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": "User mengatur",
+											"disabled": true
+										},
+										{
+											"key": "include",
+											"value": "causer"
+										},
+										{
+											"key": "include",
+											"value": "subject"
+										},
+										{
+											"key": "filter",
+											"value": "action==users.login"
+										},
+										{
+											"key": "filter",
+											"value": "causer_type==user",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "causer_id==xxx",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "causer_ip_address==255.69.51.152",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "subject_type==code",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "subject_id==xxx",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "created_atBETWEEN2025-01-01,2025-10-30",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "sort  ascending",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "-created_at",
+											"description": "sort  descending",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200 (search)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities?page=1&per_page=2&search=User mengatur&include=causer&include=subject",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "User mengatur"
+												},
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												},
+												{
+													"key": "filter",
+													"value": "action==users.update",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_type==user",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_ip_address=xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_type==role",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_id=xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "created_atBETWEEN2025-01-01,2025-10-30",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "created_at",
+													"description": "sort  ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"description": "sort  descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 22 Nov 2025 04:06:19 GMT"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activities berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": false,\n        \"prev_page\": null,\n        \"next_page\": null,\n        \"last_page\": 1,\n        \"first_page_url\": \"http://localhost:8080/api/v1/activities?include=causer&include=subject&page=1&per_page=2&search=User+mengatur\",\n        \"prev_page_url\": null,\n        \"next_page_url\": null,\n        \"last_page_url\": \"http://localhost:8080/api/v1/activities?include=causer&include=subject&page=1&per_page=2&search=User+mengatur\",\n        \"items\": [\n            {\n                \"id\": \"01KAJM7WQ5RZ6ZNQGKMND9VQK1\",\n                \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"causer_type\": \"user\",\n                \"causer\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"causer_ip_address\": \"100.101.57.113\",\n                \"action\": \"users.reset_password\",\n                \"description\": \"User mengatur ulang kata sandi\",\n                \"subject_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"subject_type\": \"user\",\n                \"subject\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-05-02T08:54:31.598758+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            },\n            {\n                \"id\": \"01KAJM7WQ5ETSK8FFEKQ6KJENF\",\n                \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"causer_type\": \"user\",\n                \"causer\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"causer_ip_address\": \"225.58.24.172\",\n                \"action\": \"roles.set_default\",\n                \"description\": \"User mengatur default role\",\n                \"subject_id\": \"01K7KJ8RYMGS1FWJRZD000TCW0\",\n                \"subject_type\": \"role\",\n                \"subject\": {\n                    \"id\": \"01K7KJ8RYMGS1FWJRZD000TCW0\",\n                    \"name\": \"super_admin\",\n                    \"is_default\": false,\n                    \"created_at\": \"2025-11-21T14:57:41.04229+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.043105+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2024-11-27T13:31:51.482511+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            }\n        ],\n        \"total_items\": 2\n    }\n}"
+								},
+								{
+									"name": "200 (action is users.update)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities?page=1&per_page=2&include=causer&include=subject&filter=action==users.update",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "User memperbarui",
+													"disabled": true
+												},
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												},
+												{
+													"key": "filter",
+													"value": "action==users.update"
+												},
+												{
+													"key": "filter",
+													"value": "causer_type==email",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_ip_address=xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_type==user",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "created_atBETWEEN2023-01-01,2023-01-31",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "created_at",
+													"description": "sort  ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"description": "sort  descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 16:42:03 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1655"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activities berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": false,\n        \"prev_page\": null,\n        \"next_page\": null,\n        \"last_page\": 1,\n        \"first_page_url\": \"http://localhost:8080/api/v1/activities?filter=action%3D%3Dusers.update&include=causer&include=subject&page=1&per_page=2\",\n        \"prev_page_url\": null,\n        \"next_page_url\": null,\n        \"last_page_url\": \"http://localhost:8080/api/v1/activities?filter=action%3D%3Dusers.update&include=causer&include=subject&page=1&per_page=2\",\n        \"items\": [\n            {\n                \"id\": \"01KAJM7WQ5KP9GPR49WC0HTYN0\",\n                \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"causer_type\": \"user\",\n                \"causer\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"causer_ip_address\": \"35.30.70.69\",\n                \"action\": \"users.update\",\n                \"description\": \"User memperbarui user\",\n                \"subject_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"subject_type\": \"user\",\n                \"subject\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-03-05T00:14:30.826812+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            }\n        ],\n        \"total_items\": 1\n    }\n}"
+								},
+								{
+									"name": "200 (causer type is user)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities?page=1&per_page=2&include=causer&include=subject&filter=causer_type==user",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "User memperbarui",
+													"disabled": true
+												},
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												},
+												{
+													"key": "filter",
+													"value": "action==users.update",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_type==user"
+												},
+												{
+													"key": "filter",
+													"value": "causer_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_ip_address=xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_type==user",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "created_atBETWEEN2023-01-01,2023-01-31",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "created_at",
+													"description": "sort  ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"description": "sort  descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 16:43:07 GMT"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activities berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": true,\n        \"prev_page\": null,\n        \"next_page\": 2,\n        \"last_page\": 11,\n        \"first_page_url\": \"http://localhost:8080/api/v1/activities?filter=causer_type%3D%3Duser&include=causer&include=subject&page=1&per_page=2\",\n        \"prev_page_url\": null,\n        \"next_page_url\": \"http://localhost:8080/api/v1/activities?filter=causer_type%3D%3Duser&include=causer&include=subject&page=2&per_page=2\",\n        \"last_page_url\": \"http://localhost:8080/api/v1/activities?filter=causer_type%3D%3Duser&include=causer&include=subject&page=11&per_page=2\",\n        \"items\": [\n            {\n                \"id\": \"01KAJM7WQ4PAYGVCQRRGZ4MRFE\",\n                \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"causer_type\": \"user\",\n                \"causer\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"causer_ip_address\": \"16.78.127.21\",\n                \"action\": \"users.register\",\n                \"description\": \"User mendaftar\",\n                \"subject_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"subject_type\": \"user\",\n                \"subject\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-11-08T20:38:11.749844+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            },\n            {\n                \"id\": \"01KAJM7WQ5RZ6ZNQGKMND9VQK1\",\n                \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"causer_type\": \"user\",\n                \"causer\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"causer_ip_address\": \"100.101.57.113\",\n                \"action\": \"users.reset_password\",\n                \"description\": \"User mengatur ulang kata sandi\",\n                \"subject_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"subject_type\": \"user\",\n                \"subject\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-05-02T08:54:31.598758+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            }\n        ],\n        \"total_items\": 22\n    }\n}"
+								},
+								{
+									"name": "200 (causer type is email)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities?page=1&per_page=2&include=causer&include=subject&filter=causer_type==email",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "User memperbarui",
+													"disabled": true
+												},
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												},
+												{
+													"key": "filter",
+													"value": "action==users.update",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_type==email"
+												},
+												{
+													"key": "filter",
+													"value": "causer_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_ip_address=xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_type==user",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "created_atBETWEEN2023-01-01,2023-01-31",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "created_at",
+													"description": "sort  ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"description": "sort  descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 16:40:31 GMT"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activities berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": false,\n        \"prev_page\": null,\n        \"next_page\": null,\n        \"last_page\": 1,\n        \"first_page_url\": \"http://localhost:8080/api/v1/activities?filter=causer_type%3D%3Demail&include=causer&include=subject&page=1&per_page=2\",\n        \"prev_page_url\": null,\n        \"next_page_url\": null,\n        \"last_page_url\": \"http://localhost:8080/api/v1/activities?filter=causer_type%3D%3Demail&include=causer&include=subject&page=1&per_page=2\",\n        \"items\": [\n            {\n                \"id\": \"01KAJM7WQ5NCVXT09B6MBH0FH8\",\n                \"causer_id\": \"cynthiadouglas@schmitt.name\",\n                \"causer_type\": \"email\",\n                \"causer_ip_address\": \"230.67.192.74\",\n                \"action\": \"codes.create_user_email_verification\",\n                \"description\": \"User membuat kode verifikasi email\",\n                \"subject_id\": \"01KAJPPGMED3MN9REP7RZ72V37\",\n                \"subject_type\": \"code\",\n                \"subject\": {\n                    \"id\": \"01KAJPPGMED3MN9REP7RZ72V37\",\n                    \"codeable_id\": \"super_admin@gmail.com\",\n                    \"codeable_type\": \"email\",\n                    \"type\": \"user_email_verification\",\n                    \"value\": \"725881\",\n                    \"meta\": null,\n                    \"used_at\": \"2025-09-03T00:19:00.249708+07:00\",\n                    \"expired_at\": \"2025-10-03T03:44:27.37178+07:00\",\n                    \"created_at\": \"2025-10-03T03:14:27.37178+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.391091+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-10-03T15:21:39.767633+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            },\n            {\n                \"id\": \"01KAJM7WQ5WB1RA7DK1FAVCH5J\",\n                \"causer_id\": \"reyosinski@quigley.info\",\n                \"causer_type\": \"email\",\n                \"causer_ip_address\": \"93.157.47.166\",\n                \"action\": \"codes.create_user_reset_password\",\n                \"description\": \"User membuat kode reset password\",\n                \"subject_id\": \"01KAJPPGMED3MN9REP7SG93X94\",\n                \"subject_type\": \"code\",\n                \"subject\": {\n                    \"id\": \"01KAJPPGMED3MN9REP7SG93X94\",\n                    \"codeable_id\": \"super_admin@gmail.com\",\n                    \"codeable_type\": \"email\",\n                    \"type\": \"user_reset_password\",\n                    \"value\": \"320820\",\n                    \"meta\": null,\n                    \"used_at\": \"2024-12-17T07:05:01.244981+07:00\",\n                    \"expired_at\": \"2025-09-16T15:53:07.410959+07:00\",\n                    \"created_at\": \"2025-09-16T15:23:07.410959+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.391091+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-05-22T22:16:22.564135+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            }\n        ],\n        \"total_items\": 2\n    }\n}"
+								},
+								{
+									"name": "200 (causer ip addr is xxx)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities?page=1&per_page=2&include=causer&include=subject&filter=causer_ip_address==255.69.51.152",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "User mengatur",
+													"disabled": true
+												},
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												},
+												{
+													"key": "filter",
+													"value": "action==users.update",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_type==user",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_ip_address==255.69.51.152"
+												},
+												{
+													"key": "filter",
+													"value": "subject_type==role",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "created_atBETWEEN2025-01-01,2025-10-30",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "created_at",
+													"description": "sort  ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"description": "sort  descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 22 Nov 2025 04:12:02 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1690"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activities berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": false,\n        \"prev_page\": null,\n        \"next_page\": null,\n        \"last_page\": 1,\n        \"first_page_url\": \"http://localhost:8080/api/v1/activities?filter=causer_ip_address%3D%3D255.69.51.152&include=causer&include=subject&page=1&per_page=2\",\n        \"prev_page_url\": null,\n        \"next_page_url\": null,\n        \"last_page_url\": \"http://localhost:8080/api/v1/activities?filter=causer_ip_address%3D%3D255.69.51.152&include=causer&include=subject&page=1&per_page=2\",\n        \"items\": [\n            {\n                \"id\": \"01KAJM7WQ56RVWNV80P74DH7RV\",\n                \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"causer_type\": \"user\",\n                \"causer\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"causer_ip_address\": \"255.69.51.152\",\n                \"action\": \"users.verify_email\",\n                \"description\": \"User memverifikasi email\",\n                \"subject_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"subject_type\": \"user\",\n                \"subject\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-03-07T09:02:13.183802+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            }\n        ],\n        \"total_items\": 1\n    }\n}"
+								},
+								{
+									"name": "200 (subject type is user)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities?page=1&per_page=2&include=causer&include=subject&filter=subject_type==user",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "User memperbarui",
+													"disabled": true
+												},
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												},
+												{
+													"key": "filter",
+													"value": "action==users.update",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_type==user",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_ip_address=xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_type==user"
+												},
+												{
+													"key": "filter",
+													"value": "subject_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "created_atBETWEEN2023-01-01,2023-01-31",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "created_at",
+													"description": "sort  ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"description": "sort  descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 22 Nov 2025 03:57:44 GMT"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activities berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": true,\n        \"prev_page\": null,\n        \"next_page\": 2,\n        \"last_page\": 7,\n        \"first_page_url\": \"http://localhost:8080/api/v1/activities?filter=subject_type%3D%3Duser&include=causer&include=subject&page=1&per_page=2\",\n        \"prev_page_url\": null,\n        \"next_page_url\": \"http://localhost:8080/api/v1/activities?filter=subject_type%3D%3Duser&include=causer&include=subject&page=2&per_page=2\",\n        \"last_page_url\": \"http://localhost:8080/api/v1/activities?filter=subject_type%3D%3Duser&include=causer&include=subject&page=7&per_page=2\",\n        \"items\": [\n            {\n                \"id\": \"01KAJM7WQ4PAYGVCQRRGZ4MRFE\",\n                \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"causer_type\": \"user\",\n                \"causer\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"causer_ip_address\": \"16.78.127.21\",\n                \"action\": \"users.register\",\n                \"description\": \"User mendaftar\",\n                \"subject_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"subject_type\": \"user\",\n                \"subject\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-11-08T20:38:11.749844+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            },\n            {\n                \"id\": \"01KAJM7WQ5RZ6ZNQGKMND9VQK1\",\n                \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"causer_type\": \"user\",\n                \"causer\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"causer_ip_address\": \"100.101.57.113\",\n                \"action\": \"users.reset_password\",\n                \"description\": \"User mengatur ulang kata sandi\",\n                \"subject_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"subject_type\": \"user\",\n                \"subject\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-05-02T08:54:31.598758+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            }\n        ],\n        \"total_items\": 13\n    }\n}"
+								},
+								{
+									"name": "200 (subject type is role)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities?page=1&per_page=2&include=causer&include=subject&filter=subject_type==role",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "User memperbarui",
+													"disabled": true
+												},
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												},
+												{
+													"key": "filter",
+													"value": "action==users.update",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_type==user",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_ip_address=xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_type==role"
+												},
+												{
+													"key": "filter",
+													"value": "subject_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "created_atBETWEEN2023-01-01,2023-01-31",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "created_at",
+													"description": "sort  ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"description": "sort  descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 22 Nov 2025 03:58:51 GMT"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activities berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": true,\n        \"prev_page\": null,\n        \"next_page\": 2,\n        \"last_page\": 3,\n        \"first_page_url\": \"http://localhost:8080/api/v1/activities?filter=subject_type%3D%3Drole&include=causer&include=subject&page=1&per_page=2\",\n        \"prev_page_url\": null,\n        \"next_page_url\": \"http://localhost:8080/api/v1/activities?filter=subject_type%3D%3Drole&include=causer&include=subject&page=2&per_page=2\",\n        \"last_page_url\": \"http://localhost:8080/api/v1/activities?filter=subject_type%3D%3Drole&include=causer&include=subject&page=3&per_page=2\",\n        \"items\": [\n            {\n                \"id\": \"01KAJM7WQ5400N5XH805H28CE1\",\n                \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"causer_type\": \"user\",\n                \"causer\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"causer_ip_address\": \"132.123.118.213\",\n                \"action\": \"roles.show\",\n                \"description\": \"User melihat detail role\",\n                \"subject_id\": \"01K7KJ8RYMGS1FWJRZD000TCW0\",\n                \"subject_type\": \"role\",\n                \"subject\": {\n                    \"id\": \"01K7KJ8RYMGS1FWJRZD000TCW0\",\n                    \"name\": \"super_admin\",\n                    \"is_default\": false,\n                    \"created_at\": \"2025-11-21T14:57:41.04229+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.043105+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-11-11T07:38:34.16823+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            },\n            {\n                \"id\": \"01KAJM7WQ5K4X7Y63E1NEZQNVE\",\n                \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"causer_type\": \"user\",\n                \"causer\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"causer_ip_address\": \"142.243.26.146\",\n                \"action\": \"roles.store\",\n                \"description\": \"User menambahkan role\",\n                \"subject_id\": \"01K7KJ8RYMGS1FWJRZD000TCW0\",\n                \"subject_type\": \"role\",\n                \"subject\": {\n                    \"id\": \"01K7KJ8RYMGS1FWJRZD000TCW0\",\n                    \"name\": \"super_admin\",\n                    \"is_default\": false,\n                    \"created_at\": \"2025-11-21T14:57:41.04229+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.043105+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-04-25T15:07:14.014895+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            }\n        ],\n        \"total_items\": 5\n    }\n}"
+								},
+								{
+									"name": "200 (subject type code)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities?page=1&per_page=2&include=causer&include=subject&filter=subject_type==code",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "User mengatur",
+													"disabled": true
+												},
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												},
+												{
+													"key": "filter",
+													"value": "action==users.update",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_type==user",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_ip_address==255.69.51.152",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_type==code"
+												},
+												{
+													"key": "filter",
+													"value": "subject_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "created_atBETWEEN2025-01-01,2025-10-30",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "created_at",
+													"description": "sort  ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"description": "sort  descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 22 Nov 2025 04:13:00 GMT"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activities berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": true,\n        \"prev_page\": null,\n        \"next_page\": 2,\n        \"last_page\": 2,\n        \"first_page_url\": \"http://localhost:8080/api/v1/activities?filter=subject_type%3D%3Dcode&include=causer&include=subject&page=1&per_page=2\",\n        \"prev_page_url\": null,\n        \"next_page_url\": \"http://localhost:8080/api/v1/activities?filter=subject_type%3D%3Dcode&include=causer&include=subject&page=2&per_page=2\",\n        \"last_page_url\": \"http://localhost:8080/api/v1/activities?filter=subject_type%3D%3Dcode&include=causer&include=subject&page=2&per_page=2\",\n        \"items\": [\n            {\n                \"id\": \"01KAJM7WQ5F8T0N5FFFRHM0JP2\",\n                \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"causer_type\": \"user\",\n                \"causer\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"causer_ip_address\": \"154.88.221.217\",\n                \"action\": \"codes.create_user_register_invitation\",\n                \"description\": \"User membuat kode undangan pendaftaran\",\n                \"subject_id\": \"01KAJPPGMED3MN9REP7Q4094J6\",\n                \"subject_type\": \"code\",\n                \"subject\": {\n                    \"id\": \"01KAJPPGMED3MN9REP7Q4094J6\",\n                    \"type\": \"user_register_invitation\",\n                    \"value\": \"654505\",\n                    \"meta\": {\n                        \"role_id\": \"01K7KJ8RYMGS1FWJRZD000TCW0\"\n                    },\n                    \"used_at\": null,\n                    \"expired_at\": \"2025-05-22T16:29:04.828642+07:00\",\n                    \"created_at\": \"2025-05-22T15:59:04.828642+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.391091+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2024-12-10T04:30:43.5694+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            },\n            {\n                \"id\": \"01KAJM7WQ5NCVXT09B6MBH0FH8\",\n                \"causer_id\": \"cynthiadouglas@schmitt.name\",\n                \"causer_type\": \"email\",\n                \"causer_ip_address\": \"230.67.192.74\",\n                \"action\": \"codes.create_user_email_verification\",\n                \"description\": \"User membuat kode verifikasi email\",\n                \"subject_id\": \"01KAJPPGMED3MN9REP7RZ72V37\",\n                \"subject_type\": \"code\",\n                \"subject\": {\n                    \"id\": \"01KAJPPGMED3MN9REP7RZ72V37\",\n                    \"codeable_id\": \"super_admin@gmail.com\",\n                    \"codeable_type\": \"email\",\n                    \"type\": \"user_email_verification\",\n                    \"value\": \"725881\",\n                    \"meta\": null,\n                    \"used_at\": \"2025-09-03T00:19:00.249708+07:00\",\n                    \"expired_at\": \"2025-10-03T03:44:27.37178+07:00\",\n                    \"created_at\": \"2025-10-03T03:14:27.37178+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.391091+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-10-03T15:21:39.767633+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            }\n        ],\n        \"total_items\": 3\n    }\n}"
+								},
+								{
+									"name": "200 (created_at between and sort desc)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities?page=1&per_page=2&include=causer&include=subject&filter=created_atBETWEEN2025-01-01,2025-10-30&sort=-created_at",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "User memperbarui",
+													"disabled": true
+												},
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												},
+												{
+													"key": "filter",
+													"value": "action==users.update",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_type==user",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_ip_address=xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_type==role",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "created_atBETWEEN2025-01-01,2025-10-30"
+												},
+												{
+													"key": "sort",
+													"value": "created_at",
+													"description": "sort  ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"description": "sort  descending"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 22 Nov 2025 04:03:26 GMT"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activities berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": true,\n        \"prev_page\": null,\n        \"next_page\": 2,\n        \"last_page\": 8,\n        \"first_page_url\": \"http://localhost:8080/api/v1/activities?filter=created_atBETWEEN2025-01-01%2C2025-10-30&include=causer&include=subject&page=1&per_page=2&sort=-created_at\",\n        \"prev_page_url\": null,\n        \"next_page_url\": \"http://localhost:8080/api/v1/activities?filter=created_atBETWEEN2025-01-01%2C2025-10-30&include=causer&include=subject&page=2&per_page=2&sort=-created_at\",\n        \"last_page_url\": \"http://localhost:8080/api/v1/activities?filter=created_atBETWEEN2025-01-01%2C2025-10-30&include=causer&include=subject&page=8&per_page=2&sort=-created_at\",\n        \"items\": [\n            {\n                \"id\": \"01KAJM7WQ5NCVXT09B6MBH0FH8\",\n                \"causer_id\": \"cynthiadouglas@schmitt.name\",\n                \"causer_type\": \"email\",\n                \"causer_ip_address\": \"230.67.192.74\",\n                \"action\": \"codes.create_user_email_verification\",\n                \"description\": \"User membuat kode verifikasi email\",\n                \"subject_id\": \"01KAJPPGMED3MN9REP7RZ72V37\",\n                \"subject_type\": \"code\",\n                \"subject\": {\n                    \"id\": \"01KAJPPGMED3MN9REP7RZ72V37\",\n                    \"codeable_id\": \"super_admin@gmail.com\",\n                    \"codeable_type\": \"email\",\n                    \"type\": \"user_email_verification\",\n                    \"value\": \"725881\",\n                    \"meta\": null,\n                    \"used_at\": \"2025-09-03T00:19:00.249708+07:00\",\n                    \"expired_at\": \"2025-10-03T03:44:27.37178+07:00\",\n                    \"created_at\": \"2025-10-03T03:14:27.37178+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.391091+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-10-03T15:21:39.767633+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            },\n            {\n                \"id\": \"01KAJM7WQ5Q5DXWTR6MGD6XY3W\",\n                \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"causer_type\": \"user\",\n                \"causer\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"causer_ip_address\": \"223.227.56.109\",\n                \"action\": \"users.update_me_profile\",\n                \"description\": \"User memperbarui profil mereka\",\n                \"subject_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                \"subject_type\": \"user\",\n                \"subject\": {\n                    \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                    \"name\": \"SuperAdmin\",\n                    \"phone_number\": \"1220719099\",\n                    \"email\": \"super_admin@gmail.com\",\n                    \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n                    \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n                    \"deactivated_at\": null,\n                    \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n                    \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n                },\n                \"properties\": null,\n                \"created_at\": \"2025-08-23T15:21:35.195072+07:00\",\n                \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n            }\n        ],\n        \"total_items\": 16\n    }\n}"
+								},
+								{
+									"name": "400 (invalid activity action)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities?page=1&per_page=2&include=causer&include=subject&filter=action==users.updat",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "User memperbarui",
+													"disabled": true
+												},
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												},
+												{
+													"key": "filter",
+													"value": "action==users.updat"
+												},
+												{
+													"key": "filter",
+													"value": "causer_type==user",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_ip_address=xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_type==user",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "created_atBETWEEN2023-01-01,2023-01-31",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "created_at",
+													"description": "sort  ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"description": "sort  descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 16:35:58 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "65"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Invalid activity action\"\n}"
+								},
+								{
+									"name": "400 (invalid activity causer type)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities?page=1&per_page=2&include=causer&include=subject&filter=causer_type==user2",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "User memperbarui",
+													"disabled": true
+												},
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												},
+												{
+													"key": "filter",
+													"value": "action==users.update",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_type==user2"
+												},
+												{
+													"key": "filter",
+													"value": "causer_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_ip_address=xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_type==user",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "created_atBETWEEN2023-01-01,2023-01-31",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "created_at",
+													"description": "sort  ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"description": "sort  descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 16:39:57 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "70"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Invalid activity causer type\"\n}"
+								},
+								{
+									"name": "400 (invalid activity subject type)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities?page=1&per_page=2&include=causer&include=subject&filter=subject_type==userxxx",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "User memperbarui",
+													"disabled": true
+												},
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												},
+												{
+													"key": "filter",
+													"value": "action==users.update",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_type==user",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "causer_ip_address=xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "subject_type==userxxx"
+												},
+												{
+													"key": "filter",
+													"value": "subject_id==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "created_atBETWEEN2023-01-01,2023-01-31",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "created_at",
+													"description": "sort  ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"description": "sort  descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 16:44:30 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "71"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 400,\n    \"status\": \"error\",\n    \"message\": \"Invalid activity subject type\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/activities/01KAR2B2ZF738W5GV9084PK40Q?include=causer&include=subject",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"activities",
+										"01KAR2B2ZF738W5GV9084PK40Q"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "causer"
+										},
+										{
+											"key": "include",
+											"value": "subject"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200 (causer user, subject user)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities/01KAJM7WQ56WCBAR6BX8Y9GT20?include=causer&include=subject",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities",
+												"01KAJM7WQ56WCBAR6BX8Y9GT20"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 07:58:23 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1083"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activity berhasil diambil\",\n    \"data\": {\n        \"id\": \"01KAJM7WQ56WCBAR6BX8Y9GT20\",\n        \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n        \"causer_type\": \"user\",\n        \"causer\": {\n            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n            \"name\": \"SuperAdmin\",\n            \"phone_number\": \"1220719099\",\n            \"email\": \"super_admin@gmail.com\",\n            \"email_verified_at\": \"2025-11-21T07:57:41.057062Z\",\n            \"activated_at\": \"2025-11-21T07:57:41.057278Z\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-06-22T22:24:55.58662Z\",\n            \"updated_at\": \"2025-11-21T07:57:41.376995Z\"\n        },\n        \"causer_ip_address\": \"164.117.29.171\",\n        \"action\": \"users.login\",\n        \"description\": \"User masuk\",\n        \"subject_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n        \"subject_type\": \"user\",\n        \"subject\": {\n            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n            \"name\": \"SuperAdmin\",\n            \"phone_number\": \"1220719099\",\n            \"email\": \"super_admin@gmail.com\",\n            \"email_verified_at\": \"2025-11-21T07:57:41.057062Z\",\n            \"activated_at\": \"2025-11-21T07:57:41.057278Z\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-06-22T22:24:55.58662Z\",\n            \"updated_at\": \"2025-11-21T07:57:41.376995Z\"\n        },\n        \"properties\": null,\n        \"created_at\": \"2025-05-31T05:00:42.120229Z\",\n        \"updated_at\": \"2025-11-21T07:57:41.40242Z\"\n    }\n}"
+								},
+								{
+									"name": "200 (causer user, subject users)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities/01KAJM7WQ5CTBDX17AP705DYM4?include=causer&include=subject",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities",
+												"01KAJM7WQ5CTBDX17AP705DYM4"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 10:35:15 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "772"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activity berhasil diambil\",\n    \"data\": {\n        \"id\": \"01KAJM7WQ5CTBDX17AP705DYM4\",\n        \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n        \"causer_type\": \"user\",\n        \"causer\": {\n            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n            \"name\": \"SuperAdmin\",\n            \"phone_number\": \"1220719099\",\n            \"email\": \"super_admin@gmail.com\",\n            \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n            \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n            \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n        },\n        \"causer_ip_address\": \"150.144.93.94\",\n        \"action\": \"users.index\",\n        \"description\": \"User melihat index users\",\n        \"subject_id\": null,\n        \"subject_type\": null,\n        \"properties\": null,\n        \"created_at\": \"2024-12-06T12:25:22.464325+07:00\",\n        \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n    }\n}"
+								},
+								{
+									"name": "200 (causer user, subject permissions)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities/01KAJM7WQ59N6SN9KEJR0GCE5D?include=causer&include=subject",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities",
+												"01KAJM7WQ59N6SN9KEJR0GCE5D"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 10:46:49 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "783"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activity berhasil diambil\",\n    \"data\": {\n        \"id\": \"01KAJM7WQ59N6SN9KEJR0GCE5D\",\n        \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n        \"causer_type\": \"user\",\n        \"causer\": {\n            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n            \"name\": \"SuperAdmin\",\n            \"phone_number\": \"1220719099\",\n            \"email\": \"super_admin@gmail.com\",\n            \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n            \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n            \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n        },\n        \"causer_ip_address\": \"113.14.29.27\",\n        \"action\": \"permissions.index\",\n        \"description\": \"User melihat index permissions\",\n        \"subject_id\": null,\n        \"subject_type\": null,\n        \"properties\": null,\n        \"created_at\": \"2025-03-13T03:08:44.062542+07:00\",\n        \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n    }\n}"
+								},
+								{
+									"name": "200 (causer user, subject roles)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities/01KAJM7WQ5MV0HRQFMGJHJ6C1Z?include=causer&include=subject",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities",
+												"01KAJM7WQ5MV0HRQFMGJHJ6C1Z"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 10:47:22 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "773"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activity berhasil diambil\",\n    \"data\": {\n        \"id\": \"01KAJM7WQ5MV0HRQFMGJHJ6C1Z\",\n        \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n        \"causer_type\": \"user\",\n        \"causer\": {\n            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n            \"name\": \"SuperAdmin\",\n            \"phone_number\": \"1220719099\",\n            \"email\": \"super_admin@gmail.com\",\n            \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n            \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n            \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n        },\n        \"causer_ip_address\": \"160.47.112.245\",\n        \"action\": \"roles.index\",\n        \"description\": \"User melihat index roles\",\n        \"subject_id\": null,\n        \"subject_type\": null,\n        \"properties\": null,\n        \"created_at\": \"2024-12-06T06:10:28.931732+07:00\",\n        \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n    }\n}"
+								},
+								{
+									"name": "200 (causer user, subject role)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities/01KAJM7WQ550NK895D8P4YAMC2?include=causer&include=subject",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities",
+												"01KAJM7WQ550NK895D8P4YAMC2"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 10:49:57 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "978"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activity berhasil diambil\",\n    \"data\": {\n        \"id\": \"01KAJM7WQ550NK895D8P4YAMC2\",\n        \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n        \"causer_type\": \"user\",\n        \"causer\": {\n            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n            \"name\": \"SuperAdmin\",\n            \"phone_number\": \"1220719099\",\n            \"email\": \"super_admin@gmail.com\",\n            \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n            \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n            \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n        },\n        \"causer_ip_address\": \"128.21.183.132\",\n        \"action\": \"roles.update\",\n        \"description\": \"User memperbarui role\",\n        \"subject_id\": \"01K7KJ8RYMGS1FWJRZD000TCW0\",\n        \"subject_type\": \"role\",\n        \"subject\": {\n            \"id\": \"01K7KJ8RYMGS1FWJRZD000TCW0\",\n            \"name\": \"super_admin\",\n            \"is_default\": false,\n            \"created_at\": \"2025-11-21T14:57:41.04229+07:00\",\n            \"updated_at\": \"2025-11-21T14:57:41.043105+07:00\"\n        },\n        \"properties\": null,\n        \"created_at\": \"2024-12-25T23:44:20.017206+07:00\",\n        \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n    }\n}"
+								},
+								{
+									"name": "200 (causer user, subject code)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities/01KAJM7WQ5F8T0N5FFFRHM0JP2?include=causer&include=subject",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities",
+												"01KAJM7WQ5F8T0N5FFFRHM0JP2"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 10:53:54 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1141"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activity berhasil diambil\",\n    \"data\": {\n        \"id\": \"01KAJM7WQ5F8T0N5FFFRHM0JP2\",\n        \"causer_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n        \"causer_type\": \"user\",\n        \"causer\": {\n            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n            \"name\": \"SuperAdmin\",\n            \"phone_number\": \"1220719099\",\n            \"email\": \"super_admin@gmail.com\",\n            \"email_verified_at\": \"2025-11-21T14:57:41.057062+07:00\",\n            \"activated_at\": \"2025-11-21T14:57:41.057278+07:00\",\n            \"deactivated_at\": null,\n            \"created_at\": \"2025-06-23T05:24:55.58662+07:00\",\n            \"updated_at\": \"2025-11-21T14:57:41.376995+07:00\"\n        },\n        \"causer_ip_address\": \"154.88.221.217\",\n        \"action\": \"codes.create_user_register_invitation\",\n        \"description\": \"User membuat kode undangan pendaftaran\",\n        \"subject_id\": \"01KAJPPGMED3MN9REP7Q4094J6\",\n        \"subject_type\": \"code\",\n        \"subject\": {\n            \"id\": \"01KAJPPGMED3MN9REP7Q4094J6\",\n            \"type\": \"user_register_invitation\",\n            \"value\": \"654505\",\n            \"meta\": {\n                \"role_id\": \"01K7KJ8RYMGS1FWJRZD000TCW0\"\n            },\n            \"used_at\": null,\n            \"expired_at\": \"2025-05-22T16:29:04.828642+07:00\",\n            \"created_at\": \"2025-05-22T15:59:04.828642+07:00\",\n            \"updated_at\": \"2025-11-21T14:57:41.391091+07:00\"\n        },\n        \"properties\": null,\n        \"created_at\": \"2024-12-10T04:30:43.5694+07:00\",\n        \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n    }\n}"
+								},
+								{
+									"name": "200 (causer email, subject code)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities/01KAJM7WQ5NCVXT09B6MBH0FH8?include=causer&include=subject",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities",
+												"01KAJM7WQ5NCVXT09B6MBH0FH8"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 10:54:49 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "845"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Activity berhasil diambil\",\n    \"data\": {\n        \"id\": \"01KAJM7WQ5NCVXT09B6MBH0FH8\",\n        \"causer_id\": \"cynthiadouglas@schmitt.name\",\n        \"causer_type\": \"email\",\n        \"causer_ip_address\": \"230.67.192.74\",\n        \"action\": \"codes.create_user_email_verification\",\n        \"description\": \"User membuat kode verifikasi email\",\n        \"subject_id\": \"01KAJPPGMED3MN9REP7RZ72V37\",\n        \"subject_type\": \"code\",\n        \"subject\": {\n            \"id\": \"01KAJPPGMED3MN9REP7RZ72V37\",\n            \"codeable_id\": \"super_admin@gmail.com\",\n            \"codeable_type\": \"email\",\n            \"type\": \"user_email_verification\",\n            \"value\": \"725881\",\n            \"meta\": null,\n            \"used_at\": \"2025-09-03T00:19:00.249708+07:00\",\n            \"expired_at\": \"2025-10-03T03:44:27.37178+07:00\",\n            \"created_at\": \"2025-10-03T03:14:27.37178+07:00\",\n            \"updated_at\": \"2025-11-21T14:57:41.391091+07:00\"\n        },\n        \"properties\": null,\n        \"created_at\": \"2025-10-03T15:21:39.767633+07:00\",\n        \"updated_at\": \"2025-11-21T14:57:41.40242+07:00\"\n    }\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/activities/01KAJM7WQ5NCVXT09NOT_FOUND?include=causer&include=subject",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activities",
+												"01KAJM7WQ5NCVXT09NOT_FOUND"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "causer"
+												},
+												{
+													"key": "include",
+													"value": "subject"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 21 Nov 2025 10:56:10 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "66"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"Activity tidak ditemukan\"\n}"
 								}
 							]
 						}
