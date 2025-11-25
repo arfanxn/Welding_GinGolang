@@ -30,6 +30,15 @@ const (
 	CodesCreateUserRegisterInvitation ActivityAction = "codes.create_user_register_invitation"
 	CodesCreateUserEmailVerification  ActivityAction = "codes.create_user_email_verification"
 	CodesCreateUserResetPassword      ActivityAction = "codes.create_user_reset_password"
+
+	ActivitiesIndex ActivityAction = "activities.index"
+	ActivitiesShow  ActivityAction = "activities.show"
+
+	MaterialTestMethodsIndex   ActivityAction = "material_test_methods.index"
+	MaterialTestMethodsShow    ActivityAction = "material_test_methods.show"
+	MaterialTestMethodsStore   ActivityAction = "material_test_methods.store"
+	MaterialTestMethodsUpdate  ActivityAction = "material_test_methods.update"
+	MaterialTestMethodsDestroy ActivityAction = "material_test_methods.destroy"
 )
 
 var ActivityActions = []ActivityAction{
@@ -60,4 +69,13 @@ var ActivityActions = []ActivityAction{
 	CodesCreateUserRegisterInvitation,
 	CodesCreateUserEmailVerification,
 	CodesCreateUserResetPassword,
+
+	ActivitiesIndex,
+	ActivitiesShow,
+
+	MaterialTestMethodsIndex,
+	MaterialTestMethodsShow,
+	MaterialTestMethodsStore,
+	MaterialTestMethodsUpdate,
+	MaterialTestMethodsDestroy,
 }

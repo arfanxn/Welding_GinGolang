@@ -46,8 +46,8 @@ func (h *activityHandler) EnumValues(c *gin.Context) {
 		"Activity enums berhasil diambil",
 		gin.H{
 			"actions":       activityEnum.ActivityActions,
-			"causer_types":  activityEnum.ActivityCauserTypes,
-			"subject_types": activityEnum.ActivitySubjectTypes,
+			"causer_types":  activityEnum.CauserTypes,
+			"subject_types": activityEnum.SubjectTypes,
 		},
 	))
 }

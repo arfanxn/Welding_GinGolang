@@ -6,6 +6,7 @@ import (
 	activityRepository "github.com/arfanxn/welding/internal/module/activity/domain/repository"
 	codeEnum "github.com/arfanxn/welding/internal/module/code/domain/enum"
 	codeRepository "github.com/arfanxn/welding/internal/module/code/domain/repository"
+	mtmRepository "github.com/arfanxn/welding/internal/module/material_test_method/domain/repository"
 	permissionRepository "github.com/arfanxn/welding/internal/module/permission/domain/repository"
 	roleEnum "github.com/arfanxn/welding/internal/module/role/domain/enum"
 	roleRepository "github.com/arfanxn/welding/internal/module/role/domain/repository"
@@ -28,18 +29,20 @@ type ActivitySeeder struct {
 	userRepository       userRepository.UserRepository
 	roleRepository       roleRepository.RoleRepository
 	permissionRepository permissionRepository.PermissionRepository
+	mtmRepository        mtmRepository.MaterialTestMethodRepository
 }
 
 type NewActivitySeederParams struct {
 	fx.In
 
-	IdService            id.IdService
-	ActivityFactory      *factory.Factory `name:"activity_factory"`
-	ActivityRepository   activityRepository.ActivityRepository
-	CodeRepository       codeRepository.CodeRepository
-	UserRepository       userRepository.UserRepository
-	RoleRepository       roleRepository.RoleRepository
-	PermissionRepository permissionRepository.PermissionRepository
+	IdService                    id.IdService
+	ActivityFactory              *factory.Factory `name:"activity_factory"`
+	ActivityRepository           activityRepository.ActivityRepository
+	CodeRepository               codeRepository.CodeRepository
+	UserRepository               userRepository.UserRepository
+	RoleRepository               roleRepository.RoleRepository
+	PermissionRepository         permissionRepository.PermissionRepository
+	MaterialTestMethodRepository mtmRepository.MaterialTestMethodRepository
 }
 
 func NewActivitySeeder(
@@ -53,6 +56,7 @@ func NewActivitySeeder(
 		userRepository:       params.UserRepository,
 		roleRepository:       params.RoleRepository,
 		permissionRepository: params.PermissionRepository,
+		mtmRepository:        params.MaterialTestMethodRepository,
 	}
 }
 
@@ -278,58 +282,137 @@ func (s *ActivitySeeder) Seed() error {
 		}).(*entity.Activity),
 	}
 
-	{
-		code, err := s.codeRepository.FindByType(codeEnum.UserRegisterInvitation)
-		if err != nil {
-			return err
+	{ // Codes
+		{
+			code, err := s.codeRepository.FindByType(codeEnum.UserRegisterInvitation)
+			if err != nil {
+				return err
+			}
+			activities = append(activities,
+				// codes.create_user_register_invitation
+				activityFactory.MustCreateWithOption(map[string]any{
+					"Id":          "01KAJM7WQ5F8T0N5FFFRHM0JP2",
+					"CauserId":    &user.Id,
+					"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+					"Action":      activityEnum.CodesCreateUserRegisterInvitation,
+					"SubjectId":   &code.Id,
+					"SubjectType": typeutil.Ptr(activityEnum.CodeSubjectType),
+				}).(*entity.Activity),
+			)
 		}
+
+		{
+			code, err := s.codeRepository.FindByType(codeEnum.UserEmailVerification)
+			if err != nil {
+				return err
+			}
+			activities = append(activities,
+				// codes.create_user_email_verification
+				activityFactory.MustCreateWithOption(map[string]any{
+					"Id":          "01KAJM7WQ5NCVXT09B6MBH0FH8",
+					"CauserId":    typeutil.Ptr(gofakeit.Email()),
+					"CauserType":  typeutil.Ptr(activityEnum.EmailCauserType),
+					"Action":      activityEnum.CodesCreateUserEmailVerification,
+					"SubjectId":   &code.Id,
+					"SubjectType": typeutil.Ptr(activityEnum.CodeSubjectType),
+				}).(*entity.Activity),
+			)
+		}
+
+		{
+			code, err := s.codeRepository.FindByType(codeEnum.UserResetPassword)
+			if err != nil {
+				return err
+			}
+			activities = append(activities,
+				// codes.create_user_reset_password
+				activityFactory.MustCreateWithOption(map[string]any{
+					"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5J",
+					"CauserId":    typeutil.Ptr(gofakeit.Email()),
+					"CauserType":  typeutil.Ptr(activityEnum.EmailCauserType),
+					"Action":      activityEnum.CodesCreateUserResetPassword,
+					"SubjectId":   &code.Id,
+					"SubjectType": typeutil.Ptr(activityEnum.CodeSubjectType),
+				}).(*entity.Activity),
+			)
+		}
+	}
+
+	{
+		// Activities
 		activities = append(activities,
-			// codes.create_user_register_invitation
+			// activities.index
 			activityFactory.MustCreateWithOption(map[string]any{
-				"Id":          "01KAJM7WQ5F8T0N5FFFRHM0JP2",
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5L",
 				"CauserId":    &user.Id,
 				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
-				"Action":      activityEnum.CodesCreateUserRegisterInvitation,
-				"SubjectId":   &code.Id,
-				"SubjectType": typeutil.Ptr(activityEnum.CodeSubjectType),
+				"Action":      activityEnum.ActivitiesIndex,
+				"SubjectType": typeutil.Ptr(activityEnum.ActivitySubjectType),
+			}).(*entity.Activity),
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5T",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.ActivitiesShow,
+				"SubjectId":   &activities[0].Id,
+				"SubjectType": typeutil.Ptr(activityEnum.ActivitySubjectType),
 			}).(*entity.Activity),
 		)
 	}
 
 	{
-		code, err := s.codeRepository.FindByType(codeEnum.UserEmailVerification)
+		// Material Test Methods
+		mtm, err := s.mtmRepository.First(nil)
 		if err != nil {
 			return err
 		}
 		activities = append(activities,
-			// codes.create_user_email_verification
+			// material_test_methods.index
 			activityFactory.MustCreateWithOption(map[string]any{
-				"Id":          "01KAJM7WQ5NCVXT09B6MBH0FH8",
-				"CauserId":    typeutil.Ptr(gofakeit.Email()),
-				"CauserType":  typeutil.Ptr(activityEnum.EmailCauserType),
-				"Action":      activityEnum.CodesCreateUserEmailVerification,
-				"SubjectId":   &code.Id,
-				"SubjectType": typeutil.Ptr(activityEnum.CodeSubjectType),
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5K",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestMethodsIndex,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestMethodSubjectType),
+			}).(*entity.Activity),
+			// material_test_methods.show
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5M",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestMethodsShow,
+				"SubjectId":   &mtm.Id,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestMethodSubjectType),
+			}).(*entity.Activity),
+			// material_test_methods.store
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5N",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestMethodsStore,
+				"SubjectId":   &mtm.Id,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestMethodSubjectType),
+			}).(*entity.Activity),
+			// material_test_methods.update
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5P",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestMethodsUpdate,
+				"SubjectId":   &mtm.Id,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestMethodSubjectType),
+			}).(*entity.Activity),
+			// material_test_methods.destroy
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5Q",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestMethodsDestroy,
+				"SubjectId":   &mtm.Id,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestMethodSubjectType),
 			}).(*entity.Activity),
 		)
-	}
 
-	{
-		code, err := s.codeRepository.FindByType(codeEnum.UserResetPassword)
-		if err != nil {
-			return err
-		}
-		activities = append(activities,
-			// codes.create_user_reset_password
-			activityFactory.MustCreateWithOption(map[string]any{
-				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5J",
-				"CauserId":    typeutil.Ptr(gofakeit.Email()),
-				"CauserType":  typeutil.Ptr(activityEnum.EmailCauserType),
-				"Action":      activityEnum.CodesCreateUserResetPassword,
-				"SubjectId":   &code.Id,
-				"SubjectType": typeutil.Ptr(activityEnum.CodeSubjectType),
-			}).(*entity.Activity),
-		)
 	}
 
 	if err := s.activityRepository.SaveMany(activities); err != nil {

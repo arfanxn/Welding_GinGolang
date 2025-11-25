@@ -8,6 +8,7 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/middleware"
 	activityHttp "github.com/arfanxn/welding/internal/module/activity/presentation/http"
 	codeHttp "github.com/arfanxn/welding/internal/module/code/presentation/http"
+	materialTestMethodHttp "github.com/arfanxn/welding/internal/module/material_test_method/presentation/http"
 	permissionEnum "github.com/arfanxn/welding/internal/module/permission/domain/enum"
 	permissionHttp "github.com/arfanxn/welding/internal/module/permission/presentation/http"
 	roleHttp "github.com/arfanxn/welding/internal/module/role/presentation/http"
@@ -35,11 +36,12 @@ type RegisterRoutesParams struct {
 	UserEmailVerifiedMiddleware middleware.UserEmailVerifiedMiddleware
 
 	// Handlers
-	UserHandler       userHttp.UserHandler
-	RoleHandler       roleHttp.RoleHandler
-	PermissionHandler permissionHttp.PermissionHandler
-	CodeHandler       codeHttp.CodeHandler
-	ActivityHandler   activityHttp.ActivityHandler
+	UserHandler               userHttp.UserHandler
+	RoleHandler               roleHttp.RoleHandler
+	PermissionHandler         permissionHttp.PermissionHandler
+	CodeHandler               codeHttp.CodeHandler
+	ActivityHandler           activityHttp.ActivityHandler
+	MaterialTestMethodHandler materialTestMethodHttp.MaterialTestMethodHandler
 }
 
 func RegisterRoutes(params RegisterRoutesParams) error {
@@ -127,6 +129,14 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 		activity := protected.Group("/activities")
 		activity.GET("", requirePermissionName(permissionEnum.ActivitiesIndex), params.ActivityHandler.Index)
 		activity.GET("/:id", requirePermissionName(permissionEnum.ActivitiesShow), params.ActivityHandler.Show)
+
+		// Material Test Method
+		materialTestMethod := protected.Group("/material-test-methods")
+		materialTestMethod.GET("", requirePermissionName(permissionEnum.MaterialTestMethodsIndex), params.MaterialTestMethodHandler.Paginate)
+		materialTestMethod.GET("/:id", requirePermissionName(permissionEnum.MaterialTestMethodsShow), params.MaterialTestMethodHandler.Show)
+		materialTestMethod.POST("", requirePermissionName(permissionEnum.MaterialTestMethodsStore), params.MaterialTestMethodHandler.Store)
+		materialTestMethod.PUT("/:id", requirePermissionName(permissionEnum.MaterialTestMethodsUpdate), params.MaterialTestMethodHandler.Update)
+		materialTestMethod.DELETE("/:id", requirePermissionName(permissionEnum.MaterialTestMethodsDestroy), params.MaterialTestMethodHandler.Destroy)
 
 	}
 

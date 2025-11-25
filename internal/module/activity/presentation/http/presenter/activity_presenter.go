@@ -113,6 +113,20 @@ func (s *activityPresenter) resolveActionDescription(action activityEnum.Activit
 		description = "User membuat kode verifikasi email"
 	case activityEnum.CodesCreateUserResetPassword:
 		description = "User membuat kode reset password"
+	case activityEnum.ActivitiesIndex:
+		description = "User melihat index activities"
+	case activityEnum.ActivitiesShow:
+		description = "User melihat detail activity"
+	case activityEnum.MaterialTestMethodsIndex:
+		description = "User melihat index material test methods"
+	case activityEnum.MaterialTestMethodsShow:
+		description = "User melihat detail material test method"
+	case activityEnum.MaterialTestMethodsStore:
+		description = "User menambahkan material test method"
+	case activityEnum.MaterialTestMethodsUpdate:
+		description = "User memperbarui material test method"
+	case activityEnum.MaterialTestMethodsDestroy:
+		description = "User menghapus material test method"
 	default:
 	}
 

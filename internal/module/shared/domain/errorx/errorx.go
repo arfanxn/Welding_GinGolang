@@ -137,4 +137,14 @@ var (
 
 	// ErrActivityInvalidSubjectType is returned when an invalid subject type is provided
 	ErrActivityInvalidSubjectType Errorx = New("activity invalid subject type")
+
+	// ========================================
+	// Material Test Method Errors
+	// ========================================
+
+	// ErrMaterialTestMethodNotFound is returned when a material test method record is not found
+	ErrMaterialTestMethodNotFound Errorx = New("material test method not found")
+
+	// ErrMaterialTestMethodAlreadyExists is returned when attempting to create a material test method that already exists
+	ErrMaterialTestMethodAlreadyExists Errorx = New("material test method already exists")
 )

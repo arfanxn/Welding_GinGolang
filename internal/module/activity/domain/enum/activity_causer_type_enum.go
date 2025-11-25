@@ -1,15 +1,15 @@
 package enum
 
-type ActivityCauserType = string
+type CauserType = string
 
 const (
-	UserCauserType   ActivityCauserType = "user"
-	EmailCauserType  ActivityCauserType = "email"
-	GuestCauserType  ActivityCauserType = "guest"
-	SystemCauserType ActivityCauserType = "system"
+	UserCauserType   CauserType = "user"
+	EmailCauserType  CauserType = "email"
+	GuestCauserType  CauserType = "guest"
+	SystemCauserType CauserType = "system"
 )
 
-var ActivityCauserTypes = []ActivityCauserType{
+var CauserTypes = []CauserType{
 	UserCauserType,
 	EmailCauserType,
 	GuestCauserType,

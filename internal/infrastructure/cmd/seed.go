@@ -35,6 +35,7 @@ var seedCommand = &cli.Command{
 				fx.Annotate(seeder.NewRoleSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
 				fx.Annotate(seeder.NewPermissionSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
 				fx.Annotate(seeder.NewCodeSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
+				fx.Annotate(seeder.NewMaterialTestMethodSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
 				fx.Annotate(seeder.NewActivitySeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
 			),
 			fx.WithLogger(func(l *logger.Logger) fxevent.Logger {
@@ -67,6 +68,7 @@ func mustGetOrderedSeeders(seeders []seeder.Seeder) []seeder.Seeder {
 		mustGetByTypeFromSeeders[*seeder.RoleSeeder](seeders),
 		mustGetByTypeFromSeeders[*seeder.UserSeeder](seeders),
 		mustGetByTypeFromSeeders[*seeder.CodeSeeder](seeders),
+		mustGetByTypeFromSeeders[*seeder.MaterialTestMethodSeeder](seeders),
 		mustGetByTypeFromSeeders[*seeder.ActivitySeeder](seeders),
 	}
 	return orderedSeeders

@@ -50,10 +50,10 @@ func (s *activityService) Create(
 		id              string                      = s.idService.Generate()
 		action          activityEnum.ActivityAction = _dto.Action
 		causerIdPtr     *string
-		causerTypePtr   *activityEnum.ActivityCauserType
+		causerTypePtr   *activityEnum.CauserType
 		causerIpAddrPtr *string
 		subjectIdPtr    *string
-		subjectTypePtr  *activityEnum.ActivitySubjectType
+		subjectTypePtr  *activityEnum.SubjectType
 		properties      types.JSONMap = _dto.Properties
 	)
 
@@ -69,8 +69,8 @@ func (s *activityService) Create(
 			fmt.Println("it went here 3")
 			cType := reflectutil.GetStructName(_dto.Causer)
 			cType = strcase.ToSnake(cType)
-			acType := activityEnum.ActivityCauserType(cType)
-			if !lo.Contains(activityEnum.ActivityCauserTypes, activityEnum.ActivityCauserType(acType)) {
+			acType := activityEnum.CauserType(cType)
+			if !lo.Contains(activityEnum.CauserTypes, activityEnum.CauserType(acType)) {
 				return nil, errorx.ErrActivityInvalidCauserType
 			}
 			causerTypePtr = &acType
@@ -100,8 +100,8 @@ func (s *activityService) Create(
 			subjectIdPtr = &subjectId
 			sType := reflectutil.GetStructName(_dto.Subject)
 			sType = strcase.ToSnake(sType)
-			asType := activityEnum.ActivitySubjectType(sType)
-			if !lo.Contains(activityEnum.ActivitySubjectTypes, activityEnum.ActivitySubjectType(sType)) {
+			asType := activityEnum.SubjectType(sType)
+			if !lo.Contains(activityEnum.SubjectTypes, activityEnum.SubjectType(sType)) {
 				return nil, errorx.ErrActivityInvalidSubjectType
 			}
 			subjectTypePtr = &asType

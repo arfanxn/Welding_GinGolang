@@ -42,7 +42,7 @@ func (r *gormActivityRepository) query(db *gorm.DB, q *query.Query) (*gorm.DB, e
 		}
 
 		if causerType := q.GetFilter("causer_type", query.OperatorEqual); causerType != nil {
-			if !goutil.Contains(activityEnum.ActivityCauserTypes, activityEnum.ActivityCauserType(causerType.Value)) {
+			if !goutil.Contains(activityEnum.CauserTypes, activityEnum.CauserType(causerType.Value)) {
 				return nil, errorx.ErrActivityInvalidCauserType
 			}
 			db = db.Where(activityTableName+".causer_type = ?", causerType.Value)
@@ -57,7 +57,7 @@ func (r *gormActivityRepository) query(db *gorm.DB, q *query.Query) (*gorm.DB, e
 		}
 
 		if subjectType := q.GetFilter("subject_type", query.OperatorEqual); subjectType != nil {
-			if !goutil.Contains(activityEnum.ActivitySubjectTypes, activityEnum.ActivitySubjectType(subjectType.Value)) {
+			if !goutil.Contains(activityEnum.SubjectTypes, activityEnum.SubjectType(subjectType.Value)) {
 				return nil, errorx.ErrActivityInvalidSubjectType
 			}
 			db = db.Where(activityTableName+".subject_type = ?", subjectType.Value)

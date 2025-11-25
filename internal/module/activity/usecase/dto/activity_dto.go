@@ -7,7 +7,7 @@ import (
 
 type CreateActivity struct {
 	CauserId   *string
-	CauserType *activityEnum.ActivityCauserType
+	CauserType *activityEnum.CauserType
 	Causer     any
 
 	CauserIpAddress *string
@@ -15,7 +15,7 @@ type CreateActivity struct {
 	Action activityEnum.ActivityAction
 
 	SubjectId   *string
-	SubjectType *activityEnum.ActivitySubjectType
+	SubjectType *activityEnum.SubjectType
 	Subject     any
 
 	Properties types.JSONMap
