@@ -9,6 +9,7 @@ const (
 	CodeSubjectType                SubjectType = "code"
 	MaterialTestMethodSubjectType  SubjectType = "material_test_method"
 	MaterialTestMachineSubjectType SubjectType = "material_test_machine"
+	MaterialTestServiceSubjectType SubjectType = "material_test_service"
 	ActivitySubjectType            SubjectType = "activity"
 )
 
@@ -19,5 +20,6 @@ var SubjectTypes = []SubjectType{
 	CodeSubjectType,
 	MaterialTestMethodSubjectType,
 	MaterialTestMachineSubjectType,
+	MaterialTestServiceSubjectType,
 	ActivitySubjectType,
 }

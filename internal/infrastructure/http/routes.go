@@ -10,6 +10,7 @@ import (
 	codeHttp "github.com/arfanxn/welding/internal/module/code/presentation/http"
 	materialTestMachineHttp "github.com/arfanxn/welding/internal/module/material_test_machine/presentation/http"
 	materialTestMethodHttp "github.com/arfanxn/welding/internal/module/material_test_method/presentation/http"
+	materialTestServiceHttp "github.com/arfanxn/welding/internal/module/material_test_service/presentation/http"
 	permissionEnum "github.com/arfanxn/welding/internal/module/permission/domain/enum"
 	permissionHttp "github.com/arfanxn/welding/internal/module/permission/presentation/http"
 	roleHttp "github.com/arfanxn/welding/internal/module/role/presentation/http"
@@ -44,6 +45,7 @@ type RegisterRoutesParams struct {
 	ActivityHandler            activityHttp.ActivityHandler
 	MaterialTestMethodHandler  materialTestMethodHttp.MaterialTestMethodHandler
 	MaterialTestMachineHandler materialTestMachineHttp.MaterialTestMachineHandler
+	MaterialTestServiceHandler materialTestServiceHttp.MaterialTestServiceHandler
 }
 
 func RegisterRoutes(params RegisterRoutesParams) error {
@@ -147,6 +149,14 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 		materialTestMachine.POST("", requirePermissionName(permissionEnum.MaterialTestMachinesStore), params.MaterialTestMachineHandler.Store)
 		materialTestMachine.PUT("/:id", requirePermissionName(permissionEnum.MaterialTestMachinesUpdate), params.MaterialTestMachineHandler.Update)
 		materialTestMachine.DELETE("/:id", requirePermissionName(permissionEnum.MaterialTestMachinesDestroy), params.MaterialTestMachineHandler.Destroy)
+
+		// Material Test Service
+		materialTestService := protected.Group("/material-test-services")
+		materialTestService.GET("", requirePermissionName(permissionEnum.MaterialTestServicesIndex), params.MaterialTestServiceHandler.Paginate)
+		materialTestService.GET("/:id", requirePermissionName(permissionEnum.MaterialTestServicesShow), params.MaterialTestServiceHandler.Show)
+		materialTestService.POST("", requirePermissionName(permissionEnum.MaterialTestServicesStore), params.MaterialTestServiceHandler.Store)
+		materialTestService.PUT("/:id", requirePermissionName(permissionEnum.MaterialTestServicesUpdate), params.MaterialTestServiceHandler.Update)
+		materialTestService.DELETE("/:id", requirePermissionName(permissionEnum.MaterialTestServicesDestroy), params.MaterialTestServiceHandler.Destroy)
 	}
 
 	return nil

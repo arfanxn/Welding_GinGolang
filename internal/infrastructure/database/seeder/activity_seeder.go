@@ -6,7 +6,9 @@ import (
 	activityRepository "github.com/arfanxn/welding/internal/module/activity/domain/repository"
 	codeEnum "github.com/arfanxn/welding/internal/module/code/domain/enum"
 	codeRepository "github.com/arfanxn/welding/internal/module/code/domain/repository"
-	mtmRepository "github.com/arfanxn/welding/internal/module/material_test_method/domain/repository"
+	mtMachineRepository "github.com/arfanxn/welding/internal/module/material_test_machine/domain/repository"
+	mtMethodRepository "github.com/arfanxn/welding/internal/module/material_test_method/domain/repository"
+	mtServiceRepository "github.com/arfanxn/welding/internal/module/material_test_service/domain/repository"
 	permissionRepository "github.com/arfanxn/welding/internal/module/permission/domain/repository"
 	roleEnum "github.com/arfanxn/welding/internal/module/role/domain/enum"
 	roleRepository "github.com/arfanxn/welding/internal/module/role/domain/repository"
@@ -29,20 +31,24 @@ type ActivitySeeder struct {
 	userRepository       userRepository.UserRepository
 	roleRepository       roleRepository.RoleRepository
 	permissionRepository permissionRepository.PermissionRepository
-	mtmRepository        mtmRepository.MaterialTestMethodRepository
+	mtMachineRepository  mtMachineRepository.MaterialTestMachineRepository
+	mtMethodRepository   mtMethodRepository.MaterialTestMethodRepository
+	mtServiceRepository  mtServiceRepository.MaterialTestServiceRepository
 }
 
 type NewActivitySeederParams struct {
 	fx.In
 
-	IdService                    id.IdService
-	ActivityFactory              *factory.Factory `name:"activity_factory"`
-	ActivityRepository           activityRepository.ActivityRepository
-	CodeRepository               codeRepository.CodeRepository
-	UserRepository               userRepository.UserRepository
-	RoleRepository               roleRepository.RoleRepository
-	PermissionRepository         permissionRepository.PermissionRepository
-	MaterialTestMethodRepository mtmRepository.MaterialTestMethodRepository
+	IdService                     id.IdService
+	ActivityFactory               *factory.Factory `name:"activity_factory"`
+	ActivityRepository            activityRepository.ActivityRepository
+	CodeRepository                codeRepository.CodeRepository
+	UserRepository                userRepository.UserRepository
+	RoleRepository                roleRepository.RoleRepository
+	PermissionRepository          permissionRepository.PermissionRepository
+	MaterialTestMachineRepository mtMachineRepository.MaterialTestMachineRepository
+	MaterialTestMethodRepository  mtMethodRepository.MaterialTestMethodRepository
+	MaterialTestServiceRepository mtServiceRepository.MaterialTestServiceRepository
 }
 
 func NewActivitySeeder(
@@ -56,7 +62,9 @@ func NewActivitySeeder(
 		userRepository:       params.UserRepository,
 		roleRepository:       params.RoleRepository,
 		permissionRepository: params.PermissionRepository,
-		mtmRepository:        params.MaterialTestMethodRepository,
+		mtMachineRepository:  params.MaterialTestMachineRepository,
+		mtMethodRepository:   params.MaterialTestMethodRepository,
+		mtServiceRepository:  params.MaterialTestServiceRepository,
 	}
 }
 
@@ -350,7 +358,7 @@ func (s *ActivitySeeder) Seed() error {
 				"SubjectType": typeutil.Ptr(activityEnum.ActivitySubjectType),
 			}).(*entity.Activity),
 			activityFactory.MustCreateWithOption(map[string]any{
-				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5T",
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH68",
 				"CauserId":    &user.Id,
 				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
 				"Action":      activityEnum.ActivitiesShow,
@@ -362,7 +370,7 @@ func (s *ActivitySeeder) Seed() error {
 
 	{
 		// Material Test Methods
-		mtm, err := s.mtmRepository.First(nil)
+		mtm, err := s.mtMethodRepository.First(nil)
 		if err != nil {
 			return err
 		}
@@ -412,7 +420,114 @@ func (s *ActivitySeeder) Seed() error {
 				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestMethodSubjectType),
 			}).(*entity.Activity),
 		)
+	}
 
+	{
+		// Material Test Machines
+		mtm, err := s.mtMachineRepository.First(nil)
+		if err != nil {
+			return err
+		}
+		activities = append(activities,
+			// material_test_machines.index
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5R",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestMachinesIndex,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestMachineSubjectType),
+			}).(*entity.Activity),
+			// material_test_machines.show
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5S",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestMachinesShow,
+				"SubjectId":   &mtm.Id,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestMachineSubjectType),
+			}).(*entity.Activity),
+			// material_test_machines.store
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH88",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestMachinesStore,
+				"SubjectId":   &mtm.Id,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestMachineSubjectType),
+			}).(*entity.Activity),
+			// material_test_machines.update
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5V",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestMachinesUpdate,
+				"SubjectId":   &mtm.Id,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestMachineSubjectType),
+			}).(*entity.Activity),
+			// material_test_machines.destroy
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5W",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestMachinesDestroy,
+				"SubjectId":   &mtm.Id,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestMachineSubjectType),
+			}).(*entity.Activity),
+		)
+	}
+
+	{
+		// Material Test Services
+		mts, err := s.mtServiceRepository.First(nil)
+		if err != nil {
+			return err
+		}
+		activities = append(activities,
+			// material_test_services.index
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5X",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestServicesIndex,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestServiceSubjectType),
+			}).(*entity.Activity),
+			// material_test_services.show
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5Y",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestServicesShow,
+				"SubjectId":   &mts.Id,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestServiceSubjectType),
+			}).(*entity.Activity),
+			// material_test_services.store
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH5Z",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestServicesStore,
+				"SubjectId":   &mts.Id,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestServiceSubjectType),
+			}).(*entity.Activity),
+			// material_test_services.update
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH60",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestServicesUpdate,
+				"SubjectId":   &mts.Id,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestServiceSubjectType),
+			}).(*entity.Activity),
+			// material_test_services.destroy
+			activityFactory.MustCreateWithOption(map[string]any{
+				"Id":          "01KAJM7WQ5WB1RA7DK1FAVCH61",
+				"CauserId":    &user.Id,
+				"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
+				"Action":      activityEnum.MaterialTestServicesDestroy,
+				"SubjectId":   &mts.Id,
+				"SubjectType": typeutil.Ptr(activityEnum.MaterialTestServiceSubjectType),
+			}).(*entity.Activity),
+		)
 	}
 
 	if err := s.activityRepository.SaveMany(activities); err != nil {

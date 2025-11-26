@@ -148,6 +148,9 @@ var (
 	// ErrMaterialTestMethodAlreadyExists is returned when attempting to create a material test method that already exists
 	ErrMaterialTestMethodAlreadyExists Errorx = New("material test method already exists")
 
+	// ErrMaterialTestMethodInUseDestroyForbidden is returned when attempting to destroy a material test method that has material test service, or it is in use
+	ErrMaterialTestMethodInUseDestroyForbidden Errorx = New("material test method in use destroy forbidden")
+
 	// ========================================
 	// Material Test Machine Errors
 	// ========================================
@@ -157,4 +160,17 @@ var (
 
 	// ErrMaterialTestMachineAlreadyExists is returned when attempting to create a material test machine that already exists
 	ErrMaterialTestMachineAlreadyExists Errorx = New("material test machine already exists")
+
+	// ErrMaterialTestMachineInUseDestroyForbidden is returned when attempting to destroy a material test machine that has material test service, or it is in use
+	ErrMaterialTestMachineInUseDestroyForbidden Errorx = New("material test machine in use destroy forbidden")
+
+	// ========================================
+	// Material Test Service Errors
+	// ========================================
+
+	// ErrMaterialTestServiceNotFound is returned when a material test service record is not found
+	ErrMaterialTestServiceNotFound Errorx = New("material test service not found")
+
+	// ErrMaterialTestServiceAlreadyExists is returned when attempting to create a material test service that already exists
+	ErrMaterialTestServiceAlreadyExists Errorx = New("material test service already exists")
 )

@@ -15,6 +15,7 @@ import (
 	employeeDi "github.com/arfanxn/welding/internal/module/employee/infrastructure/di"
 	materialTestMachineDi "github.com/arfanxn/welding/internal/module/material_test_machine/infrastructure/di"
 	materialTestMethodDi "github.com/arfanxn/welding/internal/module/material_test_method/infrastructure/di"
+	materialTestServiceDi "github.com/arfanxn/welding/internal/module/material_test_service/infrastructure/di"
 	permissionDi "github.com/arfanxn/welding/internal/module/permission/infrastructure/di"
 	permissionRoleDi "github.com/arfanxn/welding/internal/module/permission_role/infrastructure/di"
 	roleDi "github.com/arfanxn/welding/internal/module/role/infrastructure/di"
@@ -61,6 +62,7 @@ var Module = fx.Module("infrastructure",
 	activityDi.Module,
 	materialTestMethodDi.Module,
 	materialTestMachineDi.Module,
+	materialTestServiceDi.Module,
 
 	// Logger
 	fx.WithLogger(func(logger *logger.Logger) fxevent.Logger {

@@ -30,6 +30,7 @@ var seedCommand = &cli.Command{
 				fx.Annotate(factory.NewUserFactory, fx.ResultTags(`name:"user_factory"`)),
 				fx.Annotate(factory.NewCodeFactory, fx.ResultTags(`name:"code_factory"`)),
 				fx.Annotate(factory.NewActivityFactory, fx.ResultTags(`name:"activity_factory"`)),
+				fx.Annotate(factory.NewMaterialTestServiceFactory, fx.ResultTags(`name:"material_test_service_factory"`)),
 
 				fx.Annotate(seeder.NewUserSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
 				fx.Annotate(seeder.NewRoleSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
@@ -37,6 +38,7 @@ var seedCommand = &cli.Command{
 				fx.Annotate(seeder.NewCodeSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
 				fx.Annotate(seeder.NewMaterialTestMethodSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
 				fx.Annotate(seeder.NewMaterialTestMachineSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
+				fx.Annotate(seeder.NewMaterialTestServiceSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
 				fx.Annotate(seeder.NewActivitySeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
 			),
 			fx.WithLogger(func(l *logger.Logger) fxevent.Logger {
@@ -71,6 +73,7 @@ func mustGetOrderedSeeders(seeders []seeder.Seeder) []seeder.Seeder {
 		mustGetByTypeFromSeeders[*seeder.CodeSeeder](seeders),
 		mustGetByTypeFromSeeders[*seeder.MaterialTestMethodSeeder](seeders),
 		mustGetByTypeFromSeeders[*seeder.MaterialTestMachineSeeder](seeders),
+		mustGetByTypeFromSeeders[*seeder.MaterialTestServiceSeeder](seeders),
 		mustGetByTypeFromSeeders[*seeder.ActivitySeeder](seeders),
 	}
 	return orderedSeeders
