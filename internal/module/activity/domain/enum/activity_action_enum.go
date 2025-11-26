@@ -39,6 +39,12 @@ const (
 	MaterialTestMethodsStore   ActivityAction = "material_test_methods.store"
 	MaterialTestMethodsUpdate  ActivityAction = "material_test_methods.update"
 	MaterialTestMethodsDestroy ActivityAction = "material_test_methods.destroy"
+
+	MaterialTestMachinesIndex   ActivityAction = "material_test_machines.index"
+	MaterialTestMachinesShow    ActivityAction = "material_test_machines.show"
+	MaterialTestMachinesStore   ActivityAction = "material_test_machines.store"
+	MaterialTestMachinesUpdate  ActivityAction = "material_test_machines.update"
+	MaterialTestMachinesDestroy ActivityAction = "material_test_machines.destroy"
 )
 
 var ActivityActions = []ActivityAction{
@@ -78,4 +84,10 @@ var ActivityActions = []ActivityAction{
 	MaterialTestMethodsStore,
 	MaterialTestMethodsUpdate,
 	MaterialTestMethodsDestroy,
+
+	MaterialTestMachinesIndex,
+	MaterialTestMachinesShow,
+	MaterialTestMachinesStore,
+	MaterialTestMachinesUpdate,
+	MaterialTestMachinesDestroy,
 }

@@ -26,6 +26,12 @@ const (
 	MaterialTestMethodsStore   PermissionName = "material_test_methods.store"
 	MaterialTestMethodsUpdate  PermissionName = "material_test_methods.update"
 	MaterialTestMethodsDestroy PermissionName = "material_test_methods.destroy"
+
+	MaterialTestMachinesIndex   PermissionName = "material_test_machines.index"
+	MaterialTestMachinesShow    PermissionName = "material_test_machines.show"
+	MaterialTestMachinesStore   PermissionName = "material_test_machines.store"
+	MaterialTestMachinesUpdate  PermissionName = "material_test_machines.update"
+	MaterialTestMachinesDestroy PermissionName = "material_test_machines.destroy"
 )
 
 func (p PermissionName) String() string {
@@ -56,4 +62,10 @@ var PermissionNames = []PermissionName{
 	MaterialTestMethodsStore,
 	MaterialTestMethodsUpdate,
 	MaterialTestMethodsDestroy,
+
+	MaterialTestMachinesIndex,
+	MaterialTestMachinesShow,
+	MaterialTestMachinesStore,
+	MaterialTestMachinesUpdate,
+	MaterialTestMachinesDestroy,
 }

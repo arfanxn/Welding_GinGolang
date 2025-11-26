@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type MaterialTestMethod struct {
+type MaterialTestMachine struct {
 	Id          string     `json:"id" gorm:"primarykey"`
 	Name        string     `json:"name"`
 	Description *string    `json:"description"`
@@ -12,10 +12,10 @@ type MaterialTestMethod struct {
 	UpdatedAt   *time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }
 
-func NewMaterialTestMethod() *MaterialTestMethod {
-	return &MaterialTestMethod{}
+func NewMaterialTestMachine() *MaterialTestMachine {
+	return &MaterialTestMachine{}
 }
 
-func (m *MaterialTestMethod) TableName() string {
-	return "material_test_methods"
+func (m *MaterialTestMachine) TableName() string {
+	return "material_test_machines"
 }

@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/arfanxn/welding/internal/infrastructure/id"
 	activityEnum "github.com/arfanxn/welding/internal/module/activity/domain/enum"
@@ -61,12 +60,9 @@ func (s *activityService) Create(
 		causerIdPtr = _dto.CauserId
 		causerTypePtr = _dto.CauserType
 	} else if _dto.Causer != nil {
-		fmt.Println("it went here 1")
 		if cId, ok := reflectutil.GetStructField(_dto.Causer, "Id"); ok {
 			causerId := cId.(string)
-			fmt.Println("it went here 2")
 			causerIdPtr = &causerId
-			fmt.Println("it went here 3")
 			cType := reflectutil.GetStructName(_dto.Causer)
 			cType = strcase.ToSnake(cType)
 			acType := activityEnum.CauserType(cType)

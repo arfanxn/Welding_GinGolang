@@ -147,4 +147,14 @@ var (
 
 	// ErrMaterialTestMethodAlreadyExists is returned when attempting to create a material test method that already exists
 	ErrMaterialTestMethodAlreadyExists Errorx = New("material test method already exists")
+
+	// ========================================
+	// Material Test Machine Errors
+	// ========================================
+
+	// ErrMaterialTestMachineNotFound is returned when a material test machine record is not found
+	ErrMaterialTestMachineNotFound Errorx = New("material test machine not found")
+
+	// ErrMaterialTestMachineAlreadyExists is returned when attempting to create a material test machine that already exists
+	ErrMaterialTestMachineAlreadyExists Errorx = New("material test machine already exists")
 )

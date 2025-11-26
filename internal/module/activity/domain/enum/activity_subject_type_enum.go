@@ -3,12 +3,13 @@ package enum
 type SubjectType = string
 
 const (
-	UserSubjectType               SubjectType = "user"
-	PermissionSubjectType         SubjectType = "permission"
-	RoleSubjectType               SubjectType = "role"
-	CodeSubjectType               SubjectType = "code"
-	MaterialTestMethodSubjectType SubjectType = "material_test_method"
-	ActivitySubjectType           SubjectType = "activity"
+	UserSubjectType                SubjectType = "user"
+	PermissionSubjectType          SubjectType = "permission"
+	RoleSubjectType                SubjectType = "role"
+	CodeSubjectType                SubjectType = "code"
+	MaterialTestMethodSubjectType  SubjectType = "material_test_method"
+	MaterialTestMachineSubjectType SubjectType = "material_test_machine"
+	ActivitySubjectType            SubjectType = "activity"
 )
 
 var SubjectTypes = []SubjectType{
@@ -17,5 +18,6 @@ var SubjectTypes = []SubjectType{
 	RoleSubjectType,
 	CodeSubjectType,
 	MaterialTestMethodSubjectType,
+	MaterialTestMachineSubjectType,
 	ActivitySubjectType,
 }

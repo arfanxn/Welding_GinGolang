@@ -6,6 +6,7 @@ require (
 	github.com/bluele/factory-go v0.0.1
 	github.com/brianvoe/gofakeit/v7 v7.8.0
 	github.com/creasty/defaults v1.8.0
+	github.com/davecgh/go-spew v1.1.1
 	github.com/gin-gonic/gin v1.11.0
 	github.com/go-ozzo/ozzo-validation/v4 v4.3.0
 	github.com/golang-jwt/jwt/v5 v5.3.0
