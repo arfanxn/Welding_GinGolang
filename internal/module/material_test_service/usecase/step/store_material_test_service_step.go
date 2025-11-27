@@ -7,6 +7,7 @@ import (
 	mtsRepository "github.com/arfanxn/welding/internal/module/material_test_service/domain/repository"
 	"github.com/arfanxn/welding/internal/module/material_test_service/usecase/dto"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
+	"github.com/arfanxn/welding/pkg/query"
 )
 
 type StoreMaterialTestServiceStep interface {
@@ -39,6 +40,11 @@ func (s *storeMaterialTestServiceStep) Handle(ctx context.Context, _dto *dto.Sav
 	mts.Price = *_dto.Price
 
 	if err := s.mtsRepository.Save(mts); err != nil {
+		return nil, err
+	}
+
+	q := query.NewQuery().FilterById(mts.Id).Include("Machine").Include("Method")
+	if mts, err = s.mtsRepository.First(q); err != nil {
 		return nil, err
 	}
 

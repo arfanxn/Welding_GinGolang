@@ -2,6 +2,7 @@ package http
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/helper"
@@ -78,8 +79,12 @@ func (h *mtsHandler) Show(c *gin.Context) {
 }
 
 func (h *mtsHandler) Store(c *gin.Context) {
+	fmt.Println("it went here 0")
+
 	req := mtsRequest.NewStoreMaterialTestService()
 	helper.MustBindValidate(c, req)
+
+	fmt.Println("it went here 1")
 
 	mts, err := h.mtsUsecase.Store(c.Request.Context(), &dto.SaveMaterialTestService{
 		MachineId:   &req.MachineId,

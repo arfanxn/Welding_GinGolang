@@ -44,7 +44,7 @@ func (s *StoreMaterialTestService) Validate() error {
 		),
 		validation.Field(&s.Price,
 			validation.Required.Error("Price tidak boleh kosong"),
-			validation.Min(0).Error("Price harus lebih dari 0"),
+			validation.Min(0.00).Error("Price harus lebih dari 0"),
 		),
 	)
 }

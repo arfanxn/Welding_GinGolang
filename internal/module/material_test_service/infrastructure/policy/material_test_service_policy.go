@@ -40,10 +40,10 @@ func NewMaterialTestServicePolicy(params NewMaterialTestServicePolicyParams) Mat
 }
 
 func (p *materialTestServicePolicy) Store(ctx context.Context, _dto *dto.SaveMaterialTestService) error {
-	if err := p.validateMethod(*_dto.MethodId); err != nil {
+	if err := p.validateMachine(*_dto.MachineId); err != nil {
 		return err
 	}
-	if err := p.validateMachine(*_dto.MachineId); err != nil {
+	if err := p.validateMethod(*_dto.MethodId); err != nil {
 		return err
 	}
 	return nil

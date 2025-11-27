@@ -32,51 +32,73 @@ func (r *GormMaterialTestServiceRepository) All() (mtms []*entity.MaterialTestSe
 }
 
 func (r *GormMaterialTestServiceRepository) query(db *gorm.DB, q *query.Query) *gorm.DB {
-	mtsTableName := entity.NewMaterialTestService().TableName()
+	mtServiceTableName := entity.NewMaterialTestService().TableName()
+	mtMachineTableName := entity.NewMaterialTestMachine().TableName()
+	mtMethodTableName := entity.NewMaterialTestMethod().TableName()
 
 	if q != nil {
 		if id := q.GetFilterById(); id != nil {
-			db = db.Where(mtsTableName+"id = ?", id.Value)
+			db = db.Where(mtServiceTableName+".id = ?", id.Value)
+		}
+
+		if q.GetInclude("machine") != nil {
+			db = db.Preload("Machine")
+		}
+
+		if q.GetInclude("method") != nil {
+			db = db.Preload("Method")
 		}
 
 		if search := q.GetSearch(); search != nil {
-			db = db.Where(mtsTableName+"name ILIKE ?", "%"+*search+"%").Or("description ILIKE ?", "%"+*search+"%")
+			s := "%" + *search + "%"
+
+			db = db.
+				Joins("LEFT JOIN " + mtMachineTableName + " ON " + mtMachineTableName + ".id = " + mtServiceTableName + ".machine_id").
+				Joins("LEFT JOIN " + mtMethodTableName + " ON " + mtMethodTableName + ".id = " + mtServiceTableName + ".method_id").
+				Where(
+					db.Where(mtServiceTableName+".service_type ILIKE ?", s).
+						Or(mtServiceTableName+".service_code ILIKE ?", s).
+						Or(mtServiceTableName+".unit ILIKE ?", s).
+						Or("CAST("+mtServiceTableName+".price AS TEXT) LIKE ?", s). // Cast numeric price to text for partial string matching
+						Or(mtMachineTableName+".name ILIKE ?", s).
+						Or(mtMethodTableName+".name ILIKE ?", s),
+				)
 		}
 
 		if machineId := q.GetFilter("machine_id", query.OperatorEqual); machineId != nil {
-			db = db.Where(mtsTableName+"machine_id = ?", machineId.Value)
+			db = db.Where(mtServiceTableName+".machine_id = ?", machineId.Value)
 		}
 
 		if methodId := q.GetFilter("method_id", query.OperatorEqual); methodId != nil {
-			db = db.Where(mtsTableName+"method_id = ?", methodId.Value)
+			db = db.Where(mtServiceTableName+".method_id = ?", methodId.Value)
 		}
 
 		if serviceType := q.GetFilter("service_type", query.OperatorEqual); serviceType != nil {
-			db = db.Where(mtsTableName+"service_type = ?", serviceType.Value)
+			db = db.Where(mtServiceTableName+".service_type = ?", serviceType.Value)
 		}
 
 		if serviceCode := q.GetFilter("service_code", query.OperatorEqual); serviceCode != nil {
-			db = db.Where(mtsTableName+"service_code = ?", serviceCode.Value)
+			db = db.Where(mtServiceTableName+".service_code = ?", serviceCode.Value)
 		}
 
 		if unit := q.GetFilter("unit", query.OperatorEqual); unit != nil {
-			db = db.Where(mtsTableName+"unit = ?", unit.Value)
+			db = db.Where(mtServiceTableName+".unit = ?", unit.Value)
 		}
 
-		if priceBetween := q.GetFilter("unit", query.OperatorBetween); priceBetween != nil {
-			db = db.Where(mtsTableName+"unit = ?", priceBetween.Value)
+		if price := q.GetFilter("price", query.OperatorLike); price != nil {
+			db = db.Where("CAST("+mtServiceTableName+".price AS TEXT) LIKE ?", "%"+price.Value+"%")
 		}
 
 		if priceBetween := q.GetFilter("price", query.OperatorBetween); priceBetween != nil {
-			db = db.Where(mtsTableName+".price BETWEEN ? AND ?", priceBetween.Values[0], priceBetween.Values[1])
+			db = db.Where(mtServiceTableName+".price BETWEEN ? AND ?", priceBetween.Values[0], priceBetween.Values[1])
 		}
 
 		if priceSort := q.GetSort("price"); priceSort != nil {
-			db = db.Order("price " + priceSort.Order)
+			db = db.Order(mtServiceTableName + ".price " + priceSort.Order)
 		}
 
 		if createdAt := q.GetSort("created_at"); createdAt != nil {
-			db = db.Order("created_at " + createdAt.Order)
+			db = db.Order(mtServiceTableName + ".created_at " + createdAt.Order)
 		}
 	}
 

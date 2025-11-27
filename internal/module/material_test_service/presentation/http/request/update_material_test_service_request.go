@@ -43,7 +43,7 @@ func (s *UpdateMaterialTestService) Validate() error {
 			validation.Length(3, 50).Error("Unit harus di antara 3 dan 50 karakter"),
 		),
 		validation.Field(&s.Price,
-			validation.Min(0).Error("Price harus lebih dari 0"),
+			validation.Min(0.00).Error("Price harus lebih dari 0"),
 		),
 	)
 }

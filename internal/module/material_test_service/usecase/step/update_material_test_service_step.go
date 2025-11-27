@@ -7,6 +7,7 @@ import (
 	mtsRepository "github.com/arfanxn/welding/internal/module/material_test_service/domain/repository"
 	"github.com/arfanxn/welding/internal/module/material_test_service/usecase/dto"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
+	"github.com/arfanxn/welding/pkg/query"
 	"github.com/gookit/goutil"
 )
 
@@ -30,8 +31,8 @@ func NewUpdateMaterialTestServiceStep(
 }
 
 func (s *updateMaterialTestServiceStep) Handle(ctx context.Context, _dto *dto.SaveMaterialTestService) (mts *entity.MaterialTestService, err error) {
-	mts, err = s.mtsRepository.Find(*_dto.Id)
-	if err != nil {
+	q := query.NewQuery().FilterById(*_dto.Id).Include("Machine").Include("Method")
+	if mts, err = s.mtsRepository.First(q); err != nil {
 		return nil, err
 	}
 
@@ -60,6 +61,12 @@ func (s *updateMaterialTestServiceStep) Handle(ctx context.Context, _dto *dto.Sa
 	}
 
 	if err := s.mtsRepository.Save(mts); err != nil {
+		return nil, err
+	}
+
+	// refetch
+	q = query.NewQuery().FilterById(*_dto.Id).Include("Machine").Include("Method")
+	if mts, err = s.mtsRepository.First(q); err != nil {
 		return nil, err
 	}
 

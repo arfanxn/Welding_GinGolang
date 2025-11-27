@@ -15,8 +15,8 @@ type MaterialTestService struct {
 	CreatedAt   time.Time  `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt   *time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 
-	Machine *MaterialTestMachine `gorm:"foreignKey:MachineId;references:Id;constraint:OnDelete:CASCADE"`
-	Method  *MaterialTestMethod  `gorm:"foreignKey:MethodId;references:Id;constraint:OnDelete:CASCADE"`
+	Machine *MaterialTestMachine `json:"machine,omitempty" gorm:"foreignKey:MachineId;references:Id;constraint:OnDelete:CASCADE"`
+	Method  *MaterialTestMethod  `json:"method,omitempty" gorm:"foreignKey:MethodId;references:Id;constraint:OnDelete:CASCADE"`
 }
 
 func NewMaterialTestService() *MaterialTestService {
