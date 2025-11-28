@@ -14,7 +14,7 @@ type ActivityViewModel struct {
 	Causer          any                         `json:"causer,omitempty"`
 	CauserIpAddress *string                     `json:"causer_ip_address"`
 	Action          activityEnum.ActivityAction `json:"action"`
-	Description     string                      `json:"description"`
+	Description     *string                     `json:"description,omitempty"`
 	SubjectId       *string                     `json:"subject_id"`
 	SubjectType     *activityEnum.SubjectType   `json:"subject_type"`
 	Subject         any                         `json:"subject,omitempty"`

@@ -12,6 +12,7 @@ import (
 	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
 	"github.com/arfanxn/welding/pkg/pagination"
 	"github.com/gookit/goutil"
+	"github.com/samber/lo"
 	"go.uber.org/fx"
 )
 
@@ -64,7 +65,17 @@ func NewActivityPresenter(params NewActivityPresenterParams) ActivityPresenter {
 	}
 }
 
-func (s *activityPresenter) resolveActionDescription(action activityEnum.ActivityAction) (string, error) {
+// resolveActionDescription resolves the human-readable description for a given activity action.
+// It returns a pointer to the description string if found, or nil if the action is valid but has no description.
+// Returns an error if the action is not a valid activity action.
+//
+// Parameters:
+//   - action: The activity action to resolve description for
+//
+// Returns:
+//   - *string: Pointer to the description string, or nil if action is valid but has no description
+//   - error: Error if the action is not a valid activity action
+func (s *activityPresenter) resolveActionDescription(action activityEnum.ActivityAction) (descriptionPtr *string, err error) {
 	var description string
 	switch action {
 	case activityEnum.UsersRegister:
@@ -127,14 +138,42 @@ func (s *activityPresenter) resolveActionDescription(action activityEnum.Activit
 		description = "User memperbarui material test method"
 	case activityEnum.MaterialTestMethodsDestroy:
 		description = "User menghapus material test method"
+	case activityEnum.MaterialTestMachinesIndex:
+		description = "User melihat index material test machines"
+	case activityEnum.MaterialTestMachinesShow:
+		description = "User melihat detail material test machine"
+	case activityEnum.MaterialTestMachinesStore:
+		description = "User menambahkan material test machine"
+	case activityEnum.MaterialTestMachinesUpdate:
+		description = "User memperbarui material test machine"
+	case activityEnum.MaterialTestMachinesDestroy:
+		description = "User menghapus material test machine"
+	case activityEnum.MaterialTestServicesIndex:
+		description = "User melihat index material test services"
+	case activityEnum.MaterialTestServicesShow:
+		description = "User melihat detail material test service"
+	case activityEnum.MaterialTestServicesStore:
+		description = "User menambahkan material test service"
+	case activityEnum.MaterialTestServicesUpdate:
+		description = "User memperbarui material test service"
+	case activityEnum.MaterialTestServicesDestroy:
+		description = "User menghapus material test service"
 	default:
 	}
 
-	if goutil.IsEmpty(description) {
-		return "", errorx.ErrActivityInvalidAction
+	// Handle action validation and description resolution:
+	// 1. If description was set in switch case, use it
+	// 2. If action is valid but no description was set, return nil description
+	// 3. If action is not found in valid actions, return error
+	if !goutil.IsEmpty(description) {
+		descriptionPtr = &description
+	} else if lo.Contains(activityEnum.ActivityActions, action) {
+		descriptionPtr = nil
+	} else {
+		err = errorx.ErrActivityInvalidAction
 	}
 
-	return description, nil
+	return
 }
 
 func (p *activityPresenter) FromEntityToViewModel(ctx context.Context, activity *entity.Activity) (*activity_viewmodel.ActivityViewModel, error) {
