@@ -4366,7 +4366,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/v1/permissions?page=1&per_page=2",
+									"raw": "{{BASE_URL}}/api/v1/permissions?page=1&per_page=2&search=users.index",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -4386,8 +4386,7 @@
 										},
 										{
 											"key": "search",
-											"value": "users.index",
-											"disabled": true
+											"value": "users.index"
 										},
 										{
 											"key": "sort",
@@ -4405,71 +4404,6 @@
 								}
 							},
 							"response": [
-								{
-									"name": "200 (with search)",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{BASE_URL}}/api/v1/permissions?page=1&per_page=2&search=users.index",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"api",
-												"v1",
-												"permissions"
-											],
-											"query": [
-												{
-													"key": "page",
-													"value": "1"
-												},
-												{
-													"key": "per_page",
-													"value": "2"
-												},
-												{
-													"key": "search",
-													"value": "users.index"
-												},
-												{
-													"key": "sort",
-													"value": "name",
-													"description": "sort name ascending",
-													"disabled": true
-												},
-												{
-													"key": "sort",
-													"value": "-name",
-													"description": "sort name descending",
-													"disabled": true
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json",
-											"description": "",
-											"type": "text"
-										},
-										{
-											"key": "Date",
-											"value": "Tue, 18 Nov 2025 07:22:48 GMT"
-										},
-										{
-											"key": "Content-Length",
-											"value": "589"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Permissions berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": false,\n        \"prev_page\": null,\n        \"next_page\": null,\n        \"last_page\": 1,\n        \"first_page_url\": \"http://localhost:8080/api/v1/permissions?page=1&per_page=2&search=users.index\",\n        \"prev_page_url\": null,\n        \"next_page_url\": null,\n        \"last_page_url\": \"http://localhost:8080/api/v1/permissions?page=1&per_page=2&search=users.index\",\n        \"items\": [\n            {\n                \"id\": \"01KAAVS3NH72NG7H9GQH3XR8VF\",\n                \"name\": \"users.index\",\n                \"created_at\": \"2025-11-18T13:52:33.880534+07:00\"\n            }\n        ],\n        \"total_items\": 1\n    }\n}"
-								},
 								{
 									"name": "200",
 									"originalRequest": {
@@ -4521,20 +4455,87 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
+											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Nov 2025 07:23:27 GMT"
+											"value": "Fri, 28 Nov 2025 08:07:00 GMT"
 										},
 										{
 											"key": "Content-Length",
-											"value": "703"
+											"value": "767"
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Permissions berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": true,\n        \"prev_page\": null,\n        \"next_page\": 2,\n        \"last_page\": 6,\n        \"first_page_url\": \"http://localhost:8080/api/v1/permissions?page=1&per_page=2\",\n        \"prev_page_url\": null,\n        \"next_page_url\": \"http://localhost:8080/api/v1/permissions?page=2&per_page=2\",\n        \"last_page_url\": \"http://localhost:8080/api/v1/permissions?page=6&per_page=2\",\n        \"items\": [\n            {\n                \"id\": \"01KAAVS3NH72NG7H9GQH3XR8VF\",\n                \"name\": \"users.index\",\n                \"created_at\": \"2025-11-18T13:52:33.880534+07:00\"\n            },\n            {\n                \"id\": \"01KAAVS3NMJARGD5P8MMZRDZXV\",\n                \"name\": \"users.show\",\n                \"created_at\": \"2025-11-18T13:52:33.880534+07:00\"\n            }\n        ],\n        \"total_items\": 12\n    }\n}"
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Permissions berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": true,\n        \"prev_page\": null,\n        \"next_page\": 2,\n        \"last_page\": 15,\n        \"first_page_url\": \"http://localhost:8080/api/v1/permissions?page=1&per_page=2\",\n        \"prev_page_url\": null,\n        \"next_page_url\": \"http://localhost:8080/api/v1/permissions?page=2&per_page=2\",\n        \"last_page_url\": \"http://localhost:8080/api/v1/permissions?page=15&per_page=2\",\n        \"items\": [\n            {\n                \"id\": \"01KB4QY6Z5QDHY88KJH67418VF\",\n                \"name\": \"users.index\",\n                \"description\": \"Melihat daftar user\",\n                \"created_at\": \"2025-11-28T08:05:42.019874Z\"\n            },\n            {\n                \"id\": \"01KB4QY6Z5QDHY88KJH9AFPCJY\",\n                \"name\": \"users.show\",\n                \"description\": \"Melihat detail user\",\n                \"created_at\": \"2025-11-28T08:05:42.019874Z\"\n            }\n        ],\n        \"total_items\": 29\n    }\n}"
+								},
+								{
+									"name": "200 (with search)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/permissions?page=1&per_page=2&search=users.index",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"permissions"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "2"
+												},
+												{
+													"key": "search",
+													"value": "users.index"
+												},
+												{
+													"key": "sort",
+													"value": "name",
+													"description": "sort name ascending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "-name",
+													"description": "sort name descending",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 28 Nov 2025 08:07:30 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "620"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Permissions berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"has_prev_page\": false,\n        \"has_next_page\": false,\n        \"prev_page\": null,\n        \"next_page\": null,\n        \"last_page\": 1,\n        \"first_page_url\": \"http://localhost:8080/api/v1/permissions?page=1&per_page=2&search=users.index\",\n        \"prev_page_url\": null,\n        \"next_page_url\": null,\n        \"last_page_url\": \"http://localhost:8080/api/v1/permissions?page=1&per_page=2&search=users.index\",\n        \"items\": [\n            {\n                \"id\": \"01KB4QY6Z5QDHY88KJH67418VF\",\n                \"name\": \"users.index\",\n                \"description\": \"Melihat daftar user\",\n                \"created_at\": \"2025-11-28T08:05:42.019874Z\"\n            }\n        ],\n        \"total_items\": 1\n    }\n}"
 								}
 							]
 						}
