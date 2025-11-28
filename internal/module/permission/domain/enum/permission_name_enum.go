@@ -40,10 +40,6 @@ const (
 	MaterialTestServicesDestroy PermissionName = "material_test_services.destroy"
 )
 
-func (p PermissionName) String() string {
-	return string(p)
-}
-
 var PermissionNames = []PermissionName{
 	UsersIndex,
 	UsersShow,
