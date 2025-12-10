@@ -106,9 +106,12 @@ func (r *GormRoleRepository) First(q *query.Query) (*entity.Role, error) {
 	return role, nil
 }
 
-func (r *GormRoleRepository) Find(id string) (*entity.Role, error) {
+func (r *GormRoleRepository) Find(id string, q *query.Query) (*entity.Role, error) {
 	var role entity.Role
-	if err := r.db.Where("id = ?", id).First(&role).Error; err != nil {
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("id = ?", id).First(&role).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrRoleNotFound
 		}
@@ -117,9 +120,12 @@ func (r *GormRoleRepository) Find(id string) (*entity.Role, error) {
 	return &role, nil
 }
 
-func (r *GormRoleRepository) FindDefault() (*entity.Role, error) {
+func (r *GormRoleRepository) FindDefault(q *query.Query) (*entity.Role, error) {
 	var role entity.Role
-	if err := r.db.Where("is_default = ?", true).First(&role).Error; err != nil {
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("is_default = ?", true).First(&role).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrRoleDefaultNotConfigured
 		}
@@ -128,9 +134,12 @@ func (r *GormRoleRepository) FindDefault() (*entity.Role, error) {
 	return &role, nil
 }
 
-func (r *GormRoleRepository) FindByIds(ids []string) ([]*entity.Role, error) {
+func (r *GormRoleRepository) FindByIds(ids []string, q *query.Query) ([]*entity.Role, error) {
 	var roles []*entity.Role
-	if err := r.db.Where("id IN (?)", ids).Find(&roles).Error; err != nil {
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("id IN (?)", ids).Find(&roles).Error; err != nil {
 		return nil, err
 	}
 	if len(roles) != len(ids) {
@@ -139,9 +148,12 @@ func (r *GormRoleRepository) FindByIds(ids []string) ([]*entity.Role, error) {
 	return roles, nil
 }
 
-func (r *GormRoleRepository) FindByName(name string) (*entity.Role, error) {
+func (r *GormRoleRepository) FindByName(name string, q *query.Query) (*entity.Role, error) {
 	var role entity.Role
-	if err := r.db.Where("name = ?", name).First(&role).Error; err != nil {
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("name = ?", name).First(&role).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrRoleNotFound
 		}

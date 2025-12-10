@@ -11,9 +11,9 @@ type MaterialTestMachineRepository interface {
 	Get(q *query.Query) ([]*entity.MaterialTestMachine, error)
 	Paginate(q *query.Query) (*pagination.OffsetPagination[*entity.MaterialTestMachine], error)
 	First(q *query.Query) (*entity.MaterialTestMachine, error)
-	Find(id string) (*entity.MaterialTestMachine, error)
-	FindByName(name string) (*entity.MaterialTestMachine, error)
-	FindByIds(ids []string) ([]*entity.MaterialTestMachine, error)
+	Find(id string, q *query.Query) (*entity.MaterialTestMachine, error)
+	FindByName(name string, q *query.Query) (*entity.MaterialTestMachine, error)
+	FindByIds(ids []string, q *query.Query) ([]*entity.MaterialTestMachine, error)
 	Save(mtm *entity.MaterialTestMachine) error
 	SaveMany(mtms []*entity.MaterialTestMachine) error
 	Destroy(mtm *entity.MaterialTestMachine) error

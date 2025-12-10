@@ -112,10 +112,12 @@ func (r *GormUserRepository) First(q *query.Query) (*entity.User, error) {
 	return user, nil
 }
 
-func (r *GormUserRepository) Find(id string) (*entity.User, error) {
+func (r *GormUserRepository) Find(id string, q *query.Query) (*entity.User, error) {
 	var user entity.User
 
-	if err := r.db.Where("id = ?", id).First(&user).Error; err != nil {
+	db := r.query(r.db, q)
+
+	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrUserNotFound
 		}
@@ -124,9 +126,12 @@ func (r *GormUserRepository) Find(id string) (*entity.User, error) {
 	return &user, nil
 }
 
-func (r *GormUserRepository) FindByEmail(email string) (*entity.User, error) {
+func (r *GormUserRepository) FindByEmail(email string, q *query.Query) (*entity.User, error) {
 	var user entity.User
-	if err := r.db.Where("email = ?", email).First(&user).Error; err != nil {
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("email = ?", email).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrUserNotFound
 		}

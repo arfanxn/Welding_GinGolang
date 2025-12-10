@@ -125,6 +125,7 @@ func (u *userUsecase) VerifyEmail(ctx context.Context, _dto *dto.VerifyEmail) (*
 		"email",
 		enum.UserEmailVerification,
 		_dto.Code,
+		nil,
 	)
 	if err != nil {
 		return nil, err
@@ -138,7 +139,7 @@ func (u *userUsecase) VerifyEmail(ctx context.Context, _dto *dto.VerifyEmail) (*
 		return nil, errorx.ErrCodeExpired
 	}
 
-	user, err := u.userRepository.FindByEmail(_dto.Email)
+	user, err := u.userRepository.FindByEmail(_dto.Email, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -174,6 +175,7 @@ func (u *userUsecase) ResetPassword(ctx context.Context, _dto *dto.ResetPassword
 		"email",
 		enum.UserResetPassword,
 		_dto.Code,
+		nil,
 	)
 	if err != nil {
 		return nil, err
@@ -187,7 +189,7 @@ func (u *userUsecase) ResetPassword(ctx context.Context, _dto *dto.ResetPassword
 		return nil, errorx.ErrCodeExpired
 	}
 
-	user, err := u.userRepository.FindByEmail(_dto.Email)
+	user, err := u.userRepository.FindByEmail(_dto.Email, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -218,7 +220,7 @@ func (u *userUsecase) ResetPassword(ctx context.Context, _dto *dto.ResetPassword
 }
 
 func (u *userUsecase) Login(ctx context.Context, _dto *dto.Login) (*dto.LoginResult, error) {
-	user, err := u.userRepository.FindByEmail(_dto.Email)
+	user, err := u.userRepository.FindByEmail(_dto.Email, nil)
 	if err != nil {
 		return nil, errorx.ErrUserPasswordIncorrect
 	}
@@ -390,7 +392,7 @@ func (u *userUsecase) ToggleActivation(ctx context.Context, _dto *dto.ToggleActi
 		return nil, err
 	}
 
-	user, err = u.userRepository.Find(_dto.Id)
+	user, err = u.userRepository.Find(_dto.Id, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -416,7 +418,7 @@ func (u *userUsecase) Destroy(ctx context.Context, _dto *dto.DestroyUser) error 
 		return err
 	}
 
-	user, err := u.userRepository.Find(_dto.Id)
+	user, err := u.userRepository.Find(_dto.Id, nil)
 	if err != nil {
 		return err
 	}

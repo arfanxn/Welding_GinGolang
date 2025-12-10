@@ -1,0 +1,9 @@
+CREATE TABLE addresses (
+  id CHAR(26) PRIMARY KEY NOT NULL,
+  full_address VARCHAR(512) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE,
+  deleted_at TIMESTAMP WITH TIME ZONE,
+
+  CONSTRAINT unique_full_address UNIQUE (full_address)
+);

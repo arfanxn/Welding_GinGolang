@@ -19,6 +19,8 @@ type Config struct {
 
 	// Database
 	PostgresDSN string `env:"POSTGRES_DSN"`
+	MongoURI    string `env:"MONGO_URI"`
+	MongoDB     string `env:"MONGO_DB"`
 
 	// Log
 	LogLevel    string `env:"LOG_LEVEL"`

@@ -34,7 +34,8 @@ func (r *GormMaterialTestMachineRepository) All() (mtms []*entity.MaterialTestMa
 func (r *GormMaterialTestMachineRepository) query(db *gorm.DB, q *query.Query) *gorm.DB {
 	if q != nil {
 		if id := q.GetFilterById(); id != nil {
-			db = db.Where("id = ?", id.Value)
+			// Unscoped() is used to include deleted records, only unscope on id filter
+			db = db.Unscoped().Where("id = ?", id.Value)
 		}
 
 		if search := q.GetSearch(); search != nil {
@@ -91,8 +92,10 @@ func (r *GormMaterialTestMachineRepository) First(q *query.Query) (mtm *entity.M
 	return
 }
 
-func (r *GormMaterialTestMachineRepository) Find(id string) (mtm *entity.MaterialTestMachine, err error) {
-	if err := r.db.Where("id = ?", id).First(&mtm).Error; err != nil {
+func (r *GormMaterialTestMachineRepository) Find(id string, q *query.Query) (mtm *entity.MaterialTestMachine, err error) {
+	db := r.query(r.db, q)
+
+	if err := db.Unscoped().Where("id = ?", id).First(&mtm).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrMaterialTestMachineNotFound
 		}
@@ -101,8 +104,10 @@ func (r *GormMaterialTestMachineRepository) Find(id string) (mtm *entity.Materia
 	return
 }
 
-func (r *GormMaterialTestMachineRepository) FindByName(name string) (mtm *entity.MaterialTestMachine, err error) {
-	if err := r.db.Where("name = ?", name).First(&mtm).Error; err != nil {
+func (r *GormMaterialTestMachineRepository) FindByName(name string, q *query.Query) (mtm *entity.MaterialTestMachine, err error) {
+	db := r.query(r.db, q)
+
+	if err := db.Where("name = ?", name).First(&mtm).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrMaterialTestMachineNotFound
 		}
@@ -111,8 +116,10 @@ func (r *GormMaterialTestMachineRepository) FindByName(name string) (mtm *entity
 	return
 }
 
-func (r *GormMaterialTestMachineRepository) FindByIds(ids []string) (mtms []*entity.MaterialTestMachine, err error) {
-	if err := r.db.Where("id IN (?)", ids).Find(&mtms).Error; err != nil {
+func (r *GormMaterialTestMachineRepository) FindByIds(ids []string, q *query.Query) (mtms []*entity.MaterialTestMachine, err error) {
+	db := r.query(r.db, q)
+
+	if err := db.Where("id IN (?)", ids).Find(&mtms).Error; err != nil {
 		return nil, err
 	}
 	if len(mtms) != len(ids) {

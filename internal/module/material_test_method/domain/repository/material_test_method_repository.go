@@ -11,9 +11,9 @@ type MaterialTestMethodRepository interface {
 	Get(q *query.Query) ([]*entity.MaterialTestMethod, error)
 	Paginate(q *query.Query) (*pagination.OffsetPagination[*entity.MaterialTestMethod], error)
 	First(q *query.Query) (*entity.MaterialTestMethod, error)
-	Find(id string) (*entity.MaterialTestMethod, error)
-	FindByName(name string) (*entity.MaterialTestMethod, error)
-	FindByIds(ids []string) ([]*entity.MaterialTestMethod, error)
+	Find(id string, q *query.Query) (*entity.MaterialTestMethod, error)
+	FindByName(name string, q *query.Query) (*entity.MaterialTestMethod, error)
+	FindByIds(ids []string, q *query.Query) ([]*entity.MaterialTestMethod, error)
 	Save(mtm *entity.MaterialTestMethod) error
 	SaveMany(mtms []*entity.MaterialTestMethod) error
 	Destroy(mtm *entity.MaterialTestMethod) error

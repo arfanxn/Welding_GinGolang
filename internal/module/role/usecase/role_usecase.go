@@ -143,7 +143,7 @@ func (u *roleUsecase) SetDefault(ctx context.Context, _dto *dto.SetDefaultRole) 
 		return nil, err
 	}
 
-	role, err := u.roleRepository.Find(_dto.Id)
+	role, err := u.roleRepository.Find(_dto.Id, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +168,7 @@ func (u *roleUsecase) Destroy(ctx context.Context, _dto *dto.DestroyRole) error 
 		return err
 	}
 
-	role, err := u.roleRepository.Find(_dto.Id)
+	role, err := u.roleRepository.Find(_dto.Id, nil)
 	if err != nil {
 		return err
 	}

@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS material_test_work_packages;

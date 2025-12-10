@@ -90,9 +90,12 @@ func (r *GormPermissionRepository) First(q *query.Query) (*entity.Permission, er
 	return permission, nil
 }
 
-func (r *GormPermissionRepository) Find(id string) (*entity.Permission, error) {
+func (r *GormPermissionRepository) Find(id string, q *query.Query) (*entity.Permission, error) {
 	var permission entity.Permission
-	if err := r.db.Where("id = ?", id).First(&permission).Error; err != nil {
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("id = ?", id).First(&permission).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrPermissionNotFound
 		}
@@ -101,9 +104,12 @@ func (r *GormPermissionRepository) Find(id string) (*entity.Permission, error) {
 	return &permission, nil
 }
 
-func (r *GormPermissionRepository) FindByName(name string) (*entity.Permission, error) {
+func (r *GormPermissionRepository) FindByName(name string, q *query.Query) (*entity.Permission, error) {
 	var permission entity.Permission
-	if err := r.db.Where("name = ?", name).First(&permission).Error; err != nil {
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("name = ?", name).First(&permission).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrPermissionNotFound
 		}
@@ -112,9 +118,12 @@ func (r *GormPermissionRepository) FindByName(name string) (*entity.Permission, 
 	return &permission, nil
 }
 
-func (r *GormPermissionRepository) FindByIds(ids []string) ([]*entity.Permission, error) {
+func (r *GormPermissionRepository) FindByIds(ids []string, q *query.Query) ([]*entity.Permission, error) {
 	var permissions []*entity.Permission
-	if err := r.db.Where("id IN (?)", ids).Find(&permissions).Error; err != nil {
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("id IN (?)", ids).Find(&permissions).Error; err != nil {
 		return nil, err
 	}
 	if len(permissions) != len(ids) {

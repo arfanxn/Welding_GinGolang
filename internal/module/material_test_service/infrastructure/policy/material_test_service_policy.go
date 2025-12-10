@@ -74,7 +74,7 @@ func (p *materialTestServicePolicy) Destroy(ctx context.Context, _dto *dto.Destr
 // ==================================================
 
 func (p *materialTestServicePolicy) validateMethod(methodId string) error {
-	_, err := p.mtMethodRepository.Find(methodId)
+	_, err := p.mtMethodRepository.Find(methodId, nil)
 	if err != nil {
 		return err
 	}
@@ -82,7 +82,7 @@ func (p *materialTestServicePolicy) validateMethod(methodId string) error {
 }
 
 func (p *materialTestServicePolicy) validateMachine(machineId string) error {
-	_, err := p.mtMachineRepository.Find(machineId)
+	_, err := p.mtMachineRepository.Find(machineId, nil)
 	if err != nil {
 		return err
 	}

@@ -11,6 +11,8 @@ services:
       - ./.env.docker:/app/.env:ro
       # Mount logs directory for persistent logging
       - ./logs:/app/logs
+      # Mount storage directory for persistent storage
+      - ./storage:/app/storage 
     working_dir: /app
     ports:
       - "8080:8080"

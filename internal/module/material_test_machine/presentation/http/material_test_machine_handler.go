@@ -136,9 +136,6 @@ func (h *mtmHandler) Destroy(c *gin.Context) {
 		if errors.Is(err, errorx.ErrMaterialTestMachineNotFound) {
 			httperror.Panic(http.StatusNotFound, "Material test machine tidak ditemukan", nil)
 		}
-		if errors.Is(err, errorx.ErrMaterialTestMachineInUseDestroyForbidden) {
-			httperror.Panic(http.StatusForbidden, "Material test machine sedang digunakan", nil)
-		}
 		panic(err)
 	}
 

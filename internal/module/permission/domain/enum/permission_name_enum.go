@@ -21,6 +21,18 @@ const (
 	ActivitiesIndex PermissionName = "activities.index"
 	ActivitiesShow  PermissionName = "activities.show"
 
+	AddressesIndex   PermissionName = "addresses.index"
+	AddressesShow    PermissionName = "addresses.show"
+	AddressesStore   PermissionName = "addresses.store"
+	AddressesUpdate  PermissionName = "addresses.update"
+	AddressesDestroy PermissionName = "addresses.destroy"
+
+	CustomersIndex   PermissionName = "customers.index"
+	CustomersShow    PermissionName = "customers.show"
+	CustomersStore   PermissionName = "customers.store"
+	CustomersUpdate  PermissionName = "customers.update"
+	CustomersDestroy PermissionName = "customers.destroy"
+
 	MaterialTestMethodsIndex   PermissionName = "material_test_methods.index"
 	MaterialTestMethodsShow    PermissionName = "material_test_methods.show"
 	MaterialTestMethodsStore   PermissionName = "material_test_methods.store"
@@ -38,6 +50,24 @@ const (
 	MaterialTestServicesStore   PermissionName = "material_test_services.store"
 	MaterialTestServicesUpdate  PermissionName = "material_test_services.update"
 	MaterialTestServicesDestroy PermissionName = "material_test_services.destroy"
+
+	MaterialTestWorkCategoriesIndex   PermissionName = "material_test_work_categories.index"
+	MaterialTestWorkCategoriesShow    PermissionName = "material_test_work_categories.show"
+	MaterialTestWorkCategoriesStore   PermissionName = "material_test_work_categories.store"
+	MaterialTestWorkCategoriesUpdate  PermissionName = "material_test_work_categories.update"
+	MaterialTestWorkCategoriesDestroy PermissionName = "material_test_work_categories.destroy"
+
+	MaterialTestWorkPackagesIndex   PermissionName = "material_test_work_packages.index"
+	MaterialTestWorkPackagesShow    PermissionName = "material_test_work_packages.show"
+	MaterialTestWorkPackagesStore   PermissionName = "material_test_work_packages.store"
+	MaterialTestWorkPackagesUpdate  PermissionName = "material_test_work_packages.update"
+	MaterialTestWorkPackagesDestroy PermissionName = "material_test_work_packages.destroy"
+
+	MaterialTestOrdersIndex   PermissionName = "material_test_orders.index"
+	MaterialTestOrdersShow    PermissionName = "material_test_orders.show"
+	MaterialTestOrdersStore   PermissionName = "material_test_orders.store"
+	MaterialTestOrdersUpdate  PermissionName = "material_test_orders.update"
+	MaterialTestOrdersDestroy PermissionName = "material_test_orders.destroy"
 )
 
 var PermissionNames = []PermissionName{
@@ -59,6 +89,18 @@ var PermissionNames = []PermissionName{
 	ActivitiesIndex,
 	ActivitiesShow,
 
+	AddressesIndex,
+	AddressesShow,
+	AddressesStore,
+	AddressesUpdate,
+	AddressesDestroy,
+
+	CustomersIndex,
+	CustomersShow,
+	CustomersStore,
+	CustomersUpdate,
+	CustomersDestroy,
+
 	MaterialTestMethodsIndex,
 	MaterialTestMethodsShow,
 	MaterialTestMethodsStore,
@@ -76,4 +118,22 @@ var PermissionNames = []PermissionName{
 	MaterialTestServicesStore,
 	MaterialTestServicesUpdate,
 	MaterialTestServicesDestroy,
+
+	MaterialTestWorkCategoriesIndex,
+	MaterialTestWorkCategoriesShow,
+	MaterialTestWorkCategoriesStore,
+	MaterialTestWorkCategoriesUpdate,
+	MaterialTestWorkCategoriesDestroy,
+
+	MaterialTestWorkPackagesIndex,
+	MaterialTestWorkPackagesShow,
+	MaterialTestWorkPackagesStore,
+	MaterialTestWorkPackagesUpdate,
+	MaterialTestWorkPackagesDestroy,
+
+	MaterialTestOrdersIndex,
+	MaterialTestOrdersShow,
+	MaterialTestOrdersStore,
+	MaterialTestOrdersUpdate,
+	MaterialTestOrdersDestroy,
 }

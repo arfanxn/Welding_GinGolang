@@ -133,7 +133,7 @@ func (u *mtsUsecase) Destroy(ctx context.Context, _dto *dto.DestroyMaterialTestS
 		return err
 	}
 
-	mts, err := u.mtsRepository.Find(_dto.Id)
+	mts, err := u.mtsRepository.Find(_dto.Id, nil)
 	if err != nil {
 		return err
 	}

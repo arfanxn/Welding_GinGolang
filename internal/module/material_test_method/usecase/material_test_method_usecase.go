@@ -118,7 +118,7 @@ func (u *mtmUsecase) Update(ctx context.Context, _dto *dto.SaveMaterialTestMetho
 		return nil, err
 	}
 
-	if mtm, err = u.mtmRepository.Find(*_dto.Id); err != nil {
+	if mtm, err = u.mtmRepository.Find(*_dto.Id, nil); err != nil {
 		return nil, err
 	}
 
@@ -150,7 +150,7 @@ func (u *mtmUsecase) Destroy(ctx context.Context, _dto *dto.DestroyMaterialTestM
 		return err
 	}
 
-	mtm, err := u.mtmRepository.Find(_dto.Id)
+	mtm, err := u.mtmRepository.Find(_dto.Id, nil)
 	if err != nil {
 		return err
 	}

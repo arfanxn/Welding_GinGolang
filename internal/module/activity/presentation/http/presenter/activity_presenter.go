@@ -78,6 +78,7 @@ func NewActivityPresenter(params NewActivityPresenterParams) ActivityPresenter {
 func (s *activityPresenter) resolveActionDescription(action activityEnum.ActivityAction) (descriptionPtr *string, err error) {
 	var description string
 	switch action {
+	// Users
 	case activityEnum.UsersRegister:
 		description = "User mendaftar"
 	case activityEnum.UsersResetPassword:
@@ -104,8 +105,12 @@ func (s *activityPresenter) resolveActionDescription(action activityEnum.Activit
 		description = "User mengaktifkan/menonaktifkan user"
 	case activityEnum.UsersDestroy:
 		description = "User menghapus user"
+
+	// Permissions
 	case activityEnum.PermissionsIndex:
 		description = "User melihat index permissions"
+
+	// Roles
 	case activityEnum.RolesIndex:
 		description = "User melihat index roles"
 	case activityEnum.RolesShow:
@@ -118,16 +123,30 @@ func (s *activityPresenter) resolveActionDescription(action activityEnum.Activit
 		description = "User mengatur default role"
 	case activityEnum.RolesDestroy:
 		description = "User menghapus role"
+
+	// Codes
 	case activityEnum.CodesCreateUserRegisterInvitation:
 		description = "User membuat kode undangan untuk pendaftaran user"
 	case activityEnum.CodesCreateUserEmailVerification:
 		description = "User membuat kode verifikasi email"
 	case activityEnum.CodesCreateUserResetPassword:
 		description = "User membuat kode reset password"
+
+	// Activities
 	case activityEnum.ActivitiesIndex:
 		description = "User melihat index activities"
 	case activityEnum.ActivitiesShow:
 		description = "User melihat detail activity"
+
+	// Addresses
+	case activityEnum.AddressesIndex:
+		description = "User melihat index addresses"
+
+	// Customers
+	case activityEnum.CustomersIndex:
+		description = "User melihat index customers"
+
+	// Material test methods
 	case activityEnum.MaterialTestMethodsIndex:
 		description = "User melihat index material test methods"
 	case activityEnum.MaterialTestMethodsShow:
@@ -138,6 +157,8 @@ func (s *activityPresenter) resolveActionDescription(action activityEnum.Activit
 		description = "User memperbarui material test method"
 	case activityEnum.MaterialTestMethodsDestroy:
 		description = "User menghapus material test method"
+
+	// Material test machines
 	case activityEnum.MaterialTestMachinesIndex:
 		description = "User melihat index material test machines"
 	case activityEnum.MaterialTestMachinesShow:
@@ -148,6 +169,8 @@ func (s *activityPresenter) resolveActionDescription(action activityEnum.Activit
 		description = "User memperbarui material test machine"
 	case activityEnum.MaterialTestMachinesDestroy:
 		description = "User menghapus material test machine"
+
+	// Material test services
 	case activityEnum.MaterialTestServicesIndex:
 		description = "User melihat index material test services"
 	case activityEnum.MaterialTestServicesShow:
@@ -158,6 +181,43 @@ func (s *activityPresenter) resolveActionDescription(action activityEnum.Activit
 		description = "User memperbarui material test service"
 	case activityEnum.MaterialTestServicesDestroy:
 		description = "User menghapus material test service"
+
+	// Material test work categories
+	case activityEnum.MaterialTestWorkCategoriesIndex:
+		description = "User melihat index material test work categories"
+	case activityEnum.MaterialTestWorkCategoriesShow:
+		description = "User melihat detail material test work category"
+	case activityEnum.MaterialTestWorkCategoriesStore:
+		description = "User menambahkan material test work category"
+	case activityEnum.MaterialTestWorkCategoriesUpdate:
+		description = "User memperbarui material test work category"
+	case activityEnum.MaterialTestWorkCategoriesDestroy:
+		description = "User menghapus material test work category"
+
+	// Material test work packages
+	case activityEnum.MaterialTestWorkPackagesIndex:
+		description = "User melihat index material test work packages"
+	case activityEnum.MaterialTestWorkPackagesShow:
+		description = "User melihat detail material test work package"
+	case activityEnum.MaterialTestWorkPackagesStore:
+		description = "User menambahkan material test work package"
+	case activityEnum.MaterialTestWorkPackagesUpdate:
+		description = "User memperbarui material test work package"
+	case activityEnum.MaterialTestWorkPackagesDestroy:
+		description = "User menghapus material test work package"
+
+	// Material test orders
+	case activityEnum.MaterialTestOrdersIndex:
+		description = "User melihat index material test orders"
+	case activityEnum.MaterialTestOrdersShow:
+		description = "User melihat detail material test order"
+	case activityEnum.MaterialTestOrdersStore:
+		description = "User menambahkan material test order"
+	case activityEnum.MaterialTestOrdersUpdate:
+		description = "User memperbarui material test order"
+	case activityEnum.MaterialTestOrdersDestroy:
+		description = "User menghapus material test order"
+
 	default:
 	}
 

@@ -42,6 +42,9 @@ logs/
 log/
 *.log.*
 
+# Storage
+storage/
+
 # OS generated files
 .DS_Store
 .DS_Store?

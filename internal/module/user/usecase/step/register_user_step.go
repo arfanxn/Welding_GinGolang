@@ -73,7 +73,7 @@ func (s *registerUserStep) Handle(
 	// Handle invitation-based registration
 	if isWithInvitationCode {
 		// Find invitation code by type and value
-		code, err = s.codeRepository.FindByTypeAndValue(enum.UserRegisterInvitation, *_dto.InvitationCode)
+		code, err = s.codeRepository.FindByTypeAndValue(enum.UserRegisterInvitation, *_dto.InvitationCode, nil)
 		if err != nil {
 			if errors.Is(err, gorm.ErrRecordNotFound) {
 				return nil, errorx.ErrCodeNotFound
@@ -95,7 +95,7 @@ func (s *registerUserStep) Handle(
 		roleIds = []string{roleId}
 	} else {
 		// Handle default registration without invitation code
-		defaultRole, err := s.roleRepository.FindDefault()
+		defaultRole, err := s.roleRepository.FindDefault(nil)
 		if err != nil {
 			return nil, err
 		}

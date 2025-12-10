@@ -54,6 +54,18 @@ func (s *PermissionSeeder) Seed() error {
 		enum.ActivitiesIndex: "Melihat daftar activity",
 		enum.ActivitiesShow:  "Melihat detail activity",
 
+		enum.AddressesIndex:   "Melihat daftar address",
+		enum.AddressesShow:    "Melihat detail address",
+		enum.AddressesStore:   "Menambahkan address baru",
+		enum.AddressesUpdate:  "Memperbarui address",
+		enum.AddressesDestroy: "Menghapus address",
+
+		enum.CustomersIndex:   "Melihat daftar customer",
+		enum.CustomersShow:    "Melihat detail customer",
+		enum.CustomersStore:   "Menambahkan customer baru",
+		enum.CustomersUpdate:  "Memperbarui customer",
+		enum.CustomersDestroy: "Menghapus customer",
+
 		enum.MaterialTestMethodsIndex:   "Melihat daftar material test method",
 		enum.MaterialTestMethodsShow:    "Melihat detail material test method",
 		enum.MaterialTestMethodsStore:   "Menambahkan material test method baru",
@@ -71,6 +83,24 @@ func (s *PermissionSeeder) Seed() error {
 		enum.MaterialTestServicesStore:   "Menambahkan material test service baru",
 		enum.MaterialTestServicesUpdate:  "Memperbarui material test service",
 		enum.MaterialTestServicesDestroy: "Menghapus material test service",
+
+		enum.MaterialTestWorkCategoriesIndex:   "Melihat daftar material test work category",
+		enum.MaterialTestWorkCategoriesShow:    "Melihat detail material test work category",
+		enum.MaterialTestWorkCategoriesStore:   "Menambahkan material test work category baru",
+		enum.MaterialTestWorkCategoriesUpdate:  "Memperbarui material test work category",
+		enum.MaterialTestWorkCategoriesDestroy: "Menghapus material test work category",
+
+		enum.MaterialTestWorkPackagesIndex:   "Melihat daftar material test work package",
+		enum.MaterialTestWorkPackagesShow:    "Melihat detail material test work package",
+		enum.MaterialTestWorkPackagesStore:   "Menambahkan material test work package baru",
+		enum.MaterialTestWorkPackagesUpdate:  "Memperbarui material test work package",
+		enum.MaterialTestWorkPackagesDestroy: "Menghapus material test work package",
+
+		enum.MaterialTestOrdersIndex:   "Melihat daftar material test order",
+		enum.MaterialTestOrdersShow:    "Melihat detail material test order",
+		enum.MaterialTestOrdersStore:   "Menambahkan material test order baru",
+		enum.MaterialTestOrdersUpdate:  "Memperbarui material test order",
+		enum.MaterialTestOrdersDestroy: "Menghapus material test order",
 	}
 
 	var permissions []*entity.Permission

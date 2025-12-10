@@ -66,7 +66,7 @@ func (m *authenticateMiddleware) MiddlewareFunc() gin.HandlerFunc {
 		}
 
 		// 4. Verify that the user exists in the database
-		user, err := m.UserRepository.Find(claims.UserID)
+		user, err := m.UserRepository.Find(claims.UserID, nil)
 		if err != nil {
 			httperror.Panic(http.StatusUnauthorized, "User tidak ditemukan", nil)
 		}

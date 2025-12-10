@@ -292,7 +292,7 @@ func (s *ActivitySeeder) Seed() error {
 
 	{ // Codes
 		{
-			code, err := s.codeRepository.FindByType(codeEnum.UserRegisterInvitation)
+			code, err := s.codeRepository.FindByType(codeEnum.UserRegisterInvitation, nil)
 			if err != nil {
 				return err
 			}
@@ -310,7 +310,7 @@ func (s *ActivitySeeder) Seed() error {
 		}
 
 		{
-			code, err := s.codeRepository.FindByType(codeEnum.UserEmailVerification)
+			code, err := s.codeRepository.FindByType(codeEnum.UserEmailVerification, nil)
 			if err != nil {
 				return err
 			}
@@ -328,7 +328,7 @@ func (s *ActivitySeeder) Seed() error {
 		}
 
 		{
-			code, err := s.codeRepository.FindByType(codeEnum.UserResetPassword)
+			code, err := s.codeRepository.FindByType(codeEnum.UserResetPassword, nil)
 			if err != nil {
 				return err
 			}

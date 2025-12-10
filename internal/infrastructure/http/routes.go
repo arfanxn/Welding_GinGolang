@@ -7,10 +7,15 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/logger"
 	"github.com/arfanxn/welding/internal/infrastructure/middleware"
 	activityHttp "github.com/arfanxn/welding/internal/module/activity/presentation/http"
+	addressHttp "github.com/arfanxn/welding/internal/module/address/presentation/http"
 	codeHttp "github.com/arfanxn/welding/internal/module/code/presentation/http"
+	customerHttp "github.com/arfanxn/welding/internal/module/customer/presentation/http"
 	materialTestMachineHttp "github.com/arfanxn/welding/internal/module/material_test_machine/presentation/http"
 	materialTestMethodHttp "github.com/arfanxn/welding/internal/module/material_test_method/presentation/http"
+	materialTestOrderHttp "github.com/arfanxn/welding/internal/module/material_test_order/presentation/http"
 	materialTestServiceHttp "github.com/arfanxn/welding/internal/module/material_test_service/presentation/http"
+	materialTestWorkCategoryHttp "github.com/arfanxn/welding/internal/module/material_test_work_category/presentation/http"
+	materialTestWorkPackageHttp "github.com/arfanxn/welding/internal/module/material_test_work_package/presentation/http"
 	permissionEnum "github.com/arfanxn/welding/internal/module/permission/domain/enum"
 	permissionHttp "github.com/arfanxn/welding/internal/module/permission/presentation/http"
 	roleHttp "github.com/arfanxn/welding/internal/module/role/presentation/http"
@@ -38,19 +43,28 @@ type RegisterRoutesParams struct {
 	UserEmailVerifiedMiddleware middleware.UserEmailVerifiedMiddleware
 
 	// Handlers
-	UserHandler                userHttp.UserHandler
-	RoleHandler                roleHttp.RoleHandler
-	PermissionHandler          permissionHttp.PermissionHandler
-	CodeHandler                codeHttp.CodeHandler
-	ActivityHandler            activityHttp.ActivityHandler
-	MaterialTestMethodHandler  materialTestMethodHttp.MaterialTestMethodHandler
-	MaterialTestMachineHandler materialTestMachineHttp.MaterialTestMachineHandler
-	MaterialTestServiceHandler materialTestServiceHttp.MaterialTestServiceHandler
+	UserHandler                     userHttp.UserHandler
+	RoleHandler                     roleHttp.RoleHandler
+	PermissionHandler               permissionHttp.PermissionHandler
+	CodeHandler                     codeHttp.CodeHandler
+	ActivityHandler                 activityHttp.ActivityHandler
+	MaterialTestMethodHandler       materialTestMethodHttp.MaterialTestMethodHandler
+	MaterialTestMachineHandler      materialTestMachineHttp.MaterialTestMachineHandler
+	MaterialTestServiceHandler      materialTestServiceHttp.MaterialTestServiceHandler
+	MaterialTestWorkCategoryHandler materialTestWorkCategoryHttp.MaterialTestWorkCategoryHandler
+	MaterialTestWorkPackageHandler  materialTestWorkPackageHttp.MaterialTestWorkPackageHandler
+	MaterialTestOrderHandler        materialTestOrderHttp.MaterialTestOrderHandler
+	AddressHandler                  addressHttp.AddressHandler
+	CustomerHandler                 customerHttp.CustomerHandler
 }
 
 func RegisterRoutes(params RegisterRoutesParams) error {
+
+	router := params.Router
+	router.Static("/storage", "./storage")
+
 	// API v1
-	apiV1 := params.Router.Group("/api/v1")
+	apiV1 := router.Group("/api/v1")
 	apiV1.Use(
 		params.HttpErrorRecoveryMiddleware.MiddlewareFunc(),
 		params.RequestContextMiddleware.MiddlewareFunc(),
@@ -134,6 +148,22 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 		activity.GET("", requirePermissionName(permissionEnum.ActivitiesIndex), params.ActivityHandler.Index)
 		activity.GET("/:id", requirePermissionName(permissionEnum.ActivitiesShow), params.ActivityHandler.Show)
 
+		// Address
+		address := protected.Group("/addresses")
+		address.GET("", requirePermissionName(permissionEnum.AddressesIndex), params.AddressHandler.Paginate)
+		address.GET("/:id", requirePermissionName(permissionEnum.AddressesShow), params.AddressHandler.Show)
+		address.POST("", requirePermissionName(permissionEnum.AddressesStore), params.AddressHandler.Store)
+		address.PUT("/:id", requirePermissionName(permissionEnum.AddressesUpdate), params.AddressHandler.Update)
+		address.DELETE("/:id", requirePermissionName(permissionEnum.AddressesDestroy), params.AddressHandler.Destroy)
+
+		// Customer
+		customer := protected.Group("/customers")
+		customer.GET("", requirePermissionName(permissionEnum.CustomersIndex), params.CustomerHandler.Paginate)
+		customer.GET("/:id", requirePermissionName(permissionEnum.CustomersShow), params.CustomerHandler.Show)
+		customer.POST("", requirePermissionName(permissionEnum.CustomersStore), params.CustomerHandler.Store)
+		customer.PUT("/:id", requirePermissionName(permissionEnum.CustomersUpdate), params.CustomerHandler.Update)
+		customer.DELETE("/:id", requirePermissionName(permissionEnum.CustomersDestroy), params.CustomerHandler.Destroy)
+
 		// Material Test Method
 		materialTestMethod := protected.Group("/material-test-methods")
 		materialTestMethod.GET("", requirePermissionName(permissionEnum.MaterialTestMethodsIndex), params.MaterialTestMethodHandler.Paginate)
@@ -142,7 +172,7 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 		materialTestMethod.PUT("/:id", requirePermissionName(permissionEnum.MaterialTestMethodsUpdate), params.MaterialTestMethodHandler.Update)
 		materialTestMethod.DELETE("/:id", requirePermissionName(permissionEnum.MaterialTestMethodsDestroy), params.MaterialTestMethodHandler.Destroy)
 
-		// Material Test Method
+		// Material Test Machine
 		materialTestMachine := protected.Group("/material-test-machines")
 		materialTestMachine.GET("", requirePermissionName(permissionEnum.MaterialTestMachinesIndex), params.MaterialTestMachineHandler.Paginate)
 		materialTestMachine.GET("/:id", requirePermissionName(permissionEnum.MaterialTestMachinesShow), params.MaterialTestMachineHandler.Show)
@@ -157,6 +187,30 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 		materialTestService.POST("", requirePermissionName(permissionEnum.MaterialTestServicesStore), params.MaterialTestServiceHandler.Store)
 		materialTestService.PUT("/:id", requirePermissionName(permissionEnum.MaterialTestServicesUpdate), params.MaterialTestServiceHandler.Update)
 		materialTestService.DELETE("/:id", requirePermissionName(permissionEnum.MaterialTestServicesDestroy), params.MaterialTestServiceHandler.Destroy)
+
+		// Material Test Work Category
+		materialTestWorkCategory := protected.Group("/material-test-work-categories")
+		materialTestWorkCategory.GET("", requirePermissionName(permissionEnum.MaterialTestWorkCategoriesIndex), params.MaterialTestWorkCategoryHandler.Paginate)
+		materialTestWorkCategory.GET("/:id", requirePermissionName(permissionEnum.MaterialTestWorkCategoriesShow), params.MaterialTestWorkCategoryHandler.Show)
+		materialTestWorkCategory.POST("", requirePermissionName(permissionEnum.MaterialTestWorkCategoriesStore), params.MaterialTestWorkCategoryHandler.Store)
+		materialTestWorkCategory.PUT("/:id", requirePermissionName(permissionEnum.MaterialTestWorkCategoriesUpdate), params.MaterialTestWorkCategoryHandler.Update)
+		materialTestWorkCategory.DELETE("/:id", requirePermissionName(permissionEnum.MaterialTestWorkCategoriesDestroy), params.MaterialTestWorkCategoryHandler.Destroy)
+
+		// Material Test Work Package
+		materialTestWorkPackage := protected.Group("/material-test-work-packages")
+		materialTestWorkPackage.GET("", requirePermissionName(permissionEnum.MaterialTestWorkPackagesIndex), params.MaterialTestWorkPackageHandler.Paginate)
+		materialTestWorkPackage.GET("/:id", requirePermissionName(permissionEnum.MaterialTestWorkPackagesShow), params.MaterialTestWorkPackageHandler.Show)
+		materialTestWorkPackage.POST("", requirePermissionName(permissionEnum.MaterialTestWorkPackagesStore), params.MaterialTestWorkPackageHandler.Store)
+		materialTestWorkPackage.PUT("/:id", requirePermissionName(permissionEnum.MaterialTestWorkPackagesUpdate), params.MaterialTestWorkPackageHandler.Update)
+		materialTestWorkPackage.DELETE("/:id", requirePermissionName(permissionEnum.MaterialTestWorkPackagesDestroy), params.MaterialTestWorkPackageHandler.Destroy)
+
+		// Material Test Order
+		materialTestOrder := protected.Group("/material-test-orders")
+		materialTestOrder.GET("", requirePermissionName(permissionEnum.MaterialTestOrdersIndex), params.MaterialTestOrderHandler.Paginate)
+		materialTestOrder.GET("/:id", requirePermissionName(permissionEnum.MaterialTestOrdersShow), params.MaterialTestOrderHandler.Show)
+		materialTestOrder.POST("", requirePermissionName(permissionEnum.MaterialTestOrdersStore), params.MaterialTestOrderHandler.Store)
+		materialTestOrder.PUT("/:id", requirePermissionName(permissionEnum.MaterialTestOrdersUpdate), params.MaterialTestOrderHandler.Update)
+		materialTestOrder.DELETE("/:id", requirePermissionName(permissionEnum.MaterialTestOrdersDestroy), params.MaterialTestOrderHandler.Destroy)
 	}
 
 	return nil

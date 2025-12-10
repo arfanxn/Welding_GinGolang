@@ -8,6 +8,7 @@ CREATE TABLE material_test_services (
   price DECIMAL(10, 2) NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE,
+  deleted_at TIMESTAMP WITH TIME ZONE,
 
   CONSTRAINT fk_material_test_services_machine_id FOREIGN KEY (machine_id) REFERENCES material_test_machines(id) ON DELETE CASCADE,
   CONSTRAINT fk_material_test_services_method_id FOREIGN KEY (method_id) REFERENCES material_test_methods(id) ON DELETE CASCADE

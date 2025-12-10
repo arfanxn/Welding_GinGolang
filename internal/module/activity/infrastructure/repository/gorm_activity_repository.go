@@ -128,7 +128,7 @@ func (r *gormActivityRepository) First(q *query.Query) (*entity.Activity, error)
 	return activity, nil
 }
 
-func (r *gormActivityRepository) Find(id string) (*entity.Activity, error) {
+func (r *gormActivityRepository) Find(id string, q *query.Query) (*entity.Activity, error) {
 	var activity entity.Activity
 	if err := r.db.Where("id = ?", id).First(&activity).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

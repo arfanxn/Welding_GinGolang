@@ -38,15 +38,20 @@ func (r *GormMaterialTestServiceRepository) query(db *gorm.DB, q *query.Query) *
 
 	if q != nil {
 		if id := q.GetFilterById(); id != nil {
-			db = db.Where(mtServiceTableName+".id = ?", id.Value)
+			// Unscoped() is used to include deleted records, only unscope on id filter
+			db = db.Unscoped().Where(mtServiceTableName+".id = ?", id.Value)
 		}
 
 		if q.GetInclude("machine") != nil {
-			db = db.Preload("Machine")
+			db = db.Preload("Machine", func(db *gorm.DB) *gorm.DB {
+				return db.Unscoped()
+			})
 		}
 
 		if q.GetInclude("method") != nil {
-			db = db.Preload("Method")
+			db = db.Preload("Method", func(db *gorm.DB) *gorm.DB {
+				return db.Unscoped()
+			})
 		}
 
 		if search := q.GetSearch(); search != nil {
@@ -139,8 +144,10 @@ func (r *GormMaterialTestServiceRepository) First(q *query.Query) (mtm *entity.M
 	return
 }
 
-func (r *GormMaterialTestServiceRepository) Find(id string) (mtm *entity.MaterialTestService, err error) {
-	if err := r.db.Where("id = ?", id).First(&mtm).Error; err != nil {
+func (r *GormMaterialTestServiceRepository) Find(id string, q *query.Query) (mtm *entity.MaterialTestService, err error) {
+	db := r.query(r.db, q)
+
+	if err := db.Unscoped().Where("id = ?", id).First(&mtm).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrMaterialTestServiceNotFound
 		}
@@ -149,8 +156,10 @@ func (r *GormMaterialTestServiceRepository) Find(id string) (mtm *entity.Materia
 	return
 }
 
-func (r *GormMaterialTestServiceRepository) FindByIds(ids []string) (mtms []*entity.MaterialTestService, err error) {
-	if err := r.db.Where("id IN (?)", ids).Find(&mtms).Error; err != nil {
+func (r *GormMaterialTestServiceRepository) FindByIds(ids []string, q *query.Query) (mtms []*entity.MaterialTestService, err error) {
+	db := r.query(r.db, q)
+
+	if err := db.Where("id IN (?)", ids).Find(&mtms).Error; err != nil {
 		return nil, err
 	}
 	if len(mtms) != len(ids) {

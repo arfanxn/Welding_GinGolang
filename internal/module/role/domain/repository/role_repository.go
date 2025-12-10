@@ -11,10 +11,10 @@ type RoleRepository interface {
 	Get(*query.Query) ([]*entity.Role, error)
 	Paginate(*query.Query) (*pagination.OffsetPagination[*entity.Role], error)
 	First(*query.Query) (*entity.Role, error)
-	Find(id string) (*entity.Role, error)
-	FindDefault() (*entity.Role, error)
-	FindByIds(ids []string) ([]*entity.Role, error)
-	FindByName(name string) (*entity.Role, error)
+	Find(id string, q *query.Query) (*entity.Role, error)
+	FindDefault(q *query.Query) (*entity.Role, error)
+	FindByIds(ids []string, q *query.Query) ([]*entity.Role, error)
+	FindByName(name string, q *query.Query) (*entity.Role, error)
 	Save(role *entity.Role) error
 	SetDefault(role *entity.Role) error
 	SaveMany(roles []*entity.Role) error

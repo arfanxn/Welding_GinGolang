@@ -9,7 +9,7 @@ import (
 type ActivityRepository interface {
 	Paginate(q *query.Query) (*pagination.OffsetPagination[*entity.Activity], error)
 	First(query *query.Query) (*entity.Activity, error)
-	Find(id string) (*entity.Activity, error)
+	Find(id string, q *query.Query) (*entity.Activity, error)
 	Save(activity *entity.Activity) error
 	SaveMany(activities []*entity.Activity) error
 }

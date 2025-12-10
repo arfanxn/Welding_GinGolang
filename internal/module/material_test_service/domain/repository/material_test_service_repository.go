@@ -11,8 +11,8 @@ type MaterialTestServiceRepository interface {
 	Get(q *query.Query) ([]*entity.MaterialTestService, error)
 	Paginate(q *query.Query) (*pagination.OffsetPagination[*entity.MaterialTestService], error)
 	First(q *query.Query) (*entity.MaterialTestService, error)
-	Find(id string) (*entity.MaterialTestService, error)
-	FindByIds(ids []string) ([]*entity.MaterialTestService, error)
+	Find(id string, q *query.Query) (*entity.MaterialTestService, error)
+	FindByIds(ids []string, q *query.Query) ([]*entity.MaterialTestService, error)
 	CountByMachineId(machineId string) (int64, error)
 	CountByMethodId(methodId string) (int64, error)
 	Save(mts *entity.MaterialTestService) error

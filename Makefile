@@ -57,6 +57,8 @@ check-env-docker:
 
 clean:
 	@if [ -f bin/welding ]; then rm bin/welding; fi
+	@if [ -d logs ]; then rm -rf logs/*; fi
+	@if [ -d storage ]; then rm -rf storage/*; fi
 	@for dir in docker/*/data; do \
 	    if [ -d "$$dir" ]; then \
 	        rm -rf "$$dir"; \
