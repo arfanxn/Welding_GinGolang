@@ -34,6 +34,7 @@ func (s *storeMaterialTestServiceStep) Handle(ctx context.Context, _dto *dto.Sav
 	mts.Id = s.idService.Generate()
 	mts.MachineId = *_dto.MachineId
 	mts.MethodId = *_dto.MethodId
+	mts.TestName = *_dto.TestName
 	mts.ServiceType = *_dto.ServiceType
 	mts.ServiceCode = *_dto.ServiceCode
 	mts.Unit = *_dto.Unit

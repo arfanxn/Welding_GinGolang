@@ -44,6 +44,10 @@ func (s *updateMaterialTestServiceStep) Handle(ctx context.Context, _dto *dto.Sa
 		mts.MethodId = *_dto.MethodId
 	}
 
+	if !goutil.IsEmptyReal(_dto.TestName) {
+		mts.TestName = *_dto.TestName
+	}
+
 	if !goutil.IsEmptyReal(_dto.ServiceType) {
 		mts.ServiceType = *_dto.ServiceType
 	}

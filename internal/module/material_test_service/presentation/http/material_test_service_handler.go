@@ -84,6 +84,7 @@ func (h *mtsHandler) Store(c *gin.Context) {
 	mts, err := h.mtsUsecase.Store(c.Request.Context(), &dto.SaveMaterialTestService{
 		MachineId:   &req.MachineId,
 		MethodId:    &req.MethodId,
+		TestName:    &req.TestName,
 		ServiceType: &req.ServiceType,
 		ServiceCode: &req.ServiceCode,
 		Unit:        &req.Unit,
@@ -118,6 +119,7 @@ func (h *mtsHandler) Update(c *gin.Context) {
 		Id:          &req.Id,
 		MachineId:   req.MachineId,
 		MethodId:    req.MethodId,
+		TestName:    req.TestName,
 		ServiceType: req.ServiceType,
 		ServiceCode: req.ServiceCode,
 		Unit:        req.Unit,

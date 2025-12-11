@@ -10,6 +10,7 @@ var _ request.Request = (*StoreMaterialTestService)(nil)
 type StoreMaterialTestService struct {
 	MachineId   string  `form:"machine_id" json:"machine_id"`
 	MethodId    string  `form:"method_id" json:"method_id"`
+	TestName    string  `form:"test_name" json:"test_name"`
 	ServiceType string  `form:"service_type" json:"service_type"`
 	ServiceCode string  `form:"service_code" json:"service_code"`
 	Unit        string  `form:"unit" json:"unit"`
@@ -29,6 +30,10 @@ func (s *StoreMaterialTestService) Validate() error {
 		validation.Field(&s.MethodId,
 			validation.Required.Error("Method Id tidak boleh kosong"),
 			validation.Length(26, 26).Error("Method Id harus 26 karakter"),
+		),
+		validation.Field(&s.TestName,
+			validation.Required.Error("Test Name tidak boleh kosong"),
+			validation.Length(3, 255).Error("Test Name harus di antara 3 dan 255 karakter"),
 		),
 		validation.Field(&s.ServiceType,
 			validation.Required.Error("Service Type tidak boleh kosong"),
