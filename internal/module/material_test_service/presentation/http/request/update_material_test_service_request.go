@@ -11,6 +11,7 @@ type UpdateMaterialTestService struct {
 	Id          string   `form:"id" json:"id"`
 	MachineId   *string  `form:"machine_id" json:"machine_id"`
 	MethodId    *string  `form:"method_id" json:"method_id"`
+	TestName    *string  `form:"test_name" json:"test_name"`
 	ServiceType *string  `form:"service_type" json:"service_type"`
 	ServiceCode *string  `form:"service_code" json:"service_code"`
 	Unit        *string  `form:"unit" json:"unit"`
@@ -32,6 +33,9 @@ func (s *UpdateMaterialTestService) Validate() error {
 		),
 		validation.Field(&s.MethodId,
 			validation.Length(26, 26).Error("Method Id harus 26 karakter"),
+		),
+		validation.Field(&s.TestName,
+			validation.Length(3, 255).Error("Test Name harus di antara 3 dan 255 karakter"),
 		),
 		validation.Field(&s.ServiceType,
 			validation.Length(3, 50).Error("Service Type harus di antara 3 dan 50 karakter"),

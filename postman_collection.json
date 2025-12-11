@@ -1573,7 +1573,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Login berhasil\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMDFLNzNWNENaQVBaMFk2TURLOTY5QUhNNDQiLCJleHAiOjE3NjAxMjM2OTEsImlhdCI6MTc2MDEyMDA5MX0.KRM1vuVxiiDFnU27XHOY3o0sq8shCS2mgWMWSy1RwqQ\",\n        \"user\": {\n            \"Id\": \"01K73V4CZAPZ0Y6MDK969AHM44\",\n            \"name\": \"Admin\",\n            \"birth_date\": \"2000-01-01T00:00:00Z\",\n            \"email\": \"admin@gmail.com\",\n            \"email_verified_at\": \"2025-10-09T13:37:47+07:00\",\n            \"password\": \"$2a$12$N3ly9UTEFe0GRiodOzIqfeWl9RNpdlb/nz4N7ZnpQk/xwxuntgbbm\",\n            \"created_at\": \"2025-10-09T13:37:47+07:00\",\n            \"updated_at\": \"2025-10-09T13:37:47+07:00\",\n            \"deleted_at\": null\n        }\n    }\n}"
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Login berhasil\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMDFLNzNWNENaQVBaMFk2TURLOTY5QUhNNDQiLCJleHAiOjE3NjAxMjM2OTEsImlhdCI6MTc2MDEyMDA5MX0.KRM1vuVxiiDFnU27XHOY3o0sq8shCS2mgWMWSy1RwqQ\",\n        \"user\": {\n            \"Id\": \"01K73V4CZAPZ0Y6MDK969AHM44\",\n            \"name\": \"Admin\",\n            \"birth_date\": \"2000-01-01T00:00:00Z\",\n            \"email\": \"admin@gmail.com\",\n            \"email_verified_at\": \"2025-10-09T13:37:47+07:00\",\n            \"created_at\": \"2025-10-09T13:37:47+07:00\",\n            \"updated_at\": \"2025-10-09T13:37:47+07:00\",\n            \"deleted_at\": null\n        }\n    }\n}"
 								},
 								{
 									"name": "401",
@@ -8602,7 +8602,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -8721,7 +8720,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -8898,7 +8896,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -8954,7 +8951,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -9016,7 +9012,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -9057,7 +9052,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -9973,7 +9967,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -10014,7 +10007,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -10124,7 +10116,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -10189,7 +10180,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -10258,7 +10248,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -10441,7 +10430,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -10507,7 +10495,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -10634,7 +10621,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -10675,7 +10661,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -12848,7 +12833,7 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "{{BASE_URL}}/api/v1/material-test-services?page=1&per_page=10&include=machine&include=method&sort=price&sort=created_at",
+									"raw": "{{BASE_URL}}/api/v1/material-test-services?page=1&per_page=10&include=machine&include=method&search=Weekly&sort=price&sort=created_at",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -12876,9 +12861,8 @@
 										},
 										{
 											"key": "search",
-											"value": "ASTM",
-											"description": "search by service_type, service_code, unit, price, machine_name, and method_name",
-											"disabled": true
+											"value": "Weekly",
+											"description": "search by test_name, service_type, service_code, unit, price, machine_name, and method_name"
 										},
 										{
 											"key": "filter",
@@ -13194,6 +13178,129 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Material test services berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 10,\n        \"has_prev_page\": false,\n        \"has_next_page\": true,\n        \"prev_page\": null,\n        \"next_page\": 2,\n        \"last_page\": 5,\n        \"first_page_url\": \"http://localhost:8080/api/v1/material-test-services?page=1&per_page=10\",\n        \"prev_page_url\": null,\n        \"next_page_url\": \"http://localhost:8080/api/v1/material-test-services?page=2&per_page=10\",\n        \"last_page_url\": \"http://localhost:8080/api/v1/material-test-services?page=5&per_page=10\",\n        \"items\": [\n            {\n                \"id\": \"01MTS0YPH5WB7KM2BRRW264JZD\",\n                \"machine_id\": \"01M2Z0VGWC7X12FH9N6J5BG4DQ\",\n                \"method_id\": \"01KAXAS43W12KZ4Q6VQXNBH1SB\",\n                \"service_type\": \"Machining\",\n                \"service_code\": \"UTK\",\n                \"unit\": \"jam\",\n                \"price\": 97491.24,\n                \"created_at\": \"2025-03-15T18:42:08.552703+07:00\",\n                \"updated_at\": \"2025-11-27T05:01:40.526793+07:00\"\n            },\n            {\n                \"id\": \"01MTSNRVZ9P08JRM2YWHQ2405N\",\n                \"machine_id\": \"01M2Z0VGWG2S7VS5HZF9KQJ8CG\",\n                \"method_id\": \"01KAXAS43GQK2N96V8Z2T1BM6F\",\n                \"service_type\": \"Machining\",\n                \"service_code\": \"CNC\",\n                \"unit\": \"sample\",\n                \"price\": 53292.22,\n                \"created_at\": \"2025-05-27T14:30:22.779796+07:00\",\n                \"updated_at\": \"2025-11-27T05:01:40.526793+07:00\"\n            },\n            {\n                \"id\": \"01MTSVYQWDZVX8BD6PD42D7QQ2\",\n                \"machine_id\": \"01M2Z0VGW81Q5R6Z8DYX7T4H2M\",\n                \"method_id\": \"01KAXAS44ATW2KQF0MTQ7JZPQH\",\n                \"service_type\": \"Machining\",\n                \"service_code\": \"CNC\",\n                \"unit\": \"jam\",\n                \"price\": 49334.12,\n                \"created_at\": \"2025-02-09T13:57:11.640144+07:00\",\n                \"updated_at\": \"2025-10-26T21:27:02.442725+07:00\"\n            },\n            {\n                \"id\": \"01MTST9JXDTBN3C53K6S3DX9H9\",\n                \"machine_id\": \"01M2Z0VGWEWQXG1Z5C9H27JQGR\",\n                \"method_id\": \"01KAXAS44ECP8NY7G4XHFH8ARP\",\n                \"service_type\": \"Testing\",\n                \"service_code\": \"UTK\",\n                \"unit\": \"jam\",\n                \"price\": 27803.89,\n                \"created_at\": \"2025-02-18T06:33:57.82562+07:00\",\n                \"updated_at\": \"2025-11-27T05:01:40.526793+07:00\"\n            },\n            {\n                \"id\": \"01MTS7K5GCPB93GGB6BF9H0K84\",\n                \"machine_id\": \"01M2Z0VGWJ3Y9FHQ8BW6K21RTP\",\n                \"method_id\": \"01KAXAS43A1Q3E8VZD7J4X5Z9F\",\n                \"service_type\": \"Machining\",\n                \"service_code\": \"CNC\",\n                \"unit\": \"jam\",\n                \"price\": 67496.05,\n                \"created_at\": \"2024-12-08T05:32:07.693045+07:00\",\n                \"updated_at\": \"2025-08-31T13:49:39.836487+07:00\"\n            },\n            {\n                \"id\": \"01MTS64K4B6F87DZ5ZWHMPR7H9\",\n                \"machine_id\": \"01KB051BW3DS6F1J0QYKNFQBH0\",\n                \"method_id\": \"01KAXAS44PBQ8H9C8WZK6S7JQF\",\n                \"service_type\": \"Machining\",\n                \"service_code\": \"UTK\",\n                \"unit\": \"sample\",\n                \"price\": 46849.61,\n                \"created_at\": \"2024-12-22T15:25:27.939614+07:00\",\n                \"updated_at\": \"2025-11-27T05:01:40.526793+07:00\"\n            },\n            {\n                \"id\": \"01MTSCCQZ0MEYGQGTXQB0GKFPN\",\n                \"machine_id\": \"01M2Z0VGW8S6QWTH9K5C2MF0D8\",\n                \"method_id\": \"01KAXAS43M2YH3C5W8XKHW4S3C\",\n                \"service_type\": \"Machining\",\n                \"service_code\": \"UTK\",\n                \"unit\": \"jam\",\n                \"price\": 46842.02,\n                \"created_at\": \"2025-08-17T08:00:07.199165+07:00\",\n                \"updated_at\": \"2025-10-02T04:46:47.934548+07:00\"\n            },\n            {\n                \"id\": \"01MTS437KJT3YFJ16R03BA4CX0\",\n                \"machine_id\": \"01M2Z0VGWAGA3V9NFXZ4H78QHP\",\n                \"method_id\": \"01KAXAS440D3SYZEFX3TRW63KZ\",\n                \"service_type\": \"Machining\",\n                \"service_code\": \"UTK\",\n                \"unit\": \"jam\",\n                \"price\": 49972.24,\n                \"created_at\": \"2025-11-13T05:27:58.589585+07:00\",\n                \"updated_at\": \"2025-11-24T08:52:57.17611+07:00\"\n            },\n            {\n                \"id\": \"01MTSMRDD9PMHS083DJ20WQ1NC\",\n                \"machine_id\": \"01KB051BW3DS6F1J0QYKNFQBH0\",\n                \"method_id\": \"01KAXAS44M2M4M3Z4GJ6P0N2XH\",\n                \"service_type\": \"Testing\",\n                \"service_code\": \"UTK\",\n                \"unit\": \"sample\",\n                \"price\": 17563.14,\n                \"created_at\": \"2025-01-24T03:46:21.702407+07:00\",\n                \"updated_at\": \"2025-11-27T05:01:40.526793+07:00\"\n            },\n            {\n                \"id\": \"01MTSCNSK1W7SVTY07E05GKNTD\",\n                \"machine_id\": \"01M2Z0VGW9ZJ1GFDC89KD7R0FS\",\n                \"method_id\": \"01KAXAS446EJ1KQP9MHZ1WQC29\",\n                \"service_type\": \"Testing\",\n                \"service_code\": \"UTK\",\n                \"unit\": \"jam\",\n                \"price\": 51347.6,\n                \"created_at\": \"2025-05-04T09:23:44.832961+07:00\",\n                \"updated_at\": \"2025-11-27T05:01:40.526793+07:00\"\n            }\n        ],\n        \"total_items\": 49\n    }\n}"
+								},
+								{
+									"name": "200 (search by test_name)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": []
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/material-test-services?page=1&per_page=10&include=machine&include=method&search=Weekly&sort=price&sort=created_at",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"material-test-services"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "10"
+												},
+												{
+													"key": "include",
+													"value": "machine"
+												},
+												{
+													"key": "include",
+													"value": "method"
+												},
+												{
+													"key": "search",
+													"value": "Weekly",
+													"description": "search by test_name, service_type, service_code, unit, price, machine_name, and method_name"
+												},
+												{
+													"key": "filter",
+													"value": "machine_id==01M2Z0VGWDW2KDH6Z9QX3JP4BV",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "method_id==01KAXAS44M2M4M3Z4GJ6P0N2XH",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "service_type==Machining",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "service_code==UTK",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "unit==jam",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "priceLIKE45",
+													"description": "filter where price LIKE %40%",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "priceBETWEEN10000,70000",
+													"description": "filter where price between 10,000 and 70,000",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "price",
+													"description": "sort ascending"
+												},
+												{
+													"key": "sort",
+													"value": "-price",
+													"description": "sort descending",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "created_at"
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 11 Dec 2025 11:32:36 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1428"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Material test services berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 10,\n        \"has_prev_page\": false,\n        \"has_next_page\": false,\n        \"prev_page\": null,\n        \"next_page\": null,\n        \"last_page\": 1,\n        \"first_page_url\": \"http://localhost:8080/api/v1/material-test-services?include=machine&include=method&page=1&per_page=10&search=Weekly&sort=price&sort=created_at\",\n        \"prev_page_url\": null,\n        \"next_page_url\": null,\n        \"last_page_url\": \"http://localhost:8080/api/v1/material-test-services?include=machine&include=method&page=1&per_page=10&search=Weekly&sort=price&sort=created_at\",\n        \"items\": [\n            {\n                \"id\": \"01MTS0Q98XMK2X346CF21N4J3R\",\n                \"machine_id\": \"01M2Z0VGWDC6MN47ZF1X0G8RFZ\",\n                \"method_id\": \"01KAXAS43D9T1Y4NQ2XWQTSGKM\",\n                \"test_name\": \"Weekly - 2711\",\n                \"service_type\": \"Testing\",\n                \"service_code\": \"UTK\",\n                \"unit\": \"sample\",\n                \"price\": 31501.63,\n                \"created_at\": \"2025-09-06T17:06:09.721668Z\",\n                \"updated_at\": \"2025-12-11T11:13:05.072271Z\",\n                \"deleted_at\": null,\n                \"machine\": {\n                    \"id\": \"01M2Z0VGWDC6MN47ZF1X0G8RFZ\",\n                    \"name\": \"Torque Testing Machine\",\n                    \"description\": \"Measures rotational force strength\",\n                    \"created_at\": \"2025-12-11T11:13:05.063694Z\",\n                    \"updated_at\": \"2025-12-11T11:13:05.063694Z\",\n                    \"deleted_at\": null\n                },\n                \"method\": {\n                    \"id\": \"01KAXAS43D9T1Y4NQ2XWQTSGKM\",\n                    \"name\": \"ASTM E9\",\n                    \"description\": \"Compression Test\",\n                    \"created_at\": \"2025-12-11T11:13:05.058818Z\",\n                    \"updated_at\": \"2025-12-11T11:13:05.058818Z\",\n                    \"deleted_at\": null\n                }\n            }\n        ],\n        \"total_items\": 1\n    }\n}"
 								},
 								{
 									"name": "200 (search by service_type)",
@@ -14952,7 +15059,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/api/v1/material-test-services/01MTS5ZS0V6WBZ8QRNOT_FOUND?include=machine&include=method",
+									"raw": "{{BASE_URL}}/api/v1/material-test-services/01KC6T1D2HE2SYHQ7B70T7Y6QP?include=machine&include=method",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -14960,7 +15067,7 @@
 										"api",
 										"v1",
 										"material-test-services",
-										"01MTS5ZS0V6WBZ8QRNOT_FOUND"
+										"01KC6T1D2HE2SYHQ7B70T7Y6QP"
 									],
 									"query": [
 										{
@@ -14981,7 +15088,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{BASE_URL}}/api/v1/material-test-services/01MTS5ZS0V6WBZ8QRAKPYQEP3S?include=machine&include=method",
+											"raw": "{{BASE_URL}}/api/v1/material-test-services/01KC6T1D2HE2SYHQ7B70T7Y6QP?include=machine&include=method",
 											"host": [
 												"{{BASE_URL}}"
 											],
@@ -14989,7 +15096,7 @@
 												"api",
 												"v1",
 												"material-test-services",
-												"01MTS5ZS0V6WBZ8QRAKPYQEP3S"
+												"01KC6T1D2HE2SYHQ7B70T7Y6QP"
 											],
 											"query": [
 												{
@@ -15015,15 +15122,15 @@
 										},
 										{
 											"key": "Date",
-											"value": "Thu, 27 Nov 2025 12:49:06 GMT"
+											"value": "Thu, 11 Dec 2025 13:41:32 GMT"
 										},
 										{
 											"key": "Content-Length",
-											"value": "819"
+											"value": "972"
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Material test service berhasil diambil\",\n    \"data\": {\n        \"material_test_service\": {\n            \"id\": \"01MTS5ZS0V6WBZ8QRAKPYQEP3S\",\n            \"machine_id\": \"01M2Z0VGWE2MK1T3ZVH8C7QJDN\",\n            \"method_id\": \"01KAXAS43D9T1Y4NQ2XWQTSGKM\",\n            \"service_type\": \"Machining\",\n            \"service_code\": \"UTK\",\n            \"unit\": \"sample\",\n            \"price\": 89343.36,\n            \"created_at\": \"2025-08-17T17:35:29.963532+07:00\",\n            \"updated_at\": \"2025-11-27T05:01:40.526793+07:00\",\n            \"machine\": {\n                \"id\": \"01M2Z0VGWE2MK1T3ZVH8C7QJDN\",\n                \"name\": \"Salt Spray Chamber\",\n                \"description\": \"Tests corrosion resistance rates\",\n                \"created_at\": \"2025-11-27T05:01:40.516603+07:00\",\n                \"updated_at\": \"2025-11-27T05:01:40.516603+07:00\"\n            },\n            \"method\": {\n                \"id\": \"01KAXAS43D9T1Y4NQ2XWQTSGKM\",\n                \"name\": \"ASTM E9\",\n                \"description\": \"Compression Test\",\n                \"created_at\": \"2025-11-27T05:01:40.51182+07:00\",\n                \"updated_at\": \"2025-11-27T05:01:40.51182+07:00\"\n            }\n        }\n    }\n}"
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Material test service berhasil diambil\",\n    \"data\": {\n        \"material_test_service\": {\n            \"id\": \"01KC6T1D2HE2SYHQ7B70T7Y6QP\",\n            \"machine_id\": \"01KB051BW3CNQ3ZGBHPW9EMV7N\",\n            \"method_id\": \"01KAXAS44M2M4M3Z4GJ6P0N2XH\",\n            \"test_name\": \"test store Material Test Service, updated\",\n            \"service_type\": \"Testing\",\n            \"service_code\": \"CNC\",\n            \"unit\": \"jam\",\n            \"price\": 50000,\n            \"created_at\": \"2025-12-11T20:36:34.390171+07:00\",\n            \"updated_at\": \"2025-12-11T20:40:15.346892+07:00\",\n            \"deleted_at\": null,\n            \"machine\": {\n                \"id\": \"01KB051BW3CNQ3ZGBHPW9EMV7N\",\n                \"name\": \"CNC Lathe Machine\",\n                \"description\": \"Precision cutting and shaping tools\",\n                \"created_at\": \"2025-12-11T18:13:05.063694+07:00\",\n                \"updated_at\": \"2025-12-11T18:13:05.063694+07:00\",\n                \"deleted_at\": null\n            },\n            \"method\": {\n                \"id\": \"01KAXAS44M2M4M3Z4GJ6P0N2XH\",\n                \"name\": \"ASTM E8\",\n                \"description\": \"Standard Test Methods for Tension Testing of Metallic Materials\",\n                \"created_at\": \"2025-12-11T18:13:05.058818+07:00\",\n                \"updated_at\": \"2025-12-11T18:13:05.058818+07:00\",\n                \"deleted_at\": null\n            }\n        }\n    }\n}"
 								},
 								{
 									"name": "404",
@@ -15094,6 +15201,11 @@
 											"type": "text"
 										},
 										{
+											"key": "test_name",
+											"value": "test store Material Test Service",
+											"type": "text"
+										},
+										{
 											"key": "service_type",
 											"value": "Machining",
 											"type": "text"
@@ -15147,6 +15259,11 @@
 													"type": "text"
 												},
 												{
+													"key": "test_name",
+													"value": "test store Material Test Service",
+													"type": "text"
+												},
+												{
 													"key": "service_type",
 													"value": "Machining",
 													"type": "text"
@@ -15187,20 +15304,21 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
+											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "Date",
-											"value": "Thu, 27 Nov 2025 13:15:03 GMT"
+											"value": "Thu, 11 Dec 2025 13:36:34 GMT"
 										},
 										{
 											"key": "Content-Length",
-											"value": "866"
+											"value": "969"
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Material test service berhasil disimpan\",\n    \"data\": {\n        \"material_test_service\": {\n            \"id\": \"01KB2Q7YP2VNZ0GK3AM3Z6W0SY\",\n            \"machine_id\": \"01KB051BW3CNQ3ZGBHPW9EMV7N\",\n            \"method_id\": \"01KAXAS44M2M4M3Z4GJ6P0N2XH\",\n            \"service_type\": \"Machining\",\n            \"service_code\": \"UTK\",\n            \"unit\": \"sample\",\n            \"price\": 45000,\n            \"created_at\": \"2025-11-27T20:15:03.749815+07:00\",\n            \"updated_at\": \"2025-11-27T20:15:03.747156+07:00\",\n            \"machine\": {\n                \"id\": \"01KB051BW3CNQ3ZGBHPW9EMV7N\",\n                \"name\": \"CNC Lathe Machine\",\n                \"description\": \"Precision cutting and shaping tools\",\n                \"created_at\": \"2025-11-27T05:01:40.516603+07:00\",\n                \"updated_at\": \"2025-11-27T05:01:40.516603+07:00\"\n            },\n            \"method\": {\n                \"id\": \"01KAXAS44M2M4M3Z4GJ6P0N2XH\",\n                \"name\": \"ASTM E8\",\n                \"description\": \"Standard Test Methods for Tension Testing of Metallic Materials\",\n                \"created_at\": \"2025-11-27T05:01:40.51182+07:00\",\n                \"updated_at\": \"2025-11-27T05:01:40.51182+07:00\"\n            }\n        }\n    }\n}"
+									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Material test service berhasil disimpan\",\n    \"data\": {\n        \"material_test_service\": {\n            \"id\": \"01KC6T1D2HE2SYHQ7B70T7Y6QP\",\n            \"machine_id\": \"01KB051BW3CNQ3ZGBHPW9EMV7N\",\n            \"method_id\": \"01KAXAS44M2M4M3Z4GJ6P0N2XH\",\n            \"test_name\": \"test store Material Test Service\",\n            \"service_type\": \"Machining\",\n            \"service_code\": \"UTK\",\n            \"unit\": \"sample\",\n            \"price\": 45000,\n            \"created_at\": \"2025-12-11T20:36:34.390171+07:00\",\n            \"updated_at\": \"2025-12-11T20:36:34.386217+07:00\",\n            \"deleted_at\": null,\n            \"machine\": {\n                \"id\": \"01KB051BW3CNQ3ZGBHPW9EMV7N\",\n                \"name\": \"CNC Lathe Machine\",\n                \"description\": \"Precision cutting and shaping tools\",\n                \"created_at\": \"2025-12-11T18:13:05.063694+07:00\",\n                \"updated_at\": \"2025-12-11T18:13:05.063694+07:00\",\n                \"deleted_at\": null\n            },\n            \"method\": {\n                \"id\": \"01KAXAS44M2M4M3Z4GJ6P0N2XH\",\n                \"name\": \"ASTM E8\",\n                \"description\": \"Standard Test Methods for Tension Testing of Metallic Materials\",\n                \"created_at\": \"2025-12-11T18:13:05.058818+07:00\",\n                \"updated_at\": \"2025-12-11T18:13:05.058818+07:00\",\n                \"deleted_at\": null\n            }\n        }\n    }\n}"
 								},
 								{
 									"name": "404 (machine not found)",
@@ -15218,6 +15336,11 @@
 												{
 													"key": "method_id",
 													"value": "01KAXAS44M2M4M3Z4NOT_FOUND",
+													"type": "text"
+												},
+												{
+													"key": "test_name",
+													"value": "test store Material Test Service",
 													"type": "text"
 												},
 												{
@@ -15292,6 +15415,11 @@
 												{
 													"key": "method_id",
 													"value": "01KAXAS44M2M4M3Z4NOT_FOUND",
+													"type": "text"
+												},
+												{
+													"key": "test_name",
+													"value": "test store Material Test Service",
 													"type": "text"
 												},
 												{
@@ -15371,6 +15499,12 @@
 													"disabled": true
 												},
 												{
+													"key": "test_name",
+													"value": "test store Material Test Service",
+													"type": "text",
+													"disabled": true
+												},
+												{
 													"key": "service_type",
 													"value": "Machining",
 													"type": "text",
@@ -15415,20 +15549,101 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
+											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "Date",
-											"value": "Thu, 27 Nov 2025 13:05:51 GMT"
+											"value": "Thu, 11 Dec 2025 13:36:11 GMT"
 										},
 										{
 											"key": "Content-Length",
-											"value": "348"
+											"value": "387"
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 422,\n    \"status\": \"error\",\n    \"message\": \"Machine Id tidak boleh kosong\",\n    \"errors\": {\n        \"machine_id\": [\n            \"Machine Id tidak boleh kosong\"\n        ],\n        \"method_id\": [\n            \"Method Id tidak boleh kosong\"\n        ],\n        \"price\": [\n            \"Price tidak boleh kosong\"\n        ],\n        \"service_code\": [\n            \"Service Code tidak boleh kosong\"\n        ],\n        \"service_type\": [\n            \"Service Type tidak boleh kosong\"\n        ],\n        \"unit\": [\n            \"Unit tidak boleh kosong\"\n        ]\n    }\n}"
+									"body": "{\n    \"code\": 422,\n    \"status\": \"error\",\n    \"message\": \"Unit tidak boleh kosong\",\n    \"errors\": {\n        \"machine_id\": [\n            \"Machine Id tidak boleh kosong\"\n        ],\n        \"method_id\": [\n            \"Method Id tidak boleh kosong\"\n        ],\n        \"price\": [\n            \"Price tidak boleh kosong\"\n        ],\n        \"service_code\": [\n            \"Service Code tidak boleh kosong\"\n        ],\n        \"service_type\": [\n            \"Service Type tidak boleh kosong\"\n        ],\n        \"test_name\": [\n            \"Test Name tidak boleh kosong\"\n        ],\n        \"unit\": [\n            \"Unit tidak boleh kosong\"\n        ]\n    }\n}"
+								},
+								{
+									"name": "409",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "machine_id",
+													"value": "01KB051BW3CNQ3ZGBHPW9EMV7N",
+													"type": "text"
+												},
+												{
+													"key": "method_id",
+													"value": "01KAXAS44M2M4M3Z4GJ6P0N2XH",
+													"type": "text"
+												},
+												{
+													"key": "test_name",
+													"value": "test store Material Test Service",
+													"type": "text"
+												},
+												{
+													"key": "service_type",
+													"value": "Machining",
+													"type": "text"
+												},
+												{
+													"key": "service_code",
+													"value": "UTK",
+													"type": "text"
+												},
+												{
+													"key": "unit",
+													"value": "sample",
+													"type": "text"
+												},
+												{
+													"key": "price",
+													"value": "45000",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/material-test-services",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"material-test-services"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 11 Dec 2025 13:36:56 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "73"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 409,\n    \"status\": \"error\",\n    \"message\": \"Material test service sudah ada\"\n}"
 								}
 							]
 						},
@@ -15443,43 +15658,42 @@
 										{
 											"key": "machine_id",
 											"value": "01KB051BW331Z7TEEQB292EM2X",
-											"type": "text",
-											"disabled": true
+											"type": "text"
 										},
 										{
 											"key": "method_id",
 											"value": "01KAXAS44N6Q6X6V7JQ3F9Y1DT",
-											"type": "text",
-											"disabled": true
+											"type": "text"
+										},
+										{
+											"key": "test_name",
+											"value": "test store Material Test Service, updated",
+											"type": "text"
 										},
 										{
 											"key": "service_type",
 											"value": "Testing",
-											"type": "text",
-											"disabled": true
+											"type": "text"
 										},
 										{
 											"key": "service_code",
 											"value": "CNC",
-											"type": "text",
-											"disabled": true
+											"type": "text"
 										},
 										{
 											"key": "unit",
 											"value": "jam",
-											"type": "text",
-											"disabled": true
+											"type": "text"
 										},
 										{
 											"key": "price",
 											"value": "50000",
-											"type": "text",
-											"disabled": true
+											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{BASE_URL}}/api/v1/material-test-services/01KB2Q7YP2VNZ0GK3AM3Z6W0SY",
+									"raw": "{{BASE_URL}}/api/v1/material-test-services/01KC6T1D2HE2SYHQ7B70T7Y6QP",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -15487,7 +15701,7 @@
 										"api",
 										"v1",
 										"material-test-services",
-										"01KB2Q7YP2VNZ0GK3AM3Z6W0SY"
+										"01KC6T1D2HE2SYHQ7B70T7Y6QP"
 									]
 								}
 							},
@@ -15508,6 +15722,11 @@
 												{
 													"key": "method_id",
 													"value": "01KAXAS44N6Q6X6V7JQ3F9Y1DT",
+													"type": "text"
+												},
+												{
+													"key": "test_name",
+													"value": "test store Material Test Service, updated",
 													"type": "text"
 												},
 												{
@@ -15533,7 +15752,7 @@
 											]
 										},
 										"url": {
-											"raw": "{{BASE_URL}}/api/v1/material-test-services/01KB2Q7YP2VNZ0GK3AM3Z6W0SY",
+											"raw": "{{BASE_URL}}/api/v1/material-test-services/01KC6T1D2HE2SYHQ7B70T7Y6QP",
 											"host": [
 												"{{BASE_URL}}"
 											],
@@ -15541,7 +15760,7 @@
 												"api",
 												"v1",
 												"material-test-services",
-												"01KB2Q7YP2VNZ0GK3AM3Z6W0SY"
+												"01KC6T1D2HE2SYHQ7B70T7Y6QP"
 											]
 										}
 									},
@@ -15557,15 +15776,15 @@
 										},
 										{
 											"key": "Date",
-											"value": "Thu, 27 Nov 2025 13:20:49 GMT"
+											"value": "Thu, 11 Dec 2025 13:40:15 GMT"
 										},
 										{
 											"key": "Content-Length",
-											"value": "822"
+											"value": "975"
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Material test service berhasil diperbarui\",\n    \"data\": {\n        \"material_test_service\": {\n            \"id\": \"01KB2Q7YP2VNZ0GK3AM3Z6W0SY\",\n            \"machine_id\": \"01KB051BW331Z7TEEQB292EM2X\",\n            \"method_id\": \"01KAXAS44N6Q6X6V7JQ3F9Y1DT\",\n            \"service_type\": \"Testing\",\n            \"service_code\": \"CNC\",\n            \"unit\": \"jam\",\n            \"price\": 50000,\n            \"created_at\": \"2025-11-27T20:15:03.749815+07:00\",\n            \"updated_at\": \"2025-11-27T20:20:49.362526+07:00\",\n            \"machine\": {\n                \"id\": \"01KB051BW331Z7TEEQB292EM2X\",\n                \"name\": \"Oven\",\n                \"description\": \"Heats samples under controlled temperature\",\n                \"created_at\": \"2025-11-27T05:01:40.516603+07:00\",\n                \"updated_at\": \"2025-11-27T05:01:40.516603+07:00\"\n            },\n            \"method\": {\n                \"id\": \"01KAXAS44N6Q6X6V7JQ3F9Y1DT\",\n                \"name\": \"SNI 1974:2011\",\n                \"description\": \"Metode Uji Tarik Logam\",\n                \"created_at\": \"2025-11-27T05:01:40.51182+07:00\",\n                \"updated_at\": \"2025-11-27T05:01:40.51182+07:00\"\n            }\n        }\n    }\n}"
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Material test service berhasil diperbarui\",\n    \"data\": {\n        \"material_test_service\": {\n            \"id\": \"01KC6T1D2HE2SYHQ7B70T7Y6QP\",\n            \"machine_id\": \"01KB051BW3CNQ3ZGBHPW9EMV7N\",\n            \"method_id\": \"01KAXAS44M2M4M3Z4GJ6P0N2XH\",\n            \"test_name\": \"test store Material Test Service, updated\",\n            \"service_type\": \"Testing\",\n            \"service_code\": \"CNC\",\n            \"unit\": \"jam\",\n            \"price\": 50000,\n            \"created_at\": \"2025-12-11T20:36:34.390171+07:00\",\n            \"updated_at\": \"2025-12-11T20:40:15.346892+07:00\",\n            \"deleted_at\": null,\n            \"machine\": {\n                \"id\": \"01KB051BW3CNQ3ZGBHPW9EMV7N\",\n                \"name\": \"CNC Lathe Machine\",\n                \"description\": \"Precision cutting and shaping tools\",\n                \"created_at\": \"2025-12-11T18:13:05.063694+07:00\",\n                \"updated_at\": \"2025-12-11T18:13:05.063694+07:00\",\n                \"deleted_at\": null\n            },\n            \"method\": {\n                \"id\": \"01KAXAS44M2M4M3Z4GJ6P0N2XH\",\n                \"name\": \"ASTM E8\",\n                \"description\": \"Standard Test Methods for Tension Testing of Metallic Materials\",\n                \"created_at\": \"2025-12-11T18:13:05.058818+07:00\",\n                \"updated_at\": \"2025-12-11T18:13:05.058818+07:00\",\n                \"deleted_at\": null\n            }\n        }\n    }\n}"
 								},
 								{
 									"name": "404",
@@ -15586,6 +15805,11 @@
 													"value": "01KAXAS44M2M4M3Z4GJ6P0N2XH",
 													"type": "text",
 													"disabled": true
+												},
+												{
+													"key": "test_name",
+													"value": "test store Material Test Service, updated",
+													"type": "text"
 												},
 												{
 													"key": "service_type",
@@ -15667,6 +15891,11 @@
 													"type": "text"
 												},
 												{
+													"key": "test_name",
+													"value": "test store Material Test Service, updated",
+													"type": "text"
+												},
+												{
 													"key": "service_type",
 													"value": "Testing",
 													"type": "text"
@@ -15739,6 +15968,11 @@
 												{
 													"key": "method_id",
 													"value": "01KAXAS44N6Q6X6V7NOT_FOUND",
+													"type": "text"
+												},
+												{
+													"key": "test_name",
+													"value": "test store Material Test Service, updated",
 													"type": "text"
 												},
 												{
@@ -17111,7 +17345,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -17173,7 +17406,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -17214,7 +17446,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -17305,7 +17536,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -17360,7 +17590,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -17469,7 +17698,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -17561,7 +17789,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -17617,7 +17844,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -17717,7 +17943,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
