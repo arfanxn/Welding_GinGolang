@@ -10,6 +10,7 @@ type MaterialTestService struct {
 	Id          string         `json:"id" gorm:"primarykey"`
 	MachineId   string         `json:"machine_id"`
 	MethodId    string         `json:"method_id"`
+	TestName    string         `json:"test_name"`
 	ServiceType string         `json:"service_type"`
 	ServiceCode string         `json:"service_code"`
 	Unit        string         `json:"unit"`

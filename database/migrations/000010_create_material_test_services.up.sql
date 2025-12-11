@@ -2,6 +2,7 @@ CREATE TABLE material_test_services (
   id CHAR(26) PRIMARY KEY NOT NULL,
   machine_id CHAR(26) NOT NULL,
   method_id CHAR(26) NOT NULL,
+  test_name VARCHAR(255) NOT NULL UNIQUE,
   service_type VARCHAR(50) NOT NULL,
   service_code VARCHAR(50) NOT NULL,
   unit VARCHAR(50) NOT NULL,

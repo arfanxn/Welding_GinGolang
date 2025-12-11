@@ -1,6 +1,7 @@
 package factory
 
 import (
+	"fmt"
 	"time"
 
 	id "github.com/arfanxn/welding/internal/infrastructure/id"
@@ -8,6 +9,7 @@ import (
 	"github.com/arfanxn/welding/pkg/typeutil"
 	"github.com/bluele/factory-go/factory"
 	"github.com/brianvoe/gofakeit/v7"
+	"github.com/iancoleman/strcase"
 	"go.uber.org/fx"
 )
 
@@ -23,6 +25,10 @@ func NewMaterialTestServiceFactory(params NewMaterialTestServiceFactoryParams) *
 	return factory.NewFactory(&entity.MaterialTestService{}).
 		Attr("Id", func(args factory.Args) (any, error) {
 			return idService.Generate(), nil
+		}).
+		Attr("TestName", func(args factory.Args) (any, error) {
+			testName := fmt.Sprintf("%s - %d", strcase.ToCamel(gofakeit.Word()), gofakeit.IntRange(1000, 9999))
+			return testName, nil
 		}).
 		Attr("ServiceType", func(args factory.Args) (any, error) {
 			serviceTypes := []string{"Testing", "Machining"}

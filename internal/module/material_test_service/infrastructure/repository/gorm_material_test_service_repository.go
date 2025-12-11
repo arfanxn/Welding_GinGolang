@@ -61,7 +61,8 @@ func (r *GormMaterialTestServiceRepository) query(db *gorm.DB, q *query.Query) *
 				Joins("LEFT JOIN " + mtMachineTableName + " ON " + mtMachineTableName + ".id = " + mtServiceTableName + ".machine_id").
 				Joins("LEFT JOIN " + mtMethodTableName + " ON " + mtMethodTableName + ".id = " + mtServiceTableName + ".method_id").
 				Where(
-					db.Where(mtServiceTableName+".service_type ILIKE ?", s).
+					db.Where(mtServiceTableName+".test_name ILIKE ?", s).
+						Or(mtServiceTableName+".service_type ILIKE ?", s).
 						Or(mtServiceTableName+".service_code ILIKE ?", s).
 						Or(mtServiceTableName+".unit ILIKE ?", s).
 						Or("CAST("+mtServiceTableName+".price AS TEXT) LIKE ?", s). // Cast numeric price to text for partial string matching
@@ -76,6 +77,10 @@ func (r *GormMaterialTestServiceRepository) query(db *gorm.DB, q *query.Query) *
 
 		if methodId := q.GetFilter("method_id", query.OperatorEqual); methodId != nil {
 			db = db.Where(mtServiceTableName+".method_id = ?", methodId.Value)
+		}
+
+		if testName := q.GetFilter("test_name", query.OperatorEqual); testName != nil {
+			db = db.Where(mtServiceTableName+".test_name = ?", testName.Value)
 		}
 
 		if serviceType := q.GetFilter("service_type", query.OperatorEqual); serviceType != nil {
