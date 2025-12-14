@@ -6,6 +6,14 @@ import (
 	"gorm.io/gorm"
 )
 
+// WorkCategory
+// Terjemahan langsung dari "Jenis Pekerjaan" pada dokumen fisik.
+// Digunakan untuk mengkategorisasi PEMOHON:
+// - Pendidik
+// - IKM
+// - Industri
+// - Other
+// BUKAN kategori pekerjaan fisik.
 type MaterialTestWorkCategory struct {
 	Id          string         `json:"id" gorm:"primarykey"`
 	Name        string         `json:"name"`

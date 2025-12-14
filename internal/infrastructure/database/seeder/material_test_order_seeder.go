@@ -6,14 +6,12 @@ import (
 	"time"
 
 	"github.com/arfanxn/welding/internal/infrastructure/id"
-	customerRepository "github.com/arfanxn/welding/internal/module/customer/domain/repository"
 	materialTestOrderEnum "github.com/arfanxn/welding/internal/module/material_test_order/domain/enum"
 	materialTestOrderRepository "github.com/arfanxn/welding/internal/module/material_test_order/domain/repository"
 	materialTestOrderServiceRepository "github.com/arfanxn/welding/internal/module/material_test_order_service/domain/repository"
 	materialTestOrderServiceEvaluationRepository "github.com/arfanxn/welding/internal/module/material_test_order_service_evaluation/domain/repository"
 	materialTestServiceRepository "github.com/arfanxn/welding/internal/module/material_test_service/domain/repository"
 	materialTestWorkCategoryRepository "github.com/arfanxn/welding/internal/module/material_test_work_category/domain/repository"
-	materialTestWorkPackageRepository "github.com/arfanxn/welding/internal/module/material_test_work_package/domain/repository"
 	mediaEnum "github.com/arfanxn/welding/internal/module/media/domain/enum"
 	mediaRepository "github.com/arfanxn/welding/internal/module/media/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
@@ -32,12 +30,10 @@ type MaterialTestOrderSeeder struct {
 	materialTestOrderRepository                  materialTestOrderRepository.MaterialTestOrderRepository
 	materialTestServiceRepository                materialTestServiceRepository.MaterialTestServiceRepository
 	materialTestWorkCategoryRepository           materialTestWorkCategoryRepository.MaterialTestWorkCategoryRepository
-	materialTestWorkPackageRepository            materialTestWorkPackageRepository.MaterialTestWorkPackageRepository
 	materialTestOrderServiceFactory              *factory.Factory
 	materialTestOrderServiceRepository           materialTestOrderServiceRepository.MaterialTestOrderServiceRepository
 	materialTestOrderServiceEvaluationFactory    *factory.Factory
 	materialTestOrderServiceEvaluationRepository materialTestOrderServiceEvaluationRepository.MaterialTestOrderServiceEvaluationRepository
-	customerRepository                           customerRepository.CustomerRepository
 	mediaFactory                                 *factory.Factory
 	mediaRepository                              mediaRepository.MediaRepository
 }
@@ -50,12 +46,10 @@ type NewMaterialTestOrderSeederParams struct {
 	MaterialTestOrderRepository                  materialTestOrderRepository.MaterialTestOrderRepository
 	MaterialTestServiceRepository                materialTestServiceRepository.MaterialTestServiceRepository
 	MaterialTestWorkCategoryRepository           materialTestWorkCategoryRepository.MaterialTestWorkCategoryRepository
-	MaterialTestWorkPackageRepository            materialTestWorkPackageRepository.MaterialTestWorkPackageRepository
 	MaterialTestOrderServiceFactory              *factory.Factory `name:"material_test_order_service_factory"`
 	MaterialTestOrderServiceRepository           materialTestOrderServiceRepository.MaterialTestOrderServiceRepository
 	MaterialTestOrderServiceEvaluationFactory    *factory.Factory `name:"material_test_order_service_evaluation_factory"`
 	MaterialTestOrderServiceEvaluationRepository materialTestOrderServiceEvaluationRepository.MaterialTestOrderServiceEvaluationRepository
-	CustomerRepository                           customerRepository.CustomerRepository
 	MediaFactory                                 *factory.Factory `name:"media_factory"`
 	MediaRepository                              mediaRepository.MediaRepository
 }
@@ -67,12 +61,10 @@ func NewMaterialTestOrderSeeder(params NewMaterialTestOrderSeederParams) Seeder 
 		materialTestOrderRepository:                  params.MaterialTestOrderRepository,
 		materialTestServiceRepository:                params.MaterialTestServiceRepository,
 		materialTestWorkCategoryRepository:           params.MaterialTestWorkCategoryRepository,
-		materialTestWorkPackageRepository:            params.MaterialTestWorkPackageRepository,
 		materialTestOrderServiceFactory:              params.MaterialTestOrderServiceFactory,
 		materialTestOrderServiceRepository:           params.MaterialTestOrderServiceRepository,
 		materialTestOrderServiceEvaluationFactory:    params.MaterialTestOrderServiceEvaluationFactory,
 		materialTestOrderServiceEvaluationRepository: params.MaterialTestOrderServiceEvaluationRepository,
-		customerRepository:                           params.CustomerRepository,
 		mediaFactory:                                 params.MediaFactory,
 		mediaRepository:                              params.MediaRepository,
 	}
@@ -82,7 +74,6 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 	materialTestOrderRepository := s.materialTestOrderRepository
 	materialTestServiceRepository := s.materialTestServiceRepository
 	materialTestWorkCategoryRepository := s.materialTestWorkCategoryRepository
-	materialTestWorkPackageRepository := s.materialTestWorkPackageRepository
 	materialTestOrderServiceFactory := s.materialTestOrderServiceFactory
 	materialTestOrderServiceRepository := s.materialTestOrderServiceRepository
 	materialTestOrderServiceEvaluationFactory := s.materialTestOrderServiceEvaluationFactory
@@ -141,18 +132,7 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 	if err != nil {
 		return err
 	}
-
-	mtWorkPackages, err := materialTestWorkPackageRepository.Get(nil)
-	if err != nil {
-		return err
-	}
-
 	fmt.Println("it went here 4")
-
-	customers, err := s.customerRepository.Get(nil)
-	if err != nil {
-		return err
-	}
 
 	fmt.Println("it went here 5")
 
@@ -195,15 +175,9 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 		mtWorkCategory := mtWorkCategories[gofakeit.IntRange(0, len(mtWorkCategories)-1)]
 		mtOrder.WorkCategoryId = mtWorkCategory.Id
 
-		mtWorkPackage := mtWorkPackages[gofakeit.IntRange(0, len(mtWorkPackages)-1)]
-		mtOrder.WorkPackageId = mtWorkPackage.Id
-
-		customer := customers[gofakeit.IntRange(0, len(customers)-1)]
-		mtOrder.CustomerId = customer.Id
-
 		mtOrderHasMedias := gofakeit.Bool()
 		if mtOrderHasMedias {
-			mtOrderMediasCount := gofakeit.IntRange(0, 5)
+			mtOrderMediasCount := gofakeit.IntRange(1, 5)
 
 			for i := range mtOrderMediasCount {
 				orderColumn := i + 1

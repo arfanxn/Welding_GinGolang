@@ -4,14 +4,19 @@ import "time"
 
 type MaterialTestOrder struct {
 	// ---- IDENTIFICATION ----
-	Id             string  `json:"id" gorm:"primaryKey"`
-	Number         string  `json:"number"`
-	WorkCategoryId string  `json:"work_category_id"`
-	WorkPackageId  string  `json:"work_package_id"`
-	CustomerId     string  `json:"customer_id"`
-	CustomerNote   *string `json:"customer_note"`
-	TesterNote     *string `json:"tester_note"`
-	IssuedFor      string  `json:"issued_for"`
+	Id             string `json:"id" gorm:"primaryKey"`
+	Number         string `json:"number"`
+	WorkCategoryId string `json:"work_category_id"`
+
+	// ---- WORK PACKAGE & APPLICANT DETAILS ----
+	WorkPackageName      string  `json:"work_package_name"`
+	ApplicantName        string  `json:"applicant_name"`
+	ApplicantPhoneNumber string  `json:"applicant_phone_number"`
+	ApplicantEmail       string  `json:"applicant_email"`
+	ApplicantFullAddress string  `json:"applicant_full_address"`
+	ApplicantNote        *string `json:"applicant_note"`
+	RecipentName         string  `json:"recipent_name"`
+	TesterNote           *string `json:"tester_note"`
 
 	// ---- FINANCIAL METADATA ----
 	SubTotal float64 `json:"sub_total"`
@@ -46,8 +51,6 @@ type MaterialTestOrder struct {
 
 	// ---- RELATIONS ----
 	WorkCategory              MaterialTestWorkCategory    `json:"work_category" gorm:"foreignKey:WorkCategoryId;references:Id"`
-	WorkPackage               MaterialTestWorkPackage     `json:"work_package" gorm:"foreignKey:WorkPackageId;references:Id"`
-	Customer                  Customer                    `json:"customer" gorm:"foreignKey:CustomerId;references:Id"`
 	MaterialTestOrderServices []*MaterialTestOrderService `json:"material_test_order_services,omitempty" gorm:"foreignKey:OrderId;references:Id"`
 	Medias                    []*Media                    `json:"medias,omitempty" gorm:"foreignKey:ModelId;references:Id"`
 }

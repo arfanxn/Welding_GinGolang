@@ -25,18 +25,38 @@ func NewMaterialTestOrderFactory(
 			number := lo.Substring(idService.Generate(), 17, 26)
 			return number, nil
 		}).
-		Attr("CustomerNote", func(args factory.Args) (any, error) {
-			customerNote := gofakeit.Sentence()
-			withCustomerNote := gofakeit.Bool()
-			return boolutil.Ternary(withCustomerNote, &customerNote, nil), nil
+		Attr("WorkPackageName", func(args factory.Args) (any, error) {
+			isIndividual := gofakeit.Bool()
+			return boolutil.Ternary(isIndividual, gofakeit.Name(), gofakeit.Company()), nil
+		}).
+		Attr("ApplicantName", func(args factory.Args) (any, error) {
+			isIndividual := gofakeit.Bool()
+			return boolutil.Ternary(isIndividual, gofakeit.Name(), gofakeit.Company()), nil
+		}).
+		Attr("ApplicantPhoneNumber", func(args factory.Args) (any, error) {
+			return gofakeit.Phone(), nil
+		}).
+		Attr("ApplicantEmail", func(args factory.Args) (any, error) {
+			return gofakeit.Email(), nil
+		}).
+		Attr("ApplicantFullAddress", func(args factory.Args) (any, error) {
+			addrInfo := gofakeit.Address()
+			fullAddr := addrInfo.Address
+			return fullAddr, nil
+		}).
+		Attr("ApplicantNote", func(args factory.Args) (any, error) {
+			applicantNote := gofakeit.Sentence()
+			withApplicantNote := gofakeit.Bool()
+			return boolutil.Ternary(withApplicantNote, &applicantNote, nil), nil
 		}).
 		Attr("TesterNote", func(args factory.Args) (any, error) {
 			testerNote := gofakeit.Sentence()
 			withTesterNote := gofakeit.Bool()
 			return boolutil.Ternary(withTesterNote, &testerNote, nil), nil
 		}).
-		Attr("IssuedFor", func(args factory.Args) (any, error) {
-			return gofakeit.Name(), nil
+		Attr("RecipientName", func(args factory.Args) (any, error) {
+			isIndividual := gofakeit.Bool()
+			return boolutil.Ternary(isIndividual, gofakeit.Name(), gofakeit.Company()), nil
 		}).
 		Attr("Tax", func(args factory.Args) (any, error) {
 			withTax := gofakeit.Bool()
