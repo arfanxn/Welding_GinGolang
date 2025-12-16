@@ -4,6 +4,7 @@ import (
 	"github.com/arfanxn/welding/internal/module/material_test_order/infrastructure/policy"
 	repositoryImpl "github.com/arfanxn/welding/internal/module/material_test_order/infrastructure/repository"
 	"github.com/arfanxn/welding/internal/module/material_test_order/presentation/http"
+	"github.com/arfanxn/welding/internal/module/material_test_order/presentation/http/presenter"
 	"github.com/arfanxn/welding/internal/module/material_test_order/usecase"
 	"github.com/arfanxn/welding/internal/module/material_test_order/usecase/step"
 	"go.uber.org/fx"
@@ -14,9 +15,9 @@ var Module = fx.Module(
 	fx.Provide(
 		repositoryImpl.NewGormMaterialTestOrderRepository,
 		policy.NewMaterialTestOrderPolicy,
-		step.NewStoreMaterialTestOrderStep,
-		step.NewUpdateMaterialTestOrderStep,
+		step.NewSaveMaterialTestOrderStep,
 		usecase.NewMaterialTestOrderUsecase,
+		presenter.NewMaterialTestOrderPresenter,
 		http.NewMaterialTestOrderHandler,
 	),
 )

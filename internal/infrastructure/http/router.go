@@ -7,5 +7,6 @@ import (
 
 func NewRouterFromConfig(cfg *config.Config) *gin.Engine {
 	r := gin.Default()
+	r.MaxMultipartMemory = 10 << 20
 	return r
 }

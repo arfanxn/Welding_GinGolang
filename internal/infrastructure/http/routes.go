@@ -206,11 +206,12 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 
 		// Material Test Order
 		materialTestOrder := protected.Group("/material-test-orders")
-		materialTestOrder.GET("", requirePermissionName(permissionEnum.MaterialTestOrdersIndex), params.MaterialTestOrderHandler.Paginate)
-		materialTestOrder.GET("/:id", requirePermissionName(permissionEnum.MaterialTestOrdersShow), params.MaterialTestOrderHandler.Show)
-		materialTestOrder.POST("", requirePermissionName(permissionEnum.MaterialTestOrdersStore), params.MaterialTestOrderHandler.Store)
-		materialTestOrder.PUT("/:id", requirePermissionName(permissionEnum.MaterialTestOrdersUpdate), params.MaterialTestOrderHandler.Update)
-		materialTestOrder.DELETE("/:id", requirePermissionName(permissionEnum.MaterialTestOrdersDestroy), params.MaterialTestOrderHandler.Destroy)
+		materialTestOrder.GET("", params.MaterialTestOrderHandler.Paginate)
+		materialTestOrder.GET("/:id", params.MaterialTestOrderHandler.Show)
+		materialTestOrder.POST("", params.MaterialTestOrderHandler.Store)
+		materialTestOrder.PUT("/:id", params.MaterialTestOrderHandler.Update)
+		materialTestOrder.DELETE("/:id", params.MaterialTestOrderHandler.Destroy)
+		materialTestOrder.POST("/:id/medias", params.MaterialTestOrderHandler.StoreMedia)
 	}
 
 	return nil

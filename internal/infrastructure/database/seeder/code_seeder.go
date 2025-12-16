@@ -47,7 +47,7 @@ func (s *CodeSeeder) Seed() error {
 		return err
 	}
 
-	roleEngineer, err := s.roleRepository.First(query.NewQuery().Filter("name", query.OperatorEqual, roleEnum.Engineer.String()))
+	roleEngineer, err := s.roleRepository.First(query.NewQuery().Filter("name", query.OperatorEqual, roleEnum.Engineer))
 	if err != nil {
 		return err
 	}

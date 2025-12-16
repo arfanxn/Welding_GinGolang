@@ -26,8 +26,7 @@ func NewMaterialTestOrderFactory(
 			return number, nil
 		}).
 		Attr("WorkPackageName", func(args factory.Args) (any, error) {
-			isIndividual := gofakeit.Bool()
-			return boolutil.Ternary(isIndividual, gofakeit.Name(), gofakeit.Company()), nil
+			return gofakeit.Sentence(), nil
 		}).
 		Attr("ApplicantName", func(args factory.Args) (any, error) {
 			isIndividual := gofakeit.Bool()

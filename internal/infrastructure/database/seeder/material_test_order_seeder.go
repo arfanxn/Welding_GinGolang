@@ -1,7 +1,6 @@
 package seeder
 
 import (
-	"fmt"
 	"os"
 	"time"
 
@@ -10,11 +9,16 @@ import (
 	materialTestOrderRepository "github.com/arfanxn/welding/internal/module/material_test_order/domain/repository"
 	materialTestOrderServiceRepository "github.com/arfanxn/welding/internal/module/material_test_order_service/domain/repository"
 	materialTestOrderServiceEvaluationRepository "github.com/arfanxn/welding/internal/module/material_test_order_service_evaluation/domain/repository"
+	materialTestOrderUserEnum "github.com/arfanxn/welding/internal/module/material_test_order_user/domain/enum"
+	materialTestOrderUserRepository "github.com/arfanxn/welding/internal/module/material_test_order_user/domain/repository"
 	materialTestServiceRepository "github.com/arfanxn/welding/internal/module/material_test_service/domain/repository"
 	materialTestWorkCategoryRepository "github.com/arfanxn/welding/internal/module/material_test_work_category/domain/repository"
 	mediaEnum "github.com/arfanxn/welding/internal/module/media/domain/enum"
 	mediaRepository "github.com/arfanxn/welding/internal/module/media/domain/repository"
+	roleEnum "github.com/arfanxn/welding/internal/module/role/domain/enum"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
+	userRepository "github.com/arfanxn/welding/internal/module/user/domain/repository"
+	"github.com/arfanxn/welding/pkg/query"
 	"github.com/arfanxn/welding/pkg/sliceutil"
 	"github.com/bluele/factory-go/factory"
 	"github.com/brianvoe/gofakeit/v7"
@@ -28,6 +32,7 @@ type MaterialTestOrderSeeder struct {
 	idService                                    id.IdService
 	materialTestOrderFactory                     *factory.Factory
 	materialTestOrderRepository                  materialTestOrderRepository.MaterialTestOrderRepository
+	materialTestOrderUserRepository              materialTestOrderUserRepository.MaterialTestOrderUserRepository
 	materialTestServiceRepository                materialTestServiceRepository.MaterialTestServiceRepository
 	materialTestWorkCategoryRepository           materialTestWorkCategoryRepository.MaterialTestWorkCategoryRepository
 	materialTestOrderServiceFactory              *factory.Factory
@@ -36,6 +41,7 @@ type MaterialTestOrderSeeder struct {
 	materialTestOrderServiceEvaluationRepository materialTestOrderServiceEvaluationRepository.MaterialTestOrderServiceEvaluationRepository
 	mediaFactory                                 *factory.Factory
 	mediaRepository                              mediaRepository.MediaRepository
+	userRepository                               userRepository.UserRepository
 }
 
 type NewMaterialTestOrderSeederParams struct {
@@ -44,6 +50,7 @@ type NewMaterialTestOrderSeederParams struct {
 	IdService                                    id.IdService
 	MaterialTestOrderFactory                     *factory.Factory `name:"material_test_order_factory"`
 	MaterialTestOrderRepository                  materialTestOrderRepository.MaterialTestOrderRepository
+	MaterialTestOrderUserRepository              materialTestOrderUserRepository.MaterialTestOrderUserRepository
 	MaterialTestServiceRepository                materialTestServiceRepository.MaterialTestServiceRepository
 	MaterialTestWorkCategoryRepository           materialTestWorkCategoryRepository.MaterialTestWorkCategoryRepository
 	MaterialTestOrderServiceFactory              *factory.Factory `name:"material_test_order_service_factory"`
@@ -52,6 +59,7 @@ type NewMaterialTestOrderSeederParams struct {
 	MaterialTestOrderServiceEvaluationRepository materialTestOrderServiceEvaluationRepository.MaterialTestOrderServiceEvaluationRepository
 	MediaFactory                                 *factory.Factory `name:"media_factory"`
 	MediaRepository                              mediaRepository.MediaRepository
+	UserRepository                               userRepository.UserRepository
 }
 
 func NewMaterialTestOrderSeeder(params NewMaterialTestOrderSeederParams) Seeder {
@@ -59,6 +67,7 @@ func NewMaterialTestOrderSeeder(params NewMaterialTestOrderSeederParams) Seeder 
 		idService:                                    params.IdService,
 		materialTestOrderFactory:                     params.MaterialTestOrderFactory,
 		materialTestOrderRepository:                  params.MaterialTestOrderRepository,
+		materialTestOrderUserRepository:              params.MaterialTestOrderUserRepository,
 		materialTestServiceRepository:                params.MaterialTestServiceRepository,
 		materialTestWorkCategoryRepository:           params.MaterialTestWorkCategoryRepository,
 		materialTestOrderServiceFactory:              params.MaterialTestOrderServiceFactory,
@@ -67,11 +76,13 @@ func NewMaterialTestOrderSeeder(params NewMaterialTestOrderSeederParams) Seeder 
 		materialTestOrderServiceEvaluationRepository: params.MaterialTestOrderServiceEvaluationRepository,
 		mediaFactory:                                 params.MediaFactory,
 		mediaRepository:                              params.MediaRepository,
+		userRepository:                               params.UserRepository,
 	}
 }
 
 func (s *MaterialTestOrderSeeder) Seed() error {
 	materialTestOrderRepository := s.materialTestOrderRepository
+	materialTestOrderUserRepository := s.materialTestOrderUserRepository
 	materialTestServiceRepository := s.materialTestServiceRepository
 	materialTestWorkCategoryRepository := s.materialTestWorkCategoryRepository
 	materialTestOrderServiceFactory := s.materialTestOrderServiceFactory
@@ -80,10 +91,10 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 	materialTestOrderServiceEvaluationRepository := s.materialTestOrderServiceEvaluationRepository
 	mediaFactory := s.mediaFactory
 	mediaRepository := s.mediaRepository
-
-	fmt.Println("it went here 1")
+	userRepository := s.userRepository
 
 	medias := []*entity.Media{}
+	mtOrderUsers := []*entity.MaterialTestOrderUser{}
 	mtOrderServices := []*entity.MaterialTestOrderService{}
 	mtOrderServiceEvaluations := []*entity.MaterialTestOrderServiceEvaluation{}
 	mtOrders := []*entity.MaterialTestOrder{
@@ -121,7 +132,19 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 		s.createRefunded(nil),
 	}
 
-	fmt.Println("it went here 3")
+	customerUsers, err := userRepository.Get(query.NewQuery().Include("roles").Filter("roles.name", query.OperatorEqual, roleEnum.Customer))
+	if err != nil {
+		return err
+	}
+
+	employeeUsers, err := userRepository.Get(query.NewQuery().Include("roles").Filter("roles.name", query.OperatorNotEqual, roleEnum.Customer))
+	if err != nil {
+		return err
+	}
+
+	users := []*entity.User{}
+	users = append(users, customerUsers...)
+	users = append(users, employeeUsers...)
 
 	mtServices, err := materialTestServiceRepository.Get(nil)
 	if err != nil {
@@ -132,9 +155,6 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("it went here 4")
-
-	fmt.Println("it went here 5")
 
 	for _, mtOrder := range mtOrders {
 		mtOrderServicesCount := gofakeit.IntRange(0, 5)
@@ -172,6 +192,23 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 			}
 		}
 
+		// Append two MaterialTestOrderUser entries for each material test order:
+		// 1. A creator (can be either employee or customer user)
+		// 2. An owner (must be a customer user)
+		mtOrderUsers = append(mtOrderUsers,
+			&entity.MaterialTestOrderUser{
+				OrderId:   mtOrder.Id,
+				UserId:    users[gofakeit.IntRange(0, len(users)-1)].Id, // Can be any user (employee or customer)
+				Type:      materialTestOrderUserEnum.TypeCreator,
+				CreatedAt: mtOrder.CreatedAt,
+			},
+			&entity.MaterialTestOrderUser{
+				OrderId:   mtOrder.Id,
+				UserId:    customerUsers[gofakeit.IntRange(0, len(customerUsers)-1)].Id, // Must be a customer
+				Type:      materialTestOrderUserEnum.TypeOwner,
+				CreatedAt: mtOrder.CreatedAt,
+			})
+
 		mtWorkCategory := mtWorkCategories[gofakeit.IntRange(0, len(mtWorkCategories)-1)]
 		mtOrder.WorkCategoryId = mtWorkCategory.Id
 
@@ -189,6 +226,7 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 				media.OrderColumn = &orderColumn
 
 				{
+					// TODO: implement abstract filesystem
 					_path := "./storage/medias/" + media.Id
 					_filePath := _path + "/" + media.FileName
 
@@ -219,13 +257,9 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 		}
 	}
 
-	fmt.Println("it went here 6")
-
 	if err := materialTestOrderRepository.SaveMany(mtOrders); err != nil {
 		return err
 	}
-
-	fmt.Println("it went here 7")
 
 	mtOrderServiceChunks := lo.Chunk(mtOrderServices, 100)
 	for _, mtOrderServiceChunk := range mtOrderServiceChunks {
@@ -248,7 +282,12 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 		}
 	}
 
-	fmt.Println("it went here 8")
+	mtOrderUserChunks := lo.Chunk(mtOrderUsers, 100)
+	for _, mtOrderUserChunk := range mtOrderUserChunks {
+		if err := materialTestOrderUserRepository.SaveMany(mtOrderUserChunk); err != nil {
+			return err
+		}
+	}
 
 	return nil
 }

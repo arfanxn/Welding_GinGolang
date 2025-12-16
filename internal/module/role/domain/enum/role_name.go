@@ -1,10 +1,6 @@
 package enum
 
-type RoleName string
-
-func (p RoleName) String() string {
-	return string(p)
-}
+type RoleName = string
 
 const (
 	SuperAdmin           RoleName = "super_admin"

@@ -35,7 +35,7 @@ func NewMaterialTestOrderServiceFactory(
 				gofakeit.Number(1, 999),
 			)
 
-			return &sampleNumber, nil
+			return sampleNumber, nil
 		}).
 		Attr("Quantity", func(args factory.Args) (any, error) {
 			return gofakeit.Number(1, 100), nil

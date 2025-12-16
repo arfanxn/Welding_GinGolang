@@ -20,6 +20,7 @@ import (
 	materialTestOrderDi "github.com/arfanxn/welding/internal/module/material_test_order/infrastructure/di"
 	materialTestOrderServiceDi "github.com/arfanxn/welding/internal/module/material_test_order_service/infrastructure/di"
 	materialTestOrderServiceEvaluationDi "github.com/arfanxn/welding/internal/module/material_test_order_service_evaluation/infrastructure/di"
+	materialTestOrderUserDi "github.com/arfanxn/welding/internal/module/material_test_order_user/infrastructure/di"
 	materialTestServiceDi "github.com/arfanxn/welding/internal/module/material_test_service/infrastructure/di"
 	materialTestWorkCategoryDi "github.com/arfanxn/welding/internal/module/material_test_work_category/infrastructure/di"
 	materialTestWorkPackageDi "github.com/arfanxn/welding/internal/module/material_test_work_package/infrastructure/di"
@@ -78,6 +79,7 @@ var Module = fx.Module("infrastructure",
 	addressDi.Module,
 	customerDi.Module,
 	materialTestOrderDi.Module,
+	materialTestOrderUserDi.Module,
 	materialTestOrderServiceDi.Module,
 	materialTestOrderServiceEvaluationDi.Module,
 	mediaDi.Module,
