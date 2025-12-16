@@ -15304,7 +15304,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -15549,7 +15548,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -15629,7 +15627,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -17964,7 +17961,990 @@
 				},
 				{
 					"name": "Material Test Order",
-					"item": []
+					"item": [
+						{
+							"name": "Index",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/material-test-orders?page=1&per_page=10&include=order_users.user&include=work_category&include=ordered_services.evaluation&include=medias&sort=created_at",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"material-test-orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										},
+										{
+											"key": "include",
+											"value": "order_users.user"
+										},
+										{
+											"key": "include",
+											"value": "work_category"
+										},
+										{
+											"key": "include",
+											"value": "ordered_services.evaluation"
+										},
+										{
+											"key": "include",
+											"value": "medias"
+										},
+										{
+											"key": "search",
+											"value": "xxx",
+											"description": "search by number, work_pacakge_name, applicant_name, applicant_phone_number, applicant_email, applicant_full_address, recipient_name, and status",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "number==xxx",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "work_category_id==01KAXAS44M2M4M3Z4GJ6P0N2XH",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "work_package_name==xxx",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "applicant_name==xxx",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "applicant_phone_number==xxx",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "applicant_email==xxx",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "recipient_name==xxx",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "status==xxx",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "created_at"
+										},
+										{
+											"key": "sort",
+											"value": "-created_at",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": []
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/material-test-orders?page=1&per_page=10&include=order_users.user&include=work_category&include=ordered_services.evaluation&include=medias&sort=created_at",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"material-test-orders"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "10"
+												},
+												{
+													"key": "include",
+													"value": "order_users.user"
+												},
+												{
+													"key": "include",
+													"value": "work_category"
+												},
+												{
+													"key": "include",
+													"value": "ordered_services.evaluation"
+												},
+												{
+													"key": "include",
+													"value": "medias"
+												},
+												{
+													"key": "search",
+													"value": "xxx",
+													"description": "search by number, work_pacakge_name, applicant_name, applicant_phone_number, applicant_email, applicant_full_address, recipient_name, and status",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "number==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "work_category_id==01KAXAS44M2M4M3Z4GJ6P0N2XH",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "work_package_name==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "applicant_name==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "applicant_phone_number==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "applicant_email==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "recipient_name==xxx",
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "status==xxx",
+													"disabled": true
+												},
+												{
+													"key": "sort",
+													"value": "created_at"
+												},
+												{
+													"key": "sort",
+													"value": "-created_at",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 16 Dec 2025 21:47:15 GMT"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Material test orders berhasil diambil\",\n    \"data\": {\n        \"current_page\": 1,\n        \"per_page\": 10,\n        \"has_prev_page\": false,\n        \"has_next_page\": true,\n        \"prev_page\": null,\n        \"next_page\": 2,\n        \"last_page\": 2,\n        \"first_page_url\": \"http://localhost:8080/api/v1/material-test-orders?include=order_users.user&include=work_category&include=ordered_services.evaluation&include=medias&page=1&per_page=10&sort=created_at\",\n        \"prev_page_url\": null,\n        \"next_page_url\": \"http://localhost:8080/api/v1/material-test-orders?include=order_users.user&include=work_category&include=ordered_services.evaluation&include=medias&page=2&per_page=10&sort=created_at\",\n        \"last_page_url\": \"http://localhost:8080/api/v1/material-test-orders?include=order_users.user&include=work_category&include=ordered_services.evaluation&include=medias&page=2&per_page=10&sort=created_at\",\n        \"items\": [\n            {\n                \"id\": \"01KCM4J0DXVVXHP0W1GRH9KA3M\",\n                \"number\": \"1GRQ3010Q\",\n                \"work_category_id\": \"01ARZ3NDEKMTWC8A3C7ZB52R9C\",\n                \"work_package_name\": \"Reduce cognitive load in the work.\",\n                \"applicant_name\": \"Walker Lubowitz\",\n                \"applicant_phone_number\": \"7038464422\",\n                \"applicant_email\": \"juddstamm@gleason.net\",\n                \"applicant_full_address\": \"2637 Wellsside, Phoenix, Minnesota 26946\",\n                \"applicant_note\": \"In summation, document the person and smell the rest.\",\n                \"recipient_name\": \"Breana Bashirian\",\n                \"tester_note\": \"Ruthlessly remove dead place.\",\n                \"sub_total\": 7103901.36,\n                \"tax\": 0,\n                \"discount\": 98643.33,\n                \"total\": 7005258.03,\n                \"entered_at\": \"2025-07-25T23:37:05.06314+07:00\",\n                \"status\": \"awaiting_review\",\n                \"payment_submitted_at\": null,\n                \"payment_rejected_at\": null,\n                \"payment_approved_at\": null,\n                \"testing_at\": null,\n                \"completed_at\": null,\n                \"cancelled_at\": null,\n                \"rejected_at\": null,\n                \"refunded_at\": null,\n                \"created_at\": \"2024-01-01T20:16:45.290211+07:00\",\n                \"updated_at\": \"2024-04-07T18:24:14.269419+07:00\",\n                \"work_category\": {\n                    \"id\": \"01ARZ3NDEKMTWC8A3C7ZB52R9C\",\n                    \"name\": \"Pendidikan\",\n                    \"description\": \"Defaults at Child Care Desk being shape case.\",\n                    \"created_at\": \"2025-07-18T11:27:31.987662+07:00\",\n                    \"updated_at\": \"2025-12-17T00:50:31.841383+07:00\",\n                    \"deleted_at\": null\n                },\n                \"order_users\": [\n                    {\n                        \"role_id\": \"01KCM4J0DXVVXHP0W1GRH9KA3M\",\n                        \"user_id\": \"01K7HR8N4Z9TE0ENB0K1275MNW\",\n                        \"type\": \"creator\",\n                        \"created_at\": \"2024-01-01T20:16:45.290211+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR8N4Z9TE0ENB0K1275MNW\",\n                            \"name\": \"Head\",\n                            \"phone_number\": \"9163451172\",\n                            \"email\": \"head@gmail.com\",\n                            \"email_verified_at\": \"2025-12-17T00:50:31.409564+07:00\",\n                            \"activated_at\": \"1835-02-07T18:36:42.442974+07:07\",\n                            \"deactivated_at\": null,\n                            \"created_at\": \"2025-12-14T07:03:17.433175+07:00\",\n                            \"updated_at\": \"2025-12-16T17:59:01.279358+07:00\"\n                        }\n                    },\n                    {\n                        \"role_id\": \"01KCM4J0DXVVXHP0W1GRH9KA3M\",\n                        \"user_id\": \"01K7HR9A6WKK0W67W8S7F8755X\",\n                        \"type\": \"owner\",\n                        \"created_at\": \"2024-01-01T20:16:45.290211+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR9A6WKK0W67W8S7F8755X\",\n                            \"name\": \"Admin\",\n                            \"phone_number\": \"9049978227\",\n                            \"email\": \"admin@gmail.com\",\n                            \"email_verified_at\": \"2025-12-17T00:50:31.284033+07:00\",\n                            \"activated_at\": null,\n                            \"deactivated_at\": \"1936-09-04T09:21:26.729331+07:30\",\n                            \"created_at\": \"2025-05-30T05:04:49.743336+07:00\",\n                            \"updated_at\": \"2025-12-03T21:56:52.987652+07:00\"\n                        }\n                    }\n                ],\n                \"ordered_services\": [\n                    {\n                        \"id\": \"01KCM4J0EENXB6MRQV6D4WKM3F\",\n                        \"order_id\": \"01KCM4J0DXVVXHP0W1GRH9KA3M\",\n                        \"service_id\": \"01MTS5DQDC54B9C8W2HW8NCKR3\",\n                        \"sample_number\": \"22/2025.12.0/CAL/380\",\n                        \"sample_name\": \"plastic\",\n                        \"price\": 52464.19,\n                        \"quantity\": 48,\n                        \"line_total\": 2518281.12,\n                        \"created_at\": \"2025-12-17T00:50:31.886245+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:32.98781+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J0EENXB6MRQV6F1SVQTH\",\n                            \"order_service_id\": \"01KCM4J0EENXB6MRQV6D4WKM3F\",\n                            \"is_equipment_available\": true,\n                            \"is_personnel_available\": true,\n                            \"is_time_available\": false,\n                            \"is_test_ready\": true,\n                            \"is_subcontract_lab_available\": false,\n                            \"created_at\": \"2025-03-04T11:19:28.127471+07:00\",\n                            \"updated_at\": \"2025-04-02T13:48:49.372163+07:00\"\n                        }\n                    },\n                    {\n                        \"id\": \"01KCM4J0EENXB6MRQV6GMBEGR1\",\n                        \"order_id\": \"01KCM4J0DXVVXHP0W1GRH9KA3M\",\n                        \"service_id\": \"01MTSQVWFVEM0WE143KX576FGN\",\n                        \"sample_number\": \"20/2025.12.0/CNC/434\",\n                        \"sample_name\": \"aluminum\",\n                        \"price\": 96233.93,\n                        \"quantity\": 6,\n                        \"line_total\": 577403.58,\n                        \"created_at\": \"2025-12-17T00:50:31.886251+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:32.98781+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J0EENXB6MRQV6GN2T99D\",\n                            \"order_service_id\": \"01KCM4J0EENXB6MRQV6GMBEGR1\",\n                            \"is_equipment_available\": false,\n                            \"is_personnel_available\": true,\n                            \"is_time_available\": false,\n                            \"is_test_ready\": false,\n                            \"is_subcontract_lab_available\": true,\n                            \"created_at\": \"2024-12-21T09:19:41.271944+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:32.99335+07:00\"\n                        }\n                    },\n                    {\n                        \"id\": \"01KCM4J0EENXB6MRQV6KD07WZM\",\n                        \"order_id\": \"01KCM4J0DXVVXHP0W1GRH9KA3M\",\n                        \"service_id\": \"01MTSXZC86K27C7NK028E775M3\",\n                        \"sample_number\": \"20/2025.12.0/CAL/969\",\n                        \"sample_name\": \"bamboo\",\n                        \"price\": 81800.34,\n                        \"quantity\": 49,\n                        \"line_total\": 4008216.66,\n                        \"created_at\": \"2025-12-17T00:50:31.886259+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:32.98781+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J0EENXB6MRQV6M0NP486\",\n                            \"order_service_id\": \"01KCM4J0EENXB6MRQV6KD07WZM\",\n                            \"is_equipment_available\": false,\n                            \"is_personnel_available\": true,\n                            \"is_time_available\": false,\n                            \"is_test_ready\": true,\n                            \"is_subcontract_lab_available\": false,\n                            \"created_at\": \"2025-12-08T06:55:37.014901+07:00\",\n                            \"updated_at\": \"2025-12-12T09:42:44.522058+07:00\"\n                        }\n                    }\n                ]\n            },\n            {\n                \"id\": \"01KCM4J0DWRA09CFHGDHCAWPF8\",\n                \"number\": \"GDJCNYCW2\",\n                \"work_category_id\": \"01ARZ3NDEKMTWC7H2D8P9S4XKB\",\n                \"work_package_name\": \"Continuously measure the life and avoid the outliers.\",\n                \"applicant_name\": \"Damaris Cole\",\n                \"applicant_phone_number\": \"8969539424\",\n                \"applicant_email\": \"dillonkiehn@block.name\",\n                \"applicant_full_address\": \"7372 Walkberg, Garland, Connecticut 75715\",\n                \"applicant_note\": \"Clear fact might better than clever group.\",\n                \"recipient_name\": \"Ceiba Solutions\",\n                \"tester_note\": null,\n                \"sub_total\": 7648066.24,\n                \"tax\": 0,\n                \"discount\": 0,\n                \"total\": 7648066.24,\n                \"entered_at\": \"2025-04-07T00:25:13.141003+07:00\",\n                \"status\": \"draft\",\n                \"payment_submitted_at\": null,\n                \"payment_rejected_at\": null,\n                \"payment_approved_at\": null,\n                \"testing_at\": null,\n                \"completed_at\": null,\n                \"cancelled_at\": null,\n                \"rejected_at\": null,\n                \"refunded_at\": null,\n                \"created_at\": \"2024-02-15T17:20:57.295502+07:00\",\n                \"updated_at\": \"2025-04-03T15:17:01.02565+07:00\",\n                \"work_category\": {\n                    \"id\": \"01ARZ3NDEKMTWC7H2D8P9S4XKB\",\n                    \"name\": \"IKM\",\n                    \"description\": \"Warm starts beat cold man.\",\n                    \"created_at\": \"2025-03-04T23:59:34.022146+07:00\",\n                    \"updated_at\": \"2025-12-17T00:50:31.841383+07:00\",\n                    \"deleted_at\": null\n                },\n                \"order_users\": [\n                    {\n                        \"role_id\": \"01KCM4J0DWRA09CFHGDHCAWPF8\",\n                        \"user_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                        \"type\": \"creator\",\n                        \"created_at\": \"2024-02-15T17:20:57.295502+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                            \"name\": \"SuperAdmin\",\n                            \"phone_number\": \"8381850981\",\n                            \"email\": \"super_admin@gmail.com\",\n                            \"email_verified_at\": \"2025-12-17T00:50:31.155538+07:00\",\n                            \"activated_at\": \"2025-12-17T00:50:31.155541+07:00\",\n                            \"deactivated_at\": null,\n                            \"created_at\": \"2025-05-05T00:27:19.180588+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:31.783901+07:00\"\n                        }\n                    },\n                    {\n                        \"role_id\": \"01KCM4J0DWRA09CFHGDHCAWPF8\",\n                        \"user_id\": \"01K7HR9C7XKJ2F8P5V3N6Q9W2E\",\n                        \"type\": \"owner\",\n                        \"created_at\": \"2024-02-15T17:20:57.295502+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR9C7XKJ2F8P5V3N6Q9W2E\",\n                            \"name\": \"Customer\",\n                            \"phone_number\": \"4396582504\",\n                            \"email\": \"customer@gmail.com\",\n                            \"email_verified_at\": \"2025-12-17T00:50:31.658332+07:00\",\n                            \"activated_at\": \"1791-03-26T01:31:17.100358+07:07\",\n                            \"deactivated_at\": null,\n                            \"created_at\": \"2025-02-28T04:57:29.617437+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:31.783901+07:00\"\n                        }\n                    }\n                ],\n                \"ordered_services\": [\n                    {\n                        \"id\": \"01KCM4J0ECD4GACMT0Q34QSKAG\",\n                        \"order_id\": \"01KCM4J0DWRA09CFHGDHCAWPF8\",\n                        \"service_id\": \"01MTSXZC86K27C7NK028E775M3\",\n                        \"sample_number\": \"17/2025.12.0/CAL/280\",\n                        \"sample_name\": \"aluminum\",\n                        \"price\": 81800.34,\n                        \"quantity\": 42,\n                        \"line_total\": 3435614.28,\n                        \"created_at\": \"2025-12-17T00:50:31.886016+07:00\",\n                        \"updated_at\": \"2025-12-17T05:40:31.524557+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J0EENXB6MRQV60N7ZZ7Z\",\n                            \"order_service_id\": \"01KCM4J0ECD4GACMT0Q34QSKAG\",\n                            \"is_equipment_available\": false,\n                            \"is_personnel_available\": false,\n                            \"is_time_available\": true,\n                            \"is_test_ready\": false,\n                            \"is_subcontract_lab_available\": true,\n                            \"created_at\": \"2024-12-24T14:17:47.624582+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:32.99335+07:00\"\n                        }\n                    },\n                    {\n                        \"id\": \"01KCM4J0EENXB6MRQV62M13FZB\",\n                        \"order_id\": \"01KCM4J0DWRA09CFHGDHCAWPF8\",\n                        \"service_id\": \"01MTS64K4B6F87DZ5ZWHMPR7H9\",\n                        \"sample_number\": \"21/2025.12.0/CNC/274\",\n                        \"sample_name\": \"plexiglass\",\n                        \"price\": 50206.14,\n                        \"quantity\": 9,\n                        \"line_total\": 451855.26,\n                        \"created_at\": \"2025-12-17T00:50:31.886211+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:32.98781+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J0EENXB6MRQV62SCE0GM\",\n                            \"order_service_id\": \"01KCM4J0EENXB6MRQV62M13FZB\",\n                            \"is_equipment_available\": true,\n                            \"is_personnel_available\": true,\n                            \"is_time_available\": false,\n                            \"is_test_ready\": false,\n                            \"is_subcontract_lab_available\": false,\n                            \"created_at\": \"2025-06-16T13:15:18.200301+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:32.99335+07:00\"\n                        }\n                    },\n                    {\n                        \"id\": \"01KCM4J0EENXB6MRQV6641MAYH\",\n                        \"order_id\": \"01KCM4J0DWRA09CFHGDHCAWPF8\",\n                        \"service_id\": \"01MTSK4G2F9SJXPPYWM5A112YG\",\n                        \"sample_number\": \"16/2025.12.0/CNC/728\",\n                        \"sample_name\": \"marble\",\n                        \"price\": 53722.81,\n                        \"quantity\": 70,\n                        \"line_total\": 3760596.7,\n                        \"created_at\": \"2025-12-17T00:50:31.886218+07:00\",\n                        \"updated_at\": \"2025-12-18T15:52:15.636612+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J0EENXB6MRQV6A19KPPY\",\n                            \"order_service_id\": \"01KCM4J0EENXB6MRQV6641MAYH\",\n                            \"is_equipment_available\": true,\n                            \"is_personnel_available\": false,\n                            \"is_time_available\": true,\n                            \"is_test_ready\": true,\n                            \"is_subcontract_lab_available\": true,\n                            \"created_at\": \"2025-08-10T08:32:52.094311+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:32.99335+07:00\"\n                        }\n                    }\n                ]\n            },\n            {\n                \"id\": \"01KCM4J0E0X3RMKGDXZMCT0VAZ\",\n                \"number\": \"XZQZJHGMV\",\n                \"work_category_id\": \"01ARZ3NDEKMTWC9R4F6XK8S5AD\",\n                \"work_package_name\": \"Weekends reserve time for Cosplaying and number.\",\n                \"applicant_name\": \"Kimono Labs\",\n                \"applicant_phone_number\": \"9158634944\",\n                \"applicant_email\": \"ignatiuskovacek@jerde.biz\",\n                \"applicant_full_address\": \"604 Stationside, Toledo, Nebraska 38768\",\n                \"applicant_note\": \"Instrument the fact for observability.\",\n                \"recipient_name\": \"Cambridge Information Group\",\n                \"tester_note\": null,\n                \"sub_total\": 15683568.5,\n                \"tax\": 94740.27,\n                \"discount\": 22622.04,\n                \"total\": 15755686.73,\n                \"entered_at\": \"2024-04-04T19:07:01.893269+07:00\",\n                \"status\": \"refunded\",\n                \"payment_submitted_at\": \"2024-04-04T19:31:11.400059+07:00\",\n                \"payment_rejected_at\": null,\n                \"payment_approved_at\": \"2024-04-07T18:33:21.997874+07:00\",\n                \"testing_at\": \"2024-04-05T06:41:01.521569+07:00\",\n                \"completed_at\": null,\n                \"cancelled_at\": null,\n                \"rejected_at\": null,\n                \"refunded_at\": \"2024-04-16T23:19:01.87876+07:00\",\n                \"created_at\": \"2024-03-27T13:35:58.114633+07:00\",\n                \"updated_at\": \"2025-06-10T01:56:17.682842+07:00\",\n                \"work_category\": {\n                    \"id\": \"01ARZ3NDEKMTWC9R4F6XK8S5AD\",\n                    \"name\": \"Other\",\n                    \"description\": \"Rate-limit hand by default.\",\n                    \"created_at\": \"2025-09-24T05:35:36.820315+07:00\",\n                    \"updated_at\": \"2025-12-17T00:50:31.841383+07:00\",\n                    \"deleted_at\": null\n                },\n                \"order_users\": [\n                    {\n                        \"role_id\": \"01KCM4J0E0X3RMKGDXZMCT0VAZ\",\n                        \"user_id\": \"01K7HR9C7XKJ2F8P5V3N6Q9W2E\",\n                        \"type\": \"creator\",\n                        \"created_at\": \"2024-03-27T13:35:58.114633+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR9C7XKJ2F8P5V3N6Q9W2E\",\n                            \"name\": \"Customer\",\n                            \"phone_number\": \"4396582504\",\n                            \"email\": \"customer@gmail.com\",\n                            \"email_verified_at\": \"2025-12-17T00:50:31.658332+07:00\",\n                            \"activated_at\": \"1791-03-26T01:31:17.100358+07:07\",\n                            \"deactivated_at\": null,\n                            \"created_at\": \"2025-02-28T04:57:29.617437+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:31.783901+07:00\"\n                        }\n                    },\n                    {\n                        \"role_id\": \"01KCM4J0E0X3RMKGDXZMCT0VAZ\",\n                        \"user_id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                        \"type\": \"owner\",\n                        \"created_at\": \"2024-03-27T13:35:58.114633+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                            \"name\": \"CustomerServiceAdmin\",\n                            \"phone_number\": \"8420994897\",\n                            \"email\": \"customer_service_admin@gmail.com\",\n                            \"email_verified_at\": null,\n                            \"activated_at\": null,\n                            \"deactivated_at\": \"1892-09-23T09:13:29.03784+07:07\",\n                            \"created_at\": \"2025-04-24T03:47:47.484288+07:00\",\n                            \"updated_at\": \"2025-05-26T05:24:23.519975+07:00\"\n                        }\n                    }\n                ],\n                \"ordered_services\": [\n                    {\n                        \"id\": \"01KCM4J1GGGNPSXEDJ4QTE9CRX\",\n                        \"order_id\": \"01KCM4J0E0X3RMKGDXZMCT0VAZ\",\n                        \"service_id\": \"01MTSNRVZ9P08JRM2YWHQ2405N\",\n                        \"sample_number\": \"20/2025.12.0/CAL/433\",\n                        \"sample_name\": \"silicon\",\n                        \"price\": 19911.91,\n                        \"quantity\": 36,\n                        \"line_total\": 716828.76,\n                        \"created_at\": \"2025-12-17T00:50:32.976106+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:32.98781+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J1GGGNPSXEDJ4TJASDPS\",\n                            \"order_service_id\": \"01KCM4J1GGGNPSXEDJ4QTE9CRX\",\n                            \"is_equipment_available\": true,\n                            \"is_personnel_available\": true,\n                            \"is_time_available\": true,\n                            \"is_test_ready\": false,\n                            \"is_subcontract_lab_available\": false,\n                            \"created_at\": \"2025-07-19T00:43:50.649422+07:00\",\n                            \"updated_at\": \"2025-11-19T08:57:41.391248+07:00\"\n                        }\n                    },\n                    {\n                        \"id\": \"01KCM4J1GGGNPSXEDJ4WPVA46S\",\n                        \"order_id\": \"01KCM4J0E0X3RMKGDXZMCT0VAZ\",\n                        \"service_id\": \"01MTSK4G2F9SJXPPYWM5A112YG\",\n                        \"sample_number\": \"20/2025.12.0/CAL/233\",\n                        \"sample_name\": \"titanium\",\n                        \"price\": 53722.81,\n                        \"quantity\": 26,\n                        \"line_total\": 1396793.06,\n                        \"created_at\": \"2025-12-17T00:50:32.976124+07:00\",\n                        \"updated_at\": \"2025-12-18T05:51:49.863562+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J1GGGNPSXEDJ4YQK9HE3\",\n                            \"order_service_id\": \"01KCM4J1GGGNPSXEDJ4WPVA46S\",\n                            \"is_equipment_available\": false,\n                            \"is_personnel_available\": true,\n                            \"is_time_available\": false,\n                            \"is_test_ready\": true,\n                            \"is_subcontract_lab_available\": false,\n                            \"created_at\": \"2025-11-02T11:07:55.342572+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:32.99335+07:00\"\n                        }\n                    },\n                    {\n                        \"id\": \"01KCM4J1GGGNPSXEDJ4ZZ88PXC\",\n                        \"order_id\": \"01KCM4J0E0X3RMKGDXZMCT0VAZ\",\n                        \"service_id\": \"01MTSCCQZ0MEYGQGTXQB0GKFPN\",\n                        \"sample_number\": \"23/2025.12.0/CAL/957\",\n                        \"sample_name\": \"bronze\",\n                        \"price\": 96724.62,\n                        \"quantity\": 100,\n                        \"line_total\": 9672462,\n                        \"created_at\": \"2025-12-17T00:50:32.976142+07:00\",\n                        \"updated_at\": \"2025-12-18T09:01:11.735275+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J1GGGNPSXEDJ51MTDWSJ\",\n                            \"order_service_id\": \"01KCM4J1GGGNPSXEDJ4ZZ88PXC\",\n                            \"is_equipment_available\": false,\n                            \"is_personnel_available\": false,\n                            \"is_time_available\": false,\n                            \"is_test_ready\": true,\n                            \"is_subcontract_lab_available\": true,\n                            \"created_at\": \"2025-08-29T07:07:57.829045+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:32.99335+07:00\"\n                        }\n                    },\n                    {\n                        \"id\": \"01KCM4J1GGGNPSXEDJ55EH6T3V\",\n                        \"order_id\": \"01KCM4J0E0X3RMKGDXZMCT0VAZ\",\n                        \"service_id\": \"01MTSJ7QG4AT1T56GZTW8NNMVJ\",\n                        \"sample_number\": \"22/2025.12.0/CAL/430\",\n                        \"sample_name\": \"bronze\",\n                        \"price\": 93681.23,\n                        \"quantity\": 36,\n                        \"line_total\": 3372524.28,\n                        \"created_at\": \"2025-12-17T00:50:32.976155+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:32.98781+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J1GGGNPSXEDJ590NB3J3\",\n                            \"order_service_id\": \"01KCM4J1GGGNPSXEDJ55EH6T3V\",\n                            \"is_equipment_available\": true,\n                            \"is_personnel_available\": false,\n                            \"is_time_available\": true,\n                            \"is_test_ready\": true,\n                            \"is_subcontract_lab_available\": true,\n                            \"created_at\": \"2025-06-08T16:56:42.395164+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:32.99335+07:00\"\n                        }\n                    },\n                    {\n                        \"id\": \"01KCM4J1GGGNPSXEDJ59RFGQ54\",\n                        \"order_id\": \"01KCM4J0E0X3RMKGDXZMCT0VAZ\",\n                        \"service_id\": \"01MTS7K5GCPB93GGB6BF9H0K84\",\n                        \"sample_number\": \"23/2025.12.0/UTK/702\",\n                        \"sample_name\": \"silicon\",\n                        \"price\": 34997.36,\n                        \"quantity\": 15,\n                        \"line_total\": 524960.4,\n                        \"created_at\": \"2025-12-17T00:50:32.976169+07:00\",\n                        \"updated_at\": \"2025-12-18T16:46:55.720046+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J1GGGNPSXEDJ5A4G6GXA\",\n                            \"order_service_id\": \"01KCM4J1GGGNPSXEDJ59RFGQ54\",\n                            \"is_equipment_available\": true,\n                            \"is_personnel_available\": true,\n                            \"is_time_available\": false,\n                            \"is_test_ready\": true,\n                            \"is_subcontract_lab_available\": true,\n                            \"created_at\": \"2025-06-16T13:09:46.308159+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:32.99335+07:00\"\n                        }\n                    }\n                ]\n            },\n            {\n                \"id\": \"01KCM4J0DZDAGJNC9WYYR2EWK8\",\n                \"number\": \"WYZTMYGXQ\",\n                \"work_category_id\": \"01ARZ3NDEKMTWC7H2D8P9S4XKB\",\n                \"work_package_name\": \"Despite this, keep the hand simple.\",\n                \"applicant_name\": \"Kayla Jaskolski\",\n                \"applicant_phone_number\": \"2068050994\",\n                \"applicant_email\": \"vellamarks@greenfelder.org\",\n                \"applicant_full_address\": \"666 New Brookborough, Jersey, Idaho 79039\",\n                \"applicant_note\": null,\n                \"recipient_name\": \"Gracie Rogahn\",\n                \"tester_note\": null,\n                \"sub_total\": 0,\n                \"tax\": 0,\n                \"discount\": 0,\n                \"total\": 0,\n                \"entered_at\": \"2024-04-24T13:13:12.945638+07:00\",\n                \"status\": \"payment_submitted\",\n                \"payment_submitted_at\": \"2024-04-24T06:37:40.82983+07:00\",\n                \"payment_rejected_at\": null,\n                \"payment_approved_at\": null,\n                \"testing_at\": null,\n                \"completed_at\": null,\n                \"cancelled_at\": null,\n                \"rejected_at\": null,\n                \"refunded_at\": null,\n                \"created_at\": \"2024-04-14T07:46:30.399129+07:00\",\n                \"updated_at\": \"2025-01-30T14:43:35.941775+07:00\",\n                \"work_category\": {\n                    \"id\": \"01ARZ3NDEKMTWC7H2D8P9S4XKB\",\n                    \"name\": \"IKM\",\n                    \"description\": \"Warm starts beat cold man.\",\n                    \"created_at\": \"2025-03-04T23:59:34.022146+07:00\",\n                    \"updated_at\": \"2025-12-17T00:50:31.841383+07:00\",\n                    \"deleted_at\": null\n                },\n                \"order_users\": [\n                    {\n                        \"role_id\": \"01KCM4J0DZDAGJNC9WYYR2EWK8\",\n                        \"user_id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                        \"type\": \"creator\",\n                        \"created_at\": \"2024-04-14T07:46:30.399129+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                            \"name\": \"CustomerServiceAdmin\",\n                            \"phone_number\": \"8420994897\",\n                            \"email\": \"customer_service_admin@gmail.com\",\n                            \"email_verified_at\": null,\n                            \"activated_at\": null,\n                            \"deactivated_at\": \"1892-09-23T09:13:29.03784+07:07\",\n                            \"created_at\": \"2025-04-24T03:47:47.484288+07:00\",\n                            \"updated_at\": \"2025-05-26T05:24:23.519975+07:00\"\n                        }\n                    },\n                    {\n                        \"role_id\": \"01KCM4J0DZDAGJNC9WYYR2EWK8\",\n                        \"user_id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                        \"type\": \"owner\",\n                        \"created_at\": \"2024-04-14T07:46:30.399129+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                            \"name\": \"CustomerServiceAdmin\",\n                            \"phone_number\": \"8420994897\",\n                            \"email\": \"customer_service_admin@gmail.com\",\n                            \"email_verified_at\": null,\n                            \"activated_at\": null,\n                            \"deactivated_at\": \"1892-09-23T09:13:29.03784+07:07\",\n                            \"created_at\": \"2025-04-24T03:47:47.484288+07:00\",\n                            \"updated_at\": \"2025-05-26T05:24:23.519975+07:00\"\n                        }\n                    }\n                ]\n            },\n            {\n                \"id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n                \"number\": \"WZF4RS28N\",\n                \"work_category_id\": \"01ARZ3NDEKMTWC7H2D8P9S4XKB\",\n                \"work_package_name\": \"Guide week with homeless affordances.\",\n                \"applicant_name\": \"Lolita Von\",\n                \"applicant_phone_number\": \"4538825696\",\n                \"applicant_email\": \"leslyconroy@labadie.biz\",\n                \"applicant_full_address\": \"3684 Port Havenborough, Wichita, Delaware 95573\",\n                \"applicant_note\": null,\n                \"recipient_name\": \"Chadrick Stroman\",\n                \"tester_note\": \"Subtle Chartreuse accents will effective scarcely.\",\n                \"sub_total\": 0,\n                \"tax\": 0,\n                \"discount\": 0,\n                \"total\": 0,\n                \"entered_at\": \"2024-04-30T23:25:14.155615+07:00\",\n                \"status\": \"testing\",\n                \"payment_submitted_at\": \"2024-04-29T14:12:31.839489+07:00\",\n                \"payment_rejected_at\": null,\n                \"payment_approved_at\": \"2024-04-30T21:17:52.569764+07:00\",\n                \"testing_at\": \"2024-05-02T12:50:50.414322+07:00\",\n                \"completed_at\": null,\n                \"cancelled_at\": null,\n                \"rejected_at\": null,\n                \"refunded_at\": null,\n                \"created_at\": \"2024-04-19T00:27:00.089008+07:00\",\n                \"updated_at\": \"2024-05-02T23:31:39.183139+07:00\",\n                \"work_category\": {\n                    \"id\": \"01ARZ3NDEKMTWC7H2D8P9S4XKB\",\n                    \"name\": \"IKM\",\n                    \"description\": \"Warm starts beat cold man.\",\n                    \"created_at\": \"2025-03-04T23:59:34.022146+07:00\",\n                    \"updated_at\": \"2025-12-17T00:50:31.841383+07:00\",\n                    \"deleted_at\": null\n                },\n                \"order_users\": [\n                    {\n                        \"role_id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n                        \"user_id\": \"01K7HR8N4Z9TE0ENB0K1275MNW\",\n                        \"type\": \"creator\",\n                        \"created_at\": \"2024-04-19T00:27:00.089008+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR8N4Z9TE0ENB0K1275MNW\",\n                            \"name\": \"Head\",\n                            \"phone_number\": \"9163451172\",\n                            \"email\": \"head@gmail.com\",\n                            \"email_verified_at\": \"2025-12-17T00:50:31.409564+07:00\",\n                            \"activated_at\": \"1835-02-07T18:36:42.442974+07:07\",\n                            \"deactivated_at\": null,\n                            \"created_at\": \"2025-12-14T07:03:17.433175+07:00\",\n                            \"updated_at\": \"2025-12-16T17:59:01.279358+07:00\"\n                        }\n                    },\n                    {\n                        \"role_id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n                        \"user_id\": \"01K7HR8N4Z9TE0ENB0K1275MNW\",\n                        \"type\": \"owner\",\n                        \"created_at\": \"2024-04-19T00:27:00.089008+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR8N4Z9TE0ENB0K1275MNW\",\n                            \"name\": \"Head\",\n                            \"phone_number\": \"9163451172\",\n                            \"email\": \"head@gmail.com\",\n                            \"email_verified_at\": \"2025-12-17T00:50:31.409564+07:00\",\n                            \"activated_at\": \"1835-02-07T18:36:42.442974+07:07\",\n                            \"deactivated_at\": null,\n                            \"created_at\": \"2025-12-14T07:03:17.433175+07:00\",\n                            \"updated_at\": \"2025-12-16T17:59:01.279358+07:00\"\n                        }\n                    }\n                ],\n                \"medias\": [\n                    {\n                        \"id\": \"01KCM4J0SHQ2M03X4J6JDX2KN6\",\n                        \"model_type\": \"material_test_order\",\n                        \"model_id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n                        \"ulid\": null,\n                        \"collection_name\": \"material_test_order\",\n                        \"name\": \"About\",\n                        \"file_name\": \"about.jpeg\",\n                        \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J0SHQ2M03X4J6JDX2KN6/about.jpeg\",\n                        \"mime_type\": \"image/jpeg\",\n                        \"disk\": \"local\",\n                        \"conversions_disk\": null,\n                        \"size\": 155245,\n                        \"manipulations\": null,\n                        \"custom_properties\": null,\n                        \"generated_conversions\": null,\n                        \"responsive_images\": null,\n                        \"order_column\": 1,\n                        \"created_at\": \"0001-01-01T00:00:00Z\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"id\": \"01KCM4J0W1TQ6EJ1HN98H0K57T\",\n                        \"model_type\": \"material_test_order\",\n                        \"model_id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n                        \"ulid\": null,\n                        \"collection_name\": \"material_test_order\",\n                        \"name\": \"Clothing\",\n                        \"file_name\": \"clothing.jpeg\",\n                        \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J0W1TQ6EJ1HN98H0K57T/clothing.jpeg\",\n                        \"mime_type\": \"image/jpeg\",\n                        \"disk\": \"local\",\n                        \"conversions_disk\": null,\n                        \"size\": 155304,\n                        \"manipulations\": null,\n                        \"custom_properties\": null,\n                        \"generated_conversions\": null,\n                        \"responsive_images\": null,\n                        \"order_column\": 2,\n                        \"created_at\": \"0001-01-01T00:00:00Z\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"id\": \"01KCM4J0Y64G1C97NGKVC0Q7QJ\",\n                        \"model_type\": \"material_test_order\",\n                        \"model_id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n                        \"ulid\": null,\n                        \"collection_name\": \"material_test_order\",\n                        \"name\": \"Even\",\n                        \"file_name\": \"even.jpeg\",\n                        \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J0Y64G1C97NGKVC0Q7QJ/even.jpeg\",\n                        \"mime_type\": \"image/jpeg\",\n                        \"disk\": \"local\",\n                        \"conversions_disk\": null,\n                        \"size\": 155147,\n                        \"manipulations\": null,\n                        \"custom_properties\": null,\n                        \"generated_conversions\": null,\n                        \"responsive_images\": null,\n                        \"order_column\": 3,\n                        \"created_at\": \"0001-01-01T00:00:00Z\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"id\": \"01KCM4J10PYK929KV2RN69TM4B\",\n                        \"model_type\": \"material_test_order\",\n                        \"model_id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n                        \"ulid\": null,\n                        \"collection_name\": \"material_test_order\",\n                        \"name\": \"Late\",\n                        \"file_name\": \"late.jpeg\",\n                        \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J10PYK929KV2RN69TM4B/late.jpeg\",\n                        \"mime_type\": \"image/jpeg\",\n                        \"disk\": \"local\",\n                        \"conversions_disk\": null,\n                        \"size\": 155204,\n                        \"manipulations\": null,\n                        \"custom_properties\": null,\n                        \"generated_conversions\": null,\n                        \"responsive_images\": null,\n                        \"order_column\": 4,\n                        \"created_at\": \"0001-01-01T00:00:00Z\",\n                        \"updated_at\": null\n                    }\n                ]\n            },\n            {\n                \"id\": \"01KCM4J0DZDAGJNC9WZ8DEWF2G\",\n                \"number\": \"WZAPVCPQK\",\n                \"work_category_id\": \"01ARZ3NDEKMTWC4RRFFQ69G5FA\",\n                \"work_package_name\": \"Align woman with user intent.\",\n                \"applicant_name\": \"Valentin Gislason\",\n                \"applicant_phone_number\": \"3081880843\",\n                \"applicant_email\": \"jaydonkulas@murray.io\",\n                \"applicant_full_address\": \"918 North Viastad, Apt 257, Lincoln, New Mexico 20422\",\n                \"applicant_note\": null,\n                \"recipient_name\": \"Ansel Gerhold\",\n                \"tester_note\": null,\n                \"sub_total\": 4866972.88,\n                \"tax\": 42778,\n                \"discount\": 83319.3,\n                \"total\": 4826431.58,\n                \"entered_at\": \"2024-06-08T13:26:37.794337+07:00\",\n                \"status\": \"payment_approved\",\n                \"payment_submitted_at\": \"2024-06-10T19:25:31.653155+07:00\",\n                \"payment_rejected_at\": null,\n                \"payment_approved_at\": \"2024-06-10T23:47:33.015036+07:00\",\n                \"testing_at\": null,\n                \"completed_at\": null,\n                \"cancelled_at\": null,\n                \"rejected_at\": null,\n                \"refunded_at\": null,\n                \"created_at\": \"2024-05-28T10:20:08.12629+07:00\",\n                \"updated_at\": \"2025-03-06T02:34:03.187894+07:00\",\n                \"work_category\": {\n                    \"id\": \"01ARZ3NDEKMTWC4RRFFQ69G5FA\",\n                    \"name\": \"Industri\",\n                    \"description\": \"Whose close quickly specify the child.\",\n                    \"created_at\": \"2025-02-20T00:02:45.687499+07:00\",\n                    \"updated_at\": \"2025-12-17T00:50:31.841383+07:00\",\n                    \"deleted_at\": null\n                },\n                \"order_users\": [\n                    {\n                        \"role_id\": \"01KCM4J0DZDAGJNC9WZ8DEWF2G\",\n                        \"user_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                        \"type\": \"creator\",\n                        \"created_at\": \"2024-05-28T10:20:08.12629+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                            \"name\": \"SuperAdmin\",\n                            \"phone_number\": \"8381850981\",\n                            \"email\": \"super_admin@gmail.com\",\n                            \"email_verified_at\": \"2025-12-17T00:50:31.155538+07:00\",\n                            \"activated_at\": \"2025-12-17T00:50:31.155541+07:00\",\n                            \"deactivated_at\": null,\n                            \"created_at\": \"2025-05-05T00:27:19.180588+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:31.783901+07:00\"\n                        }\n                    },\n                    {\n                        \"role_id\": \"01KCM4J0DZDAGJNC9WZ8DEWF2G\",\n                        \"user_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                        \"type\": \"owner\",\n                        \"created_at\": \"2024-05-28T10:20:08.12629+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                            \"name\": \"SuperAdmin\",\n                            \"phone_number\": \"8381850981\",\n                            \"email\": \"super_admin@gmail.com\",\n                            \"email_verified_at\": \"2025-12-17T00:50:31.155538+07:00\",\n                            \"activated_at\": \"2025-12-17T00:50:31.155541+07:00\",\n                            \"deactivated_at\": null,\n                            \"created_at\": \"2025-05-05T00:27:19.180588+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:31.783901+07:00\"\n                        }\n                    }\n                ],\n                \"ordered_services\": [\n                    {\n                        \"id\": \"01KCM4J0SHQ2M03X4J6CVRPM7G\",\n                        \"order_id\": \"01KCM4J0DZDAGJNC9WZ8DEWF2G\",\n                        \"service_id\": \"01MTSMRDD9PMHS083DJ20WQ1NC\",\n                        \"sample_number\": \"21/2025.12.0/CNC/692\",\n                        \"sample_name\": \"plexiglass\",\n                        \"price\": 55306.51,\n                        \"quantity\": 88,\n                        \"line_total\": 4866972.88,\n                        \"created_at\": \"2025-12-17T00:50:32.241749+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:32.98781+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J0SHQ2M03X4J6EP10YND\",\n                            \"order_service_id\": \"01KCM4J0SHQ2M03X4J6CVRPM7G\",\n                            \"is_equipment_available\": true,\n                            \"is_personnel_available\": false,\n                            \"is_time_available\": false,\n                            \"is_test_ready\": false,\n                            \"is_subcontract_lab_available\": false,\n                            \"created_at\": \"2025-11-07T03:21:45.769817+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:32.99335+07:00\"\n                        }\n                    }\n                ]\n            },\n            {\n                \"id\": \"01KCM4J0E0X3RMKGDXZJ4NB7WS\",\n                \"number\": \"XZMC00G5H\",\n                \"work_category_id\": \"01ARZ3NDEKMTWC9R4F6XK8S5AD\",\n                \"work_package_name\": \"Remove first friction from the thing.\",\n                \"applicant_name\": \"Kirk Little\",\n                \"applicant_phone_number\": \"7345290482\",\n                \"applicant_email\": \"carleystiedemann@feil.biz\",\n                \"applicant_full_address\": \"35526 Courtberg, Kansas, Virginia 68530\",\n                \"applicant_note\": \"Compare hand before and after you notice.\",\n                \"recipient_name\": \"Carmine Stiedemann\",\n                \"tester_note\": null,\n                \"sub_total\": 14300789.25,\n                \"tax\": 0,\n                \"discount\": 0,\n                \"total\": 14300789.25,\n                \"entered_at\": \"2025-04-23T10:09:05.358752+07:00\",\n                \"status\": \"rejected\",\n                \"payment_submitted_at\": null,\n                \"payment_rejected_at\": null,\n                \"payment_approved_at\": null,\n                \"testing_at\": null,\n                \"completed_at\": null,\n                \"cancelled_at\": null,\n                \"rejected_at\": \"2024-07-10T04:19:17.489892+07:00\",\n                \"refunded_at\": null,\n                \"created_at\": \"2024-07-08T07:21:14.267219+07:00\",\n                \"updated_at\": \"2024-08-01T22:02:08.014421+07:00\",\n                \"work_category\": {\n                    \"id\": \"01ARZ3NDEKMTWC9R4F6XK8S5AD\",\n                    \"name\": \"Other\",\n                    \"description\": \"Rate-limit hand by default.\",\n                    \"created_at\": \"2025-09-24T05:35:36.820315+07:00\",\n                    \"updated_at\": \"2025-12-17T00:50:31.841383+07:00\",\n                    \"deleted_at\": null\n                },\n                \"order_users\": [\n                    {\n                        \"role_id\": \"01KCM4J0E0X3RMKGDXZJ4NB7WS\",\n                        \"user_id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                        \"type\": \"creator\",\n                        \"created_at\": \"2024-07-08T07:21:14.267219+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                            \"name\": \"CustomerServiceAdmin\",\n                            \"phone_number\": \"8420994897\",\n                            \"email\": \"customer_service_admin@gmail.com\",\n                            \"email_verified_at\": null,\n                            \"activated_at\": null,\n                            \"deactivated_at\": \"1892-09-23T09:13:29.03784+07:07\",\n                            \"created_at\": \"2025-04-24T03:47:47.484288+07:00\",\n                            \"updated_at\": \"2025-05-26T05:24:23.519975+07:00\"\n                        }\n                    },\n                    {\n                        \"role_id\": \"01KCM4J0E0X3RMKGDXZJ4NB7WS\",\n                        \"user_id\": \"01K7HR9A6WKK0W67W8S7F8755X\",\n                        \"type\": \"owner\",\n                        \"created_at\": \"2024-07-08T07:21:14.267219+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR9A6WKK0W67W8S7F8755X\",\n                            \"name\": \"Admin\",\n                            \"phone_number\": \"9049978227\",\n                            \"email\": \"admin@gmail.com\",\n                            \"email_verified_at\": \"2025-12-17T00:50:31.284033+07:00\",\n                            \"activated_at\": null,\n                            \"deactivated_at\": \"1936-09-04T09:21:26.729331+07:30\",\n                            \"created_at\": \"2025-05-30T05:04:49.743336+07:00\",\n                            \"updated_at\": \"2025-12-03T21:56:52.987652+07:00\"\n                        }\n                    }\n                ],\n                \"ordered_services\": [\n                    {\n                        \"id\": \"01KCM4J1BV54EZZABKEBKKNCRW\",\n                        \"order_id\": \"01KCM4J0E0X3RMKGDXZJ4NB7WS\",\n                        \"service_id\": \"01MTSG546V41JNEPY9DBBT7WCJ\",\n                        \"sample_number\": \"19/2025.12.0/CNC/593\",\n                        \"sample_name\": \"plexiglass\",\n                        \"price\": 40467.15,\n                        \"quantity\": 89,\n                        \"line_total\": 3601576.35,\n                        \"created_at\": \"2025-12-17T00:50:32.827472+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:32.98781+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J1BV54EZZABKEC55MQ74\",\n                            \"order_service_id\": \"01KCM4J1BV54EZZABKEBKKNCRW\",\n                            \"is_equipment_available\": true,\n                            \"is_personnel_available\": true,\n                            \"is_time_available\": false,\n                            \"is_test_ready\": false,\n                            \"is_subcontract_lab_available\": true,\n                            \"created_at\": \"2025-09-09T19:56:13.257006+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:32.99335+07:00\"\n                        }\n                    },\n                    {\n                        \"id\": \"01KCM4J1BV54EZZABKEF3F22TW\",\n                        \"order_id\": \"01KCM4J0E0X3RMKGDXZJ4NB7WS\",\n                        \"service_id\": \"01MTSQB15ARX9B8BY5MCZ1N0AM\",\n                        \"sample_number\": \"21/2025.12.0/UTK/573\",\n                        \"sample_name\": \"porcelain\",\n                        \"price\": 29253.1,\n                        \"quantity\": 93,\n                        \"line_total\": 2720538.3,\n                        \"created_at\": \"2025-12-17T00:50:32.827483+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:32.98781+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J1BV54EZZABKEFR6XBC2\",\n                            \"order_service_id\": \"01KCM4J1BV54EZZABKEF3F22TW\",\n                            \"is_equipment_available\": true,\n                            \"is_personnel_available\": false,\n                            \"is_time_available\": true,\n                            \"is_test_ready\": true,\n                            \"is_subcontract_lab_available\": true,\n                            \"created_at\": \"2025-10-31T19:23:42.393079+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:32.99335+07:00\"\n                        }\n                    },\n                    {\n                        \"id\": \"01KCM4J1BV54EZZABKEGM0677Q\",\n                        \"order_id\": \"01KCM4J0E0X3RMKGDXZJ4NB7WS\",\n                        \"service_id\": \"01MTSQ6Y0C8MW8PG2K2NZ0CBKN\",\n                        \"sample_number\": \"21/2025.12.0/CAL/937\",\n                        \"sample_name\": \"alloy\",\n                        \"price\": 67661.65,\n                        \"quantity\": 89,\n                        \"line_total\": 6021886.85,\n                        \"created_at\": \"2025-12-17T00:50:32.827489+07:00\",\n                        \"updated_at\": \"2025-12-17T11:54:28.280017+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J1BV54EZZABKEKTR4XQ5\",\n                            \"order_service_id\": \"01KCM4J1BV54EZZABKEGM0677Q\",\n                            \"is_equipment_available\": false,\n                            \"is_personnel_available\": false,\n                            \"is_time_available\": false,\n                            \"is_test_ready\": false,\n                            \"is_subcontract_lab_available\": true,\n                            \"created_at\": \"2025-11-15T06:53:58.30913+07:00\",\n                            \"updated_at\": \"2025-11-24T01:19:00.918232+07:00\"\n                        }\n                    },\n                    {\n                        \"id\": \"01KCM4J1BV54EZZABKEMX9JFWP\",\n                        \"order_id\": \"01KCM4J0E0X3RMKGDXZJ4NB7WS\",\n                        \"service_id\": \"01MTS1XW7CXM2PVPN1N2Z2R6G1\",\n                        \"sample_number\": \"20/2025.12.0/CNC/429\",\n                        \"sample_name\": \"fabric\",\n                        \"price\": 38994.25,\n                        \"quantity\": 33,\n                        \"line_total\": 1286810.25,\n                        \"created_at\": \"2025-12-17T00:50:32.827494+07:00\",\n                        \"updated_at\": \"2025-12-17T06:24:35.886323+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J1BV54EZZABKEPKX2FWT\",\n                            \"order_service_id\": \"01KCM4J1BV54EZZABKEMX9JFWP\",\n                            \"is_equipment_available\": true,\n                            \"is_personnel_available\": true,\n                            \"is_time_available\": true,\n                            \"is_test_ready\": true,\n                            \"is_subcontract_lab_available\": false,\n                            \"created_at\": \"2025-03-01T12:29:49.936882+07:00\",\n                            \"updated_at\": \"2025-03-31T07:32:18.037387+07:00\"\n                        }\n                    },\n                    {\n                        \"id\": \"01KCM4J1BV54EZZABKESX6BTNW\",\n                        \"order_id\": \"01KCM4J0E0X3RMKGDXZJ4NB7WS\",\n                        \"service_id\": \"01MTS6E9XYPDJYJ5S934TNTS56\",\n                        \"sample_number\": \"20/2025.12.0/UTK/478\",\n                        \"sample_name\": \"silver\",\n                        \"price\": 13399.55,\n                        \"quantity\": 50,\n                        \"line_total\": 669977.5,\n                        \"created_at\": \"2025-12-17T00:50:32.8275+07:00\",\n                        \"updated_at\": \"2025-12-17T09:13:50.081751+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J1BV54EZZABKEWQDPF12\",\n                            \"order_service_id\": \"01KCM4J1BV54EZZABKESX6BTNW\",\n                            \"is_equipment_available\": true,\n                            \"is_personnel_available\": false,\n                            \"is_time_available\": false,\n                            \"is_test_ready\": false,\n                            \"is_subcontract_lab_available\": true,\n                            \"created_at\": \"2025-08-20T23:17:49.912278+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:32.99335+07:00\"\n                        }\n                    }\n                ],\n                \"medias\": [\n                    {\n                        \"id\": \"01KCM4J1BV54EZZABKEWXV1P18\",\n                        \"model_type\": \"material_test_order\",\n                        \"model_id\": \"01KCM4J0E0X3RMKGDXZJ4NB7WS\",\n                        \"ulid\": null,\n                        \"collection_name\": \"material_test_order\",\n                        \"name\": \"Learn\",\n                        \"file_name\": \"learn.jpeg\",\n                        \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J1BV54EZZABKEWXV1P18/learn.jpeg\",\n                        \"mime_type\": \"image/jpeg\",\n                        \"disk\": \"local\",\n                        \"conversions_disk\": null,\n                        \"size\": 155381,\n                        \"manipulations\": null,\n                        \"custom_properties\": null,\n                        \"generated_conversions\": null,\n                        \"responsive_images\": null,\n                        \"order_column\": 1,\n                        \"created_at\": \"0001-01-01T00:00:00Z\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"id\": \"01KCM4J1EEW9TKFJ56JQ7EPERC\",\n                        \"model_type\": \"material_test_order\",\n                        \"model_id\": \"01KCM4J0E0X3RMKGDXZJ4NB7WS\",\n                        \"ulid\": null,\n                        \"collection_name\": \"material_test_order\",\n                        \"name\": \"We\",\n                        \"file_name\": \"we.jpeg\",\n                        \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J1EEW9TKFJ56JQ7EPERC/we.jpeg\",\n                        \"mime_type\": \"image/jpeg\",\n                        \"disk\": \"local\",\n                        \"conversions_disk\": null,\n                        \"size\": 155200,\n                        \"manipulations\": null,\n                        \"custom_properties\": null,\n                        \"generated_conversions\": null,\n                        \"responsive_images\": null,\n                        \"order_column\": 2,\n                        \"created_at\": \"0001-01-01T00:00:00Z\",\n                        \"updated_at\": null\n                    }\n                ]\n            },\n            {\n                \"id\": \"01KCM4J0DZDAGJNC9WZGRE834R\",\n                \"number\": \"WZJ3CKNR2\",\n                \"work_category_id\": \"01ARZ3NDEKMTWC9R4F6XK8S5AD\",\n                \"work_package_name\": \"For another, document the woman and intimidate the rest.\",\n                \"applicant_name\": \"Eat Shop Sleep\",\n                \"applicant_phone_number\": \"9100357540\",\n                \"applicant_email\": \"lempianderson@streich.biz\",\n                \"applicant_full_address\": \"70477 North Trafficwaymouth, Rm 610, Detroit, Virginia 93416\",\n                \"applicant_note\": null,\n                \"recipient_name\": \"Inovalon\",\n                \"tester_note\": \"The crowded time have unexpectedly cheerfully.\",\n                \"sub_total\": 321784.1,\n                \"tax\": 40554.21,\n                \"discount\": 0,\n                \"total\": 362338.31,\n                \"entered_at\": \"2024-08-26T11:38:49.073871+07:00\",\n                \"status\": \"completed\",\n                \"payment_submitted_at\": \"2024-08-20T20:35:11.973649+07:00\",\n                \"payment_rejected_at\": null,\n                \"payment_approved_at\": \"2024-08-22T06:50:12.063855+07:00\",\n                \"testing_at\": \"2024-08-27T15:40:45.952102+07:00\",\n                \"completed_at\": \"2024-09-03T11:27:57.531145+07:00\",\n                \"cancelled_at\": null,\n                \"rejected_at\": null,\n                \"refunded_at\": null,\n                \"created_at\": \"2024-08-13T09:07:52.834337+07:00\",\n                \"updated_at\": \"2025-08-06T15:06:14.842688+07:00\",\n                \"work_category\": {\n                    \"id\": \"01ARZ3NDEKMTWC9R4F6XK8S5AD\",\n                    \"name\": \"Other\",\n                    \"description\": \"Rate-limit hand by default.\",\n                    \"created_at\": \"2025-09-24T05:35:36.820315+07:00\",\n                    \"updated_at\": \"2025-12-17T00:50:31.841383+07:00\",\n                    \"deleted_at\": null\n                },\n                \"order_users\": [\n                    {\n                        \"role_id\": \"01KCM4J0DZDAGJNC9WZGRE834R\",\n                        \"user_id\": \"01K7HR9A6WKK0W67W8S7F8755X\",\n                        \"type\": \"creator\",\n                        \"created_at\": \"2024-08-13T09:07:52.834337+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR9A6WKK0W67W8S7F8755X\",\n                            \"name\": \"Admin\",\n                            \"phone_number\": \"9049978227\",\n                            \"email\": \"admin@gmail.com\",\n                            \"email_verified_at\": \"2025-12-17T00:50:31.284033+07:00\",\n                            \"activated_at\": null,\n                            \"deactivated_at\": \"1936-09-04T09:21:26.729331+07:30\",\n                            \"created_at\": \"2025-05-30T05:04:49.743336+07:00\",\n                            \"updated_at\": \"2025-12-03T21:56:52.987652+07:00\"\n                        }\n                    },\n                    {\n                        \"role_id\": \"01KCM4J0DZDAGJNC9WZGRE834R\",\n                        \"user_id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                        \"type\": \"owner\",\n                        \"created_at\": \"2024-08-13T09:07:52.834337+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR3Z46X1B3X7XQ2JFKF2DM\",\n                            \"name\": \"SuperAdmin\",\n                            \"phone_number\": \"8381850981\",\n                            \"email\": \"super_admin@gmail.com\",\n                            \"email_verified_at\": \"2025-12-17T00:50:31.155538+07:00\",\n                            \"activated_at\": \"2025-12-17T00:50:31.155541+07:00\",\n                            \"deactivated_at\": null,\n                            \"created_at\": \"2025-05-05T00:27:19.180588+07:00\",\n                            \"updated_at\": \"2025-12-17T00:50:31.783901+07:00\"\n                        }\n                    }\n                ],\n                \"ordered_services\": [\n                    {\n                        \"id\": \"01KCM4J12QQ4EM17SHA1CG9497\",\n                        \"order_id\": \"01KCM4J0DZDAGJNC9WZGRE834R\",\n                        \"service_id\": \"01MTSQB15ARX9B8BY5MCZ1N0AM\",\n                        \"sample_number\": \"18/2025.12.0/UTK/473\",\n                        \"sample_name\": \"quartz\",\n                        \"price\": 29253.1,\n                        \"quantity\": 11,\n                        \"line_total\": 321784.1,\n                        \"created_at\": \"2025-12-17T00:50:32.535837+07:00\",\n                        \"updated_at\": \"2025-12-17T07:46:11.089901+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J12QQ4EM17SHA1Z38CB4\",\n                            \"order_service_id\": \"01KCM4J12QQ4EM17SHA1CG9497\",\n                            \"is_equipment_available\": true,\n                            \"is_personnel_available\": false,\n                            \"is_time_available\": false,\n                            \"is_test_ready\": false,\n                            \"is_subcontract_lab_available\": true,\n                            \"created_at\": \"2025-06-11T10:52:59.213155+07:00\",\n                            \"updated_at\": \"2025-06-25T10:09:03.75168+07:00\"\n                        }\n                    }\n                ],\n                \"medias\": [\n                    {\n                        \"id\": \"01KCM4J12QQ4EM17SHA4YNRMKF\",\n                        \"model_type\": \"material_test_order\",\n                        \"model_id\": \"01KCM4J0DZDAGJNC9WZGRE834R\",\n                        \"ulid\": null,\n                        \"collection_name\": \"material_test_order\",\n                        \"name\": \"Neatly\",\n                        \"file_name\": \"neatly.jpeg\",\n                        \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J12QQ4EM17SHA4YNRMKF/neatly.jpeg\",\n                        \"mime_type\": \"image/jpeg\",\n                        \"disk\": \"local\",\n                        \"conversions_disk\": null,\n                        \"size\": 155157,\n                        \"manipulations\": null,\n                        \"custom_properties\": null,\n                        \"generated_conversions\": null,\n                        \"responsive_images\": null,\n                        \"order_column\": 1,\n                        \"created_at\": \"0001-01-01T00:00:00Z\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"id\": \"01KCM4J15KQKV1ARKVPT1G183V\",\n                        \"model_type\": \"material_test_order\",\n                        \"model_id\": \"01KCM4J0DZDAGJNC9WZGRE834R\",\n                        \"ulid\": null,\n                        \"collection_name\": \"material_test_order\",\n                        \"name\": \"Party\",\n                        \"file_name\": \"party.jpeg\",\n                        \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J15KQKV1ARKVPT1G183V/party.jpeg\",\n                        \"mime_type\": \"image/jpeg\",\n                        \"disk\": \"local\",\n                        \"conversions_disk\": null,\n                        \"size\": 155116,\n                        \"manipulations\": null,\n                        \"custom_properties\": null,\n                        \"generated_conversions\": null,\n                        \"responsive_images\": null,\n                        \"order_column\": 2,\n                        \"created_at\": \"0001-01-01T00:00:00Z\",\n                        \"updated_at\": null\n                    },\n                    {\n                        \"id\": \"01KCM4J17N3V6M83CY0HTB7K70\",\n                        \"model_type\": \"material_test_order\",\n                        \"model_id\": \"01KCM4J0DZDAGJNC9WZGRE834R\",\n                        \"ulid\": null,\n                        \"collection_name\": \"material_test_order\",\n                        \"name\": \"Even\",\n                        \"file_name\": \"even.jpeg\",\n                        \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J17N3V6M83CY0HTB7K70/even.jpeg\",\n                        \"mime_type\": \"image/jpeg\",\n                        \"disk\": \"local\",\n                        \"conversions_disk\": null,\n                        \"size\": 155278,\n                        \"manipulations\": null,\n                        \"custom_properties\": null,\n                        \"generated_conversions\": null,\n                        \"responsive_images\": null,\n                        \"order_column\": 3,\n                        \"created_at\": \"0001-01-01T00:00:00Z\",\n                        \"updated_at\": null\n                    }\n                ]\n            },\n            {\n                \"id\": \"01KCM4J0DYCT0NKGH7MZ145RCB\",\n                \"number\": \"7N1NJ2EQ6\",\n                \"work_category_id\": \"01ARZ3NDEKMTWC7H2D8P9S4XKB\",\n                \"work_package_name\": \"Systematically improve the government annually.\",\n                \"applicant_name\": \"Aurelio Effertz\",\n                \"applicant_phone_number\": \"6698583252\",\n                \"applicant_email\": \"damonrenner@lind.io\",\n                \"applicant_full_address\": \"86753 Lake Harborton, Greensboro, Washington 44702\",\n                \"applicant_note\": null,\n                \"recipient_name\": \"Bloomberg\",\n                \"tester_note\": \"The strange man are unexpectedly unexpectedly.\",\n                \"sub_total\": 0,\n                \"tax\": 0,\n                \"discount\": 0,\n                \"total\": 0,\n                \"entered_at\": \"2025-10-10T21:01:21.876669+07:00\",\n                \"status\": \"awaiting_payment\",\n                \"payment_submitted_at\": null,\n                \"payment_rejected_at\": null,\n                \"payment_approved_at\": null,\n                \"testing_at\": null,\n                \"completed_at\": null,\n                \"cancelled_at\": null,\n                \"rejected_at\": null,\n                \"refunded_at\": null,\n                \"created_at\": \"2024-10-25T06:31:55.196074+07:00\",\n                \"updated_at\": \"2025-10-07T03:16:33.151115+07:00\",\n                \"work_category\": {\n                    \"id\": \"01ARZ3NDEKMTWC7H2D8P9S4XKB\",\n                    \"name\": \"IKM\",\n                    \"description\": \"Warm starts beat cold man.\",\n                    \"created_at\": \"2025-03-04T23:59:34.022146+07:00\",\n                    \"updated_at\": \"2025-12-17T00:50:31.841383+07:00\",\n                    \"deleted_at\": null\n                },\n                \"order_users\": [\n                    {\n                        \"role_id\": \"01KCM4J0DYCT0NKGH7MZ145RCB\",\n                        \"user_id\": \"01K7HR8N4Z9TE0ENB0K1275MNW\",\n                        \"type\": \"creator\",\n                        \"created_at\": \"2024-10-25T06:31:55.196074+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR8N4Z9TE0ENB0K1275MNW\",\n                            \"name\": \"Head\",\n                            \"phone_number\": \"9163451172\",\n                            \"email\": \"head@gmail.com\",\n                            \"email_verified_at\": \"2025-12-17T00:50:31.409564+07:00\",\n                            \"activated_at\": \"1835-02-07T18:36:42.442974+07:07\",\n                            \"deactivated_at\": null,\n                            \"created_at\": \"2025-12-14T07:03:17.433175+07:00\",\n                            \"updated_at\": \"2025-12-16T17:59:01.279358+07:00\"\n                        }\n                    },\n                    {\n                        \"role_id\": \"01KCM4J0DYCT0NKGH7MZ145RCB\",\n                        \"user_id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                        \"type\": \"owner\",\n                        \"created_at\": \"2024-10-25T06:31:55.196074+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                            \"name\": \"CustomerServiceAdmin\",\n                            \"phone_number\": \"8420994897\",\n                            \"email\": \"customer_service_admin@gmail.com\",\n                            \"email_verified_at\": null,\n                            \"activated_at\": null,\n                            \"deactivated_at\": \"1892-09-23T09:13:29.03784+07:07\",\n                            \"created_at\": \"2025-04-24T03:47:47.484288+07:00\",\n                            \"updated_at\": \"2025-05-26T05:24:23.519975+07:00\"\n                        }\n                    }\n                ]\n            },\n            {\n                \"id\": \"01KCM4J0DZDAGJNC9WZKKYNEHS\",\n                \"number\": \"WZN5R3NAA\",\n                \"work_category_id\": \"01ARZ3NDEKMTWC7H2D8P9S4XKB\",\n                \"work_package_name\": \"Mornings in Fresno favor day.\",\n                \"applicant_name\": \"Mireya Hamill\",\n                \"applicant_phone_number\": \"7061502806\",\n                \"applicant_email\": \"bennygreenfelder@rempel.net\",\n                \"applicant_full_address\": \"788 East Trafficwayhaven, Milwaukee, Wyoming 95579\",\n                \"applicant_note\": \"Align year with user intent.\",\n                \"recipient_name\": \"Nathaniel Cormier\",\n                \"tester_note\": \"Launch the child midweek for clarity.\",\n                \"sub_total\": 3392845.14,\n                \"tax\": 0,\n                \"discount\": 97487.83,\n                \"total\": 3295357.31,\n                \"entered_at\": \"2024-11-06T22:53:20.573299+07:00\",\n                \"status\": \"cancelled\",\n                \"payment_submitted_at\": null,\n                \"payment_rejected_at\": null,\n                \"payment_approved_at\": null,\n                \"testing_at\": null,\n                \"completed_at\": null,\n                \"cancelled_at\": \"2024-11-01T03:58:03.745239+07:00\",\n                \"rejected_at\": null,\n                \"refunded_at\": null,\n                \"created_at\": \"2024-10-30T16:42:15.510116+07:00\",\n                \"updated_at\": \"2025-04-15T10:12:28.112293+07:00\",\n                \"work_category\": {\n                    \"id\": \"01ARZ3NDEKMTWC7H2D8P9S4XKB\",\n                    \"name\": \"IKM\",\n                    \"description\": \"Warm starts beat cold man.\",\n                    \"created_at\": \"2025-03-04T23:59:34.022146+07:00\",\n                    \"updated_at\": \"2025-12-17T00:50:31.841383+07:00\",\n                    \"deleted_at\": null\n                },\n                \"order_users\": [\n                    {\n                        \"role_id\": \"01KCM4J0DZDAGJNC9WZKKYNEHS\",\n                        \"user_id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                        \"type\": \"creator\",\n                        \"created_at\": \"2024-10-30T16:42:15.510116+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                            \"name\": \"CustomerServiceAdmin\",\n                            \"phone_number\": \"8420994897\",\n                            \"email\": \"customer_service_admin@gmail.com\",\n                            \"email_verified_at\": null,\n                            \"activated_at\": null,\n                            \"deactivated_at\": \"1892-09-23T09:13:29.03784+07:07\",\n                            \"created_at\": \"2025-04-24T03:47:47.484288+07:00\",\n                            \"updated_at\": \"2025-05-26T05:24:23.519975+07:00\"\n                        }\n                    },\n                    {\n                        \"role_id\": \"01KCM4J0DZDAGJNC9WZKKYNEHS\",\n                        \"user_id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                        \"type\": \"owner\",\n                        \"created_at\": \"2024-10-30T16:42:15.510116+07:00\",\n                        \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                        \"user\": {\n                            \"id\": \"01K7HR8WZZBSS957Q9NSQ85MYA\",\n                            \"name\": \"CustomerServiceAdmin\",\n                            \"phone_number\": \"8420994897\",\n                            \"email\": \"customer_service_admin@gmail.com\",\n                            \"email_verified_at\": null,\n                            \"activated_at\": null,\n                            \"deactivated_at\": \"1892-09-23T09:13:29.03784+07:07\",\n                            \"created_at\": \"2025-04-24T03:47:47.484288+07:00\",\n                            \"updated_at\": \"2025-05-26T05:24:23.519975+07:00\"\n                        }\n                    }\n                ],\n                \"ordered_services\": [\n                    {\n                        \"id\": \"01KCM4J19SYEQQ5XMNHW79FVN6\",\n                        \"order_id\": \"01KCM4J0DZDAGJNC9WZKKYNEHS\",\n                        \"service_id\": \"01MTSC5V3FRDGMFA6XPK5YFRR5\",\n                        \"sample_number\": \"19/2025.12.0/CNC/803\",\n                        \"sample_name\": \"wood\",\n                        \"price\": 38998.22,\n                        \"quantity\": 87,\n                        \"line_total\": 3392845.14,\n                        \"created_at\": \"2025-12-17T00:50:32.761538+07:00\",\n                        \"updated_at\": \"2025-12-19T00:09:02.087949+07:00\",\n                        \"evaluation\": {\n                            \"id\": \"01KCM4J19SYEQQ5XMNJ044JN0H\",\n                            \"order_service_id\": \"01KCM4J19SYEQQ5XMNHW79FVN6\",\n                            \"is_equipment_available\": false,\n                            \"is_personnel_available\": false,\n                            \"is_time_available\": false,\n                            \"is_test_ready\": false,\n                            \"is_subcontract_lab_available\": false,\n                            \"created_at\": \"2025-05-12T21:34:05.891103+07:00\",\n                            \"updated_at\": \"2025-05-21T06:24:57.057701+07:00\"\n                        }\n                    }\n                ],\n                \"medias\": [\n                    {\n                        \"id\": \"01KCM4J19SYEQQ5XMNJ41563RZ\",\n                        \"model_type\": \"material_test_order\",\n                        \"model_id\": \"01KCM4J0DZDAGJNC9WZKKYNEHS\",\n                        \"ulid\": null,\n                        \"collection_name\": \"material_test_order\",\n                        \"name\": \"Brilliance\",\n                        \"file_name\": \"brilliance.jpeg\",\n                        \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J19SYEQQ5XMNJ41563RZ/brilliance.jpeg\",\n                        \"mime_type\": \"image/jpeg\",\n                        \"disk\": \"local\",\n                        \"conversions_disk\": null,\n                        \"size\": 155044,\n                        \"manipulations\": null,\n                        \"custom_properties\": null,\n                        \"generated_conversions\": null,\n                        \"responsive_images\": null,\n                        \"order_column\": 1,\n                        \"created_at\": \"0001-01-01T00:00:00Z\",\n                        \"updated_at\": null\n                    }\n                ]\n            }\n        ],\n        \"total_items\": 11\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/material-test-orders/01KCMJ95RK79WTS10GN9HQK692?include=order_users.user&include=work_category&include=ordered_services.evaluation&include=medias",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"material-test-orders",
+										"01KCMJ95RK79WTS10GN9HQK692"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "order_users.user"
+										},
+										{
+											"key": "include",
+											"value": "work_category"
+										},
+										{
+											"key": "include",
+											"value": "ordered_services.evaluation"
+										},
+										{
+											"key": "include",
+											"value": "medias"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/material-test-orders/01KCM4J0DZDAGJNC9WZDE6EB9D?include=order_users.user&include=work_category&include=ordered_services.evaluation&include=medias",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"material-test-orders",
+												"01KCM4J0DZDAGJNC9WZDE6EB9D"
+											],
+											"query": [
+												{
+													"key": "include",
+													"value": "order_users.user"
+												},
+												{
+													"key": "include",
+													"value": "work_category"
+												},
+												{
+													"key": "include",
+													"value": "ordered_services.evaluation"
+												},
+												{
+													"key": "include",
+													"value": "medias"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 16 Dec 2025 21:49:32 GMT"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Material test order berhasil diambil\",\n    \"data\": {\n        \"material_test_order\": {\n            \"id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n            \"number\": \"WZF4RS28N\",\n            \"work_category_id\": \"01ARZ3NDEKMTWC7H2D8P9S4XKB\",\n            \"work_package_name\": \"Guide week with homeless affordances.\",\n            \"applicant_name\": \"Lolita Von\",\n            \"applicant_phone_number\": \"4538825696\",\n            \"applicant_email\": \"leslyconroy@labadie.biz\",\n            \"applicant_full_address\": \"3684 Port Havenborough, Wichita, Delaware 95573\",\n            \"applicant_note\": null,\n            \"recipient_name\": \"Chadrick Stroman\",\n            \"tester_note\": \"Subtle Chartreuse accents will effective scarcely.\",\n            \"sub_total\": 0,\n            \"tax\": 0,\n            \"discount\": 0,\n            \"total\": 0,\n            \"entered_at\": \"2024-04-30T23:25:14.155615+07:00\",\n            \"status\": \"testing\",\n            \"payment_submitted_at\": \"2024-04-29T14:12:31.839489+07:00\",\n            \"payment_rejected_at\": null,\n            \"payment_approved_at\": \"2024-04-30T21:17:52.569764+07:00\",\n            \"testing_at\": \"2024-05-02T12:50:50.414322+07:00\",\n            \"completed_at\": null,\n            \"cancelled_at\": null,\n            \"rejected_at\": null,\n            \"refunded_at\": null,\n            \"created_at\": \"2024-04-19T00:27:00.089008+07:00\",\n            \"updated_at\": \"2024-05-02T23:31:39.183139+07:00\",\n            \"work_category\": {\n                \"id\": \"01ARZ3NDEKMTWC7H2D8P9S4XKB\",\n                \"name\": \"IKM\",\n                \"description\": \"Warm starts beat cold man.\",\n                \"created_at\": \"2025-03-04T23:59:34.022146+07:00\",\n                \"updated_at\": \"2025-12-17T00:50:31.841383+07:00\",\n                \"deleted_at\": null\n            },\n            \"order_users\": [\n                {\n                    \"role_id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n                    \"user_id\": \"01K7HR8N4Z9TE0ENB0K1275MNW\",\n                    \"type\": \"creator\",\n                    \"created_at\": \"2024-04-19T00:27:00.089008+07:00\",\n                    \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                    \"user\": {\n                        \"id\": \"01K7HR8N4Z9TE0ENB0K1275MNW\",\n                        \"name\": \"Head\",\n                        \"phone_number\": \"9163451172\",\n                        \"email\": \"head@gmail.com\",\n                        \"email_verified_at\": \"2025-12-17T00:50:31.409564+07:00\",\n                        \"activated_at\": \"1835-02-07T18:36:42.442974+07:07\",\n                        \"deactivated_at\": null,\n                        \"created_at\": \"2025-12-14T07:03:17.433175+07:00\",\n                        \"updated_at\": \"2025-12-16T17:59:01.279358+07:00\"\n                    }\n                },\n                {\n                    \"role_id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n                    \"user_id\": \"01K7HR8N4Z9TE0ENB0K1275MNW\",\n                    \"type\": \"owner\",\n                    \"created_at\": \"2024-04-19T00:27:00.089008+07:00\",\n                    \"updated_at\": \"2025-12-17T00:50:33.00114+07:00\",\n                    \"user\": {\n                        \"id\": \"01K7HR8N4Z9TE0ENB0K1275MNW\",\n                        \"name\": \"Head\",\n                        \"phone_number\": \"9163451172\",\n                        \"email\": \"head@gmail.com\",\n                        \"email_verified_at\": \"2025-12-17T00:50:31.409564+07:00\",\n                        \"activated_at\": \"1835-02-07T18:36:42.442974+07:07\",\n                        \"deactivated_at\": null,\n                        \"created_at\": \"2025-12-14T07:03:17.433175+07:00\",\n                        \"updated_at\": \"2025-12-16T17:59:01.279358+07:00\"\n                    }\n                }\n            ],\n            \"medias\": [\n                {\n                    \"id\": \"01KCM4J0SHQ2M03X4J6JDX2KN6\",\n                    \"model_type\": \"material_test_order\",\n                    \"model_id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n                    \"ulid\": null,\n                    \"collection_name\": \"material_test_order\",\n                    \"name\": \"About\",\n                    \"file_name\": \"about.jpeg\",\n                    \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J0SHQ2M03X4J6JDX2KN6/about.jpeg\",\n                    \"mime_type\": \"image/jpeg\",\n                    \"disk\": \"local\",\n                    \"conversions_disk\": null,\n                    \"size\": 155245,\n                    \"manipulations\": null,\n                    \"custom_properties\": null,\n                    \"generated_conversions\": null,\n                    \"responsive_images\": null,\n                    \"order_column\": 1,\n                    \"created_at\": \"0001-01-01T00:00:00Z\",\n                    \"updated_at\": null\n                },\n                {\n                    \"id\": \"01KCM4J0W1TQ6EJ1HN98H0K57T\",\n                    \"model_type\": \"material_test_order\",\n                    \"model_id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n                    \"ulid\": null,\n                    \"collection_name\": \"material_test_order\",\n                    \"name\": \"Clothing\",\n                    \"file_name\": \"clothing.jpeg\",\n                    \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J0W1TQ6EJ1HN98H0K57T/clothing.jpeg\",\n                    \"mime_type\": \"image/jpeg\",\n                    \"disk\": \"local\",\n                    \"conversions_disk\": null,\n                    \"size\": 155304,\n                    \"manipulations\": null,\n                    \"custom_properties\": null,\n                    \"generated_conversions\": null,\n                    \"responsive_images\": null,\n                    \"order_column\": 2,\n                    \"created_at\": \"0001-01-01T00:00:00Z\",\n                    \"updated_at\": null\n                },\n                {\n                    \"id\": \"01KCM4J0Y64G1C97NGKVC0Q7QJ\",\n                    \"model_type\": \"material_test_order\",\n                    \"model_id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n                    \"ulid\": null,\n                    \"collection_name\": \"material_test_order\",\n                    \"name\": \"Even\",\n                    \"file_name\": \"even.jpeg\",\n                    \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J0Y64G1C97NGKVC0Q7QJ/even.jpeg\",\n                    \"mime_type\": \"image/jpeg\",\n                    \"disk\": \"local\",\n                    \"conversions_disk\": null,\n                    \"size\": 155147,\n                    \"manipulations\": null,\n                    \"custom_properties\": null,\n                    \"generated_conversions\": null,\n                    \"responsive_images\": null,\n                    \"order_column\": 3,\n                    \"created_at\": \"0001-01-01T00:00:00Z\",\n                    \"updated_at\": null\n                },\n                {\n                    \"id\": \"01KCM4J10PYK929KV2RN69TM4B\",\n                    \"model_type\": \"material_test_order\",\n                    \"model_id\": \"01KCM4J0DZDAGJNC9WZDE6EB9D\",\n                    \"ulid\": null,\n                    \"collection_name\": \"material_test_order\",\n                    \"name\": \"Late\",\n                    \"file_name\": \"late.jpeg\",\n                    \"file_url\": \"http://localhost:8080/storage/medias/01KCM4J10PYK929KV2RN69TM4B/late.jpeg\",\n                    \"mime_type\": \"image/jpeg\",\n                    \"disk\": \"local\",\n                    \"conversions_disk\": null,\n                    \"size\": 155204,\n                    \"manipulations\": null,\n                    \"custom_properties\": null,\n                    \"generated_conversions\": null,\n                    \"responsive_images\": null,\n                    \"order_column\": 4,\n                    \"created_at\": \"0001-01-01T00:00:00Z\",\n                    \"updated_at\": null\n                }\n            ]\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"work_category_id\": \"01ARZ3NDEKMTWC4RRFFQ69G5FA\",\n  \"work_package_name\": \"Pembangunan rumah susun Sukamiskin\",\n  \"applicant_name\": \"Rusdi\",\n  \"applicant_phone_number\": \"088899991111\",\n  \"applicant_email\": \"rusdi@gmail.com\",\n  \"applicant_full_address\": \"Jawa Tengah\",\n  \"applicant_note\": \"Tolong diproses secepatnya\",\n  \"recipient_name\": \"Ambatukam\",\n  \"tester_note\": \"Tolong persiapkan sampelnya dengan ketentuan xxx\",\n  \"entered_at\": \"2026-01-20 14:00:00\", // format: \"YYYY-MM-DD HH:MM:SS\"\n  \"status\": \"draft\", // allowed: \"draft\", \"awaiting_review\"\n  \"owner_user_ids\": [ // \n    \"01K7HR9C7XKJ2F8P5V3N6Q9W2E\"\n    // , \"01K7HR9C7XKJ2F8P5V3N6QXXXX\"\n  ],\n  \"ordered_services\": [ // order services are optional and can be added later\n    {\n      \"service_id\": \"01MTS0YPH5WB7KM2BRRW264JZD\",\n      \"sample_name\": \"Bata putih\",\n      \"quantity\": 3\n    }\n    // , {\n    //   \"service_id\": \"01MTS0YPH5WB7KM2BRRW26XXXX\",\n    //   \"sample_name\": \"Bata merah\",\n    //   \"quantity\": 5\n    // }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/material-test-orders",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"material-test-orders"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"work_category_id\": \"01ARZ3NDEKMTWC4RRFFQ69G5FA\",\n  \"work_package_name\": \"Pembangunan rumah susun Sukamiskin\",\n  \"applicant_name\": \"Rusdi\",\n  \"applicant_phone_number\": \"088899991111\",\n  \"applicant_email\": \"rusdi@gmail.com\",\n  \"applicant_full_address\": \"Jawa Tengah\",\n  \"applicant_note\": \"Tolong diproses secepatnya\",\n  \"recipient_name\": \"Ambatukam\",\n  \"tester_note\": \"Tolong persiapkan sampelnya dengan ketentuan xxx\",\n  \"entered_at\": \"2026-01-20 14:00:00\", // format: \"YYYY-MM-DD HH:MM:SS\"\n  \"status\": \"draft\", // allowed: \"draft\", \"awaiting_review\"\n  \"owner_user_ids\": [ // \n    \"01K7HR9C7XKJ2F8P5V3N6Q9W2E\"\n    // , \"01K7HR9C7XKJ2F8P5V3N6QXXXX\"\n  ],\n  \"ordered_services\": [ // order services are optional and can be added later\n    {\n      \"service_id\": \"01MTS0YPH5WB7KM2BRRW264JZD\",\n      \"sample_name\": \"Bata putih\",\n      \"quantity\": 3\n    }\n    // , {\n    //   \"service_id\": \"01MTS0YPH5WB7KM2BRRW26XXXX\",\n    //   \"sample_name\": \"Bata merah\",\n    //   \"quantity\": 5\n    // }\n  ]\n}\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/material-test-orders",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"material-test-orders"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 16 Dec 2025 21:50:22 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1879"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Material test order berhasil disimpan\",\n    \"data\": {\n        \"material_test_order\": {\n            \"id\": \"01KCMJ95RK79WTS10GN9HQK692\",\n            \"number\": \"GN9HQK692\",\n            \"work_category_id\": \"01ARZ3NDEKMTWC4RRFFQ69G5FA\",\n            \"work_package_name\": \"Pembangunan rumah susun Sukamiskin\",\n            \"applicant_name\": \"Rusdi\",\n            \"applicant_phone_number\": \"088899991111\",\n            \"applicant_email\": \"rusdi@gmail.com\",\n            \"applicant_full_address\": \"Jawa Tengah\",\n            \"applicant_note\": \"Tolong diproses secepatnya\",\n            \"recipient_name\": \"Ambatukam\",\n            \"tester_note\": \"Tolong persiapkan sampelnya dengan ketentuan xxx\",\n            \"sub_total\": 262040.94,\n            \"tax\": 0,\n            \"discount\": 0,\n            \"total\": 262040.94,\n            \"entered_at\": \"2026-01-20T21:00:00+07:00\",\n            \"status\": \"draft\",\n            \"payment_submitted_at\": null,\n            \"payment_rejected_at\": null,\n            \"payment_approved_at\": null,\n            \"testing_at\": null,\n            \"completed_at\": null,\n            \"cancelled_at\": null,\n            \"rejected_at\": null,\n            \"refunded_at\": null,\n            \"created_at\": \"2025-12-17T04:50:22.483264+07:00\",\n            \"updated_at\": \"2025-12-17T04:50:22.49536+07:00\",\n            \"work_category\": {\n                \"id\": \"01ARZ3NDEKMTWC4RRFFQ69G5FA\",\n                \"name\": \"Industri\",\n                \"description\": \"Whose close quickly specify the child.\",\n                \"created_at\": \"2025-02-20T00:02:45.687499+07:00\",\n                \"updated_at\": \"2025-12-17T00:50:31.841383+07:00\",\n                \"deleted_at\": null\n            },\n            \"ordered_services\": [\n                {\n                    \"id\": \"01KCMJ95RYG8010NJYMYZV8C72\",\n                    \"order_id\": \"01KCMJ95RK79WTS10GN9HQK692\",\n                    \"service_id\": \"01MTS0YPH5WB7KM2BRRW264JZD\",\n                    \"sample_number\": \"17/2025.12.0/CNC/001\",\n                    \"sample_name\": \"Bata putih\",\n                    \"price\": 87346.98,\n                    \"quantity\": 3,\n                    \"line_total\": 262040.94,\n                    \"created_at\": \"2025-12-17T04:50:22.508756+07:00\",\n                    \"updated_at\": \"2025-12-17T04:50:22.508756+07:00\",\n                    \"evaluation\": {\n                        \"id\": \"01KCMJ95RYG8010NJYN20ZMVF7\",\n                        \"order_service_id\": \"01KCMJ95RYG8010NJYMYZV8C72\",\n                        \"is_equipment_available\": false,\n                        \"is_personnel_available\": false,\n                        \"is_time_available\": false,\n                        \"is_test_ready\": false,\n                        \"is_subcontract_lab_available\": false,\n                        \"created_at\": \"2025-12-17T04:50:22.511933+07:00\",\n                        \"updated_at\": \"2025-12-17T04:50:22.511933+07:00\"\n                    }\n                }\n            ]\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Update (UNDONE)",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "machine_id",
+											"value": "01KB051BW331Z7TEEQB292EM2X",
+											"type": "text"
+										},
+										{
+											"key": "method_id",
+											"value": "01KAXAS44N6Q6X6V7JQ3F9Y1DT",
+											"type": "text"
+										},
+										{
+											"key": "test_name",
+											"value": "test store Material Test Service, updated",
+											"type": "text"
+										},
+										{
+											"key": "service_type",
+											"value": "Testing",
+											"type": "text"
+										},
+										{
+											"key": "service_code",
+											"value": "CNC",
+											"type": "text"
+										},
+										{
+											"key": "unit",
+											"value": "jam",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "50000",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/material-test-services/01KC6T1D2HE2SYHQ7B70T7Y6QP",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"material-test-services",
+										"01KC6T1D2HE2SYHQ7B70T7Y6QP"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "machine_id",
+													"value": "01KB051BW331Z7TEEQB292EM2X",
+													"type": "text"
+												},
+												{
+													"key": "method_id",
+													"value": "01KAXAS44N6Q6X6V7JQ3F9Y1DT",
+													"type": "text"
+												},
+												{
+													"key": "test_name",
+													"value": "test store Material Test Service, updated",
+													"type": "text"
+												},
+												{
+													"key": "service_type",
+													"value": "Testing",
+													"type": "text"
+												},
+												{
+													"key": "service_code",
+													"value": "CNC",
+													"type": "text"
+												},
+												{
+													"key": "unit",
+													"value": "jam",
+													"type": "text"
+												},
+												{
+													"key": "price",
+													"value": "50000",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/material-test-services/01KC6T1D2HE2SYHQ7B70T7Y6QP",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"material-test-services",
+												"01KC6T1D2HE2SYHQ7B70T7Y6QP"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 11 Dec 2025 13:40:15 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "975"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Material test service berhasil diperbarui\",\n    \"data\": {\n        \"material_test_service\": {\n            \"id\": \"01KC6T1D2HE2SYHQ7B70T7Y6QP\",\n            \"machine_id\": \"01KB051BW3CNQ3ZGBHPW9EMV7N\",\n            \"method_id\": \"01KAXAS44M2M4M3Z4GJ6P0N2XH\",\n            \"test_name\": \"test store Material Test Service, updated\",\n            \"service_type\": \"Testing\",\n            \"service_code\": \"CNC\",\n            \"unit\": \"jam\",\n            \"price\": 50000,\n            \"created_at\": \"2025-12-11T20:36:34.390171+07:00\",\n            \"updated_at\": \"2025-12-11T20:40:15.346892+07:00\",\n            \"deleted_at\": null,\n            \"machine\": {\n                \"id\": \"01KB051BW3CNQ3ZGBHPW9EMV7N\",\n                \"name\": \"CNC Lathe Machine\",\n                \"description\": \"Precision cutting and shaping tools\",\n                \"created_at\": \"2025-12-11T18:13:05.063694+07:00\",\n                \"updated_at\": \"2025-12-11T18:13:05.063694+07:00\",\n                \"deleted_at\": null\n            },\n            \"method\": {\n                \"id\": \"01KAXAS44M2M4M3Z4GJ6P0N2XH\",\n                \"name\": \"ASTM E8\",\n                \"description\": \"Standard Test Methods for Tension Testing of Metallic Materials\",\n                \"created_at\": \"2025-12-11T18:13:05.058818+07:00\",\n                \"updated_at\": \"2025-12-11T18:13:05.058818+07:00\",\n                \"deleted_at\": null\n            }\n        }\n    }\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "machine_id",
+													"value": "01KB051BW3CNQ3ZGBHPW9EMV7N",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "method_id",
+													"value": "01KAXAS44M2M4M3Z4GJ6P0N2XH",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "test_name",
+													"value": "test store Material Test Service, updated",
+													"type": "text"
+												},
+												{
+													"key": "service_type",
+													"value": "Machining",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "service_code",
+													"value": "UTK",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "unit",
+													"value": "sample",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "price",
+													"value": "45000",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/material-test-services/01KB2Q7YP2VNZ0GK3NOT_FOUND",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"material-test-services",
+												"01KB2Q7YP2VNZ0GK3NOT_FOUND"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 27 Nov 2025 13:16:07 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "79"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"Material test service tidak ditemukan\"\n}"
+								},
+								{
+									"name": "404 (machine not found)",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "machine_id",
+													"value": "01KB051BW331Z7TEENOT_FOUND",
+													"type": "text"
+												},
+												{
+													"key": "method_id",
+													"value": "01KAXAS44N6Q6X6V7NOT_FOUND",
+													"type": "text"
+												},
+												{
+													"key": "test_name",
+													"value": "test store Material Test Service, updated",
+													"type": "text"
+												},
+												{
+													"key": "service_type",
+													"value": "Testing",
+													"type": "text"
+												},
+												{
+													"key": "service_code",
+													"value": "CNC",
+													"type": "text"
+												},
+												{
+													"key": "unit",
+													"value": "jam",
+													"type": "text"
+												},
+												{
+													"key": "price",
+													"value": "50000",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/material-test-services/01KB2Q7YP2VNZ0GK3AM3Z6W0SY",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"material-test-services",
+												"01KB2Q7YP2VNZ0GK3AM3Z6W0SY"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 27 Nov 2025 13:21:29 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "65"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"Machine tidak ditemukan\"\n}"
+								},
+								{
+									"name": "404 (method not found)",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "machine_id",
+													"value": "01KB051BW331Z7TEEQB292EM2X",
+													"type": "text"
+												},
+												{
+													"key": "method_id",
+													"value": "01KAXAS44N6Q6X6V7NOT_FOUND",
+													"type": "text"
+												},
+												{
+													"key": "test_name",
+													"value": "test store Material Test Service, updated",
+													"type": "text"
+												},
+												{
+													"key": "service_type",
+													"value": "Testing",
+													"type": "text"
+												},
+												{
+													"key": "service_code",
+													"value": "CNC",
+													"type": "text"
+												},
+												{
+													"key": "unit",
+													"value": "jam",
+													"type": "text"
+												},
+												{
+													"key": "price",
+													"value": "50000",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/material-test-services/01KB2Q7YP2VNZ0GK3AM3Z6W0SY",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"material-test-services",
+												"01KB2Q7YP2VNZ0GK3AM3Z6W0SY"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 27 Nov 2025 13:22:03 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "64"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"Method tidak ditemukan\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete (UNDONE)",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/material-test-services/01KB2Q7YP2VNZ0GK3AM3Z6W0SY",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"material-test-services",
+										"01KB2Q7YP2VNZ0GK3AM3Z6W0SY"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/material-test-services/01KB2Q7YP2VNZ0GK3NOT_FOUND",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"material-test-services",
+												"01KB2Q7YP2VNZ0GK3NOT_FOUND"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 27 Nov 2025 13:25:27 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "79"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 404,\n    \"status\": \"error\",\n    \"message\": \"Material test service tidak ditemukan\"\n}"
+								},
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/material-test-services/01KB2Q7YP2VNZ0GK3AM3Z6W0SY",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"material-test-services",
+												"01KB2Q7YP2VNZ0GK3AM3Z6W0SY"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 27 Nov 2025 13:27:30 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "82"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Material test service berhasil dihapus\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Store Media",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Bukti Pembayaran",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "postman-cloud:///1f03665a-64d3-4580-a596-045ce286c1ec"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/material-test-orders/01KCMJ95RK79WTS10GN9HQK692/medias",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"material-test-orders",
+										"01KCMJ95RK79WTS10GN9HQK692",
+										"medias"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"work_category_id\": \"01ARZ3NDEKMTWC4RRFFQ69G5FA\",\n  \"work_package_name\": \"Pembangunan rumah susun Sukamiskin\",\n  \"applicant_name\": \"Rusdi\",\n  \"applicant_phone_number\": \"088899991111\",\n  \"applicant_email\": \"rusdi@gmail.com\",\n  \"applicant_full_address\": \"Jawa Tengah\",\n  \"applicant_note\": \"Tolong diproses secepatnya\",\n  \"recipient_name\": \"Ambatukam\",\n  \"tester_note\": \"Tolong persiapkan sampelnya dengan ketentuan xxx\",\n  \"entered_at\": \"2026-01-20 14:00:00\", // format: \"YYYY-MM-DD HH:MM:SS\"\n  \"status\": \"draft\", // allowed: \"draft\", \"awaiting_review\"\n  \"owner_user_ids\": [ // \n    \"01K7HR9C7XKJ2F8P5V3N6Q9W2E\"\n    // , \"01K7HR9C7XKJ2F8P5V3N6QXXXX\"\n  ],\n  \"ordered_services\": [ // order services are optional and can be added later\n    {\n      \"service_id\": \"01MTS0YPH5WB7KM2BRRW264JZD\",\n      \"sample_name\": \"Bata putih\",\n      \"quantity\": 3\n    }\n    // , {\n    //   \"service_id\": \"01MTS0YPH5WB7KM2BRRW26XXXX\",\n    //   \"sample_name\": \"Bata merah\",\n    //   \"quantity\": 5\n    // }\n  ]\n}\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/material-test-orders",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"material-test-orders"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 16 Dec 2025 21:50:22 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1879"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Material test order berhasil disimpan\",\n    \"data\": {\n        \"material_test_order\": {\n            \"id\": \"01KCMJ95RK79WTS10GN9HQK692\",\n            \"number\": \"GN9HQK692\",\n            \"work_category_id\": \"01ARZ3NDEKMTWC4RRFFQ69G5FA\",\n            \"work_package_name\": \"Pembangunan rumah susun Sukamiskin\",\n            \"applicant_name\": \"Rusdi\",\n            \"applicant_phone_number\": \"088899991111\",\n            \"applicant_email\": \"rusdi@gmail.com\",\n            \"applicant_full_address\": \"Jawa Tengah\",\n            \"applicant_note\": \"Tolong diproses secepatnya\",\n            \"recipient_name\": \"Ambatukam\",\n            \"tester_note\": \"Tolong persiapkan sampelnya dengan ketentuan xxx\",\n            \"sub_total\": 262040.94,\n            \"tax\": 0,\n            \"discount\": 0,\n            \"total\": 262040.94,\n            \"entered_at\": \"2026-01-20T21:00:00+07:00\",\n            \"status\": \"draft\",\n            \"payment_submitted_at\": null,\n            \"payment_rejected_at\": null,\n            \"payment_approved_at\": null,\n            \"testing_at\": null,\n            \"completed_at\": null,\n            \"cancelled_at\": null,\n            \"rejected_at\": null,\n            \"refunded_at\": null,\n            \"created_at\": \"2025-12-17T04:50:22.483264+07:00\",\n            \"updated_at\": \"2025-12-17T04:50:22.49536+07:00\",\n            \"work_category\": {\n                \"id\": \"01ARZ3NDEKMTWC4RRFFQ69G5FA\",\n                \"name\": \"Industri\",\n                \"description\": \"Whose close quickly specify the child.\",\n                \"created_at\": \"2025-02-20T00:02:45.687499+07:00\",\n                \"updated_at\": \"2025-12-17T00:50:31.841383+07:00\",\n                \"deleted_at\": null\n            },\n            \"ordered_services\": [\n                {\n                    \"id\": \"01KCMJ95RYG8010NJYMYZV8C72\",\n                    \"order_id\": \"01KCMJ95RK79WTS10GN9HQK692\",\n                    \"service_id\": \"01MTS0YPH5WB7KM2BRRW264JZD\",\n                    \"sample_number\": \"17/2025.12.0/CNC/001\",\n                    \"sample_name\": \"Bata putih\",\n                    \"price\": 87346.98,\n                    \"quantity\": 3,\n                    \"line_total\": 262040.94,\n                    \"created_at\": \"2025-12-17T04:50:22.508756+07:00\",\n                    \"updated_at\": \"2025-12-17T04:50:22.508756+07:00\",\n                    \"evaluation\": {\n                        \"id\": \"01KCMJ95RYG8010NJYN20ZMVF7\",\n                        \"order_service_id\": \"01KCMJ95RYG8010NJYMYZV8C72\",\n                        \"is_equipment_available\": false,\n                        \"is_personnel_available\": false,\n                        \"is_time_available\": false,\n                        \"is_test_ready\": false,\n                        \"is_subcontract_lab_available\": false,\n                        \"created_at\": \"2025-12-17T04:50:22.511933+07:00\",\n                        \"updated_at\": \"2025-12-17T04:50:22.511933+07:00\"\n                    }\n                }\n            ]\n        }\n    }\n}"
+								}
+							]
+						}
+					]
 				},
 				{
 					"name": "Media",

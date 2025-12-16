@@ -14,6 +14,7 @@ type UserRepository interface {
 	First(query *query.Query) (*entity.User, error)
 	Find(id string, q *query.Query) (*entity.User, error)
 	FindByEmail(email string, q *query.Query) (*entity.User, error)
+	FindByIds(ids []string, q *query.Query) ([]*entity.User, error)
 	HasPermissionNames(user *entity.User, permissionNames []permissionEnum.PermissionName) (bool, error)
 	HasRoleNames(user *entity.User, roleNames []roleEnum.RoleName) (bool, error)
 	ToggleActivation(user *entity.User) (*entity.User, error)

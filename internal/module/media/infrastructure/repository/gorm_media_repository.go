@@ -166,3 +166,7 @@ func (r *gormMediaRepository) SaveMany(mtos []*entity.Media) error {
 func (r *gormMediaRepository) Destroy(mto *entity.Media) error {
 	return r.db.Delete(mto).Error
 }
+
+func (r *gormMediaRepository) DestroyByModelTypeAndModelId(modelType string, modelId string) error {
+	return r.db.Where("model_type = ? AND model_id = ?", modelType, modelId).Delete(&entity.Media{}).Error
+}

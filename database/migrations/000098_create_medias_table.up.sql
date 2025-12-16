@@ -4,7 +4,7 @@ CREATE TABLE medias (
   model_id CHAR(26) NOT NULL,
   ulid VARCHAR(26),
   collection_name VARCHAR(50) NOT NULL,
-  name VARCHAR(50) NOT NULL, 
+  name VARCHAR(255) NOT NULL, 
   file_name VARCHAR(50) NOT NULL, 
   mime_type VARCHAR(50),
   disk VARCHAR(50) NOT NULL,

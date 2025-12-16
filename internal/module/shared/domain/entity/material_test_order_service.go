@@ -8,7 +8,7 @@ type MaterialTestOrderService struct {
 	Id           string     `json:"id" gorm:"primarykey"`
 	OrderId      string     `json:"order_id"`
 	ServiceId    string     `json:"service_id"`
-	SampleNumber *string    `json:"sample_number"`
+	SampleNumber string     `json:"sample_number"`
 	SampleName   string     `json:"sample_name"`
 	Price        float64    `json:"price"`
 	Quantity     int        `json:"quantity"`

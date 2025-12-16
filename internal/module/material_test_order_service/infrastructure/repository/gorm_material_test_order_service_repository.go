@@ -119,6 +119,32 @@ func (r *GormMaterialTestOrderServiceRepository) Find(id string, q *query.Query)
 	return &mtso, nil
 }
 
+func (r *GormMaterialTestOrderServiceRepository) FindLatestPerServiceByServiceIds(serviceIds []string, q *query.Query) (mtoss []*entity.MaterialTestOrderService, err error) {
+	// TODO: do something on `q *query.Query
+
+	mtossTableName := entity.NewMaterialTestOrderService().TableName()
+
+	subQuery := r.db.
+		Table(mtossTableName).
+		Select(
+			mtossTableName+`.*,
+			ROW_NUMBER() OVER (
+			PARTITION BY service_id
+			ORDER BY
+				SPLIT_PART(SPLIT_PART(sample_number, '/', 2), '.', 1)::int DESC,
+				RIGHT(sample_number, 3)::int DESC
+		) AS rn
+	`).
+		Where("service_id IN ?", serviceIds)
+
+	err = r.db.
+		Table("(?) AS ranked", subQuery).
+		Where("rn = 1").
+		Find(&mtoss).Error
+
+	return mtoss, err
+}
+
 func (r *GormMaterialTestOrderServiceRepository) Save(mtso *entity.MaterialTestOrderService) error {
 	err := r.db.Save(mtso).Error
 	if err != nil {
@@ -133,6 +159,10 @@ func (r *GormMaterialTestOrderServiceRepository) Save(mtso *entity.MaterialTestO
 
 func (r *GormMaterialTestOrderServiceRepository) SaveMany(mtsos []*entity.MaterialTestOrderService) error {
 	return r.db.CreateInBatches(mtsos, 100).Error
+}
+
+func (r *GormMaterialTestOrderServiceRepository) DestroyByOrderId(orderId string) error {
+	return r.db.Where("order_id = ?", orderId).Delete(&entity.MaterialTestOrderService{}).Error
 }
 
 func (r *GormMaterialTestOrderServiceRepository) Destroy(mtso *entity.MaterialTestOrderService) error {

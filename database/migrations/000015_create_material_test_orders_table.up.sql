@@ -2,11 +2,14 @@ CREATE TABLE material_test_orders (
   id CHAR(26) PRIMARY KEY NOT NULL,
   number VARCHAR(50) NOT NULL,
   work_category_id CHAR(26) NOT NULL,
-  work_package_id CHAR(26) NOT NULL,
-  customer_id CHAR(26) NOT NULL,
-  customer_note TEXT,
+  work_package_name VARCHAR(255) NOT NULL,
+  applicant_name VARCHAR(255) NOT NULL,
+  applicant_phone_number VARCHAR(25) NOT NULL,
+  applicant_email VARCHAR(50) NOT NULL,
+  applicant_full_address VARCHAR(512) NOT NULL,
+  applicant_note TEXT,
+  recipient_name VARCHAR(255) NOT NULL,
   tester_note TEXT,
-  issued_for VARCHAR(255) NOT NULL,
   
   sub_total DECIMAL(10, 2) NOT NULL,
   tax DECIMAL(10, 2) NOT NULL,
@@ -31,7 +34,5 @@ CREATE TABLE material_test_orders (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE,
 
-  CONSTRAINT fk_material_test_orders_work_category_id FOREIGN KEY (work_category_id) REFERENCES material_test_work_categories(id) ON DELETE CASCADE,
-  CONSTRAINT fk_material_test_orders_work_package_id FOREIGN KEY (work_package_id) REFERENCES material_test_work_packages(id) ON DELETE CASCADE,
-  CONSTRAINT fk_material_test_orders_customer_id FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
+  CONSTRAINT fk_material_test_orders_work_category_id FOREIGN KEY (work_category_id) REFERENCES material_test_work_categories(id) ON DELETE CASCADE
 );

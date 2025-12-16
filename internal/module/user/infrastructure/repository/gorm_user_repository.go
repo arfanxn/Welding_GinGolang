@@ -126,6 +126,20 @@ func (r *GormUserRepository) Find(id string, q *query.Query) (*entity.User, erro
 	return &user, nil
 }
 
+func (r *GormUserRepository) FindByIds(ids []string, q *query.Query) ([]*entity.User, error) {
+	var users []*entity.User
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("id IN (?)", ids).Find(&users).Error; err != nil {
+		return nil, err
+	}
+	if len(users) != len(ids) {
+		return nil, errorx.ErrUserNotFound
+	}
+	return users, nil
+}
+
 func (r *GormUserRepository) FindByEmail(email string, q *query.Query) (*entity.User, error) {
 	var user entity.User
 

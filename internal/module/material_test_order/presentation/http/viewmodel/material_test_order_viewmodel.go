@@ -1,10 +1,15 @@
-package entity
+package viewmodel
 
-import "time"
+import (
+	"time"
 
-type MaterialTestOrder struct {
+	mediaViewmodel "github.com/arfanxn/welding/internal/module/media/presentation/http/viewmodel"
+	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
+)
+
+type MaterialTestOrderViewModel struct {
 	// ---- IDENTIFICATION ----
-	Id             string `json:"id" gorm:"primaryKey"`
+	Id             string `json:"id"`
 	Number         string `json:"number"`
 	WorkCategoryId string `json:"work_category_id"`
 
@@ -46,20 +51,12 @@ type MaterialTestOrder struct {
 	RefundedAt  *time.Time `json:"refunded_at"`
 
 	// ---- SYSTEM METADATA ----
-	CreatedAt time.Time  `json:"created_at" gorm:"autoCreateTime"`
-	UpdatedAt *time.Time `json:"updated_at" gorm:"autoUpdateTime"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt *time.Time `json:"updated_at"`
 
 	// ---- RELATIONS ----
-	OrderUsers      []*MaterialTestOrderUser    `json:"order_users,omitempty" gorm:"foreignKey:OrderId;references:Id"`
-	WorkCategory    MaterialTestWorkCategory    `json:"work_category" gorm:"foreignKey:WorkCategoryId;references:Id"`
-	OrderedServices []*MaterialTestOrderService `json:"ordered_services,omitempty" gorm:"foreignKey:OrderId;references:Id"`
-	Medias          []*Media                    `json:"medias,omitempty" gorm:"foreignKey:ModelId;references:Id"`
-}
-
-func NewMaterialTestOrder() *MaterialTestOrder {
-	return &MaterialTestOrder{}
-}
-
-func (MaterialTestOrder) TableName() string {
-	return "material_test_orders"
+	WorkCategory    entity.MaterialTestWorkCategory    `json:"work_category,omitempty"`
+	OrderUsers      []*entity.MaterialTestOrderUser    `json:"order_users,omitempty"`
+	OrderedServices []*entity.MaterialTestOrderService `json:"ordered_services,omitempty"`
+	Medias          []*mediaViewmodel.Media            `json:"medias,omitempty"`
 }

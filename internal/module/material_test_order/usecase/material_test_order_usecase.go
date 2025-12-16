@@ -10,6 +10,9 @@ import (
 	mtoPolicy "github.com/arfanxn/welding/internal/module/material_test_order/infrastructure/policy"
 	"github.com/arfanxn/welding/internal/module/material_test_order/usecase/dto"
 	mtoStep "github.com/arfanxn/welding/internal/module/material_test_order/usecase/step"
+	mediaEnum "github.com/arfanxn/welding/internal/module/media/domain/enum"
+	mediaDto "github.com/arfanxn/welding/internal/module/media/usecase/dto"
+	mediaService "github.com/arfanxn/welding/internal/module/media/usecase/service"
 	"github.com/arfanxn/welding/internal/module/shared/contextkey"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/pkg/pagination"
@@ -24,12 +27,16 @@ type MaterialTestOrderUsecase interface {
 	Store(context.Context, *dto.SaveMaterialTestOrder) (*entity.MaterialTestOrder, error)
 	Update(context.Context, *dto.SaveMaterialTestOrder) (*entity.MaterialTestOrder, error)
 	Destroy(context.Context, *dto.DestroyMaterialTestOrder) error
+
+	StoreMedia(context.Context, *dto.SaveMaterialTestOrderMedia) (*entity.MaterialTestOrder, error)
+	UpdateMedia(context.Context, *dto.SaveMaterialTestOrderMedia) (*entity.MaterialTestOrder, error)
+	DestroyMedia(context.Context, *dto.DestroyMaterialTestOrderMedia) error
 }
 
 type materialTestOrderUsecase struct {
 	activityService activityService.ActivityService
-	storeMtoStep    mtoStep.StoreMaterialTestOrderStep
-	updateMtoStep   mtoStep.UpdateMaterialTestOrderStep
+	mediaService    mediaService.MediaService
+	saveMtoStep     mtoStep.SaveMaterialTestOrderStep
 	mtoRepository   mtoRepository.MaterialTestOrderRepository
 	mtoPolicy       mtoPolicy.MaterialTestOrderPolicy
 }
@@ -38,8 +45,8 @@ type NewMaterialTestOrderUsecaseParams struct {
 	fx.In
 
 	ActivityService             activityService.ActivityService
-	StoreMaterialTestOrderStep  mtoStep.StoreMaterialTestOrderStep
-	UpdateMaterialTestOrderStep mtoStep.UpdateMaterialTestOrderStep
+	MediaService                mediaService.MediaService
+	SaveMaterialTestOrderStep   mtoStep.SaveMaterialTestOrderStep
 	MaterialTestOrderRepository mtoRepository.MaterialTestOrderRepository
 	MaterialTestOrderPolicy     mtoPolicy.MaterialTestOrderPolicy
 }
@@ -47,8 +54,8 @@ type NewMaterialTestOrderUsecaseParams struct {
 func NewMaterialTestOrderUsecase(params NewMaterialTestOrderUsecaseParams) MaterialTestOrderUsecase {
 	return &materialTestOrderUsecase{
 		activityService: params.ActivityService,
-		storeMtoStep:    params.StoreMaterialTestOrderStep,
-		updateMtoStep:   params.UpdateMaterialTestOrderStep,
+		mediaService:    params.MediaService,
+		saveMtoStep:     params.SaveMaterialTestOrderStep,
 		mtoRepository:   params.MaterialTestOrderRepository,
 		mtoPolicy:       params.MaterialTestOrderPolicy,
 	}
@@ -93,7 +100,7 @@ func (u *materialTestOrderUsecase) Store(ctx context.Context, _dto *dto.SaveMate
 		return nil, err
 	}
 
-	if mto, err = u.storeMtoStep.Handle(ctx, _dto); err != nil {
+	if mto, err = u.saveMtoStep.Handle(ctx, _dto); err != nil {
 		return nil, err
 	}
 
@@ -113,7 +120,7 @@ func (u *materialTestOrderUsecase) Update(ctx context.Context, _dto *dto.SaveMat
 		return nil, err
 	}
 
-	if mto, err = u.updateMtoStep.Handle(ctx, _dto); err != nil {
+	if mto, err = u.saveMtoStep.Handle(ctx, _dto); err != nil {
 		return nil, err
 	}
 
@@ -151,4 +158,86 @@ func (u *materialTestOrderUsecase) Destroy(ctx context.Context, _dto *dto.Destro
 		return err
 	}
 	return nil
+}
+
+func (u *materialTestOrderUsecase) StoreMedia(ctx context.Context, _dto *dto.SaveMaterialTestOrderMedia) (mto *entity.MaterialTestOrder, err error) {
+	if err = u.mtoPolicy.StoreMedia(ctx, _dto); err != nil {
+		return nil, err
+	}
+
+	_, err = u.mediaService.CreateFromMultipartFiles(ctx, mediaDto.CreateFromMultipartFiles{
+		mediaDto.CreateFromMultipartFile{
+			ModelType:      mediaEnum.ModelTypeMaterialTestOrder,
+			ModelId:        *_dto.OrderId,
+			CollectionName: mediaEnum.CollectionNameMaterialTestOrder,
+			Name:           *_dto.Name,
+			File:           _dto.File,
+		},
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	mto, err = u.mtoRepository.Find(*_dto.OrderId, query.NewQuery().Include("medias"))
+	if err != nil {
+		return nil, err
+	}
+
+	return
+}
+
+func (u *materialTestOrderUsecase) UpdateMedia(ctx context.Context, _dto *dto.SaveMaterialTestOrderMedia) (mto *entity.MaterialTestOrder, err error) {
+	/*
+		TODO: update media
+
+		if err = u.mtoPolicy.StoreMedia(ctx, _dto); err != nil {
+			return nil, err
+		}
+
+		_, err = u.mediaService.CreateFromMultipartFiles(ctx, mediaDto.CreateFromMultipartFiles{
+			mediaDto.CreateFromMultipartFile{
+				ModelType: mediaEnum.ModelTypeMaterialTestOrder,
+				ModelId:   *_dto.OrderId,
+				Name:      *_dto.Name,
+				File:      _dto.File,
+			},
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		mto, err = u.mtoRepository.Find(*_dto.OrderId, query.NewQuery().Include("medias"))
+		if err != nil {
+			return nil, err
+		}
+	*/
+
+	return
+}
+
+func (u *materialTestOrderUsecase) DestroyMedia(ctx context.Context, _dto *dto.DestroyMaterialTestOrderMedia) (err error) {
+	/*
+		if err = u.mtoPolicy.StoreMedia(ctx, _dto); err != nil {
+			return nil, err
+		}
+
+		_, err = u.mediaService.CreateFromMultipartFiles(ctx, mediaDto.CreateFromMultipartFiles{
+			mediaDto.CreateFromMultipartFile{
+				ModelType: mediaEnum.ModelTypeMaterialTestOrder,
+				ModelId:   *_dto.OrderId,
+				Name:      *_dto.Name,
+				File:      _dto.File,
+			},
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		mto, err = u.mtoRepository.Find(*_dto.OrderId, query.NewQuery().Include("medias"))
+		if err != nil {
+			return nil, err
+		}
+	*/
+
+	return
 }
