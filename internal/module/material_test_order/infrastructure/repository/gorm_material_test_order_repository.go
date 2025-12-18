@@ -171,15 +171,6 @@ func (r *GormMaterialTestOrderRepository) Find(id string, q *query.Query) (*enti
 	return &mto, nil
 }
 
-func (r *GormMaterialTestOrderRepository) CountByCustomerId(customerId string) (count int64, err error) {
-	db := r.db.Model(&entity.MaterialTestOrder{})
-
-	if err = db.Where("customer_id = ?", customerId).Count(&count).Error; err != nil {
-		return 0, err
-	}
-	return
-}
-
 func (r *GormMaterialTestOrderRepository) Save(mto *entity.MaterialTestOrder) error {
 	err := r.db.Omit("WorkCategory", "OrderedServices", "OrderUsers", "Medias").Save(mto).Error
 	if err != nil {
