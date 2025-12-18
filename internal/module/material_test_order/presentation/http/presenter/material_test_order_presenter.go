@@ -83,9 +83,6 @@ func (p *materialTestOrderPresenter) FromEntityToViewModel(ctx context.Context, 
 	mtoVM.Discount = mto.Discount
 	mtoVM.Total = mto.Total
 
-	// TIMELINE
-	mtoVM.EnteredAt = mto.EnteredAt
-
 	// WORKFLOW STATUS
 	mtoVM.Status = mto.Status
 

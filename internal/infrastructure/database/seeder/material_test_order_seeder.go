@@ -305,10 +305,6 @@ func (s *MaterialTestOrderSeeder) createDateTimeOptions() map[string]any {
 		createdAt,
 		createdAt.AddDate(0, 0, 2),
 	)
-	enteredAt := gofakeit.DateRange(
-		createdAt.AddDate(0, 0, 7),
-		createdAt.AddDate(0, 0, 14),
-	)
 	paymentSubmittedAt := gofakeit.DateRange(
 		createdAt.AddDate(0, 0, 7),
 		createdAt.AddDate(0, 0, 14),
@@ -322,8 +318,8 @@ func (s *MaterialTestOrderSeeder) createDateTimeOptions() map[string]any {
 		paymentRejectedAt.AddDate(0, 0, 2),
 	)
 	testingAt := gofakeit.DateRange(
-		enteredAt,
-		enteredAt.AddDate(0, 0, 2),
+		createdAt,
+		createdAt.AddDate(0, 0, 2),
 	)
 	completedAt := gofakeit.DateRange(
 		testingAt.AddDate(0, 0, 2),
@@ -340,8 +336,6 @@ func (s *MaterialTestOrderSeeder) createDateTimeOptions() map[string]any {
 	)
 
 	return map[string]any{
-		"EnteredAt": enteredAt,
-
 		"PaymentSubmittedAt": &paymentSubmittedAt,
 		"PaymentRejectedAt":  &paymentRejectedAt,
 		"PaymentApprovedAt":  &paymentApprovedAt,
@@ -403,7 +397,6 @@ func (s *MaterialTestOrderSeeder) createAwaitingPayment(options map[string]any) 
 
 func (s *MaterialTestOrderSeeder) createPaymentSubmitted(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
-		"EnteredAt",
 		"PaymentSubmittedAt",
 		"CreatedAt",
 		"UpdatedAt",
@@ -418,7 +411,6 @@ func (s *MaterialTestOrderSeeder) createPaymentSubmitted(options map[string]any)
 
 func (s *MaterialTestOrderSeeder) createPaymentRejected(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
-		"EnteredAt",
 		"PaymentSubmittedAt",
 		"PaymentRejectedAt",
 		"CreatedAt",
@@ -434,7 +426,6 @@ func (s *MaterialTestOrderSeeder) createPaymentRejected(options map[string]any) 
 
 func (s *MaterialTestOrderSeeder) createPaymentApproved(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
-		"EnteredAt",
 		"PaymentSubmittedAt",
 		"PaymentApprovedAt",
 		"CreatedAt",
@@ -450,7 +441,6 @@ func (s *MaterialTestOrderSeeder) createPaymentApproved(options map[string]any) 
 
 func (s *MaterialTestOrderSeeder) createTesting(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
-		"EnteredAt",
 		"PaymentSubmittedAt",
 		"PaymentApprovedAt",
 		"TestingAt",
@@ -467,7 +457,6 @@ func (s *MaterialTestOrderSeeder) createTesting(options map[string]any) *entity.
 
 func (s *MaterialTestOrderSeeder) createCompleted(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
-		"EnteredAt",
 		"PaymentSubmittedAt",
 		"PaymentApprovedAt",
 		"TestingAt",
@@ -485,7 +474,6 @@ func (s *MaterialTestOrderSeeder) createCompleted(options map[string]any) *entit
 
 func (s *MaterialTestOrderSeeder) createCancelled(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
-		"EnteredAt",
 		"CancelledAt",
 		"CreatedAt",
 		"UpdatedAt",
@@ -514,7 +502,6 @@ func (s *MaterialTestOrderSeeder) createRejected(options map[string]any) *entity
 
 func (s *MaterialTestOrderSeeder) createRefunded(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
-		"EnteredAt",
 		"PaymentSubmittedAt",
 		"PaymentApprovedAt",
 		"TestingAt",

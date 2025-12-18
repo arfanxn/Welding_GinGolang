@@ -67,13 +67,6 @@ func NewMaterialTestOrderFactory(
 			discount := gofakeit.Float64Range(1000.00, 100000.00)
 			return boolutil.Ternary(withDiscount, discount, 0.00), nil
 		}).
-		Attr("EnteredAt", func(args factory.Args) (any, error) {
-			enteredAt := gofakeit.DateRange(
-				time.Now().AddDate(-1, 0, 0),
-				time.Now(),
-			)
-			return enteredAt, nil
-		}).
 		Attr("Status", func(args factory.Args) (any, error) {
 			status := statuses[gofakeit.IntRange(0, len(statuses)-1)]
 			return status, nil
@@ -97,10 +90,9 @@ func NewMaterialTestOrderFactory(
 			}).
 		*/
 		Attr("CreatedAt", func(args factory.Args) (any, error) {
-			enteredAt := args.Instance().(*entity.MaterialTestOrder).EnteredAt
 			createdAt := gofakeit.DateRange(
-				enteredAt.AddDate(0, -6, 0),
-				enteredAt,
+				time.Now().AddDate(0, -6, 0),
+				time.Now(),
 			)
 			return createdAt, nil
 		}).

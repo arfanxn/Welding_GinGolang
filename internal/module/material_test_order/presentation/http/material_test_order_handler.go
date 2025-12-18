@@ -3,7 +3,6 @@ package http
 import (
 	"errors"
 	"net/http"
-	"time"
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/helper"
 	"github.com/arfanxn/welding/internal/infrastructure/http/response"
@@ -99,11 +98,6 @@ func (h *materialTestOrderHandler) Store(c *gin.Context) {
 	req := materialTestOrderRequest.NewStoreMaterialTestOrder()
 	helper.MustBindValidate(c, req)
 
-	enteredAt, err := time.Parse(time.DateTime, req.EnteredAt)
-	if err != nil {
-		panic(err)
-	}
-
 	materialTestOrder, err := h.materialTestOrderUsecase.Store(c.Request.Context(), &materialTestOrderDto.SaveMaterialTestOrder{
 		WorkCategoryId:       &req.WorkCategoryId,       // work category
 		WorkPackageName:      &req.WorkPackageName,      // work package name
@@ -115,7 +109,6 @@ func (h *materialTestOrderHandler) Store(c *gin.Context) {
 		RecipientName:        &req.RecipientName,        // recipient name
 		TesterNote:           req.TesterNote,            // tester note
 		Status:               &req.Status,               // status
-		EnteredAt:            &enteredAt,                // entered at
 		OwnerUserIds:         req.OwnerUserIds,          // owner user ids
 		OrderedServices: lo.Map(req.OrderedServices, // order services
 			func(service materialTestOrderRequest.StoreMaterialTestOrderService, _ int) materialTestOrderDto.SaveMaterialTestOrderService {
@@ -156,15 +149,8 @@ func (h *materialTestOrderHandler) Update(c *gin.Context) {
 	helper.MustBindValidate(c, req)
 
 	var (
-		enteredAt time.Time
-		err       error
+		err error
 	)
-	if req.EnteredAt != nil {
-		enteredAt, err = time.Parse(time.DateTime, *req.EnteredAt)
-		if err != nil {
-			panic(err)
-		}
-	}
 
 	materialTestOrder, err := h.materialTestOrderUsecase.Update(c.Request.Context(), &materialTestOrderDto.SaveMaterialTestOrder{
 		Id:                   &req.Id,
@@ -178,7 +164,6 @@ func (h *materialTestOrderHandler) Update(c *gin.Context) {
 		RecipientName:        req.RecipientName,        // recipient name
 		TesterNote:           req.TesterNote,           // tester note
 		Status:               req.Status,               // status
-		EnteredAt:            &enteredAt,               // entered at
 		OwnerUserIds:         req.OwnerUserIds,         // owner user ids
 		OrderedServices: lo.Map(req.OrderedServices,
 			func(service materialTestOrderRequest.UpdateMaterialTestOrderService, _ int) materialTestOrderDto.SaveMaterialTestOrderService {

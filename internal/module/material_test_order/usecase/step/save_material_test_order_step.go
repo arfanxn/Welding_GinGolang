@@ -168,10 +168,6 @@ func (s *saveMaterialTestServiceStep) Handle(ctx context.Context, _dto *dto.Save
 		}
 	}
 
-	if !goutil.IsEmptyReal(_dto.EnteredAt) {
-		mto.EnteredAt = *_dto.EnteredAt
-	}
-
 	if !goutil.IsEmptyReal(_dto.Status) {
 		mto.Status = *_dto.Status
 	}

@@ -24,9 +24,6 @@ type MaterialTestOrder struct {
 	Discount float64 `json:"discount"`
 	Total    float64 `json:"total"`
 
-	// ---- TIMELINE ----
-	EnteredAt time.Time `json:"entered_at"`
-
 	// ---- WORKFLOW STATUS ----
 	Status string `json:"status"`
 

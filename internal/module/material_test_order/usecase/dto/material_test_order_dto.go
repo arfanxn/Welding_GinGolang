@@ -2,7 +2,6 @@ package dto
 
 import (
 	"mime/multipart"
-	"time"
 
 	materialTestOrderEnum "github.com/arfanxn/welding/internal/module/material_test_order/domain/enum"
 )
@@ -23,8 +22,7 @@ type SaveMaterialTestOrder struct {
 
 	TesterNote *string `json:"tester_note"`
 
-	EnteredAt *time.Time                                     `json:"entered_at"`
-	Status    *materialTestOrderEnum.MaterialTestOrderStatus `json:"status"`
+	Status *materialTestOrderEnum.MaterialTestOrderStatus `json:"status"`
 
 	OwnerUserIds []string `json:"owner_user_ids"`
 

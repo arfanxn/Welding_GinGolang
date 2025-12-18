@@ -16,8 +16,6 @@ CREATE TABLE material_test_orders (
   discount DECIMAL(10, 2) NOT NULL,
   total DECIMAL(10, 2) NOT NULL,
 
-  entered_at TIMESTAMP WITH TIME ZONE NOT NULL,
-
   status VARCHAR(50) NOT NULL,
 
   payment_submitted_at TIMESTAMP WITH TIME ZONE,
