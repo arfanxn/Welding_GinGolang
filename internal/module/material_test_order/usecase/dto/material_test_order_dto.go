@@ -27,8 +27,6 @@ type SaveMaterialTestOrder struct {
 	OwnerUserIds []string `json:"owner_user_ids"`
 
 	OrderedServices []SaveMaterialTestOrderService `json:"ordered_services"`
-
-	Medias []SaveMaterialTestOrderMedia `json:"medias"`
 }
 
 type DestroyMaterialTestOrder struct {

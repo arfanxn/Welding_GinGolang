@@ -72,7 +72,7 @@ func (r *StoreMaterialTestOrder) Validate() error {
 			validation.Required.Error("Status wajib disi"),
 			validation.In(
 				materialTestOrderEnum.MaterialTestOrderStatusDraft, materialTestOrderEnum.MaterialTestOrderStatusAwaitingReview).
-				Error(fmt.Sprintf("Status tidak valid. available: '%s', '%s'",
+				Error(fmt.Sprintf("Status tidak valid. allowed: '%s', '%s'",
 					materialTestOrderEnum.MaterialTestOrderStatusDraft,
 					materialTestOrderEnum.MaterialTestOrderStatusAwaitingReview),
 				),

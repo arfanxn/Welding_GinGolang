@@ -38,6 +38,10 @@ func (r *GormMaterialTestOrderRepository) query(db *gorm.DB, q *query.Query) (*g
 			db = db.Preload("OrderedServices")
 		}
 
+		if q.GetInclude("ordered_services.service") != nil {
+			db = db.Preload("OrderedServices.Service")
+		}
+
 		if q.GetInclude("ordered_services.evaluation") != nil {
 			db = db.Preload("OrderedServices.Evaluation")
 		}
@@ -168,6 +172,28 @@ func (r *GormMaterialTestOrderRepository) Find(id string, q *query.Query) (*enti
 		}
 		return nil, err
 	}
+	return &mto, nil
+}
+
+func (r *GormMaterialTestOrderRepository) FindLatestThisYear(
+	q *query.Query,
+) (*entity.MaterialTestOrder, error) {
+
+	var mto entity.MaterialTestOrder
+
+	err := r.db.
+		Where("EXTRACT(YEAR FROM created_at) = EXTRACT(YEAR FROM CURRENT_DATE)").
+		Order("number::int DESC").
+		Limit(1).
+		First(&mto).Error
+
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errorx.ErrMaterialTestOrderNotFound
+		}
+		return nil, err
+	}
+
 	return &mto, nil
 }
 

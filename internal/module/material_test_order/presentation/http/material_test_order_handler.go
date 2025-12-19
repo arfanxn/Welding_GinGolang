@@ -111,11 +111,11 @@ func (h *materialTestOrderHandler) Store(c *gin.Context) {
 		Status:               &req.Status,               // status
 		OwnerUserIds:         req.OwnerUserIds,          // owner user ids
 		OrderedServices: lo.Map(req.OrderedServices, // order services
-			func(service materialTestOrderRequest.StoreMaterialTestOrderService, _ int) materialTestOrderDto.SaveMaterialTestOrderService {
+			func(orderService materialTestOrderRequest.StoreMaterialTestOrderService, _ int) materialTestOrderDto.SaveMaterialTestOrderService {
 				return materialTestOrderDto.SaveMaterialTestOrderService{
-					ServiceId:  service.ServiceId,
-					SampleName: service.SampleName,
-					Quantity:   service.Quantity,
+					ServiceId:  orderService.ServiceId,
+					SampleName: orderService.SampleName,
+					Quantity:   orderService.Quantity,
 				}
 			}),
 	})
@@ -166,11 +166,11 @@ func (h *materialTestOrderHandler) Update(c *gin.Context) {
 		Status:               req.Status,               // status
 		OwnerUserIds:         req.OwnerUserIds,         // owner user ids
 		OrderedServices: lo.Map(req.OrderedServices,
-			func(service materialTestOrderRequest.UpdateMaterialTestOrderService, _ int) materialTestOrderDto.SaveMaterialTestOrderService {
+			func(orderService materialTestOrderRequest.UpdateMaterialTestOrderService, _ int) materialTestOrderDto.SaveMaterialTestOrderService {
 				return materialTestOrderDto.SaveMaterialTestOrderService{
-					ServiceId:  service.ServiceId,
-					SampleName: service.SampleName,
-					Quantity:   service.Quantity,
+					ServiceId:  orderService.ServiceId,
+					SampleName: orderService.SampleName,
+					Quantity:   orderService.Quantity,
 				}
 			}),
 	})

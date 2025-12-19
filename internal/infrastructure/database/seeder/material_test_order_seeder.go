@@ -1,6 +1,7 @@
 package seeder
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -156,7 +157,7 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 		return err
 	}
 
-	for _, mtOrder := range mtOrders {
+	for mtOrderIndex, mtOrder := range mtOrders {
 		mtOrderServicesCount := gofakeit.IntRange(0, 5)
 
 		if mtOrderServicesCount > 0 {
@@ -247,6 +248,8 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 				medias = append(medias, media)
 			}
 		}
+
+		mtOrder.Number = fmt.Sprintf("%03d", len(mtOrders)-mtOrderIndex)
 
 		if mtOrder.SubTotal > 0 {
 			mtOrder.Total = mtOrder.SubTotal + mtOrder.Tax - mtOrder.Discount

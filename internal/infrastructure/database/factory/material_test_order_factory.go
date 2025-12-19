@@ -1,6 +1,7 @@
 package factory
 
 import (
+	"fmt"
 	"time"
 
 	id "github.com/arfanxn/welding/internal/infrastructure/id"
@@ -9,7 +10,6 @@ import (
 	"github.com/arfanxn/welding/pkg/boolutil"
 	"github.com/bluele/factory-go/factory"
 	"github.com/brianvoe/gofakeit/v7"
-	"github.com/samber/lo"
 )
 
 func NewMaterialTestOrderFactory(
@@ -22,7 +22,7 @@ func NewMaterialTestOrderFactory(
 			return idService.Generate(), nil
 		}).
 		Attr("Number", func(args factory.Args) (any, error) {
-			number := lo.Substring(idService.Generate(), 17, 26)
+			number := fmt.Sprintf("%03d", gofakeit.IntRange(1, 999))
 			return number, nil
 		}).
 		Attr("WorkPackageName", func(args factory.Args) (any, error) {
