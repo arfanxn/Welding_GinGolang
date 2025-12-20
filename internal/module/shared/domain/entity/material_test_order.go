@@ -1,6 +1,10 @@
 package entity
 
-import "time"
+import (
+	"time"
+
+	mtoEnum "github.com/arfanxn/welding/internal/module/material_test_order/domain/enum"
+)
 
 type MaterialTestOrder struct {
 	// ---- IDENTIFICATION ----
@@ -59,4 +63,12 @@ func NewMaterialTestOrder() *MaterialTestOrder {
 
 func (MaterialTestOrder) TableName() string {
 	return "material_test_orders"
+}
+
+func (mto *MaterialTestOrder) IsDraft() bool {
+	return mto.Status == mtoEnum.MaterialTestOrderStatusDraft
+}
+
+func (mto *MaterialTestOrder) IsAwaitingReview() bool {
+	return mto.Status == mtoEnum.MaterialTestOrderStatusAwaitingReview
 }

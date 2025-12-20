@@ -168,12 +168,23 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 				// Get the material test service for this iteration
 				mtService := shuffledMTServices[i]
 
+				sampledAt := mtOrder.CreatedAt
+				sampleNumber := fmt.Sprintf(
+					"%02d/%d.%s/%s/%03d",
+					int(sampledAt.Month()), // MM
+					sampledAt.Year(),       // YYYY
+					mtOrder.Number,         // ORDER_NUMBER
+					mtService.ServiceCode,  // SERVICE_CODE
+					len(mtOrderServices)+1, // SEQ (3 digits)
+				)
+
 				// Create a new material test order service using the factory
 				mtOrderService := materialTestOrderServiceFactory.MustCreate().(*entity.MaterialTestOrderService)
 
 				// Set up the order service details
-				mtOrderService.OrderId = mtOrder.Id                                                // Link to the parent order
-				mtOrderService.ServiceId = mtService.Id                                            // Reference the service
+				mtOrderService.OrderId = mtOrder.Id     // Link to the parent order
+				mtOrderService.ServiceId = mtService.Id // Reference the service
+				mtOrderService.SampleNumber = sampleNumber
 				mtOrderService.Price = mtService.Price                                             // Set the service price
 				mtOrderService.Quantity = gofakeit.IntRange(1, 100)                                // Random quantity between 1-100
 				mtOrderService.LineTotal = mtOrderService.Price * float64(mtOrderService.Quantity) // Calculate line total

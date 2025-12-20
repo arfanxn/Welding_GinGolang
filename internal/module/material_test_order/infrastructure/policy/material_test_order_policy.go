@@ -5,8 +5,11 @@ import (
 
 	mtoRepository "github.com/arfanxn/welding/internal/module/material_test_order/domain/repository"
 	"github.com/arfanxn/welding/internal/module/material_test_order/usecase/dto"
+	mtosRepository "github.com/arfanxn/welding/internal/module/material_test_order_service/domain/repository"
 	mtsRepository "github.com/arfanxn/welding/internal/module/material_test_service/domain/repository"
 	mtwcRepository "github.com/arfanxn/welding/internal/module/material_test_work_category/domain/repository"
+	mediaRepository "github.com/arfanxn/welding/internal/module/media/domain/repository"
+	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
 	userRepository "github.com/arfanxn/welding/internal/module/user/domain/repository"
 	"github.com/gookit/goutil"
 	"go.uber.org/fx"
@@ -23,27 +26,33 @@ type MaterialTestOrderPolicy interface {
 }
 
 type materialTestOrderPolicy struct {
-	mtoRepository  mtoRepository.MaterialTestOrderRepository
-	mtsRepository  mtsRepository.MaterialTestServiceRepository
-	mtwcRepository mtwcRepository.MaterialTestWorkCategoryRepository
-	userRepository userRepository.UserRepository
+	mtoRepository   mtoRepository.MaterialTestOrderRepository
+	mtsRepository   mtsRepository.MaterialTestServiceRepository
+	mtosRepository  mtosRepository.MaterialTestOrderServiceRepository
+	mtwcRepository  mtwcRepository.MaterialTestWorkCategoryRepository
+	userRepository  userRepository.UserRepository
+	mediaRepository mediaRepository.MediaRepository
 }
 
 type NewMaterialTestOrderPolicyParams struct {
 	fx.In
 
 	MaterialTestOrderRepository        mtoRepository.MaterialTestOrderRepository
+	MaterialTestOrderServiceRepository mtosRepository.MaterialTestOrderServiceRepository
 	MaterialTestServiceRepository      mtsRepository.MaterialTestServiceRepository
 	MaterialTestWorkCategoryRepository mtwcRepository.MaterialTestWorkCategoryRepository
 	UserRepository                     userRepository.UserRepository
+	MediaRepository                    mediaRepository.MediaRepository
 }
 
 func NewMaterialTestOrderPolicy(params NewMaterialTestOrderPolicyParams) MaterialTestOrderPolicy {
 	return &materialTestOrderPolicy{
-		mtoRepository:  params.MaterialTestOrderRepository,
-		mtsRepository:  params.MaterialTestServiceRepository,
-		mtwcRepository: params.MaterialTestWorkCategoryRepository,
-		userRepository: params.UserRepository,
+		mtoRepository:   params.MaterialTestOrderRepository,
+		mtosRepository:  params.MaterialTestOrderServiceRepository,
+		mtsRepository:   params.MaterialTestServiceRepository,
+		mtwcRepository:  params.MaterialTestWorkCategoryRepository,
+		userRepository:  params.UserRepository,
+		mediaRepository: params.MediaRepository,
 	}
 }
 
@@ -53,7 +62,7 @@ func (p *materialTestOrderPolicy) Store(ctx context.Context, _dto *dto.SaveMater
 	}
 
 	if _dto.OwnerUserIds != nil {
-		if !goutil.IsEmptyReal(_dto.OwnerUserIds[0]) {
+		if len(_dto.OwnerUserIds) > 0 && !goutil.IsEmptyReal(_dto.OwnerUserIds[0]) {
 			if err := p.validateUsers(_dto.OwnerUserIds); err != nil {
 				return err
 			}
@@ -61,7 +70,7 @@ func (p *materialTestOrderPolicy) Store(ctx context.Context, _dto *dto.SaveMater
 	}
 
 	if _dto.OrderedServices != nil {
-		if !goutil.IsEmptyReal(_dto.OrderedServices[0]) {
+		if len(_dto.OrderedServices) > 0 && !goutil.IsEmptyReal(_dto.OrderedServices[0]) {
 			serviceIds := []string{}
 			for _, orderedServiceDto := range _dto.OrderedServices {
 				serviceIds = append(serviceIds, orderedServiceDto.ServiceId)
@@ -78,6 +87,10 @@ func (p *materialTestOrderPolicy) Store(ctx context.Context, _dto *dto.SaveMater
 }
 
 func (p *materialTestOrderPolicy) Update(ctx context.Context, _dto *dto.SaveMaterialTestOrder) error {
+	if _, err := p.mtoRepository.Find(*_dto.Id, nil); err != nil {
+		return err
+	}
+
 	if !goutil.IsEmptyReal(_dto.WorkCategoryId) {
 		if err := p.validateWorkCategory(*_dto.WorkCategoryId); err != nil {
 			return err
@@ -85,7 +98,7 @@ func (p *materialTestOrderPolicy) Update(ctx context.Context, _dto *dto.SaveMate
 	}
 
 	if _dto.OwnerUserIds != nil {
-		if !goutil.IsEmptyReal(_dto.OwnerUserIds[0]) {
+		if len(_dto.OwnerUserIds) > 0 && !goutil.IsEmptyReal(_dto.OwnerUserIds[0]) {
 			if err := p.validateUsers(_dto.OwnerUserIds); err != nil {
 				return err
 			}
@@ -93,10 +106,11 @@ func (p *materialTestOrderPolicy) Update(ctx context.Context, _dto *dto.SaveMate
 	}
 
 	if _dto.OrderedServices != nil {
-		if !goutil.IsEmptyReal(_dto.OrderedServices[0]) {
+		if len(_dto.OrderedServices) > 0 && !goutil.IsEmptyReal(_dto.OrderedServices[0]) {
 			serviceIds := []string{}
 			for _, orderedServiceDto := range _dto.OrderedServices {
 				serviceIds = append(serviceIds, orderedServiceDto.ServiceId)
+
 			}
 
 			if err := p.validateServices(serviceIds); err != nil {
@@ -110,20 +124,63 @@ func (p *materialTestOrderPolicy) Update(ctx context.Context, _dto *dto.SaveMate
 }
 
 func (p *materialTestOrderPolicy) Destroy(ctx context.Context, _dto *dto.DestroyMaterialTestOrder) error {
+	mto, err := p.mtoRepository.Find(_dto.Id, nil)
+	if err != nil {
+		return err
+	}
+
+	if !mto.IsDraft() && !mto.IsAwaitingReview() {
+		return errorx.ErrMaterialTestOrderStatusDestroyForbidden
+	}
+
 	return nil
 }
 
 func (p *materialTestOrderPolicy) StoreMedia(ctx context.Context, _dto *dto.SaveMaterialTestOrderMedia) error {
+	if _, err := p.mtoRepository.Find(*_dto.OrderId, nil); err != nil {
+		return err
+	}
+
 	return nil
 }
 
 func (p *materialTestOrderPolicy) UpdateMedia(ctx context.Context, _dto *dto.SaveMaterialTestOrderMedia) error {
+	if _, err := p.mtoRepository.Find(*_dto.OrderId, nil); err != nil {
+		return err
+	}
+
+	if _, err := p.mediaRepository.Find(*_dto.MediaId, nil); err != nil {
+		return err
+	}
+
 	return nil
 }
 
 func (p *materialTestOrderPolicy) DestroyMedia(ctx context.Context, _dto *dto.SaveMaterialTestOrderMedia) error {
+	if _, err := p.mtoRepository.Find(*_dto.OrderId, nil); err != nil {
+		return err
+	}
+
+	if _, err := p.mediaRepository.Find(*_dto.MediaId, nil); err != nil {
+		return err
+	}
+
 	return nil
 }
+
+/* ==============================
+	Private Helper Methods
+============================== */
+
+/*
+func (p *materialTestOrderPolicy) validateOrderServices(orderServiceIds []string) error {
+	_, err := p.mtosRepository.FindByIds(orderServiceIds, nil)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+*/
 
 func (p *materialTestOrderPolicy) validateServices(serviceIds []string) error {
 	_, err := p.mtsRepository.FindByIds(serviceIds, nil)

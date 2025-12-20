@@ -1,7 +1,6 @@
 package factory
 
 import (
-	"fmt"
 	"time"
 
 	id "github.com/arfanxn/welding/internal/infrastructure/id"
@@ -20,22 +19,6 @@ func NewMaterialTestOrderServiceFactory(
 		}).
 		Attr("SampleName", func(args factory.Args) (any, error) {
 			return gofakeit.ProductMaterial(), nil
-		}).
-		Attr("SampleNumber", func(args factory.Args) (any, error) {
-			now := time.Now()
-			sampledAt := gofakeit.DateRange(now, now.AddDate(0, 0, 7))
-
-			serviceCodes := []string{"UTK", "CNC", "CAL"}
-			serviceCode := serviceCodes[gofakeit.IntRange(0, len(serviceCodes)-1)]
-			sampleNumber := fmt.Sprintf("%02d/%d.%.1f/%s/%03d", // eg: 01/2025.1/UTK/001
-				sampledAt.Day(),
-				sampledAt.Year(),
-				float64(sampledAt.Month())/1,
-				serviceCode,
-				gofakeit.Number(1, 999),
-			)
-
-			return sampleNumber, nil
 		}).
 		Attr("Quantity", func(args factory.Args) (any, error) {
 			return gofakeit.Number(1, 100), nil

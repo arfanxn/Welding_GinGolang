@@ -2,15 +2,18 @@ package http
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/helper"
 	"github.com/arfanxn/welding/internal/infrastructure/http/response"
+	materialTestOrderEnum "github.com/arfanxn/welding/internal/module/material_test_order/domain/enum"
 	materialTestOrderPresenter "github.com/arfanxn/welding/internal/module/material_test_order/presentation/http/presenter"
 	materialTestOrderRequest "github.com/arfanxn/welding/internal/module/material_test_order/presentation/http/request"
 	materialTestOrderUsecase "github.com/arfanxn/welding/internal/module/material_test_order/usecase"
 	materialTestOrderDto "github.com/arfanxn/welding/internal/module/material_test_order/usecase/dto"
 	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
+	"github.com/arfanxn/welding/pkg/boolutil"
 	"github.com/arfanxn/welding/pkg/httperror"
 	"github.com/arfanxn/welding/pkg/query"
 	"github.com/gin-gonic/gin"
@@ -110,14 +113,14 @@ func (h *materialTestOrderHandler) Store(c *gin.Context) {
 		TesterNote:           req.TesterNote,            // tester note
 		Status:               &req.Status,               // status
 		OwnerUserIds:         req.OwnerUserIds,          // owner user ids
-		OrderedServices: lo.Map(req.OrderedServices, // order services
+		OrderedServices: boolutil.Ternary(req.OrderedServices != nil, lo.Map(req.OrderedServices, // order services
 			func(orderService materialTestOrderRequest.StoreMaterialTestOrderService, _ int) materialTestOrderDto.SaveMaterialTestOrderService {
 				return materialTestOrderDto.SaveMaterialTestOrderService{
 					ServiceId:  orderService.ServiceId,
 					SampleName: orderService.SampleName,
 					Quantity:   orderService.Quantity,
 				}
-			}),
+			}), nil),
 	})
 	if err != nil {
 		if errors.Is(err, errorx.ErrMaterialTestOrderAlreadyExists) {
@@ -132,7 +135,6 @@ func (h *materialTestOrderHandler) Store(c *gin.Context) {
 		if errors.Is(err, errorx.ErrMaterialTestServiceNotFound) {
 			httperror.Panic(http.StatusNotFound, "Material test service tidak ditemukan", nil)
 		}
-		// TODO: there might be more error handling here
 		panic(err)
 	}
 
@@ -165,14 +167,14 @@ func (h *materialTestOrderHandler) Update(c *gin.Context) {
 		TesterNote:           req.TesterNote,           // tester note
 		Status:               req.Status,               // status
 		OwnerUserIds:         req.OwnerUserIds,         // owner user ids
-		OrderedServices: lo.Map(req.OrderedServices,
+		OrderedServices: boolutil.Ternary(req.OrderedServices != nil, lo.Map(req.OrderedServices,
 			func(orderService materialTestOrderRequest.UpdateMaterialTestOrderService, _ int) materialTestOrderDto.SaveMaterialTestOrderService {
 				return materialTestOrderDto.SaveMaterialTestOrderService{
 					ServiceId:  orderService.ServiceId,
 					SampleName: orderService.SampleName,
 					Quantity:   orderService.Quantity,
 				}
-			}),
+			}), nil),
 	})
 	if err != nil {
 		if errors.Is(err, errorx.ErrMaterialTestOrderNotFound) {
@@ -181,13 +183,15 @@ func (h *materialTestOrderHandler) Update(c *gin.Context) {
 		if errors.Is(err, errorx.ErrMaterialTestOrderAlreadyExists) {
 			httperror.Panic(http.StatusConflict, "Material test order sudah ada", nil)
 		}
+		if errors.Is(err, errorx.ErrUserNotFound) {
+			httperror.Panic(http.StatusNotFound, "User tidak ditemukan", nil)
+		}
 		if errors.Is(err, errorx.ErrMaterialTestWorkCategoryNotFound) {
 			httperror.Panic(http.StatusNotFound, "Material test work category tidak ditemukan", nil)
 		}
 		if errors.Is(err, errorx.ErrMaterialTestServiceNotFound) {
 			httperror.Panic(http.StatusNotFound, "Material test service tidak ditemukan", nil)
 		}
-		// TODO: there might be more error handling here
 		panic(err)
 	}
 
@@ -208,7 +212,15 @@ func (h *materialTestOrderHandler) Destroy(c *gin.Context) {
 		if errors.Is(err, errorx.ErrMaterialTestOrderNotFound) {
 			httperror.Panic(http.StatusNotFound, "Material test order tidak ditemukan", nil)
 		}
-		// TODO: there might be more error handling here
+		if errors.Is(err, errorx.ErrMaterialTestOrderStatusDestroyForbidden) {
+			httperror.Panic(http.StatusForbidden,
+				fmt.Sprintf(
+					"Status material test order harus '%s' atau '%s' untuk dapat dihapus",
+					materialTestOrderEnum.MaterialTestOrderStatusDraft,
+					materialTestOrderEnum.MaterialTestOrderStatusAwaitingReview,
+				),
+				nil)
+		}
 		panic(err)
 	}
 

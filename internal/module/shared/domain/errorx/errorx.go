@@ -234,6 +234,9 @@ var (
 	// ErrMaterialTestOrderAlreadyExists is returned when attempting to create a material test order that already exists
 	ErrMaterialTestOrderAlreadyExists Errorx = New("material test order already exists")
 
+	// ErrMaterialTestOrderStatusDestroyForbidden is returned when attempting to destroy a material test order that is not in draft or awaiting review status
+	ErrMaterialTestOrderStatusDestroyForbidden Errorx = New("material test order status must be draft or awaiting review to be deleted")
+
 	// ========================================
 	// Material Test Order Service Errors
 	// ========================================
