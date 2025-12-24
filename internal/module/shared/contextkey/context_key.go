@@ -16,6 +16,8 @@ const (
 	ClaimsKey ContextKey = "claims"
 	// UserKey is the context key for user object
 	UserKey ContextKey = "user"
+	// UserPermissionsKey is the context key for user permissions
+	UserPermissionsKey ContextKey = "user_permissions"
 	// UserAgentKey is the context key for user agent
 	UserAgentKey ContextKey = "user_agent"
 	// ClientIpKey is the context key for client IP

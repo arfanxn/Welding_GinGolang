@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/arfanxn/welding/internal/infrastructure/id"
+	mtoEnum "github.com/arfanxn/welding/internal/module/material_test_order/domain/enum"
 	mtoRepository "github.com/arfanxn/welding/internal/module/material_test_order/domain/repository"
 	"github.com/arfanxn/welding/internal/module/material_test_order/usecase/dto"
 	mtosRepository "github.com/arfanxn/welding/internal/module/material_test_order_service/domain/repository"
@@ -19,6 +20,7 @@ import (
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
 	"github.com/arfanxn/welding/pkg/query"
+	"github.com/arfanxn/welding/pkg/typeutil"
 	"github.com/gookit/goutil"
 	"github.com/samber/lo"
 	"go.uber.org/fx"
@@ -171,6 +173,12 @@ func (s *saveMaterialTestOrderStep) Handle(ctx context.Context, _dto *dto.SaveMa
 
 	if !goutil.IsEmptyReal(_dto.Status) {
 		mto.Status = *_dto.Status
+		switch mto.Status {
+		case mtoEnum.MaterialTestOrderStatusAwaitingReview:
+			mto.SubmittedAt = typeutil.Ptr(time.Now())
+		case mtoEnum.MaterialTestOrderStatusDraft:
+			mto.SubmittedAt = nil
+		}
 	}
 
 	if _dto.OwnerUserIds != nil {

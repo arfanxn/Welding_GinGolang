@@ -4,6 +4,7 @@ import (
 	repositoryImpl "github.com/arfanxn/welding/internal/module/permission/infrastructure/repository"
 	"github.com/arfanxn/welding/internal/module/permission/presentation/http"
 	"github.com/arfanxn/welding/internal/module/permission/usecase"
+	permissionService "github.com/arfanxn/welding/internal/module/permission/usecase/service"
 	"go.uber.org/fx"
 )
 
@@ -11,6 +12,7 @@ var Module = fx.Module(
 	"permission",
 	fx.Provide(
 		repositoryImpl.NewGormPermissionRepository,
+		permissionService.NewPermissionService,
 		usecase.NewPermissionUsecase,
 		http.NewPermissionHandler,
 	),

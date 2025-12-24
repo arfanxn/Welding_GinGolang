@@ -24,6 +24,9 @@ func NewGormMaterialTestOrderRepository(db *gorm.DB) repository.MaterialTestOrde
 
 func (r *GormMaterialTestOrderRepository) query(db *gorm.DB, q *query.Query) (*gorm.DB, error) {
 	mtoTableName := entity.NewMaterialTestOrder().TableName()
+	mtosTableName := entity.NewMaterialTestOrderService().TableName()
+	mtouTableName := entity.NewMaterialTestOrderUser().TableName()
+	mediaTableName := entity.NewMedia().TableName()
 
 	if q != nil {
 		if q.GetInclude("work_category") != nil {
@@ -31,11 +34,18 @@ func (r *GormMaterialTestOrderRepository) query(db *gorm.DB, q *query.Query) (*g
 		}
 
 		if q.GetInclude("order_users.user") != nil {
-			db = db.Preload("OrderUsers.User")
+			db = db.Preload("OrderUsers", func(db *gorm.DB) *gorm.DB {
+				return db.Order(mtouTableName + ".created_at ASC")
+			}).Preload("OrderUsers.User")
 		}
 
-		if q.GetInclude("ordered_services") != nil {
-			db = db.Preload("OrderedServices")
+		if q.GetInclude("ordered_services") != nil ||
+			q.GetInclude("ordered_services.service") != nil ||
+			q.GetInclude("ordered_services.evaluation") != nil {
+
+			db = db.Preload("OrderedServices", func(db *gorm.DB) *gorm.DB {
+				return db.Order(mtosTableName + ".created_at ASC")
+			})
 		}
 
 		if q.GetInclude("ordered_services.service") != nil {
@@ -47,7 +57,9 @@ func (r *GormMaterialTestOrderRepository) query(db *gorm.DB, q *query.Query) (*g
 		}
 
 		if q.GetInclude("medias") != nil {
-			db = db.Preload("Medias")
+			db = db.Preload("Medias", func(db *gorm.DB) *gorm.DB {
+				return db.Order(mediaTableName + ".order_column ASC, " + mediaTableName + ".created_at DESC")
+			})
 		}
 
 		if f := q.GetFilterById(); f != nil {
@@ -172,6 +184,30 @@ func (r *GormMaterialTestOrderRepository) Find(id string, q *query.Query) (*enti
 		}
 		return nil, err
 	}
+	return &mto, nil
+}
+
+func (r *GormMaterialTestOrderRepository) FindByIdAndUserId(id string, userId string, q *query.Query) (*entity.MaterialTestOrder, error) {
+	mtouTableName := entity.NewMaterialTestOrderUser().TableName()
+	mtoTableName := entity.NewMaterialTestOrder().TableName()
+
+	var mto entity.MaterialTestOrder
+
+	db, err := r.query(r.db, q)
+	if err != nil {
+		return nil, err
+	}
+
+	err = db.Joins("JOIN "+mtouTableName+" ON "+mtouTableName+".order_id = "+mtoTableName+".id").
+		Where(mtoTableName+".id = ? AND "+mtouTableName+".user_id = ?", id, userId).
+		First(&mto).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errorx.ErrMaterialTestOrderNotFound
+		}
+		return nil, err
+	}
+
 	return &mto, nil
 }
 

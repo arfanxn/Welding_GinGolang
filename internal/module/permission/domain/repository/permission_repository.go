@@ -14,6 +14,7 @@ type PermissionRepository interface {
 	Find(id string, q *query.Query) (*entity.Permission, error)
 	FindByName(name string, q *query.Query) (*entity.Permission, error)
 	FindByIds(ids []string, q *query.Query) ([]*entity.Permission, error)
+	FindByUserId(userId string, q *query.Query) ([]*entity.Permission, error)
 	Save(permission *entity.Permission) error
 	SaveMany(permissions []*entity.Permission) error
 }

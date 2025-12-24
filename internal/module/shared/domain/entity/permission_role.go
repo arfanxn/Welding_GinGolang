@@ -13,6 +13,10 @@ type PermissionRole struct {
 	UpdatedAt    null.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }
 
+func NewPermissionRole() *PermissionRole {
+	return &PermissionRole{}
+}
+
 // TableName specifies the table name for the PermissionRole model
 func (PermissionRole) TableName() string {
 	return "permission_role"

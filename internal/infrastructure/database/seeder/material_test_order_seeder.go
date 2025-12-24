@@ -102,11 +102,17 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 		// Draft
 		s.createDraft(nil),
 
-		// Awaiting Review
+		// Submitted / Awaiting Review
 		s.createAwaitingReview(nil),
 
-		// Awaiting Payment
+		// Rejected
+		s.createRejected(nil),
+
+		// Approved / Awaiting Payment
 		s.createAwaitingPayment(nil),
+
+		// Cancelled
+		s.createCancelled(nil),
 
 		// Payment Submitted
 		s.createPaymentSubmitted(nil),
@@ -120,17 +126,11 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 		// Testing
 		s.createTesting(nil),
 
-		// Completed
-		s.createCompleted(nil),
-
-		// Cancelled
-		s.createCancelled(nil),
-
-		// Rejected
-		s.createRejected(nil),
-
 		// Refunded
 		s.createRefunded(nil),
+
+		// Completed
+		s.createCompleted(nil),
 	}
 
 	customerUsers, err := userRepository.Get(query.NewQuery().Include("roles").Filter("roles.name", query.OperatorEqual, roleEnum.Customer))
@@ -158,6 +158,11 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 	}
 
 	for mtOrderIndex, mtOrder := range mtOrders {
+
+		isPaymentSubmitted := mtOrder.IsPaymentSubmitted()
+		isRefunded := mtOrder.IsRefunded()
+		isPaymentSubmittedOrRefunded := isPaymentSubmitted || isRefunded
+
 		mtOrderServicesCount := gofakeit.IntRange(0, 5)
 
 		if mtOrderServicesCount > 0 {
@@ -224,9 +229,17 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 		mtWorkCategory := mtWorkCategories[gofakeit.IntRange(0, len(mtWorkCategories)-1)]
 		mtOrder.WorkCategoryId = mtWorkCategory.Id
 
-		mtOrderHasMedias := gofakeit.Bool()
+		var mtOrderMediasCount int
+		if isPaymentSubmitted {
+			mtOrderMediasCount = gofakeit.IntRange(1, 5)
+		} else if isRefunded {
+			mtOrderMediasCount = gofakeit.IntRange(2, 5)
+		} else {
+			mtOrderMediasCount = gofakeit.IntRange(0, 5)
+		}
+
+		mtOrderHasMedias := mtOrderMediasCount > 0
 		if mtOrderHasMedias {
-			mtOrderMediasCount := gofakeit.IntRange(1, 5)
 
 			for i := range mtOrderMediasCount {
 				orderColumn := i + 1
@@ -234,8 +247,17 @@ func (s *MaterialTestOrderSeeder) Seed() error {
 				media := mediaFactory.MustCreate().(*entity.Media)
 				media.ModelId = mtOrder.Id
 				media.ModelType = mediaEnum.ModelTypeMaterialTestOrder
-				media.CollectionName = mediaEnum.CollectionNameMaterialTestOrder
 				media.OrderColumn = &orderColumn
+
+				if i == 0 && isPaymentSubmittedOrRefunded {
+					media.Name = "Bukti pembayaran (payment)"
+					media.CollectionName = mediaEnum.CollectionNameMaterialTestOrderPaymentProof
+				} else if i == 1 && isRefunded {
+					media.Name = "Bukti pengembalian (refund)"
+					media.CollectionName = mediaEnum.CollectionNameMaterialTestOrderRefundProof
+				} else {
+					media.CollectionName = mediaEnum.CollectionNameMaterialTestOrder
+				}
 
 				{
 					// TODO: implement abstract filesystem
@@ -311,17 +333,25 @@ func (s *MaterialTestOrderSeeder) createDateTimeOptions() map[string]any {
 		time.Now().AddDate(-2, 0, 0),
 		time.Now().AddDate(-1, 0, 0),
 	)
-	rejectedAt := gofakeit.DateRange(
+	submittedAt := gofakeit.DateRange(
 		createdAt,
 		createdAt.AddDate(0, 0, 2),
+	)
+	rejectedAt := gofakeit.DateRange(
+		submittedAt,
+		submittedAt.AddDate(0, 0, 2),
+	)
+	approvedAt := gofakeit.DateRange(
+		rejectedAt,
+		rejectedAt.AddDate(0, 0, 2),
 	)
 	cancelledAt := gofakeit.DateRange(
 		createdAt,
 		createdAt.AddDate(0, 0, 2),
 	)
 	paymentSubmittedAt := gofakeit.DateRange(
-		createdAt.AddDate(0, 0, 7),
-		createdAt.AddDate(0, 0, 14),
+		approvedAt,
+		approvedAt.AddDate(0, 0, 2),
 	)
 	paymentRejectedAt := gofakeit.DateRange(
 		paymentSubmittedAt,
@@ -332,16 +362,16 @@ func (s *MaterialTestOrderSeeder) createDateTimeOptions() map[string]any {
 		paymentRejectedAt.AddDate(0, 0, 2),
 	)
 	testingAt := gofakeit.DateRange(
-		createdAt,
-		createdAt.AddDate(0, 0, 2),
+		paymentApprovedAt,
+		paymentApprovedAt.AddDate(0, 0, 2),
 	)
 	completedAt := gofakeit.DateRange(
+		testingAt,
 		testingAt.AddDate(0, 0, 2),
-		testingAt.AddDate(0, 0, 14),
 	)
 	refundedAt := gofakeit.DateRange(
-		testingAt.AddDate(0, 0, 2),
-		testingAt.AddDate(0, 0, 14),
+		paymentApprovedAt.AddDate(0, 0, 2),
+		completedAt.AddDate(0, 0, 2),
 	)
 
 	updatedAt := gofakeit.DateRange(
@@ -350,16 +380,18 @@ func (s *MaterialTestOrderSeeder) createDateTimeOptions() map[string]any {
 	)
 
 	return map[string]any{
+		"SubmittedAt": &submittedAt,
+		"RejectedAt":  &rejectedAt,
+		"ApprovedAt":  &approvedAt,
+		"CancelledAt": &cancelledAt,
+
 		"PaymentSubmittedAt": &paymentSubmittedAt,
 		"PaymentRejectedAt":  &paymentRejectedAt,
 		"PaymentApprovedAt":  &paymentApprovedAt,
 
 		"TestingAt":   &testingAt,
-		"CompletedAt": &completedAt,
-
-		"CancelledAt": &cancelledAt,
-		"RejectedAt":  &rejectedAt,
 		"RefundedAt":  &refundedAt,
+		"CompletedAt": &completedAt,
 
 		"CreatedAt": createdAt,
 		"UpdatedAt": &updatedAt,
@@ -385,6 +417,7 @@ func (s *MaterialTestOrderSeeder) createDraft(options map[string]any) *entity.Ma
 
 func (s *MaterialTestOrderSeeder) createAwaitingReview(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
+		"SubmittedAt",
 		"CreatedAt",
 		"UpdatedAt",
 	})
@@ -396,8 +429,40 @@ func (s *MaterialTestOrderSeeder) createAwaitingReview(options map[string]any) *
 	return s.materialTestOrderFactory.MustCreateWithOption(options).(*entity.MaterialTestOrder)
 }
 
+func (s *MaterialTestOrderSeeder) createRejected(options map[string]any) *entity.MaterialTestOrder {
+	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
+		"SubmittedAt",
+		"RejectedAt",
+		"CreatedAt",
+		"UpdatedAt",
+	})
+
+	options = lo.Assign(datetimeOptions, map[string]any{
+		"Status": materialTestOrderEnum.MaterialTestOrderStatusRejected,
+	}, options)
+
+	return s.materialTestOrderFactory.MustCreateWithOption(options).(*entity.MaterialTestOrder)
+}
+
+func (s *MaterialTestOrderSeeder) createCancelled(options map[string]any) *entity.MaterialTestOrder {
+	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
+		"SubmittedAt",
+		"CancelledAt",
+		"CreatedAt",
+		"UpdatedAt",
+	})
+
+	options = lo.Assign(datetimeOptions, map[string]any{
+		"Status": materialTestOrderEnum.MaterialTestOrderStatusCancelled,
+	}, options)
+
+	return s.materialTestOrderFactory.MustCreateWithOption(options).(*entity.MaterialTestOrder)
+}
+
 func (s *MaterialTestOrderSeeder) createAwaitingPayment(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
+		"SubmittedAt",
+		"ApprovedAt",
 		"CreatedAt",
 		"UpdatedAt",
 	})
@@ -411,6 +476,8 @@ func (s *MaterialTestOrderSeeder) createAwaitingPayment(options map[string]any) 
 
 func (s *MaterialTestOrderSeeder) createPaymentSubmitted(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
+		"SubmittedAt",
+		"ApprovedAt",
 		"PaymentSubmittedAt",
 		"CreatedAt",
 		"UpdatedAt",
@@ -425,6 +492,8 @@ func (s *MaterialTestOrderSeeder) createPaymentSubmitted(options map[string]any)
 
 func (s *MaterialTestOrderSeeder) createPaymentRejected(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
+		"SubmittedAt",
+		"ApprovedAt",
 		"PaymentSubmittedAt",
 		"PaymentRejectedAt",
 		"CreatedAt",
@@ -440,6 +509,8 @@ func (s *MaterialTestOrderSeeder) createPaymentRejected(options map[string]any) 
 
 func (s *MaterialTestOrderSeeder) createPaymentApproved(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
+		"SubmittedAt",
+		"ApprovedAt",
 		"PaymentSubmittedAt",
 		"PaymentApprovedAt",
 		"CreatedAt",
@@ -455,6 +526,8 @@ func (s *MaterialTestOrderSeeder) createPaymentApproved(options map[string]any) 
 
 func (s *MaterialTestOrderSeeder) createTesting(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
+		"SubmittedAt",
+		"ApprovedAt",
 		"PaymentSubmittedAt",
 		"PaymentApprovedAt",
 		"TestingAt",
@@ -469,53 +542,10 @@ func (s *MaterialTestOrderSeeder) createTesting(options map[string]any) *entity.
 	return s.materialTestOrderFactory.MustCreateWithOption(options).(*entity.MaterialTestOrder)
 }
 
-func (s *MaterialTestOrderSeeder) createCompleted(options map[string]any) *entity.MaterialTestOrder {
-	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
-		"PaymentSubmittedAt",
-		"PaymentApprovedAt",
-		"TestingAt",
-		"CompletedAt",
-		"CreatedAt",
-		"UpdatedAt",
-	})
-
-	options = lo.Assign(datetimeOptions, map[string]any{
-		"Status": materialTestOrderEnum.MaterialTestOrderStatusCompleted,
-	}, options)
-
-	return s.materialTestOrderFactory.MustCreateWithOption(options).(*entity.MaterialTestOrder)
-}
-
-func (s *MaterialTestOrderSeeder) createCancelled(options map[string]any) *entity.MaterialTestOrder {
-	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
-		"CancelledAt",
-		"CreatedAt",
-		"UpdatedAt",
-	})
-
-	options = lo.Assign(datetimeOptions, map[string]any{
-		"Status": materialTestOrderEnum.MaterialTestOrderStatusCancelled,
-	}, options)
-
-	return s.materialTestOrderFactory.MustCreateWithOption(options).(*entity.MaterialTestOrder)
-}
-
-func (s *MaterialTestOrderSeeder) createRejected(options map[string]any) *entity.MaterialTestOrder {
-	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
-		"RejectedAt",
-		"CreatedAt",
-		"UpdatedAt",
-	})
-
-	options = lo.Assign(datetimeOptions, map[string]any{
-		"Status": materialTestOrderEnum.MaterialTestOrderStatusRejected,
-	}, options)
-
-	return s.materialTestOrderFactory.MustCreateWithOption(options).(*entity.MaterialTestOrder)
-}
-
 func (s *MaterialTestOrderSeeder) createRefunded(options map[string]any) *entity.MaterialTestOrder {
 	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
+		"SubmittedAt",
+		"ApprovedAt",
 		"PaymentSubmittedAt",
 		"PaymentApprovedAt",
 		"TestingAt",
@@ -526,6 +556,25 @@ func (s *MaterialTestOrderSeeder) createRefunded(options map[string]any) *entity
 
 	options = lo.Assign(datetimeOptions, map[string]any{
 		"Status": materialTestOrderEnum.MaterialTestOrderStatusRefunded,
+	}, options)
+
+	return s.materialTestOrderFactory.MustCreateWithOption(options).(*entity.MaterialTestOrder)
+}
+
+func (s *MaterialTestOrderSeeder) createCompleted(options map[string]any) *entity.MaterialTestOrder {
+	datetimeOptions := lo.PickByKeys(s.createDateTimeOptions(), []string{
+		"SubmittedAt",
+		"ApprovedAt",
+		"PaymentSubmittedAt",
+		"PaymentApprovedAt",
+		"TestingAt",
+		"CompletedAt",
+		"CreatedAt",
+		"UpdatedAt",
+	})
+
+	options = lo.Assign(datetimeOptions, map[string]any{
+		"Status": materialTestOrderEnum.MaterialTestOrderStatusCompleted,
 	}, options)
 
 	return s.materialTestOrderFactory.MustCreateWithOption(options).(*entity.MaterialTestOrder)

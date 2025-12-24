@@ -18,3 +18,7 @@ type Permission struct {
 func NewPermission() *Permission {
 	return &Permission{}
 }
+
+func (Permission) TableName() string {
+	return "permissions"
+}

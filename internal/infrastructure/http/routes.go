@@ -210,8 +210,19 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 		materialTestOrder.GET("/:id", params.MaterialTestOrderHandler.Show)
 		materialTestOrder.POST("", params.MaterialTestOrderHandler.Store)
 		materialTestOrder.PUT("/:id", params.MaterialTestOrderHandler.Update)
-		materialTestOrder.DELETE("/:id", params.MaterialTestOrderHandler.Destroy)
+		materialTestOrder.PATCH("/:id/approve", requirePermissionName(permissionEnum.MaterialTestOrdersUpdate), params.MaterialTestOrderHandler.Approve)
+		materialTestOrder.PATCH("/:id/reject", requirePermissionName(permissionEnum.MaterialTestOrdersUpdate), params.MaterialTestOrderHandler.Reject)
+		materialTestOrder.PATCH("/:id/cancel", params.MaterialTestOrderHandler.Cancel)
+		materialTestOrder.PATCH("/:id/submit-payment", params.MaterialTestOrderHandler.SubmitPayment)
+		materialTestOrder.PATCH("/:id/approve-payment", requirePermissionName(permissionEnum.MaterialTestOrdersUpdate), params.MaterialTestOrderHandler.ApprovePayment)
+		materialTestOrder.PATCH("/:id/reject-payment", requirePermissionName(permissionEnum.MaterialTestOrdersUpdate), params.MaterialTestOrderHandler.RejectPayment)
+		materialTestOrder.PATCH("/:id/test", requirePermissionName(permissionEnum.MaterialTestOrdersUpdate), params.MaterialTestOrderHandler.Test)
+		materialTestOrder.PATCH("/:id/refund", requirePermissionName(permissionEnum.MaterialTestOrdersUpdate), params.MaterialTestOrderHandler.Refund)
+		materialTestOrder.PATCH("/:id/complete", requirePermissionName(permissionEnum.MaterialTestOrdersUpdate), params.MaterialTestOrderHandler.Complete)
+		materialTestOrder.PUT("/:id/service-evaluations/:order_service_evaluation_id", requirePermissionName(permissionEnum.MaterialTestOrdersUpdate), params.MaterialTestOrderHandler.UpdateOrderServiceEvaluation)
 		materialTestOrder.POST("/:id/medias", params.MaterialTestOrderHandler.StoreMedia)
+		materialTestOrder.PUT("/:id/medias/:media_id", params.MaterialTestOrderHandler.UpdateMedia)
+		materialTestOrder.DELETE("/:id/medias/:media_id", params.MaterialTestOrderHandler.DestroyMedia)
 	}
 
 	return nil
