@@ -119,23 +119,43 @@ func (r *GormMaterialTestOrderServiceRepository) Find(id string, q *query.Query)
 	return &mtso, nil
 }
 
-func (r *GormMaterialTestOrderServiceRepository) FindLatestPerServiceByServiceIds(serviceIds []string, q *query.Query) (mtoss []*entity.MaterialTestOrderService, err error) {
-	// TODO: do something on `q *query.Query
+func (r *GormMaterialTestOrderServiceRepository) FindByIds(ids []string, q *query.Query) (mtoss []*entity.MaterialTestOrderService, err error) {
+	db := r.query(r.db, q)
 
-	mtossTableName := entity.NewMaterialTestOrderService().TableName()
+	if err := db.Where("id IN (?)", ids).Find(&mtoss).Error; err != nil {
+		return nil, err
+	}
+	if len(mtoss) != len(ids) {
+		return nil, errorx.ErrMaterialTestOrderServiceNotFound
+	}
+	return
+}
+
+func (r *GormMaterialTestOrderServiceRepository) FindLatestThisYearPerServiceByServiceIds(
+	serviceIds []string, q *query.Query,
+) (mtoss []*entity.MaterialTestOrderService, err error) {
+	// TODO: do something on `q *query.Query`
+
+	if len(serviceIds) == 0 {
+		return []*entity.MaterialTestOrderService{}, nil
+	}
+
+	table := entity.NewMaterialTestOrderService().TableName()
 
 	subQuery := r.db.
-		Table(mtossTableName).
-		Select(
-			mtossTableName+`.*,
+		Table(table).
+		Select(`
+			*,
 			ROW_NUMBER() OVER (
-			PARTITION BY service_id
-			ORDER BY
-				SPLIT_PART(SPLIT_PART(sample_number, '/', 2), '.', 1)::int DESC,
-				RIGHT(sample_number, 3)::int DESC
-		) AS rn
-	`).
-		Where("service_id IN ?", serviceIds)
+				PARTITION BY service_id
+				ORDER BY RIGHT(sample_number, 3)::int DESC
+			) AS rn
+		`).
+		Where("service_id IN ?", serviceIds).
+		Where(`
+			SPLIT_PART(SPLIT_PART(sample_number, '/', 2), '.', 1)::int
+			= EXTRACT(YEAR FROM CURRENT_DATE)
+		`)
 
 	err = r.db.
 		Table("(?) AS ranked", subQuery).
@@ -163,6 +183,20 @@ func (r *GormMaterialTestOrderServiceRepository) SaveMany(mtsos []*entity.Materi
 
 func (r *GormMaterialTestOrderServiceRepository) DestroyByOrderId(orderId string) error {
 	return r.db.Where("order_id = ?", orderId).Delete(&entity.MaterialTestOrderService{}).Error
+}
+
+// DestroyByOrderIdAndExceptIds deletes all MaterialTestOrderService records that match the given orderId
+// except those whose IDs are in the provided ids slice.
+//
+// Parameters:
+//   - orderId: The ID of the order to match against
+//   - ids: Slice of order service IDs to exclude from deletion
+//
+// Returns:
+//   - error: An error if the deletion fails, nil otherwise
+func (r *GormMaterialTestOrderServiceRepository) DestroyByOrderIdAndExceptIds(orderId string, ids []string) error {
+	return r.db.Where("order_id = ? AND id NOT IN ?", orderId, ids).
+		Delete(&entity.MaterialTestOrderService{}).Error
 }
 
 func (r *GormMaterialTestOrderServiceRepository) Destroy(mtso *entity.MaterialTestOrderService) error {

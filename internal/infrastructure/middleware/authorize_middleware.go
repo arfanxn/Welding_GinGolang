@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	permissionEnum "github.com/arfanxn/welding/internal/module/permission/domain/enum"
+	permissionRepository "github.com/arfanxn/welding/internal/module/permission/domain/repository"
+	permissionService "github.com/arfanxn/welding/internal/module/permission/usecase/service"
 	"github.com/arfanxn/welding/internal/module/shared/contextkey"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	userRepository "github.com/arfanxn/welding/internal/module/user/domain/repository"
@@ -17,20 +19,29 @@ type AuthorizeMiddleware interface {
 }
 
 type authorizeMiddleware struct {
-	userRepository userRepository.UserRepository
+	userRepository       userRepository.UserRepository
+	permissionRepository permissionRepository.PermissionRepository
+
+	permissionService permissionService.PermissionService
 }
 
 type NewAuthorizeMiddlewareParams struct {
 	fx.In
 
-	UserRepository userRepository.UserRepository
+	UserRepository       userRepository.UserRepository
+	PermissionRepository permissionRepository.PermissionRepository
+
+	PermissionService permissionService.PermissionService
 }
 
 func NewAuthorizeMiddleware(
 	params NewAuthorizeMiddlewareParams,
 ) (AuthorizeMiddleware, error) {
 	return &authorizeMiddleware{
-		userRepository: params.UserRepository,
+		userRepository:       params.UserRepository,
+		permissionRepository: params.PermissionRepository,
+
+		permissionService: params.PermissionService,
 	}, nil
 }
 
@@ -38,9 +49,9 @@ func (m *authorizeMiddleware) RequirePermissionNames(
 	requiredPermNames ...permissionEnum.PermissionName,
 ) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		user := c.MustGet(contextkey.UserKey).(*entity.User)
+		userPermissions := c.MustGet(contextkey.UserPermissionsKey).([]*entity.Permission)
 
-		hasPermissions, err := m.userRepository.HasPermissionNames(user, requiredPermNames)
+		hasPermissions, err := m.permissionService.CheckByNames(userPermissions, requiredPermNames...)
 		if err != nil {
 			panic(err)
 		}

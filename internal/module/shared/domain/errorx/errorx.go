@@ -234,6 +234,66 @@ var (
 	// ErrMaterialTestOrderAlreadyExists is returned when attempting to create a material test order that already exists
 	ErrMaterialTestOrderAlreadyExists Errorx = New("material test order already exists")
 
+	// --- Status relateds --- //
+
+	// ErrMaterialTestOrderUpdateForbidden is returned when attempting to update a material test order without proper permission or ownership
+	ErrMaterialTestOrderUpdateForbidden Errorx = New("material test order update requires permission(s) or ownership")
+
+	// ErrMaterialTestOrderStatusNotUpdateableUpdateForbidden is returned when attempting to update a material test order that is not in an updateable status
+	ErrMaterialTestOrderStatusNotUpdateableUpdateForbidden = New("material test order status must be 'draft', 'rejected' (for user) or 'awaiting_review' (for authorized user)")
+
+	// ErrMaterialTestOrderStatusNotAwaitingReviewApproveForbidden is returned when attempting to approve a material test order that is not in awaiting_review status
+	ErrMaterialTestOrderStatusNotAwaitingReviewApproveForbidden Errorx = New("material test order status must be 'awaiting_review' to approve")
+
+	// ErrMaterialTestOrderStatusNotAwaitingReviewRejectForbidden is returned when attempting to reject a material test order that is not in awaiting_review status
+	ErrMaterialTestOrderStatusNotAwaitingReviewRejectForbidden Errorx = New("material test order status must be 'awaiting_review' to reject")
+
+	// ErrMaterialTestOrderStatusAwaitingReviewUpdateForbidden is returned when attempting to update a material test order that is in awaiting review status
+	ErrMaterialTestOrderStatusAwaitingReviewUpdateForbidden Errorx = New("material test order status 'awaiting_review' can only be updated by authorized user")
+
+	// ErrMaterialTestOrderStatusNotDraftOrRejectedUpdateForbidden is returned when attempting to update a material test order that is not in draft or rejected status
+	ErrMaterialTestOrderStatusNotDraftOrRejectedUpdateForbidden Errorx = New("material test order status must be 'draft' or 'rejected' to update")
+
+	// ErrMaterialTestOrderStatusNotCancellableCancelForbidden is returned when attempting to cancel a material test order that is not cancellable
+	ErrMaterialTestOrderStatusNotCancellableCancelForbidden Errorx = New("material test order status must be 'draft', 'awaiting_review', 'rejected', 'awaiting_payment', or 'payment_rejected' to cancel")
+
+	// ErrMaterialTestOrderStatusNotPaymentSubmittedApprovePaymentForbidden is returned when attempting to approve payment for a material test order that is not in payment_submitted status
+	ErrMaterialTestOrderStatusNotPaymentSubmittedApprovePaymentForbidden Errorx = New("material test order status must be 'payment_submitted' to approve payment")
+
+	// ErrMaterialTestOrderStatusNotPaymentSubmittedRejectPaymentForbidden is returned when attempting to reject payment for a material test order that is not in payment_submitted status
+	ErrMaterialTestOrderStatusNotPaymentSubmittedRejectPaymentForbidden Errorx = New("material test order status must be 'payment_submitted' to reject payment")
+
+	// ErrMaterialTestOrderStatusNotPaymentSubmittableSubmitPaymentForbidden is returned when attempting to submit payment for a material test order that is not in awaiting payment, payment submitted, or payment rejected status
+	ErrMaterialTestOrderStatusNotPaymentSubmittableSubmitPaymentForbidden Errorx = New("material test order status must be 'awaiting_payment' or 'payment_submitted' or 'payment_rejected' to (re)submit payment")
+
+	// ErrMaterialTestOrderStatusNotPaymentApprovedTestForbidden is returned when attempting to test a material test order that is not in payment_approved status
+	ErrMaterialTestOrderStatusNotPaymentApprovedTestForbidden Errorx = New("material test order status must be 'payment_approved' to test")
+
+	// ErrMaterialTestOrderStatusNotRefundableRefundForbidden is returned when attempting to refund a material test order that is not refundable
+	ErrMaterialTestOrderStatusNotRefundableRefundForbidden Errorx = New("material test order status must be 'payment_approved', 'testing', or 'completed' to refund")
+
+	// ErrMaterialTestOrderStatusNotTestingCompleteForbidden is returned when attempting to complete a material test order that is not in testing status
+	ErrMaterialTestOrderStatusNotTestingCompleteForbidden Errorx = New("material test order status must be 'testing' to complete")
+
+	// --- Service evaluation relateds --- //
+
+	// ErrMaterialTestOrderStatusNotAwaitingReviewUpdateServiceEvaluationForbidden is returned when attempting to update service evaluation for a material test order that is not in awaiting_review status
+	ErrMaterialTestOrderStatusNotAwaitingReviewUpdateServiceEvaluationForbidden Errorx = New("material test order status must be 'awaiting_review' to update service evaluation")
+
+	// --- Media relateds --- //
+
+	// ErrMaterialTestOrderMediaPaymentProofUpdateForbidden is returned when attempting to update a payment proof for a material test order
+	ErrMaterialTestOrderMediaPaymentProofUpdateForbidden Errorx = New("material test order media payment proof update forbidden")
+
+	// ErrMaterialTestOrderMediaPaymentProofDestroyForbidden is returned when attempting to destroy a payment proof for a material test order
+	ErrMaterialTestOrderMediaPaymentProofDestroyForbidden Errorx = New("material test order media payment proof destroy forbidden")
+
+	// ErrMaterialTestOrderMediaRefundProofUpdateForbidden is returned when attempting to update a refund proof for a material test order
+	ErrMaterialTestOrderMediaRefundProofUpdateForbidden Errorx = New("material test order media refund proof update forbidden")
+
+	// ErrMaterialTestOrderMediaRefundProofDestroyForbidden is returned when attempting to destroy a refund proof for a material test order
+	ErrMaterialTestOrderMediaRefundProofDestroyForbidden Errorx = New("material test order media refund proof destroy forbidden")
+
 	// ========================================
 	// Material Test Order Service Errors
 	// ========================================

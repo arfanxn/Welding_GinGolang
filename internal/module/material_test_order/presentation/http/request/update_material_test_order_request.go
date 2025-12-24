@@ -2,7 +2,6 @@ package request
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/request"
 	materialTestOrderEnum "github.com/arfanxn/welding/internal/module/material_test_order/domain/enum"
@@ -26,8 +25,6 @@ type UpdateMaterialTestOrder struct {
 	ApplicantNote        *string `form:"applicant_note" json:"applicant_note"`
 	RecipientName        *string `form:"recipient_name" json:"recipient_name"`
 	TesterNote           *string `form:"tester_note" json:"tester_note"`
-
-	EnteredAt *string `form:"entered_at" json:"entered_at"`
 
 	Status *string `form:"status" json:"status"`
 
@@ -70,10 +67,6 @@ func (r *UpdateMaterialTestOrder) Validate() error {
 			validation.Length(3, 255).Error("Nama penerima harus di antara 3 dan 255 karakter"),
 		),
 		validation.Field(&r.TesterNote),
-		validation.Field(&r.EnteredAt,
-			validation.Date(time.DateTime).Error("Format tanggal waktu masuk tidak valid. Gunakan format: YYYY-MM-DD HH:MM:SS"),
-			validation.Date(time.DateTime).Min(time.Now().Add(-1*time.Second)).Error("Tanggal waktu masuk tidak boleh sebelum hari ini"),
-		),
 		validation.Field(&r.Status,
 			validation.In(
 				materialTestOrderEnum.MaterialTestOrderStatusDraft, materialTestOrderEnum.MaterialTestOrderStatusAwaitingReview).

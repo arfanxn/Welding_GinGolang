@@ -132,6 +132,32 @@ func (r *GormPermissionRepository) FindByIds(ids []string, q *query.Query) ([]*e
 	return permissions, nil
 }
 
+func (r *GormPermissionRepository) FindByUserId(userId string, q *query.Query) ([]*entity.Permission, error) {
+	var (
+		permissionTableName     = entity.NewPermission().TableName()
+		permissionRoleTableName = entity.NewPermissionRole().TableName()
+		roleTableName           = entity.NewRole().TableName()
+		roleUserTableName       = entity.NewRoleUser().TableName()
+	)
+
+	var permissions []*entity.Permission
+
+	db := r.query(r.db, q)
+
+	db = db.
+		Joins("JOIN "+permissionRoleTableName+" ON "+permissionRoleTableName+".permission_id = "+permissionTableName+".id").
+		Joins("JOIN "+roleTableName+" ON "+roleTableName+".id = "+permissionRoleTableName+".role_id").
+		Joins("JOIN "+roleUserTableName+" ON "+roleUserTableName+".role_id = "+roleTableName+".id").
+		Where(roleUserTableName+".user_id = ?", userId).
+		Group(permissionTableName + ".id") // Group by permission id to avoid duplicate permissions
+
+	if err := db.Find(&permissions).Error; err != nil {
+		return nil, err
+	}
+
+	return permissions, nil
+}
+
 func (r *GormPermissionRepository) Save(permission *entity.Permission) error {
 	err := r.db.Save(permission).Error
 	if err != nil {

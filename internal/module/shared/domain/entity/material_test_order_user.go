@@ -18,6 +18,10 @@ type MaterialTestOrderUser struct {
 	User  *User              `json:"user,omitempty" gorm:"foreignKey:UserId;references:Id"`
 }
 
+func NewMaterialTestOrderUser() *MaterialTestOrderUser {
+	return &MaterialTestOrderUser{}
+}
+
 // TableName specifies the table name for the OrderUser model
 func (MaterialTestOrderUser) TableName() string {
 	return "material_test_order_user"

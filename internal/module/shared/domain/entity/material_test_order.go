@@ -1,6 +1,10 @@
 package entity
 
-import "time"
+import (
+	"time"
+
+	mtoEnum "github.com/arfanxn/welding/internal/module/material_test_order/domain/enum"
+)
 
 type MaterialTestOrder struct {
 	// ---- IDENTIFICATION ----
@@ -24,26 +28,25 @@ type MaterialTestOrder struct {
 	Discount float64 `json:"discount"`
 	Total    float64 `json:"total"`
 
-	// ---- TIMELINE ----
-	EnteredAt time.Time `json:"entered_at"`
-
 	// ---- WORKFLOW STATUS ----
 	Status string `json:"status"`
 
 	// ---- TIMESTAMP MILESTONES ----
+	// Review lifecycle
+	SubmittedAt *time.Time `json:"submitted_at"`
+	ApprovedAt  *time.Time `json:"approved_at"`
+	RejectedAt  *time.Time `json:"rejected_at"`
+	CancelledAt *time.Time `json:"cancelled_at"`
+
 	// Payment lifecycle
 	PaymentSubmittedAt *time.Time `json:"payment_submitted_at"`
-	PaymentRejectedAt  *time.Time `json:"payment_rejected_at"`
 	PaymentApprovedAt  *time.Time `json:"payment_approved_at"`
+	PaymentRejectedAt  *time.Time `json:"payment_rejected_at"`
 
 	// Testing lifecycle
 	TestingAt   *time.Time `json:"testing_at"`
-	CompletedAt *time.Time `json:"completed_at"`
-
-	// End-of-flow outcomes
-	CancelledAt *time.Time `json:"cancelled_at"`
-	RejectedAt  *time.Time `json:"rejected_at"`
 	RefundedAt  *time.Time `json:"refunded_at"`
+	CompletedAt *time.Time `json:"completed_at"`
 
 	// ---- SYSTEM METADATA ----
 	CreatedAt time.Time  `json:"created_at" gorm:"autoCreateTime"`
@@ -62,4 +65,44 @@ func NewMaterialTestOrder() *MaterialTestOrder {
 
 func (MaterialTestOrder) TableName() string {
 	return "material_test_orders"
+}
+
+func (mto *MaterialTestOrder) IsDraft() bool {
+	return mto.Status == mtoEnum.MaterialTestOrderStatusDraft
+}
+
+func (mto *MaterialTestOrder) IsAwaitingReview() bool {
+	return mto.Status == mtoEnum.MaterialTestOrderStatusAwaitingReview
+}
+
+func (mto *MaterialTestOrder) IsRejected() bool {
+	return mto.Status == mtoEnum.MaterialTestOrderStatusRejected
+}
+
+func (mto *MaterialTestOrder) IsAwaitingPayment() bool {
+	return mto.Status == mtoEnum.MaterialTestOrderStatusAwaitingPayment
+}
+
+func (mto *MaterialTestOrder) IsPaymentSubmitted() bool {
+	return mto.Status == mtoEnum.MaterialTestOrderStatusPaymentSubmitted
+}
+
+func (mto *MaterialTestOrder) IsPaymentApproved() bool {
+	return mto.Status == mtoEnum.MaterialTestOrderStatusPaymentApproved
+}
+
+func (mto *MaterialTestOrder) IsPaymentRejected() bool {
+	return mto.Status == mtoEnum.MaterialTestOrderStatusPaymentRejected
+}
+
+func (mto *MaterialTestOrder) IsRefunded() bool {
+	return mto.Status == mtoEnum.MaterialTestOrderStatusRefunded
+}
+
+func (mto *MaterialTestOrder) IsTesting() bool {
+	return mto.Status == mtoEnum.MaterialTestOrderStatusTesting
+}
+
+func (mto *MaterialTestOrder) IsCompleted() bool {
+	return mto.Status == mtoEnum.MaterialTestOrderStatusCompleted
 }

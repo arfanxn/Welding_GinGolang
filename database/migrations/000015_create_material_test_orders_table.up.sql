@@ -16,20 +16,20 @@ CREATE TABLE material_test_orders (
   discount DECIMAL(10, 2) NOT NULL,
   total DECIMAL(10, 2) NOT NULL,
 
-  entered_at TIMESTAMP WITH TIME ZONE NOT NULL,
-
   status VARCHAR(50) NOT NULL,
 
-  payment_submitted_at TIMESTAMP WITH TIME ZONE,
-  payment_rejected_at TIMESTAMP WITH TIME ZONE,
-  payment_approved_at TIMESTAMP WITH TIME ZONE,
+  submitted_at TIMESTAMP WITH TIME ZONE, -- from 'draft' to 'awaiting_review' means submitted
+  approved_at TIMESTAMP WITH TIME ZONE, -- 'awaiting_review' is approved
+  rejected_at TIMESTAMP WITH TIME ZONE, -- 'awaiting_review' is rejected
+  cancelled_at TIMESTAMP WITH TIME ZONE, -- 'cancelled'
 
-  testing_at TIMESTAMP WITH TIME ZONE,
-  completed_at TIMESTAMP WITH TIME ZONE,
+  payment_submitted_at TIMESTAMP WITH TIME ZONE, -- 'payment_submitted'
+  payment_approved_at TIMESTAMP WITH TIME ZONE, -- 'payment_approved'
+  payment_rejected_at TIMESTAMP WITH TIME ZONE, -- payment_rejected
 
-  cancelled_at TIMESTAMP WITH TIME ZONE,
-  rejected_at TIMESTAMP WITH TIME ZONE,
-  refunded_at TIMESTAMP WITH TIME ZONE,
+  testing_at TIMESTAMP WITH TIME ZONE, -- 'testing' means under test 
+  refunded_at TIMESTAMP WITH TIME ZONE, -- 'refunded'
+  completed_at TIMESTAMP WITH TIME ZONE, -- 'completed'
   
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE,

@@ -4,7 +4,7 @@ CREATE TABLE material_test_services (
   method_id CHAR(26) NOT NULL,
   test_name VARCHAR(255) NOT NULL UNIQUE,
   service_type VARCHAR(50) NOT NULL,
-  service_code VARCHAR(50) NOT NULL,
+  service_code VARCHAR(50) NOT NULL UNIQUE,
   unit VARCHAR(50) NOT NULL,
   price DECIMAL(10, 2) NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -14,5 +14,6 @@ type MediaRepository interface {
 	Save(media *entity.Media) error
 	SaveMany(medias []*entity.Media) error
 	Destroy(media *entity.Media) error
+	DestroyMany(medias []*entity.Media) error
 	DestroyByModelTypeAndModelId(modelType string, modelId string) error
 }

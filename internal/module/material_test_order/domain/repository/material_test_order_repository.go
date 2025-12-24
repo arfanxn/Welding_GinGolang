@@ -11,7 +11,8 @@ type MaterialTestOrderRepository interface {
 	Paginate(q *query.Query) (*pagination.OffsetPagination[*entity.MaterialTestOrder], error)
 	First(q *query.Query) (*entity.MaterialTestOrder, error)
 	Find(id string, q *query.Query) (*entity.MaterialTestOrder, error)
-	CountByCustomerId(customerId string) (int64, error)
+	FindByIdAndUserId(id string, userId string, q *query.Query) (*entity.MaterialTestOrder, error)
+	FindLatestThisYear(q *query.Query) (*entity.MaterialTestOrder, error)
 	Save(order *entity.MaterialTestOrder) error
 	SaveMany(orders []*entity.MaterialTestOrder) error
 	Destroy(order *entity.MaterialTestOrder) error

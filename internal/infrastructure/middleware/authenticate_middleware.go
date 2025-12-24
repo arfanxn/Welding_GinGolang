@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/jwt"
+	permissionRepository "github.com/arfanxn/welding/internal/module/permission/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/contextkey"
 	userRepository "github.com/arfanxn/welding/internal/module/user/domain/repository"
 	"github.com/arfanxn/welding/pkg/httperror"
@@ -21,23 +22,26 @@ type AuthenticateMiddleware interface {
 }
 
 type authenticateMiddleware struct {
-	UserRepository userRepository.UserRepository
-	JWTService     jwt.JWTService
+	userRepository       userRepository.UserRepository
+	permissionRepository permissionRepository.PermissionRepository
+	jwtService           jwt.JWTService
 }
 
 type NewAuthenticateMiddlewareParams struct {
 	fx.In
 
-	UserRepository userRepository.UserRepository
-	JWTService     jwt.JWTService
+	UserRepository       userRepository.UserRepository
+	PermissionRepository permissionRepository.PermissionRepository
+	JWTService           jwt.JWTService
 }
 
 func NewAuthenticateMiddleware(
 	params NewAuthenticateMiddlewareParams,
 ) (AuthenticateMiddleware, error) {
 	return &authenticateMiddleware{
-		UserRepository: params.UserRepository,
-		JWTService:     params.JWTService,
+		userRepository:       params.UserRepository,
+		permissionRepository: params.PermissionRepository,
+		jwtService:           params.JWTService,
 	}, nil
 }
 
@@ -60,13 +64,13 @@ func (m *authenticateMiddleware) MiddlewareFunc() gin.HandlerFunc {
 
 		// 3. Verify the JWT token and extract claims
 		tokenStr := tokenParts[1]
-		claims, err := m.JWTService.VerifyToken(tokenStr)
+		claims, err := m.jwtService.VerifyToken(tokenStr)
 		if err != nil {
 			httperror.Panic(http.StatusUnauthorized, "Token tidak valid atau sudah kadaluarsa", nil)
 		}
 
 		// 4. Verify that the user exists in the database
-		user, err := m.UserRepository.Find(claims.UserID, nil)
+		user, err := m.userRepository.Find(claims.UserID, nil)
 		if err != nil {
 			httperror.Panic(http.StatusUnauthorized, "User tidak ditemukan", nil)
 		}
@@ -76,20 +80,27 @@ func (m *authenticateMiddleware) MiddlewareFunc() gin.HandlerFunc {
 			httperror.Panic(http.StatusUnauthorized, "User tidak aktif, silahkan hubungi admin", nil)
 		}
 
-		// 6. Store user information in both Gin context and request context
+		// 6. Get user permissions
+		userPermissions, err := m.permissionRepository.FindByUserId(user.Id, nil)
+		if err != nil {
+			panic(err)
+		}
+
+		// 7. Store user information in both Gin context and request context
 		// This makes the user data available to subsequent handlers
 		ctx := c.Request.Context()
 		for key, value := range map[contextkey.ContextKey]any{
-			contextkey.UserIdKey: user.Id, // Store user ID
-			contextkey.ClaimsKey: claims,  // Store JWT claims
-			contextkey.UserKey:   user,    // Store full user object
+			contextkey.UserIdKey:          user.Id, // Store user ID
+			contextkey.ClaimsKey:          claims,  // Store JWT claims
+			contextkey.UserKey:            user,    // Store full user object
+			contextkey.UserPermissionsKey: userPermissions,
 		} {
 			c.Set(key, value)                        // Set in Gin context
 			ctx = context.WithValue(ctx, key, value) // Set in request context
 		}
 		c.Request = c.Request.WithContext(ctx)
 
-		// 7. Proceed to the next middleware/handler in the chain
+		// 8. Proceed to the next middleware/handler in the chain
 		c.Next()
 	}
 }

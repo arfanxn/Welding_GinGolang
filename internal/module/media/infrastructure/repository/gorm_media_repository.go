@@ -167,6 +167,15 @@ func (r *gormMediaRepository) Destroy(mto *entity.Media) error {
 	return r.db.Delete(mto).Error
 }
 
+func (r *gormMediaRepository) DestroyMany(medias []*entity.Media) error {
+	var ids []string
+	for _, media := range medias {
+		ids = append(ids, media.Id)
+	}
+
+	return r.db.Where("id IN ?", ids).Delete(&entity.Media{}).Error
+}
+
 func (r *gormMediaRepository) DestroyByModelTypeAndModelId(modelType string, modelId string) error {
 	return r.db.Where("model_type = ? AND model_id = ?", modelType, modelId).Delete(&entity.Media{}).Error
 }

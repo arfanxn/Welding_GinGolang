@@ -2,17 +2,20 @@ package service
 
 import (
 	"context"
+	"os"
 
 	"github.com/arfanxn/welding/internal/infrastructure/id"
 	mediaRepository "github.com/arfanxn/welding/internal/module/media/domain/repository"
 	"github.com/arfanxn/welding/internal/module/media/usecase/dto"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/pkg/fileutil"
+	"github.com/arfanxn/welding/pkg/query"
 	"go.uber.org/fx"
 )
 
 type MediaService interface {
 	CreateFromMultipartFiles(ctx context.Context, _dto dto.CreateFromMultipartFiles) ([]*entity.Media, error)
+	DestroyByQuery(ctx context.Context, q *query.Query) error
 }
 
 type mediaService struct {
@@ -90,4 +93,27 @@ func (s *mediaService) CreateFromMultipartFiles(ctx context.Context, _dto dto.Cr
 	}
 
 	return medias, nil
+}
+
+func (s *mediaService) DestroyByQuery(ctx context.Context, q *query.Query) (err error) {
+	medias, err := s.mediaRepository.Get(q)
+	if err != nil {
+		return err
+	}
+
+	// TODO: implement abstract filesystem for better flexibility
+	for _, media := range medias {
+		_path := "./storage/medias/" + media.Id
+		err = os.RemoveAll(_path)
+		if err != nil {
+			return err
+		}
+	}
+
+	err = s.mediaRepository.DestroyMany(medias)
+	if err != nil {
+		return err
+	}
+
+	return
 }

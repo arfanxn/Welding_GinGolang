@@ -62,12 +62,12 @@ func NewMaterialTestOrderPresenter(params NewMaterialTestOrderPresenterParams) M
 func (p *materialTestOrderPresenter) FromEntityToViewModel(ctx context.Context, mto *entity.MaterialTestOrder) (*viewmodel.MaterialTestOrderViewModel, error) {
 	mtoVM := &viewmodel.MaterialTestOrderViewModel{}
 
-	// IDENTIFICATION
+	// -- IDENTIFICATION --
 	mtoVM.Id = mto.Id
 	mtoVM.Number = mto.Number
 	mtoVM.WorkCategoryId = mto.WorkCategoryId
 
-	// WORK PACKAGE & APPLICANT DETAILS
+	// -- WORK PACKAGE & APPLICANT DETAILS --
 	mtoVM.WorkPackageName = mto.WorkPackageName
 	mtoVM.ApplicantName = mto.ApplicantName
 	mtoVM.ApplicantPhoneNumber = mto.ApplicantPhoneNumber
@@ -77,38 +77,37 @@ func (p *materialTestOrderPresenter) FromEntityToViewModel(ctx context.Context, 
 	mtoVM.RecipientName = mto.RecipientName
 	mtoVM.TesterNote = mto.TesterNote
 
-	// FINANCIAL METADATA
+	// -- FINANCIAL METADATA --
 	mtoVM.SubTotal = mto.SubTotal
 	mtoVM.Tax = mto.Tax
 	mtoVM.Discount = mto.Discount
 	mtoVM.Total = mto.Total
 
-	// TIMELINE
-	mtoVM.EnteredAt = mto.EnteredAt
-
-	// WORKFLOW STATUS
+	// -- WORKFLOW STATUS --
 	mtoVM.Status = mto.Status
 
-	// TIMESTAMP MILESTONES
+	// -- TIMESTAMP MILESTONES --
+	// Review lifecycle
+	mtoVM.SubmittedAt = mto.SubmittedAt
+	mtoVM.ApprovedAt = mto.ApprovedAt
+	mtoVM.RejectedAt = mto.RejectedAt
+	mtoVM.CancelledAt = mto.CancelledAt
+
 	// Payment lifecycle
 	mtoVM.PaymentSubmittedAt = mto.PaymentSubmittedAt
-	mtoVM.PaymentRejectedAt = mto.PaymentRejectedAt
 	mtoVM.PaymentApprovedAt = mto.PaymentApprovedAt
+	mtoVM.PaymentRejectedAt = mto.PaymentRejectedAt
 
 	// Testing lifecycle
 	mtoVM.TestingAt = mto.TestingAt
+	mtoVM.RefundedAt = mto.RefundedAt
 	mtoVM.CompletedAt = mto.CompletedAt
 
-	// End-of-flow outcomes
-	mtoVM.CancelledAt = mto.CancelledAt
-	mtoVM.RejectedAt = mto.RejectedAt
-	mtoVM.RefundedAt = mto.RefundedAt
-
-	// SYSTEM METADATA
+	// -- SYSTEM METADATA --
 	mtoVM.CreatedAt = mto.CreatedAt
 	mtoVM.UpdatedAt = mto.UpdatedAt
 
-	// RELATIONS
+	// -- RELATIONS --
 	if mto.WorkCategory.Id != "" {
 		mtoVM.WorkCategory = mto.WorkCategory
 	}
@@ -143,6 +142,8 @@ func (p *materialTestOrderPresenter) FromEntityToViewModel(ctx context.Context, 
 				GeneratedConversions: media.GeneratedConversions,
 				ResponsiveImages:     media.ResponsiveImages,
 				OrderColumn:          media.OrderColumn,
+				CreatedAt:            media.CreatedAt,
+				UpdatedAt:            media.UpdatedAt,
 			})
 		}
 	}

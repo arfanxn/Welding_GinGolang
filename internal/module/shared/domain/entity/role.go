@@ -29,15 +29,3 @@ func (u *Role) TableName() string {
 func (r *Role) IsSuperAdmin() bool {
 	return r.Name == enum.SuperAdmin
 }
-
-func (r *Role) IsUpdateable() bool {
-	return !r.IsSuperAdmin()
-}
-
-func (r *Role) IsSaveable() bool {
-	return r.IsUpdateable()
-}
-
-func (r *Role) IsDestroyable() bool {
-	return !r.IsSuperAdmin() && !r.IsDefault
-}

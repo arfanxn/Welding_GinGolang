@@ -49,7 +49,6 @@ func (s *PermissionSeeder) Seed() error {
 		enum.RolesDestroy: "Menghapus role",
 
 		enum.PermissionsIndex: "Melihat daftar permission",
-		enum.PermissionsShow:  "Melihat detail permission",
 
 		enum.ActivitiesIndex: "Melihat daftar activity",
 		enum.ActivitiesShow:  "Melihat detail activity",
@@ -96,11 +95,10 @@ func (s *PermissionSeeder) Seed() error {
 		enum.MaterialTestWorkPackagesUpdate:  "Memperbarui material test work package",
 		enum.MaterialTestWorkPackagesDestroy: "Menghapus material test work package",
 
-		enum.MaterialTestOrdersIndex:   "Melihat daftar material test order",
-		enum.MaterialTestOrdersShow:    "Melihat detail material test order",
-		enum.MaterialTestOrdersStore:   "Menambahkan material test order baru",
-		enum.MaterialTestOrdersUpdate:  "Memperbarui material test order",
-		enum.MaterialTestOrdersDestroy: "Menghapus material test order",
+		enum.MaterialTestOrdersIndex:  "Melihat daftar material test order",
+		enum.MaterialTestOrdersShow:   "Melihat detail material test order",
+		enum.MaterialTestOrdersStore:  "Menambahkan material test order baru",
+		enum.MaterialTestOrdersUpdate: "Memperbarui material test order",
 	}
 
 	var permissions []*entity.Permission

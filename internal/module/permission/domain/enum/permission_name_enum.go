@@ -1,6 +1,6 @@
 package enum
 
-type PermissionName string
+type PermissionName = string
 
 const (
 	UsersIndex   PermissionName = "users.index"
@@ -16,7 +16,6 @@ const (
 	RolesDestroy PermissionName = "roles.destroy"
 
 	PermissionsIndex PermissionName = "permissions.index"
-	PermissionsShow  PermissionName = "permissions.show"
 
 	ActivitiesIndex PermissionName = "activities.index"
 	ActivitiesShow  PermissionName = "activities.show"
@@ -63,11 +62,10 @@ const (
 	MaterialTestWorkPackagesUpdate  PermissionName = "material_test_work_packages.update"
 	MaterialTestWorkPackagesDestroy PermissionName = "material_test_work_packages.destroy"
 
-	MaterialTestOrdersIndex   PermissionName = "material_test_orders.index"
-	MaterialTestOrdersShow    PermissionName = "material_test_orders.show"
-	MaterialTestOrdersStore   PermissionName = "material_test_orders.store"
-	MaterialTestOrdersUpdate  PermissionName = "material_test_orders.update"
-	MaterialTestOrdersDestroy PermissionName = "material_test_orders.destroy"
+	MaterialTestOrdersIndex  PermissionName = "material_test_orders.index"
+	MaterialTestOrdersShow   PermissionName = "material_test_orders.show"
+	MaterialTestOrdersStore  PermissionName = "material_test_orders.store"
+	MaterialTestOrdersUpdate PermissionName = "material_test_orders.update"
 )
 
 var PermissionNames = []PermissionName{
@@ -84,7 +82,6 @@ var PermissionNames = []PermissionName{
 	RolesDestroy,
 
 	PermissionsIndex,
-	PermissionsShow,
 
 	ActivitiesIndex,
 	ActivitiesShow,
@@ -135,5 +132,4 @@ var PermissionNames = []PermissionName{
 	MaterialTestOrdersShow,
 	MaterialTestOrdersStore,
 	MaterialTestOrdersUpdate,
-	MaterialTestOrdersDestroy,
 }

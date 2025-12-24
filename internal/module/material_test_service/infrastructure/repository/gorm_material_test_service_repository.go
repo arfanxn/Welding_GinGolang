@@ -9,6 +9,7 @@ import (
 	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
 	"github.com/arfanxn/welding/pkg/pagination"
 	"github.com/arfanxn/welding/pkg/query"
+	"github.com/samber/lo"
 	"gorm.io/gorm"
 )
 
@@ -162,6 +163,8 @@ func (r *GormMaterialTestServiceRepository) Find(id string, q *query.Query) (mtm
 }
 
 func (r *GormMaterialTestServiceRepository) FindByIds(ids []string, q *query.Query) (mtms []*entity.MaterialTestService, err error) {
+	ids = lo.Uniq(ids)
+
 	db := r.query(r.db, q)
 
 	if err := db.Where("id IN (?)", ids).Find(&mtms).Error; err != nil {

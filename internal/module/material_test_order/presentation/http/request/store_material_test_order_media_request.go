@@ -7,9 +7,9 @@ import (
 )
 
 type StoreMaterialTestOrderMedia struct {
-	OrderId string                `form:"order_id" json:"order_id"`
-	Name    string                `form:"name" json:"name"`
-	File    *multipart.FileHeader `form:"file" json:"file"`
+	Id   string                `form:"id" json:"id"`
+	Name string                `form:"name" json:"name"`
+	File *multipart.FileHeader `form:"file" json:"file"`
 }
 
 func NewStoreMaterialTestOrderMedia() *StoreMaterialTestOrderMedia {
@@ -18,7 +18,7 @@ func NewStoreMaterialTestOrderMedia() *StoreMaterialTestOrderMedia {
 
 func (r *StoreMaterialTestOrderMedia) Validate() error {
 	return validation.ValidateStruct(r,
-		validation.Field(&r.OrderId,
+		validation.Field(&r.Id,
 			validation.Required.Error("Id tidak boleh kosong"),
 			validation.Length(26, 26).Error("Id harus 26 karakter"),
 		),

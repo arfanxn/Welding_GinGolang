@@ -16,6 +16,10 @@ type RoleUser struct {
 	User *User `gorm:"foreignKey:UserId;references:id;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 }
 
+func NewRoleUser() *RoleUser {
+	return &RoleUser{}
+}
+
 // TableName specifies the table name for the RoleUser model
 func (RoleUser) TableName() string {
 	return "role_user"

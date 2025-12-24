@@ -1,6 +1,7 @@
 package factory
 
 import (
+	"fmt"
 	"time"
 
 	id "github.com/arfanxn/welding/internal/infrastructure/id"
@@ -9,7 +10,6 @@ import (
 	"github.com/arfanxn/welding/pkg/boolutil"
 	"github.com/bluele/factory-go/factory"
 	"github.com/brianvoe/gofakeit/v7"
-	"github.com/samber/lo"
 )
 
 func NewMaterialTestOrderFactory(
@@ -22,7 +22,7 @@ func NewMaterialTestOrderFactory(
 			return idService.Generate(), nil
 		}).
 		Attr("Number", func(args factory.Args) (any, error) {
-			number := lo.Substring(idService.Generate(), 17, 26)
+			number := fmt.Sprintf("%03d", gofakeit.IntRange(1, 999))
 			return number, nil
 		}).
 		Attr("WorkPackageName", func(args factory.Args) (any, error) {
@@ -67,13 +67,6 @@ func NewMaterialTestOrderFactory(
 			discount := gofakeit.Float64Range(1000.00, 100000.00)
 			return boolutil.Ternary(withDiscount, discount, 0.00), nil
 		}).
-		Attr("EnteredAt", func(args factory.Args) (any, error) {
-			enteredAt := gofakeit.DateRange(
-				time.Now().AddDate(-1, 0, 0),
-				time.Now(),
-			)
-			return enteredAt, nil
-		}).
 		Attr("Status", func(args factory.Args) (any, error) {
 			status := statuses[gofakeit.IntRange(0, len(statuses)-1)]
 			return status, nil
@@ -97,10 +90,9 @@ func NewMaterialTestOrderFactory(
 			}).
 		*/
 		Attr("CreatedAt", func(args factory.Args) (any, error) {
-			enteredAt := args.Instance().(*entity.MaterialTestOrder).EnteredAt
 			createdAt := gofakeit.DateRange(
-				enteredAt.AddDate(0, -6, 0),
-				enteredAt,
+				time.Now().AddDate(0, -6, 0),
+				time.Now(),
 			)
 			return createdAt, nil
 		}).
