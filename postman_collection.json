@@ -19679,7 +19679,6 @@
 												{
 													"key": "Content-Type",
 													"value": "application/json",
-													"name": "Content-Type",
 													"description": "",
 													"type": "text"
 												},
@@ -19975,7 +19974,6 @@
 												{
 													"key": "Content-Type",
 													"value": "application/json",
-													"name": "Content-Type",
 													"description": "",
 													"type": "text"
 												},
@@ -20184,7 +20182,6 @@
 												{
 													"key": "Content-Type",
 													"value": "application/json",
-													"name": "Content-Type",
 													"description": "",
 													"type": "text"
 												},
@@ -20330,7 +20327,6 @@
 												{
 													"key": "Content-Type",
 													"value": "application/json",
-													"name": "Content-Type",
 													"description": "",
 													"type": "text"
 												},
@@ -20388,7 +20384,6 @@
 												{
 													"key": "Content-Type",
 													"value": "application/json",
-													"name": "Content-Type",
 													"description": "",
 													"type": "text"
 												},
@@ -20446,7 +20441,6 @@
 												{
 													"key": "Content-Type",
 													"value": "application/json",
-													"name": "Content-Type",
 													"description": "",
 													"type": "text"
 												},
@@ -20947,7 +20941,6 @@
 										{
 											"key": "Content-Type",
 											"value": "application/json",
-											"name": "Content-Type",
 											"description": "",
 											"type": "text"
 										},
@@ -21759,6 +21752,471 @@
 								}
 							},
 							"response": []
+						}
+					]
+				},
+				{
+					"name": "Analytic",
+					"item": [
+						{
+							"name": "Summary",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/analytics/summary?filter=dateBETWEEN2023-06-01,2026-12-30",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"analytics",
+										"summary"
+									],
+									"query": [
+										{
+											"key": "filter",
+											"value": "dateBETWEEN2023-06-01,2026-12-30"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": []
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/analytics/summary?filter=dateBETWEEN2023-06-01,2026-12-30",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"analytics",
+												"summary"
+											],
+											"query": [
+												{
+													"key": "filter",
+													"value": "dateBETWEEN2023-06-01,2026-12-30"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 04 Jan 2026 12:49:16 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "708"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Summary berhasil diambil\",\n    \"data\": {\n        \"summary\": {\n            \"user_count\": 5,\n            \"active_user_count\": 3,\n            \"deactive_user_count\": 2,\n            \"customer_user_count\": 1,\n            \"active_customer_user_count\": 0,\n            \"deactive_customer_user_count\": 1,\n            \"employee_user_count\": 4,\n            \"active_employee_user_count\": 3,\n            \"deactive_employee_user_count\": 1,\n            \"order_count\": 11,\n            \"draft_order_count\": 1,\n            \"awaiting_review_order_count\": 1,\n            \"rejected_order_count\": 1,\n            \"awaiting_payment_order_count\": 1,\n            \"cancelled_order_count\": 1,\n            \"payment_submitted_order_count\": 1,\n            \"payment_rejected_order_count\": 1,\n            \"payment_approved_order_count\": 1,\n            \"testing_order_count\": 1,\n            \"refunded_order_count\": 1,\n            \"completed_order_count\": 1,\n            \"completed_order_sum\": 2404858.71,\n            \"service_count\": 10\n        }\n    }\n}"
+								},
+								{
+									"name": "403",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": []
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/analytics/summary?filter=dateBETWEEN2023-06-01,2026-12-30",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"analytics",
+												"summary"
+											],
+											"query": [
+												{
+													"key": "filter",
+													"value": "dateBETWEEN2023-06-01,2026-12-30"
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 04 Jan 2026 13:49:17 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "71"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 403,\n    \"status\": \"error\",\n    \"message\": \"User tidak memiliki hak akses\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Order Trends",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/analytics/orders/trends?filter=dateBETWEEN2023-06-01,2026-12-30&group=date",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"analytics",
+										"orders",
+										"trends"
+									],
+									"query": [
+										{
+											"key": "filter",
+											"value": "dateBETWEEN2023-06-01,2026-12-30"
+										},
+										{
+											"key": "group",
+											"value": "date",
+											"description": "it could be 'date' or 'month' or 'year'"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200 (daily)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": []
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/analytics/orders/trends?filter=dateBETWEEN2023-06-01,2026-12-30&group=date",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"analytics",
+												"orders",
+												"trends"
+											],
+											"query": [
+												{
+													"key": "filter",
+													"value": "dateBETWEEN2023-06-01,2026-12-30"
+												},
+												{
+													"key": "group",
+													"value": "date",
+													"description": "it could be 'date' or 'month' or 'year'"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 04 Jan 2026 13:34:28 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "343"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Order trends berhasil diambil\",\n    \"data\": {\n        \"order_trends\": [\n            {\n                \"period\": \"2024-09-18T00:00:00Z\",\n                \"count\": 1,\n                \"sum\": 2404858.71\n            },\n            {\n                \"period\": \"2024-09-19T00:00:00Z\",\n                \"count\": 1,\n                \"sum\": 2404858.71\n            },\n            {\n                \"period\": \"2024-10-11T00:00:00Z\",\n                \"count\": 1,\n                \"sum\": 3004858.71\n            },\n            {\n                \"period\": \"2025-10-11T00:00:00Z\",\n                \"count\": 1,\n                \"sum\": 3204858.71\n            }\n        ]\n    }\n}"
+								},
+								{
+									"name": "200 (montly)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": []
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/analytics/orders/trends?filter=dateBETWEEN2023-06-01,2026-12-30&group=month",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"analytics",
+												"orders",
+												"trends"
+											],
+											"query": [
+												{
+													"key": "filter",
+													"value": "dateBETWEEN2023-06-01,2026-12-30"
+												},
+												{
+													"key": "group",
+													"value": "month",
+													"description": "it could be 'date' or 'month' or 'year'"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 04 Jan 2026 13:31:57 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "243"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Order trends berhasil diambil\",\n    \"data\": {\n        \"order_trends\": [\n            {\n                \"period\": \"2024-09\",\n                \"count\": 2,\n                \"sum\": 4809717.42\n            },\n            {\n                \"period\": \"2024-10\",\n                \"count\": 1,\n                \"sum\": 3004858.71\n            },\n            {\n                \"period\": \"2025-10\",\n                \"count\": 1,\n                \"sum\": 3204858.71\n            }\n        ]\n    }\n}"
+								},
+								{
+									"name": "200 (yearly)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": []
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/analytics/orders/trends?filter=dateBETWEEN2023-06-01,2026-12-30&group=year",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"analytics",
+												"orders",
+												"trends"
+											],
+											"query": [
+												{
+													"key": "filter",
+													"value": "dateBETWEEN2023-06-01,2026-12-30"
+												},
+												{
+													"key": "group",
+													"value": "year",
+													"description": "it could be 'date' or 'month' or 'year'"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 04 Jan 2026 13:33:29 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "189"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Order trends berhasil diambil\",\n    \"data\": {\n        \"order_trends\": [\n            {\n                \"period\": \"2024\",\n                \"count\": 3,\n                \"sum\": 7814576.13\n            },\n            {\n                \"period\": \"2025\",\n                \"count\": 1,\n                \"sum\": 3204858.71\n            }\n        ]\n    }\n}"
+								},
+								{
+									"name": "200 (no matched)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": []
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/analytics/orders/trends?filter=dateBETWEEN2026-06-01,2026-12-30&group=date",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"analytics",
+												"orders",
+												"trends"
+											],
+											"query": [
+												{
+													"key": "filter",
+													"value": "dateBETWEEN2026-06-01,2026-12-30"
+												},
+												{
+													"key": "group",
+													"value": "date",
+													"description": "it could be 'date' or 'month' or 'year'"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 04 Jan 2026 13:46:40 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "102"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Order trends berhasil diambil\",\n    \"data\": {\n        \"order_trends\": null\n    }\n}"
+								},
+								{
+									"name": "403",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": []
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/api/v1/analytics/orders/trends?filter=dateBETWEEN2023-06-01,2026-12-30&group=date",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"analytics",
+												"orders",
+												"trends"
+											],
+											"query": [
+												{
+													"key": "filter",
+													"value": "dateBETWEEN2023-06-01,2026-12-30"
+												},
+												{
+													"key": "group",
+													"value": "date",
+													"description": "it could be 'date' or 'month' or 'year'"
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 04 Jan 2026 13:49:02 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "71"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 403,\n    \"status\": \"error\",\n    \"message\": \"User tidak memiliki hak akses\"\n}"
+								}
+							]
 						}
 					]
 				},
