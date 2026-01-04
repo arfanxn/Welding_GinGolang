@@ -8,6 +8,7 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/middleware"
 	activityHttp "github.com/arfanxn/welding/internal/module/activity/presentation/http"
 	addressHttp "github.com/arfanxn/welding/internal/module/address/presentation/http"
+	analyticHttp "github.com/arfanxn/welding/internal/module/analytic/presentation/http"
 	codeHttp "github.com/arfanxn/welding/internal/module/code/presentation/http"
 	customerHttp "github.com/arfanxn/welding/internal/module/customer/presentation/http"
 	materialTestMachineHttp "github.com/arfanxn/welding/internal/module/material_test_machine/presentation/http"
@@ -56,6 +57,7 @@ type RegisterRoutesParams struct {
 	MaterialTestOrderHandler        materialTestOrderHttp.MaterialTestOrderHandler
 	AddressHandler                  addressHttp.AddressHandler
 	CustomerHandler                 customerHttp.CustomerHandler
+	AnalyticHandler                 analyticHttp.AnalyticHandler
 }
 
 func RegisterRoutes(params RegisterRoutesParams) error {
@@ -223,6 +225,11 @@ func RegisterRoutes(params RegisterRoutesParams) error {
 		materialTestOrder.POST("/:id/medias", params.MaterialTestOrderHandler.StoreMedia)
 		materialTestOrder.PUT("/:id/medias/:media_id", params.MaterialTestOrderHandler.UpdateMedia)
 		materialTestOrder.DELETE("/:id/medias/:media_id", params.MaterialTestOrderHandler.DestroyMedia)
+
+		// Analytics
+		analytic := protected.Group("/analytics")
+		analytic.GET("/summary", requirePermissionName(permissionEnum.AnalyticsIndex), params.AnalyticHandler.Summary)
+		analytic.GET("/orders/trends", requirePermissionName(permissionEnum.AnalyticsIndex), params.AnalyticHandler.OrderTrends)
 	}
 
 	return nil
