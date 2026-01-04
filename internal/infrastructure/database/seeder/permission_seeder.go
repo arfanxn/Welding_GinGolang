@@ -99,6 +99,8 @@ func (s *PermissionSeeder) Seed() error {
 		enum.MaterialTestOrdersShow:   "Melihat detail material test order",
 		enum.MaterialTestOrdersStore:  "Menambahkan material test order baru",
 		enum.MaterialTestOrdersUpdate: "Memperbarui material test order",
+
+		enum.AnalyticsIndex: "Melihat halaman analytics",
 	}
 
 	var permissions []*entity.Permission
