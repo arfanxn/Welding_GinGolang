@@ -66,6 +66,8 @@ const (
 	MaterialTestOrdersShow   PermissionName = "material_test_orders.show"
 	MaterialTestOrdersStore  PermissionName = "material_test_orders.store"
 	MaterialTestOrdersUpdate PermissionName = "material_test_orders.update"
+
+	AnalyticsIndex PermissionName = "analytics.index"
 )
 
 var PermissionNames = []PermissionName{
@@ -132,4 +134,6 @@ var PermissionNames = []PermissionName{
 	MaterialTestOrdersShow,
 	MaterialTestOrdersStore,
 	MaterialTestOrdersUpdate,
+
+	AnalyticsIndex,
 }
