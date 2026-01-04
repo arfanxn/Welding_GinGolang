@@ -22,7 +22,7 @@ func NewRole() *Role {
 	return &Role{}
 }
 
-func (u *Role) TableName() string {
+func (u Role) TableName() string {
 	return "roles"
 }
 
