@@ -139,6 +139,14 @@ func (s *saveMaterialTestOrderStep) Handle(ctx context.Context, _dto *dto.SaveMa
 		mto.ApplicantName = *_dto.ApplicantName
 	}
 
+	if _dto.ApplicantCompanyName != nil {
+		if !goutil.IsEmptyReal(_dto.ApplicantCompanyName) {
+			mto.ApplicantCompanyName = *_dto.ApplicantCompanyName
+		} else {
+			mto.ApplicantCompanyName = ""
+		}
+	}
+
 	if !goutil.IsEmptyReal(_dto.ApplicantPhoneNumber) {
 		mto.ApplicantPhoneNumber = *_dto.ApplicantPhoneNumber
 	}
@@ -161,6 +169,14 @@ func (s *saveMaterialTestOrderStep) Handle(ctx context.Context, _dto *dto.SaveMa
 
 	if !goutil.IsEmptyReal(_dto.RecipientName) {
 		mto.RecipientName = *_dto.RecipientName
+	}
+
+	if _dto.RecipientFullAddress != nil {
+		if !goutil.IsEmptyReal(_dto.RecipientFullAddress) {
+			mto.RecipientFullAddress = *_dto.RecipientFullAddress
+		} else {
+			mto.RecipientFullAddress = ""
+		}
 	}
 
 	if _dto.TesterNote != nil {
