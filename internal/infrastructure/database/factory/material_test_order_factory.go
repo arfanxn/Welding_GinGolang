@@ -28,18 +28,13 @@ func NewMaterialTestOrderFactory(
 		Attr("WorkPackageName", func(args factory.Args) (any, error) {
 			return gofakeit.Sentence(), nil
 		}).
-	Attr("ApplicantName", func(args factory.Args) (any, error) {
-		isIndividual := gofakeit.Bool()
-		return boolutil.Ternary(isIndividual, gofakeit.Name(), gofakeit.Company()), nil
-	}).
-	Attr("ApplicantCompanyName", func(args factory.Args) (any, error) {
-		withCompany := gofakeit.Bool()
-		company := gofakeit.Company()
-		return boolutil.Ternary(withCompany, company, ""), nil
-	}).
-	Attr("ApplicantPhoneNumber", func(args factory.Args) (any, error) {
-		return gofakeit.Phone(), nil
-	}).
+		Attr("ApplicantName", func(args factory.Args) (any, error) {
+			isIndividual := gofakeit.Bool()
+			return boolutil.Ternary(isIndividual, gofakeit.Name(), gofakeit.Company()), nil
+		}).
+		Attr("ApplicantPhoneNumber", func(args factory.Args) (any, error) {
+			return gofakeit.Phone(), nil
+		}).
 		Attr("ApplicantEmail", func(args factory.Args) (any, error) {
 			return gofakeit.Email(), nil
 		}).
@@ -58,14 +53,10 @@ func NewMaterialTestOrderFactory(
 			withTesterNote := gofakeit.Bool()
 			return boolutil.Ternary(withTesterNote, &testerNote, nil), nil
 		}).
-	Attr("RecipientName", func(args factory.Args) (any, error) {
-		isIndividual := gofakeit.Bool()
-		return boolutil.Ternary(isIndividual, gofakeit.Name(), gofakeit.Company()), nil
-	}).
-	Attr("RecipientFullAddress", func(args factory.Args) (any, error) {
-		addrInfo := gofakeit.Address()
-		return addrInfo.Address, nil
-	}).
+		Attr("RecipientName", func(args factory.Args) (any, error) {
+			isIndividual := gofakeit.Bool()
+			return boolutil.Ternary(isIndividual, gofakeit.Name(), gofakeit.Company()), nil
+		}).
 		Attr("Tax", func(args factory.Args) (any, error) {
 			withTax := gofakeit.Bool()
 			tax := gofakeit.Float64Range(1000.00, 100000.00)

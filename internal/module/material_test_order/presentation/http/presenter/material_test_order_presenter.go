@@ -70,13 +70,11 @@ func (p *materialTestOrderPresenter) FromEntityToViewModel(ctx context.Context, 
 	// -- WORK PACKAGE & APPLICANT DETAILS --
 	mtoVM.WorkPackageName = mto.WorkPackageName
 	mtoVM.ApplicantName = mto.ApplicantName
-	mtoVM.ApplicantCompanyName = mto.ApplicantCompanyName
 	mtoVM.ApplicantPhoneNumber = mto.ApplicantPhoneNumber
 	mtoVM.ApplicantEmail = mto.ApplicantEmail
 	mtoVM.ApplicantFullAddress = mto.ApplicantFullAddress
 	mtoVM.ApplicantNote = mto.ApplicantNote
 	mtoVM.RecipientName = mto.RecipientName
-	mtoVM.RecipientFullAddress = mto.RecipientFullAddress
 	mtoVM.TesterNote = mto.TesterNote
 
 	// -- FINANCIAL METADATA --

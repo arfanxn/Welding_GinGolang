@@ -19,13 +19,11 @@ type UpdateMaterialTestOrder struct {
 
 	WorkPackageName      *string `form:"work_package_name" json:"work_package_name"`
 	ApplicantName        *string `form:"applicant_name" json:"applicant_name"`
-	ApplicantCompanyName *string `form:"applicant_company_name" json:"applicant_company_name"`
 	ApplicantPhoneNumber *string `form:"applicant_phone_number" json:"applicant_phone_number"`
 	ApplicantEmail       *string `form:"applicant_email" json:"applicant_email"`
 	ApplicantFullAddress *string `form:"applicant_full_address" json:"applicant_full_address"`
 	ApplicantNote        *string `form:"applicant_note" json:"applicant_note"`
 	RecipientName        *string `form:"recipient_name" json:"recipient_name"`
-	RecipientFullAddress *string `form:"recipient_full_address" json:"recipient_full_address"`
 	TesterNote           *string `form:"tester_note" json:"tester_note"`
 
 	Status *string `form:"status" json:"status"`
@@ -54,9 +52,6 @@ func (r *UpdateMaterialTestOrder) Validate() error {
 		validation.Field(&r.ApplicantName,
 			validation.Length(3, 255).Error("Nama pemohon harus di antara 3 dan 255 karakter"),
 		),
-		validation.Field(&r.ApplicantCompanyName,
-			validation.Length(0, 255).Error("Nama perusahaan maksimal 255 karakter"),
-		),
 		validation.Field(&r.ApplicantPhoneNumber,
 			validation.Length(10, 15).Error("Nomor telpon pemohon harus antara 10-15 karakter"),
 		),
@@ -70,9 +65,6 @@ func (r *UpdateMaterialTestOrder) Validate() error {
 		validation.Field(&r.ApplicantNote),
 		validation.Field(&r.RecipientName,
 			validation.Length(3, 255).Error("Nama penerima harus di antara 3 dan 255 karakter"),
-		),
-		validation.Field(&r.RecipientFullAddress,
-			validation.Length(0, 512).Error("Alamat sertifikat maksimal 512 karakter"),
 		),
 		validation.Field(&r.TesterNote),
 		validation.Field(&r.Status,
