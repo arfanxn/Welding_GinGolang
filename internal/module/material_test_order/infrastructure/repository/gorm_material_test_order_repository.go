@@ -71,10 +71,12 @@ func (r *GormMaterialTestOrderRepository) query(db *gorm.DB, q *query.Query) (*g
 			db = db.Where("CAST("+mtoTableName+".number AS TEXT) ILIKE ?", s).
 				Or(mtoTableName+".work_package_name ILIKE ?", s).
 				Or(mtoTableName+".applicant_name ILIKE ?", s).
+				Or(mtoTableName+".applicant_company_name ILIKE ?", s).
 				Or(mtoTableName+".applicant_phone_number ILIKE ?", s).
 				Or(mtoTableName+".applicant_email ILIKE ?", s).
 				Or(mtoTableName+".applicant_full_address ILIKE ?", s).
 				Or(mtoTableName+".recipient_name ILIKE ?", s).
+				Or(mtoTableName+".recipient_full_address ILIKE ?", s).
 				Or(mtoTableName+".status ILIKE ?", s)
 		}
 
@@ -94,6 +96,10 @@ func (r *GormMaterialTestOrderRepository) query(db *gorm.DB, q *query.Query) (*g
 			db = db.Where(mtoTableName+".applicant_name = ?", applicantName.Value)
 		}
 
+		if applicantCompanyName := q.GetFilter("applicant_company_name", query.OperatorEqual); applicantCompanyName != nil {
+			db = db.Where(mtoTableName+".applicant_company_name = ?", applicantCompanyName.Value)
+		}
+
 		if applicantPhoneNumber := q.GetFilter("applicant_phone_number", query.OperatorEqual); applicantPhoneNumber != nil {
 			db = db.Where(mtoTableName+".applicant_phone_number = ?", applicantPhoneNumber.Value)
 		}
@@ -104,6 +110,10 @@ func (r *GormMaterialTestOrderRepository) query(db *gorm.DB, q *query.Query) (*g
 
 		if recipientName := q.GetFilter("recipient_name", query.OperatorEqual); recipientName != nil {
 			db = db.Where(mtoTableName+".recipient_name = ?", recipientName.Value)
+		}
+
+		if recipientFullAddress := q.GetFilter("recipient_full_address", query.OperatorEqual); recipientFullAddress != nil {
+			db = db.Where(mtoTableName+".recipient_full_address = ?", recipientFullAddress.Value)
 		}
 
 		if status := q.GetFilter("status", query.OperatorEqual); status != nil {
