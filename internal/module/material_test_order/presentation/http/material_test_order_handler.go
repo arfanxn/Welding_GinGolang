@@ -119,11 +119,13 @@ func (h *materialTestOrderHandler) Store(c *gin.Context) {
 		WorkCategoryId:       &req.WorkCategoryId,       // work category
 		WorkPackageName:      &req.WorkPackageName,      // work package name
 		ApplicantName:        &req.ApplicantName,        // applicant name
+		ApplicantCompanyName: req.ApplicantCompanyName,  // applicant company name
 		ApplicantPhoneNumber: &req.ApplicantPhoneNumber, // applicant phone number
 		ApplicantEmail:       &req.ApplicantEmail,       // applicant email
 		ApplicantFullAddress: &req.ApplicantFullAddress, // applicant full address
 		ApplicantNote:        req.ApplicantNote,         // applicant note
 		RecipientName:        &req.RecipientName,        // recipient name
+		RecipientFullAddress: req.RecipientFullAddress,  // recipient full address
 		TesterNote:           req.TesterNote,            // tester note
 		Status:               &req.Status,               // status
 		OwnerUserIds:         req.OwnerUserIds,          // owner user ids
@@ -178,11 +180,13 @@ func (h *materialTestOrderHandler) Update(c *gin.Context) {
 		WorkCategoryId:       req.WorkCategoryId,       // work category
 		WorkPackageName:      req.WorkPackageName,      // work package name
 		ApplicantName:        req.ApplicantName,        // applicant name
+		ApplicantCompanyName: req.ApplicantCompanyName, // applicant company name
 		ApplicantPhoneNumber: req.ApplicantPhoneNumber, // applicant phone number
 		ApplicantEmail:       req.ApplicantEmail,       // applicant email
 		ApplicantFullAddress: req.ApplicantFullAddress, // applicant full address
 		ApplicantNote:        req.ApplicantNote,        // applicant note
 		RecipientName:        req.RecipientName,        // recipient name
+		RecipientFullAddress: req.RecipientFullAddress, // recipient full address
 		TesterNote:           req.TesterNote,           // tester note
 		Status:               req.Status,               // status
 		OwnerUserIds:         req.OwnerUserIds,         // owner user ids

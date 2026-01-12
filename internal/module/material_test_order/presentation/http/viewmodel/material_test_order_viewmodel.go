@@ -16,11 +16,13 @@ type MaterialTestOrderViewModel struct {
 	// ---- WORK PACKAGE & APPLICANT DETAILS ----
 	WorkPackageName      string  `json:"work_package_name"`
 	ApplicantName        string  `json:"applicant_name"`
+	ApplicantCompanyName string  `json:"applicant_company_name"`
 	ApplicantPhoneNumber string  `json:"applicant_phone_number"`
 	ApplicantEmail       string  `json:"applicant_email"`
 	ApplicantFullAddress string  `json:"applicant_full_address"`
 	ApplicantNote        *string `json:"applicant_note"`
 	RecipientName        string  `json:"recipient_name"`
+	RecipientFullAddress string  `json:"recipient_full_address"`
 	TesterNote           *string `json:"tester_note"`
 
 	// ---- FINANCIAL METADATA ----

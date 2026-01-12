@@ -4,11 +4,13 @@ CREATE TABLE material_test_orders (
   work_category_id CHAR(26) NOT NULL,
   work_package_name VARCHAR(255) NOT NULL,
   applicant_name VARCHAR(255) NOT NULL,
+  applicant_company_name VARCHAR(255),
   applicant_phone_number VARCHAR(25) NOT NULL,
   applicant_email VARCHAR(50) NOT NULL,
   applicant_full_address VARCHAR(512) NOT NULL,
   applicant_note TEXT,
   recipient_name VARCHAR(255) NOT NULL,
+  recipient_full_address VARCHAR(512),
   tester_note TEXT,
   
   sub_total DECIMAL(10, 2) NOT NULL,
