@@ -54,34 +54,6 @@ func (s *RoleSeeder) Seed() error {
 		"Id":   "01K7KJ8RYMGS1FWJRZD000TCW0",
 		"Name": enum.SuperAdmin,
 	}).(*entity.Role)
-	adminRole := roleFactory.MustCreateWithOption(map[string]any{
-		"Id":   "01K7KJ8RYN8QJMYKA1WNBHQ22K",
-		"Name": enum.Admin,
-	}).(*entity.Role)
-	headRole := roleFactory.MustCreateWithOption(map[string]any{
-		"Id":   "01K7KJ8RYN8QJMYKA1WQQQYZA6",
-		"Name": enum.Head,
-	}).(*entity.Role)
-	managerRole := roleFactory.MustCreateWithOption(map[string]any{
-		"Id":   "01K7KJ8RYN8QJMYKA1WTZNZVYT",
-		"Name": enum.Manager,
-	}).(*entity.Role)
-	supervisorRole := roleFactory.MustCreateWithOption(map[string]any{
-		"Id":   "01K7KJ8RYN8QJMYKA1WYFRKSYN",
-		"Name": enum.Supervisor,
-	}).(*entity.Role)
-	engineerRole := roleFactory.MustCreateWithOption(map[string]any{
-		"Id":   "01K7KJ8RYN8QJMYKA1X0VNR31G",
-		"Name": enum.Engineer,
-	}).(*entity.Role)
-	staffRole := roleFactory.MustCreateWithOption(map[string]any{
-		"Id":   "01K7KJ8RYN8QJMYKA1X405T2FF",
-		"Name": enum.Staff,
-	}).(*entity.Role)
-	operatorRole := roleFactory.MustCreateWithOption(map[string]any{
-		"Id":   "01K7KJ8RYN8QJMYKA1X78V9C0T",
-		"Name": enum.Operator,
-	}).(*entity.Role)
 	customerServiceAdminRole := roleFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7KJ8RYN8QJMYKA1X7GKVWKP",
 		"Name": enum.CustomerServiceAdmin,
@@ -94,13 +66,6 @@ func (s *RoleSeeder) Seed() error {
 
 	roles := []*entity.Role{
 		superAdminRole,
-		adminRole,
-		headRole,
-		managerRole,
-		supervisorRole,
-		engineerRole,
-		staffRole,
-		operatorRole,
 		customerServiceAdminRole,
 		customerRole,
 	}
@@ -146,9 +111,12 @@ func (s *RoleSeeder) Seed() error {
 		// Define basic permissions that should be granted to all non-super-admin roles
 		// These are the minimum permissions needed for basic system navigation
 		exceptSuperAdminPermissionNames := []permissionEnum.PermissionName{
-			permissionEnum.UsersIndex,
-			permissionEnum.RolesIndex,
-			permissionEnum.PermissionsIndex,
+			permissionEnum.ActivitiesIndex,
+			permissionEnum.AddressesIndex,
+			permissionEnum.MaterialTestMethodsIndex,
+			permissionEnum.MaterialTestMachinesIndex,
+			permissionEnum.MaterialTestServicesIndex,
+			permissionEnum.MaterialTestWorkCategoriesIndex,
 		}
 
 		// Filter the complete permission list to only include the basic permissions
