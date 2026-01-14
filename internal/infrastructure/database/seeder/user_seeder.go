@@ -69,14 +69,6 @@ func (s *UserSeeder) Seed() error {
 		"ActivatedAt":     null.TimeFrom(time.Now()),
 		"DeactivatedAt":   null.TimeFromPtr(nil),
 	}).(*entity.User)
-	admin := userFactory.MustCreateWithOption(map[string]any{
-		"Id":   "01K7HR9A6WKK0W67W8S7F8755X",
-		"Name": strcase.ToCamel(enum.Admin),
-	}).(*entity.User)
-	head := userFactory.MustCreateWithOption(map[string]any{
-		"Id":   "01K7HR8N4Z9TE0ENB0K1275MNW",
-		"Name": strcase.ToCamel(enum.Head),
-	}).(*entity.User)
 	customerServiceAdmin := userFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7HR8WZZBSS957Q9NSQ85MYA",
 		"Name": strcase.ToCamel(enum.CustomerServiceAdmin),
@@ -88,8 +80,6 @@ func (s *UserSeeder) Seed() error {
 
 	employeeUsers := []*entity.User{
 		superAdmin,
-		admin,
-		head,
 		customerServiceAdmin,
 	}
 
@@ -152,17 +142,6 @@ func (s *UserSeeder) Seed() error {
 			roleUserFactory.MustCreateWithOption(map[string]any{
 				"RoleId": roleMap[enum.SuperAdmin].Id,
 				"UserId": superAdmin.Id,
-			}).(*entity.RoleUser),
-			// Admin role assignment
-			roleUserFactory.MustCreateWithOption(map[string]any{
-				"RoleId": roleMap[enum.Admin].Id,
-				"UserId": admin.Id,
-			}).(*entity.RoleUser),
-
-			// Head role assignment
-			roleUserFactory.MustCreateWithOption(map[string]any{
-				"RoleId": roleMap[enum.Head].Id,
-				"UserId": head.Id,
 			}).(*entity.RoleUser),
 
 			// Customer Service Admin role assignment

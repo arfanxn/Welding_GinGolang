@@ -47,7 +47,7 @@ func (s *CodeSeeder) Seed() error {
 		return err
 	}
 
-	roleEngineer, err := s.roleRepository.First(query.NewQuery().Filter("name", query.OperatorEqual, roleEnum.Engineer))
+	roleCustomerServiceAdmin, err := s.roleRepository.First(query.NewQuery().Filter("name", query.OperatorEqual, roleEnum.CustomerServiceAdmin))
 	if err != nil {
 		return err
 	}
@@ -60,7 +60,7 @@ func (s *CodeSeeder) Seed() error {
 			"CodeableType": null.StringFromPtr(nil),
 			"Type":         codeEnum.UserRegisterInvitation,
 			"Meta": types.JSONMap{
-				"role_id": roleEngineer.Id,
+				"role_id": roleCustomerServiceAdmin.Id,
 			},
 		}).(*entity.Code),
 		codeFactory.MustCreateWithOption(map[string]any{

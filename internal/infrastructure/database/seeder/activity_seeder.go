@@ -74,7 +74,7 @@ func (s *ActivitySeeder) Seed() error {
 		return err
 	}
 
-	roleEngineer, err := s.roleRepository.First(query.NewQuery().Filter("name", query.OperatorEqual, roleEnum.Engineer))
+	roleCustomerServiceAdmin, err := s.roleRepository.First(query.NewQuery().Filter("name", query.OperatorEqual, roleEnum.CustomerServiceAdmin))
 	if err != nil {
 		return err
 	}
@@ -245,7 +245,7 @@ func (s *ActivitySeeder) Seed() error {
 			"CauserId":    &user.Id,
 			"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
 			"Action":      activityEnum.RolesShow,
-			"SubjectId":   &roleEngineer.Id,
+			"SubjectId":   &roleCustomerServiceAdmin.Id,
 			"SubjectType": typeutil.Ptr(activityEnum.RoleSubjectType),
 		}).(*entity.Activity),
 
@@ -255,7 +255,7 @@ func (s *ActivitySeeder) Seed() error {
 			"CauserId":    &user.Id,
 			"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
 			"Action":      activityEnum.RolesStore,
-			"SubjectId":   &roleEngineer.Id,
+			"SubjectId":   &roleCustomerServiceAdmin.Id,
 			"SubjectType": typeutil.Ptr(activityEnum.RoleSubjectType),
 		}).(*entity.Activity),
 
@@ -265,7 +265,7 @@ func (s *ActivitySeeder) Seed() error {
 			"CauserId":    &user.Id,
 			"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
 			"Action":      activityEnum.RolesUpdate,
-			"SubjectId":   &roleEngineer.Id,
+			"SubjectId":   &roleCustomerServiceAdmin.Id,
 			"SubjectType": typeutil.Ptr(activityEnum.RoleSubjectType),
 		}).(*entity.Activity),
 
@@ -275,7 +275,7 @@ func (s *ActivitySeeder) Seed() error {
 			"CauserId":    &user.Id,
 			"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
 			"Action":      activityEnum.RolesSetDefault,
-			"SubjectId":   &roleEngineer.Id,
+			"SubjectId":   &roleCustomerServiceAdmin.Id,
 			"SubjectType": typeutil.Ptr(activityEnum.RoleSubjectType),
 		}).(*entity.Activity),
 
@@ -285,7 +285,7 @@ func (s *ActivitySeeder) Seed() error {
 			"CauserId":    &user.Id,
 			"CauserType":  typeutil.Ptr(activityEnum.UserCauserType),
 			"Action":      activityEnum.RolesDestroy,
-			"SubjectId":   &roleEngineer.Id,
+			"SubjectId":   &roleCustomerServiceAdmin.Id,
 			"SubjectType": typeutil.Ptr(activityEnum.RoleSubjectType),
 		}).(*entity.Activity),
 	}

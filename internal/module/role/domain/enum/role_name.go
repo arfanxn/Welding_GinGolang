@@ -4,26 +4,12 @@ type RoleName = string
 
 const (
 	SuperAdmin           RoleName = "super_admin"
-	Admin                RoleName = "admin"
-	Head                 RoleName = "head"
-	Manager              RoleName = "manager"
-	Supervisor           RoleName = "supervisor"
-	Engineer             RoleName = "engineer"
-	Staff                RoleName = "staff"
-	Operator             RoleName = "operator"
 	CustomerServiceAdmin RoleName = "customer_service_admin"
 	Customer             RoleName = "customer"
 )
 
 var RoleNames = []RoleName{
 	SuperAdmin,
-	Admin,
-	Head,
-	Manager,
-	Supervisor,
-	Engineer,
-	Staff,
-	Operator,
 	CustomerServiceAdmin,
 	Customer,
 }
