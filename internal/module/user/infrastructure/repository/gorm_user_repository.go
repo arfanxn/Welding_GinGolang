@@ -38,32 +38,34 @@ func (r *GormUserRepository) query(db *gorm.DB, q *query.Query) *gorm.DB {
 
 	db = db.Select(sb.String())
 
-	if f := q.GetFilterById(); f != nil {
-		db = db.Where(userTableName+".id = ?", f.Value)
-	}
+	if q != nil {
+		if f := q.GetFilterById(); f != nil {
+			db = db.Where(userTableName+".id = ?", f.Value)
+		}
 
-	if search := q.GetSearch(); search != nil {
-		db = db.Where(userTableName+".name ILIKE ?", "%"+*search+"%")
-	}
+		if search := q.GetSearch(); search != nil {
+			db = db.Where(userTableName+".name ILIKE ?", "%"+*search+"%")
+		}
 
-	if q.GetInclude("employee") != nil {
-		db = db.Preload("Employee")
-	}
+		if q.GetInclude("employee") != nil {
+			db = db.Preload("Employee")
+		}
 
-	if q.GetInclude("roles") != nil {
-		db = db.Preload("Roles")
-	}
+		if q.GetInclude("roles") != nil {
+			db = db.Preload("Roles")
+		}
 
-	if q.GetInclude("roles.permissions") != nil {
-		db = db.Preload("Roles.Permissions")
-	}
+		if q.GetInclude("roles.permissions") != nil {
+			db = db.Preload("Roles.Permissions")
+		}
 
-	if sort := q.GetSort("name"); sort != nil {
-		db = db.Order(userTableName + ".name" + sort.Order)
-	}
+		if sort := q.GetSort("name"); sort != nil {
+			db = db.Order(userTableName + ".name" + sort.Order)
+		}
 
-	if sort := q.GetSort("created_at"); sort != nil {
-		db = db.Order(userTableName + ".created_at " + sort.Order)
+		if sort := q.GetSort("created_at"); sort != nil {
+			db = db.Order(userTableName + ".created_at " + sort.Order)
+		}
 	}
 
 	db = db.Joins("LEFT JOIN " + employeeTableName + " ON " + userTableName + ".id = " + employeeTableName + ".user_id")
@@ -96,20 +98,26 @@ func (r *GormUserRepository) Paginate(q *query.Query) (*pagination.OffsetPaginat
 }
 
 func (r *GormUserRepository) First(q *query.Query) (*entity.User, error) {
-	users, err := r.Get(q)
-	if err != nil {
+	var user *entity.User
+
+	db := r.query(r.db, q)
+
+	if err := db.First(&user).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errorx.ErrUserNotFound
+		}
 		return nil, err
 	}
-	if len(users) == 0 {
-		return nil, errorx.ErrUserNotFound
-	}
-	return users[0], nil
+
+	return user, nil
 }
 
-func (r *GormUserRepository) Find(id string) (*entity.User, error) {
+func (r *GormUserRepository) Find(id string, q *query.Query) (*entity.User, error) {
 	var user entity.User
 
-	if err := r.db.Where("id = ?", id).First(&user).Error; err != nil {
+	db := r.query(r.db, q)
+
+	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrUserNotFound
 		}
@@ -118,9 +126,26 @@ func (r *GormUserRepository) Find(id string) (*entity.User, error) {
 	return &user, nil
 }
 
-func (r *GormUserRepository) FindByEmail(email string) (*entity.User, error) {
+func (r *GormUserRepository) FindByIds(ids []string, q *query.Query) ([]*entity.User, error) {
+	var users []*entity.User
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("id IN (?)", ids).Find(&users).Error; err != nil {
+		return nil, err
+	}
+	if len(users) != len(ids) {
+		return nil, errorx.ErrUserNotFound
+	}
+	return users, nil
+}
+
+func (r *GormUserRepository) FindByEmail(email string, q *query.Query) (*entity.User, error) {
 	var user entity.User
-	if err := r.db.Where("email = ?", email).First(&user).Error; err != nil {
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("email = ?", email).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrUserNotFound
 		}

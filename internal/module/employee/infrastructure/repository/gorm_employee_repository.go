@@ -6,6 +6,7 @@ import (
 	"github.com/arfanxn/welding/internal/module/employee/domain/repository"
 	"github.com/arfanxn/welding/internal/module/shared/domain/entity"
 	"github.com/arfanxn/welding/internal/module/shared/domain/errorx"
+	"github.com/arfanxn/welding/pkg/query"
 	"gorm.io/gorm"
 )
 
@@ -21,9 +22,20 @@ func NewGormEmployeeRepository(db *gorm.DB) repository.EmployeeRepository {
 	}
 }
 
-func (r *GormEmployeeRepository) FindByUserId(userId string) (*entity.Employee, error) {
+func (r *GormEmployeeRepository) query(db *gorm.DB, q *query.Query) *gorm.DB {
+	if q != nil {
+		// TODO: implement
+	}
+
+	return db
+}
+
+func (r *GormEmployeeRepository) FindByUserId(userId string, q *query.Query) (*entity.Employee, error) {
 	var employee entity.Employee
-	if err := r.db.Where("user_id = ?", userId).First(&employee).Error; err != nil {
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("user_id = ?", userId).First(&employee).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrEmployeeNotFound
 		}

@@ -29,7 +29,7 @@ func (h *permissionHandler) Paginate(c *gin.Context) {
 	q := query.NewQuery()
 	c.ShouldBind(q)
 
-	op, err := h.permissionUsecase.Paginate(q)
+	op, err := h.permissionUsecase.Paginate(c.Request.Context(), q)
 	if err != nil {
 		panic(err)
 	}
@@ -37,6 +37,6 @@ func (h *permissionHandler) Paginate(c *gin.Context) {
 	c.JSON(http.StatusOK, response.NewBodyWithData(
 		http.StatusOK,
 		"Permissions berhasil diambil",
-		pagination.PPFromOP(op, helper.URLFromC(c)),
+		pagination.FromOPToPP(op, helper.URLFromC(c)),
 	))
 }

@@ -28,10 +28,31 @@ var seedCommand = &cli.Command{
 				fx.Annotate(factory.NewRoleFactory, fx.ResultTags(`name:"role_factory"`)),
 				fx.Annotate(factory.NewRoleUserFactory, fx.ResultTags(`name:"role_user_factory"`)),
 				fx.Annotate(factory.NewUserFactory, fx.ResultTags(`name:"user_factory"`)),
+				fx.Annotate(factory.NewCodeFactory, fx.ResultTags(`name:"code_factory"`)),
+				fx.Annotate(factory.NewActivityFactory, fx.ResultTags(`name:"activity_factory"`)),
+				fx.Annotate(factory.NewMaterialTestServiceFactory, fx.ResultTags(`name:"material_test_service_factory"`)),
+				fx.Annotate(factory.NewMaterialTestWorkCategoryFactory, fx.ResultTags(`name:"material_test_work_category_factory"`)),
+				fx.Annotate(factory.NewMaterialTestWorkPackageFactory, fx.ResultTags(`name:"material_test_work_package_factory"`)),
+				fx.Annotate(factory.NewAddressFactory, fx.ResultTags(`name:"address_factory"`)),
+				fx.Annotate(factory.NewCustomerFactory, fx.ResultTags(`name:"customer_factory"`)),
+				fx.Annotate(factory.NewMaterialTestOrderServiceFactory, fx.ResultTags(`name:"material_test_order_service_factory"`)),
+				fx.Annotate(factory.NewMaterialTestOrderServiceEvaluationFactory, fx.ResultTags(`name:"material_test_order_service_evaluation_factory"`)),
+				fx.Annotate(factory.NewMaterialTestOrderFactory, fx.ResultTags(`name:"material_test_order_factory"`)),
+				fx.Annotate(factory.NewMediaFactory, fx.ResultTags(`name:"media_factory"`)),
 
 				fx.Annotate(seeder.NewUserSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
 				fx.Annotate(seeder.NewRoleSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
 				fx.Annotate(seeder.NewPermissionSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
+				fx.Annotate(seeder.NewCodeSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
+				fx.Annotate(seeder.NewActivitySeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
+				fx.Annotate(seeder.NewMaterialTestMethodSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
+				fx.Annotate(seeder.NewMaterialTestMachineSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
+				fx.Annotate(seeder.NewMaterialTestServiceSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
+				fx.Annotate(seeder.NewMaterialTestWorkCategorySeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
+				fx.Annotate(seeder.NewMaterialTestWorkPackageSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
+				fx.Annotate(seeder.NewAddressSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
+				fx.Annotate(seeder.NewCustomerSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
+				fx.Annotate(seeder.NewMaterialTestOrderSeeder, fx.As(new(seeder.Seeder)), fx.ResultTags(`group:"seeders"`)),
 			),
 			fx.WithLogger(func(l *logger.Logger) fxevent.Logger {
 				fxLogger := l.With(zap.String("component", "fx"))
@@ -62,11 +83,32 @@ func mustGetOrderedSeeders(seeders []seeder.Seeder) []seeder.Seeder {
 		mustGetByTypeFromSeeders[*seeder.PermissionSeeder](seeders),
 		mustGetByTypeFromSeeders[*seeder.RoleSeeder](seeders),
 		mustGetByTypeFromSeeders[*seeder.UserSeeder](seeders),
+		mustGetByTypeFromSeeders[*seeder.CodeSeeder](seeders),
+		mustGetByTypeFromSeeders[*seeder.MaterialTestMethodSeeder](seeders),
+		mustGetByTypeFromSeeders[*seeder.MaterialTestMachineSeeder](seeders),
+		mustGetByTypeFromSeeders[*seeder.MaterialTestServiceSeeder](seeders),
+		mustGetByTypeFromSeeders[*seeder.MaterialTestWorkCategorySeeder](seeders),
+		mustGetByTypeFromSeeders[*seeder.MaterialTestWorkPackageSeeder](seeders),
+		mustGetByTypeFromSeeders[*seeder.AddressSeeder](seeders),
+		mustGetByTypeFromSeeders[*seeder.CustomerSeeder](seeders),
+		mustGetByTypeFromSeeders[*seeder.MaterialTestOrderSeeder](seeders),
+		mustGetByTypeFromSeeders[*seeder.ActivitySeeder](seeders),
 	}
 	return orderedSeeders
 }
 
-func seed(params seedParams) error {
+func seed(params seedParams) (err error) {
+	// Handle any panic that might occur during seeding
+	defer func() {
+		if r := recover(); r != nil {
+			err = r.(error)
+			params.Logger.Error("panic occurred during seeding",
+				zap.Error(err),
+				zap.Stack("stack"),
+			)
+		}
+	}()
+
 	params.Logger.Info("==========seeding database==========")
 	defer os.Exit(0)
 
@@ -76,13 +118,30 @@ func seed(params seedParams) error {
 		seederName := reflectutil.GetStructName(s)
 		params.Logger.Info("seeding " + seederName)
 
-		if err := s.Seed(); err != nil {
-			params.Logger.Error(
-				"failed to seed "+seederName,
-				zap.Error(err),
-				zap.String("seeder", seederName),
-			)
+		// Nested defer with named return to capture errors from panics in Seed()
+		func() {
+			defer func() {
+				if r := recover(); r != nil {
+					err = r.(error)
+					params.Logger.Error("panic in seeder "+seederName,
+						zap.Error(err),
+						zap.String("seeder", seederName),
+						zap.Stack("stack"),
+					)
+				}
+			}()
 
+			if err = s.Seed(); err != nil {
+				params.Logger.Error(
+					"failed to seed "+seederName,
+					zap.Error(err),
+					zap.String("seeder", seederName),
+				)
+			}
+		}()
+
+		// If there was an error in the seeder, return it
+		if err != nil {
 			return err
 		}
 	}

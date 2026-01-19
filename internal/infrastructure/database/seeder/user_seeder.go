@@ -64,30 +64,32 @@ func (s *UserSeeder) Seed() error {
 
 	superAdmin := userFactory.MustCreateWithOption(map[string]any{
 		"Id":              "01K7HR3Z46X1B3X7XQ2JFKF2DM",
-		"Name":            strcase.ToCamel(enum.SuperAdmin.String()),
+		"Name":            strcase.ToCamel(enum.SuperAdmin),
 		"EmailVerifiedAt": null.TimeFrom(time.Now()),
 		"ActivatedAt":     null.TimeFrom(time.Now()),
 		"DeactivatedAt":   null.TimeFromPtr(nil),
 	}).(*entity.User)
-	admin := userFactory.MustCreateWithOption(map[string]any{
-		"Id":   "01K7HR9A6WKK0W67W8S7F8755X",
-		"Name": strcase.ToCamel(enum.Admin.String()),
-	}).(*entity.User)
-	head := userFactory.MustCreateWithOption(map[string]any{
-		"Id":   "01K7HR8N4Z9TE0ENB0K1275MNW",
-		"Name": strcase.ToCamel(enum.Head.String()),
-	}).(*entity.User)
 	customerServiceAdmin := userFactory.MustCreateWithOption(map[string]any{
 		"Id":   "01K7HR8WZZBSS957Q9NSQ85MYA",
-		"Name": strcase.ToCamel(enum.CustomerServiceAdmin.String()),
+		"Name": strcase.ToCamel(enum.CustomerServiceAdmin),
+	}).(*entity.User)
+	customer := userFactory.MustCreateWithOption(map[string]any{
+		"Id":   "01K7HR9C7XKJ2F8P5V3N6Q9W2E",
+		"Name": strcase.ToCamel(enum.Customer),
 	}).(*entity.User)
 
-	users := []*entity.User{
+	employeeUsers := []*entity.User{
 		superAdmin,
-		admin,
-		head,
 		customerServiceAdmin,
 	}
+
+	customerUsers := []*entity.User{
+		customer,
+	}
+
+	users := []*entity.User{}
+	users = append(users, employeeUsers...)
+	users = append(users, customerUsers...)
 
 	for _, user := range users {
 		user.Email = fmt.Sprintf("%s@gmail.com", strcase.ToSnake(user.Name))
@@ -101,7 +103,7 @@ func (s *UserSeeder) Seed() error {
 	{
 		// ========== Employee ==========
 		employees := []*entity.Employee{}
-		for _, user := range users {
+		for _, user := range employeeUsers {
 			employee := employeeFactory.MustCreateWithOption(map[string]any{
 				"UserId": user.Id,
 			}).(*entity.Employee)
@@ -141,22 +143,17 @@ func (s *UserSeeder) Seed() error {
 				"RoleId": roleMap[enum.SuperAdmin].Id,
 				"UserId": superAdmin.Id,
 			}).(*entity.RoleUser),
-			// Admin role assignment
-			roleUserFactory.MustCreateWithOption(map[string]any{
-				"RoleId": roleMap[enum.Admin].Id,
-				"UserId": admin.Id,
-			}).(*entity.RoleUser),
-
-			// Head role assignment
-			roleUserFactory.MustCreateWithOption(map[string]any{
-				"RoleId": roleMap[enum.Head].Id,
-				"UserId": head.Id,
-			}).(*entity.RoleUser),
 
 			// Customer Service Admin role assignment
 			roleUserFactory.MustCreateWithOption(map[string]any{
 				"RoleId": roleMap[enum.CustomerServiceAdmin].Id,
 				"UserId": customerServiceAdmin.Id,
+			}).(*entity.RoleUser),
+
+			// Customer
+			roleUserFactory.MustCreateWithOption(map[string]any{
+				"RoleId": roleMap[enum.Customer].Id,
+				"UserId": customer.Id,
 			}).(*entity.RoleUser),
 		}
 

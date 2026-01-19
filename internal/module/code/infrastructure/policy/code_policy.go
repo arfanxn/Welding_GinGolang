@@ -46,7 +46,7 @@ func NewCodePolicy(params NewCodePolicyParams) CodePolicy {
 //   - error: Returns nil if validation passes, otherwise returns an appropriate HTTP error
 func (p *codePolicy) CreateUserRegisterInvitation(ctx context.Context, _dto *dto.CreateUserRegisterInvitation) error {
 	// Retrieve the role to validate its existence and type
-	role, err := p.roleRepository.Find(_dto.RoleId)
+	role, err := p.roleRepository.Find(_dto.RoleId, nil)
 	if err != nil {
 		return err
 	}

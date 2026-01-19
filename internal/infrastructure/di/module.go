@@ -10,8 +10,22 @@ import (
 	"github.com/arfanxn/welding/internal/infrastructure/mail"
 	"github.com/arfanxn/welding/internal/infrastructure/middleware"
 	"github.com/arfanxn/welding/internal/infrastructure/security"
+	activityDi "github.com/arfanxn/welding/internal/module/activity/infrastructure/di"
+	addressDi "github.com/arfanxn/welding/internal/module/address/infrastructure/di"
+	analyticDi "github.com/arfanxn/welding/internal/module/analytic/infrastructure/di"
 	codeDi "github.com/arfanxn/welding/internal/module/code/infrastructure/di"
+	customerDi "github.com/arfanxn/welding/internal/module/customer/infrastructure/di"
 	employeeDi "github.com/arfanxn/welding/internal/module/employee/infrastructure/di"
+	materialTestMachineDi "github.com/arfanxn/welding/internal/module/material_test_machine/infrastructure/di"
+	materialTestMethodDi "github.com/arfanxn/welding/internal/module/material_test_method/infrastructure/di"
+	materialTestOrderDi "github.com/arfanxn/welding/internal/module/material_test_order/infrastructure/di"
+	materialTestOrderServiceDi "github.com/arfanxn/welding/internal/module/material_test_order_service/infrastructure/di"
+	materialTestOrderServiceEvaluationDi "github.com/arfanxn/welding/internal/module/material_test_order_service_evaluation/infrastructure/di"
+	materialTestOrderUserDi "github.com/arfanxn/welding/internal/module/material_test_order_user/infrastructure/di"
+	materialTestServiceDi "github.com/arfanxn/welding/internal/module/material_test_service/infrastructure/di"
+	materialTestWorkCategoryDi "github.com/arfanxn/welding/internal/module/material_test_work_category/infrastructure/di"
+	materialTestWorkPackageDi "github.com/arfanxn/welding/internal/module/material_test_work_package/infrastructure/di"
+	mediaDi "github.com/arfanxn/welding/internal/module/media/infrastructure/di"
 	permissionDi "github.com/arfanxn/welding/internal/module/permission/infrastructure/di"
 	permissionRoleDi "github.com/arfanxn/welding/internal/module/permission_role/infrastructure/di"
 	roleDi "github.com/arfanxn/welding/internal/module/role/infrastructure/di"
@@ -29,6 +43,8 @@ var Module = fx.Module("infrastructure",
 		// Core
 		config.NewConfigFromEnv,
 		database.NewPostgresGormDBFromConfig,
+		database.NewMongoClientFromConfig,
+		database.NewMongoDatabaseFromClientAndConfig,
 		logger.NewLoggerFromConfig,
 		mail.NewSmtpMailServiceFromConfig,
 		jwt.NewJWTServiceFromConfig,
@@ -39,6 +55,7 @@ var Module = fx.Module("infrastructure",
 
 		// Middleware(s)
 		middleware.NewHttpErrorRecoveryMiddleware,
+		middleware.NewRequestContextMiddleware,
 		middleware.NewRateLimiterMiddleware,
 		middleware.NewAuthenticateMiddleware,
 		middleware.NewAuthorizeMiddleware,
@@ -54,6 +71,20 @@ var Module = fx.Module("infrastructure",
 	permissionRoleDi.Module,
 	employeeDi.Module,
 	codeDi.Module,
+	activityDi.Module,
+	analyticDi.Module,
+	materialTestMethodDi.Module,
+	materialTestMachineDi.Module,
+	materialTestServiceDi.Module,
+	materialTestWorkCategoryDi.Module,
+	materialTestWorkPackageDi.Module,
+	addressDi.Module,
+	customerDi.Module,
+	materialTestOrderDi.Module,
+	materialTestOrderUserDi.Module,
+	materialTestOrderServiceDi.Module,
+	materialTestOrderServiceEvaluationDi.Module,
+	mediaDi.Module,
 
 	// Logger
 	fx.WithLogger(func(logger *logger.Logger) fxevent.Logger {

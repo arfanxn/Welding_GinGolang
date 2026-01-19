@@ -1,0 +1,20 @@
+CREATE TABLE medias (
+  id CHAR(26) PRIMARY KEY NOT NULL,
+  model_type VARCHAR(50) NOT NULL,
+  model_id CHAR(26) NOT NULL,
+  ulid VARCHAR(26),
+  collection_name VARCHAR(50) NOT NULL,
+  name VARCHAR(255) NOT NULL, 
+  file_name VARCHAR(50) NOT NULL, 
+  mime_type VARCHAR(50),
+  disk VARCHAR(50) NOT NULL,
+  conversions_disk VARCHAR(50),
+  size INT NOT NULL, 
+  manipulations JSON,
+  custom_properties JSON,
+  generated_conversions JSON,
+  responsive_images JSON,
+  order_column INT,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE
+);

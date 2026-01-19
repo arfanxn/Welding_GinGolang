@@ -7,13 +7,18 @@ import (
 )
 
 type Permission struct {
-	Id        string              `json:"id" gorm:"primarykey"`
-	Name      enum.PermissionName `json:"name"`
-	CreatedAt time.Time           `json:"created_at" gorm:"autoCreateTime"`
+	Id          string              `json:"id" gorm:"primarykey"`
+	Name        enum.PermissionName `json:"name"`
+	Description string              `json:"description"`
+	CreatedAt   time.Time           `json:"created_at" gorm:"autoCreateTime"`
 
 	Roles []*Role `json:"roles,omitempty" gorm:"many2many:permission_role"`
 }
 
 func NewPermission() *Permission {
 	return &Permission{}
+}
+
+func (Permission) TableName() string {
+	return "permissions"
 }

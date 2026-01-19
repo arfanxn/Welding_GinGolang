@@ -38,9 +38,10 @@ var Operators = []string{
 }
 
 type Filter struct {
-	Column   string `json:"column"`
-	Operator string `json:"operator"`
-	Value    string `json:"value"`
+	Column   string   `json:"column"`
+	Operator string   `json:"operator"`
+	Value    string   `json:"value"`
+	Values   []string `json:"values"`
 }
 
 const (
@@ -79,6 +80,7 @@ type Query struct {
 	// Supported operators: ==, !=, >, >=, <, <=, IN, NOT IN, etc.
 	// Examples:
 	// - ?filter=name==admin
+	// - ?filter=created_atBETWEEN2023-01-01,2023-01-31
 	// - ?filter=created_at>2023-01-01
 	// - ?filter=statusINactive,pending
 	Filters []string `form:"filter" json:"filter" default:"[]"`
@@ -90,6 +92,14 @@ type Query struct {
 	// - ?sort=-created_at (descending)
 	// - ?sort=name&sort=-created_at (multiple sorts)
 	Sorts []string `form:"sort" json:"sort" default:"[]"`
+
+	// Groups specifies the fields to group by in the query.
+	// Examples:
+	// - ?group=date
+	// - ?group=month
+	// - ?group=year
+	// - ?group=category&group=date
+	Groups []string `form:"group" json:"group" default:"[]"`
 }
 
 func NewQuery() *Query {
@@ -115,6 +125,11 @@ func (q *Query) Include(include string) *Query {
 
 func (q *Query) Sort(column, order string) *Query {
 	q.Sorts = append(q.Sorts, column+order)
+	return q
+}
+
+func (q *Query) Group(column string) *Query {
+	q.Groups = append(q.Groups, column)
 	return q
 }
 
@@ -168,11 +183,13 @@ func (q *Query) GetFilter(column string, operator string) *Filter {
 
 	for _, filter := range q.Filters {
 		matches := re.FindStringSubmatch(filter)
-		if len(matches) > 1 {
+		if len(matches) > 1 { // Check if we have a match with capture groups
+			trimmedMatch := strings.TrimSpace(matches[1])
 			return &Filter{
 				Column:   column,
 				Operator: operator,
-				Value:    strings.TrimSpace(matches[1]),
+				Value:    trimmedMatch,
+				Values:   strings.Split(trimmedMatch, ","),
 			}
 		}
 	}
@@ -197,6 +214,23 @@ func (q *Query) GetSort(column string) *Sort {
 				Column: column,
 				Order:  order,
 			}
+		}
+	}
+	return nil
+}
+
+// GetGroup returns the group if it exists in the query's Groups slice, performing a case-insensitive comparison
+// and ignoring any whitespace in the group names.
+// If the group is found, it returns a pointer to the original group string from the query.
+// If not found, it returns nil.
+func (q *Query) GetGroup(group string) *string {
+	// Create a regex pattern that matches the group name with any whitespace
+	pattern := `^\s*` + regexp.QuoteMeta(group) + `\s*$`
+	re := regexp.MustCompile(`(?i)` + pattern) // (?i) makes it case-insensitive
+
+	for _, g := range q.Groups {
+		if re.MatchString(g) {
+			return &g
 		}
 	}
 	return nil

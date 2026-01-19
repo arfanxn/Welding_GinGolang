@@ -1,0 +1,40 @@
+CREATE TABLE material_test_orders (
+  id CHAR(26) PRIMARY KEY NOT NULL,
+  number VARCHAR(50) NOT NULL,
+  work_category_id CHAR(26) NOT NULL,
+  work_package_name VARCHAR(255) NOT NULL,
+  applicant_name VARCHAR(255) NOT NULL,
+  applicant_company_name VARCHAR(255),
+  applicant_phone_number VARCHAR(25) NOT NULL,
+  applicant_email VARCHAR(50) NOT NULL,
+  applicant_full_address VARCHAR(512) NOT NULL,
+  applicant_note TEXT,
+  recipient_name VARCHAR(255) NOT NULL,
+  recipient_full_address VARCHAR(512),
+  tester_note TEXT,
+  
+  sub_total DECIMAL(10, 2) NOT NULL,
+  tax DECIMAL(10, 2) NOT NULL,
+  discount DECIMAL(10, 2) NOT NULL,
+  total DECIMAL(10, 2) NOT NULL,
+
+  status VARCHAR(50) NOT NULL,
+
+  submitted_at TIMESTAMP WITH TIME ZONE, -- from 'draft' to 'awaiting_review' means submitted
+  approved_at TIMESTAMP WITH TIME ZONE, -- 'awaiting_review' is approved
+  rejected_at TIMESTAMP WITH TIME ZONE, -- 'awaiting_review' is rejected
+  cancelled_at TIMESTAMP WITH TIME ZONE, -- 'cancelled'
+
+  payment_submitted_at TIMESTAMP WITH TIME ZONE, -- 'payment_submitted'
+  payment_approved_at TIMESTAMP WITH TIME ZONE, -- 'payment_approved'
+  payment_rejected_at TIMESTAMP WITH TIME ZONE, -- payment_rejected
+
+  testing_at TIMESTAMP WITH TIME ZONE, -- 'testing' means under test 
+  refunded_at TIMESTAMP WITH TIME ZONE, -- 'refunded'
+  completed_at TIMESTAMP WITH TIME ZONE, -- 'completed'
+  
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE,
+
+  CONSTRAINT fk_material_test_orders_work_category_id FOREIGN KEY (work_category_id) REFERENCES material_test_work_categories(id) ON DELETE CASCADE
+);

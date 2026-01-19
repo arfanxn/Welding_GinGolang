@@ -167,7 +167,7 @@ func (p *userPolicy) Destroy(_ context.Context, _dto *dto.DestroyUser) error {
 // ==================================================
 
 func (p *userPolicy) findUser(userId string) (*entity.User, error) {
-	return p.userRepository.Find(userId)
+	return p.userRepository.Find(userId, nil)
 }
 
 func (p *userPolicy) isSuperAdmin(user *entity.User) (bool, error) {
@@ -183,7 +183,7 @@ func (p *userPolicy) validateRoleAssignments(roleIDs []string) error {
 		return nil
 	}
 
-	roles, err := p.roleRepository.FindByIds(roleIDs)
+	roles, err := p.roleRepository.FindByIds(roleIDs, nil)
 	if err != nil {
 		return err
 	}

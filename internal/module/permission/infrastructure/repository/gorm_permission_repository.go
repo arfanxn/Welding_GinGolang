@@ -36,12 +36,14 @@ func (r *GormPermissionRepository) All() ([]*entity.Permission, error) {
 // It supports searching by name (case-insensitive) and sorting by name in ascending or descending order.
 // The modified *gorm.DB is returned with the applied query.
 func (r *GormPermissionRepository) query(db *gorm.DB, q *query.Query) *gorm.DB {
-	if search := q.GetSearch(); search != nil {
-		db = db.Where("name ILIKE ?", "%"+*search+"%")
-	}
+	if q != nil {
+		if search := q.GetSearch(); search != nil {
+			db = db.Where("name ILIKE ?", "%"+*search+"%")
+		}
 
-	if sort := q.GetSort("name"); sort != nil {
-		db = db.Order("name " + sort.Order)
+		if sort := q.GetSort("name"); sort != nil {
+			db = db.Order("name " + sort.Order)
+		}
 	}
 
 	return db
@@ -73,9 +75,27 @@ func (r *GormPermissionRepository) Paginate(q *query.Query) (*pagination.OffsetP
 	return pagination, nil
 }
 
-func (r *GormPermissionRepository) Find(id string) (*entity.Permission, error) {
+func (r *GormPermissionRepository) First(q *query.Query) (*entity.Permission, error) {
+	var permission *entity.Permission
+
+	db := r.query(r.db, q)
+
+	if err := db.First(&permission).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errorx.ErrPermissionNotFound
+		}
+		return nil, err
+	}
+
+	return permission, nil
+}
+
+func (r *GormPermissionRepository) Find(id string, q *query.Query) (*entity.Permission, error) {
 	var permission entity.Permission
-	if err := r.db.Where("id = ?", id).First(&permission).Error; err != nil {
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("id = ?", id).First(&permission).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrPermissionNotFound
 		}
@@ -84,9 +104,12 @@ func (r *GormPermissionRepository) Find(id string) (*entity.Permission, error) {
 	return &permission, nil
 }
 
-func (r *GormPermissionRepository) FindByName(name string) (*entity.Permission, error) {
+func (r *GormPermissionRepository) FindByName(name string, q *query.Query) (*entity.Permission, error) {
 	var permission entity.Permission
-	if err := r.db.Where("name = ?", name).First(&permission).Error; err != nil {
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("name = ?", name).First(&permission).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errorx.ErrPermissionNotFound
 		}
@@ -95,14 +118,43 @@ func (r *GormPermissionRepository) FindByName(name string) (*entity.Permission, 
 	return &permission, nil
 }
 
-func (r *GormPermissionRepository) FindByIds(ids []string) ([]*entity.Permission, error) {
+func (r *GormPermissionRepository) FindByIds(ids []string, q *query.Query) ([]*entity.Permission, error) {
 	var permissions []*entity.Permission
-	if err := r.db.Where("id IN (?)", ids).Find(&permissions).Error; err != nil {
+
+	db := r.query(r.db, q)
+
+	if err := db.Where("id IN (?)", ids).Find(&permissions).Error; err != nil {
 		return nil, err
 	}
 	if len(permissions) != len(ids) {
 		return nil, errorx.ErrPermissionsNotFound
 	}
+	return permissions, nil
+}
+
+func (r *GormPermissionRepository) FindByUserId(userId string, q *query.Query) ([]*entity.Permission, error) {
+	var (
+		permissionTableName     = entity.NewPermission().TableName()
+		permissionRoleTableName = entity.NewPermissionRole().TableName()
+		roleTableName           = entity.NewRole().TableName()
+		roleUserTableName       = entity.NewRoleUser().TableName()
+	)
+
+	var permissions []*entity.Permission
+
+	db := r.query(r.db, q)
+
+	db = db.
+		Joins("JOIN "+permissionRoleTableName+" ON "+permissionRoleTableName+".permission_id = "+permissionTableName+".id").
+		Joins("JOIN "+roleTableName+" ON "+roleTableName+".id = "+permissionRoleTableName+".role_id").
+		Joins("JOIN "+roleUserTableName+" ON "+roleUserTableName+".role_id = "+roleTableName+".id").
+		Where(roleUserTableName+".user_id = ?", userId).
+		Group(permissionTableName + ".id") // Group by permission id to avoid duplicate permissions
+
+	if err := db.Find(&permissions).Error; err != nil {
+		return nil, err
+	}
+
 	return permissions, nil
 }
 

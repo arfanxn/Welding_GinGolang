@@ -19,3 +19,7 @@ func MustGetByTypeFromArray[I any, T any](arr []I) T {
 	}
 	return val
 }
+
+func Ptr[T any](v T) *T {
+	return &v
+}

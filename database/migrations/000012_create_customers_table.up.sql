@@ -1,0 +1,12 @@
+CREATE TABLE customers (
+  id CHAR(26) PRIMARY KEY NOT NULL,
+  address_id CHAR(26) NOT NULL,
+  name VARCHAR(50) NOT NULL,
+  phone_number VARCHAR(25) NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE,
+  deleted_at TIMESTAMP WITH TIME ZONE,
+
+  CONSTRAINT fk_customers_address_id FOREIGN KEY (address_id) REFERENCES addresses(id) ON DELETE CASCADE
+);

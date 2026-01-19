@@ -73,7 +73,7 @@ func (s *registerUserStep) Handle(
 	// Handle invitation-based registration
 	if isWithInvitationCode {
 		// Find invitation code by type and value
-		code, err = s.codeRepository.FindByTypeAndValue(enum.UserRegisterInvitation, *_dto.InvitationCode)
+		code, err = s.codeRepository.FindByTypeAndValue(enum.UserRegisterInvitation, *_dto.InvitationCode, nil)
 		if err != nil {
 			if errors.Is(err, gorm.ErrRecordNotFound) {
 				return nil, errorx.ErrCodeNotFound
@@ -91,17 +91,11 @@ func (s *registerUserStep) Handle(
 			return nil, errorx.ErrCodeExpired
 		}
 
-		// Extract role ID from invitation code metadata
-		codeMeta, err := code.GetMeta()
-		if err != nil {
-			return nil, err
-		}
-
-		roleId := codeMeta["role_id"].(string)
+		roleId := code.Meta.GetString("role_id")
 		roleIds = []string{roleId}
 	} else {
 		// Handle default registration without invitation code
-		defaultRole, err := s.roleRepository.FindDefault()
+		defaultRole, err := s.roleRepository.FindDefault(nil)
 		if err != nil {
 			return nil, err
 		}

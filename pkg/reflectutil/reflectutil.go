@@ -8,105 +8,146 @@ import (
 	"time"
 )
 
-// SetValueFromString sets a reflect.Value from a string representation.
-// It supports basic types, durations, and anything implementing encoding.TextUnmarshaler.
+/* ============================================
+   Struct Helpers
+=============================================== */
+
+// DerefAndInit dereferences pointers and allocates nil ones so
+// the result is always a concrete, settable underlying value.
+func DerefAndInit(v reflect.Value) reflect.Value {
+	for v.Kind() == reflect.Pointer {
+		if v.IsNil() {
+			v.Set(reflect.New(v.Type().Elem()))
+		}
+		v = v.Elem()
+	}
+	return v
+}
+
+// Deref dereferences pointers until it reaches a non-pointer.
+func Deref(v reflect.Value) reflect.Value {
+	for v.Kind() == reflect.Pointer {
+		if v.IsNil() {
+			return v // cannot dereference further
+		}
+		v = v.Elem()
+	}
+	return v
+}
+
+func DerefType(t reflect.Type) reflect.Type {
+	for t.Kind() == reflect.Pointer {
+		t = t.Elem()
+	}
+	return t
+}
+
+// GetStructName deeply dereferences pointers and returns the struct name.
+func GetStructName(v any) string {
+	t := DerefType(reflect.TypeOf(v))
+	return t.Name()
+}
+
+// GetStructField deeply dereferences and returns a struct field by name.
+func GetStructField(v any, name string) (any, bool) {
+	val := Deref(reflect.ValueOf(v))
+
+	if val.Kind() != reflect.Struct {
+		return nil, false
+	}
+
+	field := val.FieldByName(name)
+	if !field.IsValid() || !field.CanInterface() {
+		return nil, false
+	}
+
+	return field.Interface(), true
+}
+
+/* ============================================
+   Helpers
+=============================================== */
+
+func isTimeDurationType(t reflect.Type) bool {
+	return t.PkgPath() == "time" && t.Name() == "Duration"
+}
+
+/* ============================================
+   SetValueFromString
+=============================================== */
+
 func SetValueFromString(fieldVal reflect.Value, str string) error {
 	// Handle pointer types
-	if fieldVal.Kind() == reflect.Pointer {
-		if fieldVal.IsNil() {
-			fieldVal.Set(reflect.New(fieldVal.Type().Elem()))
+	fieldVal = DerefAndInit(fieldVal)
+
+	t := fieldVal.Type()
+
+	// Special: time.Duration
+	if isTimeDurationType(t) {
+		d, err := time.ParseDuration(str)
+		if err != nil {
+			return err
 		}
-		return SetValueFromString(fieldVal.Elem(), str)
+		fieldVal.SetInt(int64(d))
+		return nil
 	}
 
 	switch fieldVal.Kind() {
 	case reflect.String:
 		fieldVal.SetString(str)
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		// Special case: time.Duration
-		if fieldVal.Type().PkgPath() == "time" && fieldVal.Type().Name() == "Duration" {
-			if d, err := time.ParseDuration(str); err == nil {
-				fieldVal.SetInt(int64(d))
-				return nil
-			} else {
-				return err
-			}
-		}
-		if v, err := strconv.ParseInt(str, 10, 64); err == nil {
-			fieldVal.SetInt(v)
-		} else {
-			return err
-		}
+		return setInt(fieldVal, str)
 	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		if v, err := strconv.ParseUint(str, 10, 64); err == nil {
-			fieldVal.SetUint(v)
-		} else {
-			return err
-		}
+		return setUint(fieldVal, str)
 	case reflect.Float32, reflect.Float64:
-		if v, err := strconv.ParseFloat(str, 64); err == nil {
-			fieldVal.SetFloat(v)
-		} else {
-			return err
-		}
+		return setFloat(fieldVal, str)
 	case reflect.Bool:
-		if v, err := strconv.ParseBool(str); err == nil {
-			fieldVal.SetBool(v)
-		} else {
-			return err
-		}
+		return setBool(fieldVal, str)
 	default:
-		// Handle custom types that implement encoding.TextUnmarshaler
+		// custom TextUnmarshaler
 		if fieldVal.CanAddr() {
 			if unmarshaler, ok := fieldVal.Addr().Interface().(encoding.TextUnmarshaler); ok {
 				return unmarshaler.UnmarshalText([]byte(str))
 			}
 		}
-
-		return fmt.Errorf("unsupported type: %s", fieldVal.Type().String())
+		return fmt.Errorf("unsupported type: %s", t.String())
 	}
+
 	return nil
 }
 
-// GetValueAsString returns a string representation of a reflect.Value.
-func GetValueAsString(fieldVal reflect.Value) (string, error) {
-	if fieldVal.Kind() == reflect.Pointer {
-		if fieldVal.IsNil() {
-			return "", nil
-		}
-		return GetValueAsString(fieldVal.Elem())
+func setInt(v reflect.Value, s string) error {
+	x, err := strconv.ParseInt(s, 10, 64)
+	if err != nil {
+		return err
 	}
-
-	switch fieldVal.Kind() {
-	case reflect.String:
-		return fieldVal.String(), nil
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		// Special case: time.Duration
-		if fieldVal.Type().PkgPath() == "time" && fieldVal.Type().Name() == "Duration" {
-			return time.Duration(fieldVal.Int()).String(), nil
-		}
-		return strconv.FormatInt(fieldVal.Int(), 10), nil
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		return strconv.FormatUint(fieldVal.Uint(), 10), nil
-	case reflect.Float32, reflect.Float64:
-		return strconv.FormatFloat(fieldVal.Float(), 'f', -1, 64), nil
-	case reflect.Bool:
-		return strconv.FormatBool(fieldVal.Bool()), nil
-	default:
-		// Handle custom types (encoding.TextMarshaler)
-		if marshaler, ok := fieldVal.Interface().(encoding.TextMarshaler); ok {
-			b, err := marshaler.MarshalText()
-			return string(b), err
-		}
-		return "", fmt.Errorf("unsupported type: %s", fieldVal.Type().String())
-	}
+	v.SetInt(x)
+	return nil
 }
 
-// GetStructName returns the name of a struct.
-func GetStructName(v any) string {
-	t := reflect.TypeOf(v)
-	if t.Kind() == reflect.Ptr {
-		t = t.Elem()
+func setUint(v reflect.Value, s string) error {
+	x, err := strconv.ParseUint(s, 10, 64)
+	if err != nil {
+		return err
 	}
-	return t.Name()
+	v.SetUint(x)
+	return nil
+}
+
+func setFloat(v reflect.Value, s string) error {
+	x, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return err
+	}
+	v.SetFloat(x)
+	return nil
+}
+
+func setBool(v reflect.Value, s string) error {
+	x, err := strconv.ParseBool(s)
+	if err != nil {
+		return err
+	}
+	v.SetBool(x)
+	return nil
 }

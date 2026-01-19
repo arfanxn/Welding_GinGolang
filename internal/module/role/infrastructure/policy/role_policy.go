@@ -76,7 +76,7 @@ func (p *rolePolicy) Store(ctx context.Context, _dto *roleDto.SaveRole) error {
 // Returns an error if any validation rule is violated.
 func (p *rolePolicy) Update(ctx context.Context, _dto *roleDto.SaveRole) error {
 	// Verify that the role exists before attempting to update it
-	role, err := p.roleRepository.Find(*_dto.Id)
+	role, err := p.roleRepository.Find(*_dto.Id, nil)
 	if err != nil {
 		return err
 	}
@@ -101,7 +101,7 @@ func (p *rolePolicy) Update(ctx context.Context, _dto *roleDto.SaveRole) error {
 // Returns an error if any validation rule is violated.
 func (p *rolePolicy) SetDefault(ctx context.Context, _dto *roleDto.SetDefaultRole) error {
 	// Verify that the role exists before attempting to set it as default
-	role, err := p.roleRepository.Find(_dto.Id)
+	role, err := p.roleRepository.Find(_dto.Id, nil)
 	if err != nil {
 		return err
 	}
@@ -125,7 +125,7 @@ func (p *rolePolicy) SetDefault(ctx context.Context, _dto *roleDto.SetDefaultRol
 // Returns an error if any validation rule is violated.
 func (p *rolePolicy) Destroy(ctx context.Context, _dto *roleDto.DestroyRole) error {
 	// Verify that the role exists before attempting to delete it
-	role, err := p.roleRepository.Find(_dto.Id)
+	role, err := p.roleRepository.Find(_dto.Id, nil)
 	if err != nil {
 		return err
 	}
@@ -162,7 +162,7 @@ func (p *rolePolicy) validatePermissionAssignments(permissionIds []string) error
 	}
 
 	// Attempt to fetch all specified permissions to verify they exist
-	_, err := p.permissionRepository.FindByIds(permissionIds)
+	_, err := p.permissionRepository.FindByIds(permissionIds, nil)
 	if err != nil {
 		return err
 	}
