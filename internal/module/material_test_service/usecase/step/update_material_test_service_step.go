@@ -37,11 +37,11 @@ func (s *updateMaterialTestServiceStep) Handle(ctx context.Context, _dto *dto.Sa
 	}
 
 	if !goutil.IsEmptyReal(_dto.MachineId) {
-		mts.MachineId = *_dto.MachineId
+		mts.MachineId = _dto.MachineId
 	}
 
 	if !goutil.IsEmptyReal(_dto.MethodId) {
-		mts.MethodId = *_dto.MethodId
+		mts.MethodId = _dto.MethodId
 	}
 
 	if !goutil.IsEmptyReal(_dto.TestName) {

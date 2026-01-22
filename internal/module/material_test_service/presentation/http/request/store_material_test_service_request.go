@@ -1,6 +1,8 @@
 package request
 
 import (
+	"strings"
+
 	"github.com/arfanxn/welding/internal/infrastructure/http/request"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 )
@@ -8,8 +10,8 @@ import (
 var _ request.Request = (*StoreMaterialTestService)(nil)
 
 type StoreMaterialTestService struct {
-	MachineId   string  `form:"machine_id" json:"machine_id"`
-	MethodId    string  `form:"method_id" json:"method_id"`
+	MachineId   *string `form:"machine_id" json:"machine_id"`
+	MethodId    *string `form:"method_id" json:"method_id"`
 	TestName    string  `form:"test_name" json:"test_name"`
 	ServiceType string  `form:"service_type" json:"service_type"`
 	ServiceCode string  `form:"service_code" json:"service_code"`
@@ -24,12 +26,14 @@ func NewStoreMaterialTestService() *StoreMaterialTestService {
 func (s *StoreMaterialTestService) Validate() error {
 	return validation.ValidateStruct(s,
 		validation.Field(&s.MachineId,
-			validation.Required.Error("Machine Id tidak boleh kosong"),
-			validation.Length(26, 26).Error("Machine Id harus 26 karakter"),
+			validation.When(hasValue(s.MachineId),
+				validation.Length(26, 26).Error("Machine Id harus 26 karakter"),
+			),
 		),
 		validation.Field(&s.MethodId,
-			validation.Required.Error("Method Id tidak boleh kosong"),
-			validation.Length(26, 26).Error("Method Id harus 26 karakter"),
+			validation.When(hasValue(s.MethodId),
+				validation.Length(26, 26).Error("Method Id harus 26 karakter"),
+			),
 		),
 		validation.Field(&s.TestName,
 			validation.Required.Error("Test Name tidak boleh kosong"),
@@ -52,4 +56,11 @@ func (s *StoreMaterialTestService) Validate() error {
 			validation.Min(0.00).Error("Price harus lebih dari 0"),
 		),
 	)
+}
+
+func hasValue(value *string) bool {
+	if value == nil {
+		return false
+	}
+	return strings.TrimSpace(*value) != ""
 }

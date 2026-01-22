@@ -3,6 +3,7 @@ package http
 import (
 	"errors"
 	"net/http"
+	"strings"
 
 	"github.com/arfanxn/welding/internal/infrastructure/http/helper"
 	"github.com/arfanxn/welding/internal/infrastructure/http/response"
@@ -81,9 +82,12 @@ func (h *mtsHandler) Store(c *gin.Context) {
 	req := mtsRequest.NewStoreMaterialTestService()
 	helper.MustBindValidate(c, req)
 
+	machineId := normalizeOptionalString(req.MachineId)
+	methodId := normalizeOptionalString(req.MethodId)
+
 	mts, err := h.mtsUsecase.Store(c.Request.Context(), &dto.SaveMaterialTestService{
-		MachineId:   &req.MachineId,
-		MethodId:    &req.MethodId,
+		MachineId:   machineId,
+		MethodId:    methodId,
 		TestName:    &req.TestName,
 		ServiceType: &req.ServiceType,
 		ServiceCode: &req.ServiceCode,
@@ -115,10 +119,13 @@ func (h *mtsHandler) Update(c *gin.Context) {
 	req.Id = c.Param("id")
 	helper.MustBindValidate(c, req)
 
+	machineId := normalizeOptionalString(req.MachineId)
+	methodId := normalizeOptionalString(req.MethodId)
+
 	mts, err := h.mtsUsecase.Update(c.Request.Context(), &dto.SaveMaterialTestService{
 		Id:          &req.Id,
-		MachineId:   req.MachineId,
-		MethodId:    req.MethodId,
+		MachineId:   machineId,
+		MethodId:    methodId,
 		TestName:    req.TestName,
 		ServiceType: req.ServiceType,
 		ServiceCode: req.ServiceCode,
@@ -162,4 +169,15 @@ func (h *mtsHandler) Destroy(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, response.NewBody(http.StatusOK, "Material test service berhasil dihapus"))
+}
+
+func normalizeOptionalString(value *string) *string {
+	if value == nil {
+		return nil
+	}
+	trimmed := strings.TrimSpace(*value)
+	if trimmed == "" {
+		return nil
+	}
+	return &trimmed
 }

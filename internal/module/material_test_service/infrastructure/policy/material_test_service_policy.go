@@ -2,12 +2,12 @@ package policy
 
 import (
 	"context"
+	"strings"
 
 	mtMachineRepository "github.com/arfanxn/welding/internal/module/material_test_machine/domain/repository"
 	mtMethodRepository "github.com/arfanxn/welding/internal/module/material_test_method/domain/repository"
 	mtServiceRepository "github.com/arfanxn/welding/internal/module/material_test_service/domain/repository"
 	"github.com/arfanxn/welding/internal/module/material_test_service/usecase/dto"
-	"github.com/gookit/goutil"
 	"go.uber.org/fx"
 )
 
@@ -40,23 +40,27 @@ func NewMaterialTestServicePolicy(params NewMaterialTestServicePolicyParams) Mat
 }
 
 func (p *materialTestServicePolicy) Store(ctx context.Context, _dto *dto.SaveMaterialTestService) error {
-	if err := p.validateMachine(*_dto.MachineId); err != nil {
-		return err
+	if hasValue(_dto.MachineId) {
+		if err := p.validateMachine(*_dto.MachineId); err != nil {
+			return err
+		}
 	}
-	if err := p.validateMethod(*_dto.MethodId); err != nil {
-		return err
+	if hasValue(_dto.MethodId) {
+		if err := p.validateMethod(*_dto.MethodId); err != nil {
+			return err
+		}
 	}
 	return nil
 }
 
 func (p *materialTestServicePolicy) Update(ctx context.Context, _dto *dto.SaveMaterialTestService) error {
-	if !goutil.IsEmptyReal(_dto.MachineId) {
+	if hasValue(_dto.MachineId) {
 		if err := p.validateMachine(*_dto.MachineId); err != nil {
 			return err
 		}
 	}
 
-	if !goutil.IsEmptyReal(_dto.MethodId) {
+	if hasValue(_dto.MethodId) {
 		if err := p.validateMethod(*_dto.MethodId); err != nil {
 			return err
 		}
@@ -87,4 +91,11 @@ func (p *materialTestServicePolicy) validateMachine(machineId string) error {
 		return err
 	}
 	return nil
+}
+
+func hasValue(value *string) bool {
+	if value == nil {
+		return false
+	}
+	return strings.TrimSpace(*value) != ""
 }
